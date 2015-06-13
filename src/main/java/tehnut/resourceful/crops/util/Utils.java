@@ -4,6 +4,8 @@ import cpw.mods.fml.common.registry.GameData;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.oredict.OreDictionary;
+import tehnut.resourceful.crops.ResourcefulCrops;
+import tehnut.resourceful.crops.base.Seed;
 import tehnut.resourceful.crops.registry.SeedRegistry;
 
 public class Utils {
@@ -32,27 +34,15 @@ public class Utils {
         return stack.getItemDamage();
     }
 
-//    public static ItemStack setSeedIndex(ItemStack stack, int seedIndex) {
-//        if (stack.stackTagCompound == null)
-//            stack.stackTagCompound = new NBTTagCompound();
-//
-//        stack.stackTagCompound.setInteger("seedIndex", seedIndex);
-//
-//        return stack;
-//    }
-//
-//    public static int getSeedIndex(ItemStack stack) {
-//        if (stack.stackTagCompound == null)
-//            stack.stackTagCompound = new NBTTagCompound();
-//
-//        return stack.stackTagCompound.getInteger("seedIndex");
-//    }
-
     public static boolean isValidSeed(int seedIndex) {
-        return !SeedRegistry.isEmpty() && !(SeedRegistry.getSize() < seedIndex);
+        return SeedRegistry.getSeed(seedIndex) != null;
     }
 
-    public static boolean isValidSeed(ItemStack stack) {
-        return isValidSeed(getItemDamage(stack));
+    public static boolean isValidSeed(String seedName) {
+        return SeedRegistry.getSeed(seedName) != null;
+    }
+
+    public static boolean isValidSeed(Seed seed) {
+        return SeedRegistry.getSeedList().contains(seed);
     }
 }

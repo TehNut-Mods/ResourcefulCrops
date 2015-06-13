@@ -24,6 +24,7 @@ import tehnut.resourceful.crops.registry.SeedRegistry;
 import tehnut.resourceful.crops.tile.TileRCrop;
 import tehnut.resourceful.crops.util.Utils;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 public class ItemPouch extends Item implements IPlantable {
@@ -48,9 +49,9 @@ public class ItemPouch extends Item implements IPlantable {
             for (int posZ = z - 1; posZ <= z + 1; posZ++) {
                 Block placed = world.getBlock(posX, y, posZ);
 
-                if (placed.canSustainPlant(world, posX, y, posZ, ForgeDirection.UP, this) && ForgeDirection.getOrientation(side) == ForgeDirection.UP && Utils.isValidSeed(stack) && world.isAirBlock(posX, y + 1, posZ)) {
+                if (placed.canSustainPlant(world, posX, y, posZ, ForgeDirection.UP, this) && ForgeDirection.getOrientation(side) == ForgeDirection.UP && Utils.isValidSeed(Utils.getItemDamage(stack)) && world.isAirBlock(posX, y + 1, posZ)) {
                     world.setBlock(posX, y + 1, posZ, BlockRegistry.crop);
-                    ((TileRCrop) world.getTileEntity(posX, y + 1, posZ)).setSeedIndex(Utils.getItemDamage(stack));
+                    ((TileRCrop) world.getTileEntity(posX, y + 1, posZ)).setSeedName(SeedRegistry.getSeed(Utils.getItemDamage(stack)).getName());
                     if (!player.capabilities.isCreativeMode)
                         player.inventory.decrStackSize(player.inventory.currentItem, 1);
 
@@ -72,7 +73,7 @@ public class ItemPouch extends Item implements IPlantable {
     @SideOnly(Side.CLIENT)
     @Override
     public String getItemStackDisplayName(ItemStack stack) {
-        if (Utils.isValidSeed(stack))
+        if (Utils.isValidSeed(Utils.getItemDamage(stack)))
             return String.format(StatCollector.translateToLocal(getUnlocalizedName()), StatCollector.translateToLocal(SeedRegistry.getSeed(Utils.getItemDamage(stack)).getName()));
         else
             return String.format(StatCollector.translateToLocal(getUnlocalizedName()), StatCollector.translateToLocal("info.ResourcefulCrops.torn"));
@@ -82,7 +83,7 @@ public class ItemPouch extends Item implements IPlantable {
     @SideOnly(Side.CLIENT)
     @Override
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean advanced) {
-        if (!Utils.isValidSeed(stack))
+        if (!Utils.isValidSeed(Utils.getItemDamage(stack)))
             list.add(EnumChatFormatting.RED + StatCollector.translateToLocal("info.ResourcefulCrops.warn"));
     }
 
@@ -103,7 +104,7 @@ public class ItemPouch extends Item implements IPlantable {
     @SideOnly(Side.CLIENT)
     @Override
     public int getColorFromItemStack(ItemStack stack, int pass) {
-        if (pass == 1 && Utils.isValidSeed(stack))
+        if (pass == 1 && Utils.isValidSeed(Utils.getItemDamage(stack)))
             return SeedRegistry.getSeed(Utils.getItemDamage(stack)).getColor().getRGB();
         else
             return super.getColorFromItemStack(stack, pass);

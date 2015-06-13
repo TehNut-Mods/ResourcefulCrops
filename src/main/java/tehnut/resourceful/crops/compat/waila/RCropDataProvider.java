@@ -8,8 +8,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import tehnut.resourceful.crops.ResourcefulCrops;
+import tehnut.resourceful.crops.base.Seed;
 import tehnut.resourceful.crops.blocks.BlockRCrop;
 import tehnut.resourceful.crops.registry.ItemRegistry;
+import tehnut.resourceful.crops.registry.SeedRegistry;
 import tehnut.resourceful.crops.tile.TileRCrop;
 import tehnut.resourceful.crops.util.Utils;
 
@@ -23,11 +26,14 @@ public class RCropDataProvider implements IWailaDataProvider {
         if (accessor.getBlock() instanceof BlockRCrop) {
             TileEntity cropTile = accessor.getTileEntity();
 
-            if (cropTile != null && cropTile instanceof TileRCrop)
-                return new ItemStack(ItemRegistry.seed, 1, ((TileRCrop) cropTile).getSeedIndex());
+            if (cropTile != null && cropTile instanceof TileRCrop) {
+                Seed seed = SeedRegistry.getSeed(((TileRCrop) cropTile).getSeedName());
+                if (Utils.isValidSeed(seed))
+                    return new ItemStack(ItemRegistry.seed, 1, SeedRegistry.getIndexOf(seed));
+            }
         }
 
-        return null;
+        return new ItemStack(ItemRegistry.seed, 1, SeedRegistry.getSize() + 1);
     }
 
     @Override

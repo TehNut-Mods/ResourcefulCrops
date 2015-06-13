@@ -10,6 +10,7 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import tehnut.resourceful.crops.ModInformation;
 import tehnut.resourceful.crops.ResourcefulCrops;
+import tehnut.resourceful.crops.base.Seed;
 import tehnut.resourceful.crops.registry.SeedRegistry;
 import tehnut.resourceful.crops.util.Utils;
 
@@ -29,15 +30,14 @@ public class ItemShard extends Item {
     @SuppressWarnings("unchecked")
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item item, CreativeTabs tabs, List list) {
-        if (!SeedRegistry.isEmpty())
-            for (int i = 0; i < SeedRegistry.getSize(); i++)
-                list.add(new ItemStack(this, 1, i));
+        for (Seed seed : SeedRegistry.getSeedList())
+            list.add(new ItemStack(this, 1, SeedRegistry.getIndexOf(seed)));
     }
 
     @SideOnly(Side.CLIENT)
     @Override
     public String getItemStackDisplayName(ItemStack stack) {
-        if (Utils.isValidSeed(stack))
+        if (Utils.isValidSeed(Utils.getItemDamage(stack)))
             return String.format(StatCollector.translateToLocal(getUnlocalizedName()), StatCollector.translateToLocal(SeedRegistry.getSeed(Utils.getItemDamage(stack)).getName()));
         else
             return String.format(StatCollector.translateToLocal(getUnlocalizedName()), StatCollector.translateToLocal("info.ResourcefulCrops.broken"));
@@ -47,14 +47,14 @@ public class ItemShard extends Item {
     @SideOnly(Side.CLIENT)
     @Override
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean advanced) {
-        if (!Utils.isValidSeed(stack))
+        if (!Utils.isValidSeed(Utils.getItemDamage(stack)))
             list.add(EnumChatFormatting.RED + StatCollector.translateToLocal("info.ResourcefulCrops.warn"));
     }
 
     @SideOnly(Side.CLIENT)
     @Override
     public int getColorFromItemStack(ItemStack stack, int pass) {
-        if (pass == 1 && Utils.isValidSeed(stack))
+        if (pass == 1 && Utils.isValidSeed(stack.getItemDamage()))
             return SeedRegistry.getSeed(Utils.getItemDamage(stack)).getColor().getRGB();
         else
             return super.getColorFromItemStack(stack, pass);

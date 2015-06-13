@@ -7,18 +7,19 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import tehnut.resourceful.crops.ResourcefulCrops;
 import tehnut.resourceful.crops.registry.SeedRegistry;
 
 public class TileRCrop extends TileEntity {
 
-    private int seedIndex = SeedRegistry.getSize() + 1;
+    private String seedName = "Dead";
 
-    public int getSeedIndex() {
-        return seedIndex;
+    public String getSeedName() {
+        return seedName;
     }
 
-    public void setSeedIndex(int seedIndex) {
-        this.seedIndex = seedIndex;
+    public void setSeedName(String seedName) {
+        this.seedName = seedName;
     }
 
     @Override
@@ -35,14 +36,14 @@ public class TileRCrop extends TileEntity {
     public void writeToNBT(NBTTagCompound tag) {
         super.writeToNBT(tag);
 
-        tag.setInteger("seedIndex", getSeedIndex());
+        tag.setString("seedName", getSeedName());
     }
 
     @Override
     public void readFromNBT(NBTTagCompound tag) {
         super.readFromNBT(tag);
 
-        setSeedIndex(tag.getInteger("seedIndex"));
+        setSeedName(tag.getString("seedName"));
     }
 
     @Override

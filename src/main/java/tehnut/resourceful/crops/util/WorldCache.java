@@ -23,6 +23,9 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * @author tterrag
+ */
 public class WorldCache<I> {
 
     public static final int MAX_ID = Short.MAX_VALUE;

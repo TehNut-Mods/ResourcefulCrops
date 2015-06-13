@@ -16,6 +16,7 @@ import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.util.ForgeDirection;
 import tehnut.resourceful.crops.ModInformation;
 import tehnut.resourceful.crops.ResourcefulCrops;
+import tehnut.resourceful.crops.base.Seed;
 import tehnut.resourceful.crops.registry.BlockRegistry;
 import tehnut.resourceful.crops.registry.SeedRegistry;
 import tehnut.resourceful.crops.tile.TileRCrop;
@@ -37,18 +38,17 @@ public class ItemSeed extends Item implements IPlantable {
     @SuppressWarnings("unchecked")
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item item, CreativeTabs tabs, List list) {
-        if (!SeedRegistry.isEmpty())
-            for (int i = 0; i < SeedRegistry.getSize(); i++)
-                list.add(new ItemStack(this, 1, i));
+        for (Seed seed : SeedRegistry.getSeedList())
+            list.add(new ItemStack(this, 1, SeedRegistry.getIndexOf(seed)));
     }
 
     public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
 
         Block placed = world.getBlock(x, y, z);
 
-        if (placed.canSustainPlant(world, x, y, z, ForgeDirection.UP, this) && ForgeDirection.getOrientation(side) == ForgeDirection.UP && Utils.isValidSeed(stack) && world.isAirBlock(x, y + 1, z)) {
+        if (placed.canSustainPlant(world, x, y, z, ForgeDirection.UP, this) && ForgeDirection.getOrientation(side) == ForgeDirection.UP && Utils.isValidSeed(Utils.getItemDamage(stack)) && world.isAirBlock(x, y + 1, z)) {
             world.setBlock(x, y + 1, z, BlockRegistry.crop);
-            ((TileRCrop) world.getTileEntity(x, y + 1, z)).setSeedIndex(Utils.getItemDamage(stack));
+            ((TileRCrop) world.getTileEntity(x, y + 1, z)).setSeedName(SeedRegistry.getSeed(Utils.getItemDamage(stack)).getName());
             if (!player.capabilities.isCreativeMode)
                 player.inventory.decrStackSize(player.inventory.currentItem, 1);
 
@@ -61,7 +61,7 @@ public class ItemSeed extends Item implements IPlantable {
     @SideOnly(Side.CLIENT)
     @Override
     public String getItemStackDisplayName(ItemStack stack) {
-        if (Utils.isValidSeed(stack))
+        if (Utils.isValidSeed(Utils.getItemDamage(stack)))
             return String.format(StatCollector.translateToLocal(getUnlocalizedName()), StatCollector.translateToLocal(SeedRegistry.getSeed(Utils.getItemDamage(stack)).getName()));
         else
             return String.format(StatCollector.translateToLocal(getUnlocalizedName()), StatCollector.translateToLocal("info.ResourcefulCrops.dead"));
@@ -71,7 +71,7 @@ public class ItemSeed extends Item implements IPlantable {
     @SideOnly(Side.CLIENT)
     @Override
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean advanced) {
-        if (!Utils.isValidSeed(stack))
+        if (!Utils.isValidSeed(Utils.getItemDamage(stack)))
             list.add(EnumChatFormatting.RED + StatCollector.translateToLocal("info.ResourcefulCrops.warn"));
         else
             list.add(String.format(StatCollector.translateToLocal("info.ResourcefulCrops.tier"), SeedRegistry.getSeed(Utils.getItemDamage(stack)).getTier()));
@@ -80,7 +80,7 @@ public class ItemSeed extends Item implements IPlantable {
     @SideOnly(Side.CLIENT)
     @Override
     public int getColorFromItemStack(ItemStack stack, int pass) {
-        if (pass == 1 && Utils.isValidSeed(stack))
+        if (pass == 1 && Utils.isValidSeed(Utils.getItemDamage(stack)))
             return SeedRegistry.getSeed(Utils.getItemDamage(stack)).getColor().getRGB();
         else
             return super.getColorFromItemStack(stack, pass);

@@ -47,10 +47,14 @@ public class ResourcefulCrops {
     public static ResourcefulCrops instance;
     public static int renderIDCrop;
     private static File configDir;
-    public static PermanentCache<Seed> seedCache;
+    private static PermanentCache<Seed> seedCache;
 
     public static File getConfigDir() {
         return configDir;
+    }
+
+    public static PermanentCache<Seed> getSeedCache() {
+        return seedCache;
     }
 
     @Mod.EventHandler
@@ -62,8 +66,6 @@ public class ResourcefulCrops {
         proxy.load();
 
         seedCache = new PermanentCache<Seed>(ModInformation.ID + "Cache");
-        for (Seed seed : SeedRegistry.getSeedList())
-            seedCache.addObject(seed, seed.getName());
 
         BlockRegistry.registerBlocks();
         ItemRegistry.registerItems();

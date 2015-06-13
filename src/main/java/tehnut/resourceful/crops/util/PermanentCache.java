@@ -6,6 +6,9 @@ import lombok.SneakyThrows;
 import java.io.File;
 import java.util.List;
 
+/**
+ * @author tterrag
+ */
 public class PermanentCache<I> extends WorldCache<I> {
 
     private static final List<PermanentCache<?>> allCaches = Lists.newArrayList();

@@ -31,32 +31,31 @@ public class RenderRCrop implements ISimpleBlockRenderingHandler {
         int meta = world.getBlockMetadata(x, y, z);
         TileEntity cropTile = world.getTileEntity(x, y, z);
         if (cropTile instanceof TileRCrop) {
-            int seedIndex = ((TileRCrop) cropTile).getSeedIndex();
+            String seedName = ((TileRCrop) cropTile).getSeedName();
 
-            if (Utils.isValidSeed(seedIndex)) {
-                Seed seed = SeedRegistry.getSeed(seedIndex);
+            if (Utils.isValidSeed(seedName)) {
+                Seed seed = SeedRegistry.getSeed(seedName);
                 IIcon icon = ((BlockRCrop) block).cropOverlay[meta];
 
                 Tessellator tessellator = Tessellator.instance;
                 tessellator.setColorRGBA(seed.getColor().getRed(), seed.getColor().getGreen(), seed.getColor().getBlue(), seed.getColor().getAlpha());
 
-                if (meta == 0) {
+                if (meta == 0)
                     renderer.drawCrossedSquares(icon, x, y, z, 1.0F);
-                } else if (meta == 1) {
+                else if (meta == 1)
                     renderer.drawCrossedSquares(icon, x, y, z, 1.0F);
-                } else if (meta == 2) {
+                else if (meta == 2)
                     renderer.drawCrossedSquares(icon, x, y, z, 1.0F);
-                } else if (meta == 3) {
+                else if (meta == 3)
                     renderer.drawCrossedSquares(icon, x, y, z, 1.0F);
-                } else if (meta == 4) {
+                else if (meta == 4)
                     renderer.drawCrossedSquares(icon, x, y, z, 1.0F);
-                } else if (meta == 5) {
+                else if (meta == 5)
                     renderer.drawCrossedSquares(icon, x, y, z, 1.0F);
-                } else if (meta == 6) {
+                else if (meta == 6)
                     renderer.drawCrossedSquares(icon, x, y + 0.0625F, z, 1.0F);
-                } else {
+                else
                     renderer.drawCrossedSquares(icon, x, y + 0.125F, z, 1.0F);
-                }
             }
         }
 
