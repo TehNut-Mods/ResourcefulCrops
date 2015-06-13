@@ -1,0 +1,15 @@
+[
+  {
+    "modid": "ResourcefulCrops",
+    "name": "ResourcefulCrops",
+    "description": "Simply JSON based resource crops.",
+    "version": "${version}",
+    "mcversion": "${mcversion}",
+    "url": "http://tehnut.info/",
+    "updateUrl": "http://tehnut.info/jenkins/",
+    "authorList": [ "TehNut" ],
+    "credits": "Rhodox, BBoldt, and Ganzu for textures",
+    "logoFile": "",
+    "screenshots": [ ]
+  }
+]

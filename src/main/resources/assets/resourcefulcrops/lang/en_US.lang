@@ -1,0 +1,35 @@
+# Creative Tab
+itemGroup.ResourcefulCrops.creativeTab=ResourcefulCrops
+
+# Items
+item.ResourcefulCrops.seed=%s Seeds
+item.ResourcefulCrops.shard=%s Shards
+item.ResourcefulCrops.pouch=%s Seed Pouch
+item.ResourcefulCrops.dust.name=Gaianite Essence
+item.ResourcefulCrops.dust.mundane.name=Mundane Gaianite Essence
+item.ResourcefulCrops.dust.magical.name=Magical Gaianite Essence
+item.ResourcefulCrops.dust.infused.name=Infused Gaianite Essence
+item.ResourcefulCrops.dust.arcane.name=Arcane Gaianite Essence
+item.ResourcefulCrops.stone.mundane.name=Mundane Stone of Creation
+item.ResourcefulCrops.stone.magical.name=Magical Stone of Creation
+item.ResourcefulCrops.stone.infused.name=Infused Stone of Creation
+item.ResourcefulCrops.stone.arcane.name=Arcane Stone of Creation
+item.ResourcefulCrops.stone.true.name=True Stone of Creation
+
+# Blocks
+tile.ResourcefulCrops.ore.name=Gaianite Ore
+tile.ResourcefulCrops.ore.nether.name=Nether Gaianite Ore
+
+# Info
+info.ResourcefulCrops.dead=Dead
+info.ResourcefulCrops.broken=Broken
+info.ResourcefulCrops.torn=Torn
+info.ResourcefulCrops.tier=Tier: %d
+info.ResourcefulCrops.warn=Warning: Invalid entry
+
+# Waila
+waila.config.render.fancy=Fancy Render
+
+# Config
+config.ResourcefulCrops.title=ResourcefulCrops Configuration
+config.ResourcefulCrops.console.refresh=Refreshing configuration file.
