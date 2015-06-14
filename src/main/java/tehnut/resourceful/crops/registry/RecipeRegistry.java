@@ -39,6 +39,11 @@ public class RecipeRegistry {
                         "SSS", "SSS", "SSS",
                         'S', new ItemStack(ItemRegistry.seed, 1, SeedRegistry.getIndexOf(seed))
                 ));
+
+                GameRegistry.addRecipe(new ShapelessOreRecipe(
+                        new ItemStack(ItemRegistry.seed, 9, SeedRegistry.getIndexOf(seed)),
+                        new ItemStack(ItemRegistry.pouch, 1, SeedRegistry.getIndexOf(seed))
+                ));
             }
         }
 
@@ -58,7 +63,7 @@ public class RecipeRegistry {
         ));
 
         for (Seed seed : SeedRegistry.getSeedList()) {
-            if (seed.getTier() == 0) {
+            if (seed.getTier() == 1) {
                 GameRegistry.addRecipe(new ShapedOreRecipe(
                         new ItemStack(ItemRegistry.stone, 1, 1),
                         "MMM", "MSM", "MMM",
@@ -67,7 +72,7 @@ public class RecipeRegistry {
                 ));
             }
 
-            if (seed.getTier() == 1) {
+            if (seed.getTier() == 2) {
                 GameRegistry.addRecipe(new ShapedOreRecipe(
                         new ItemStack(ItemRegistry.stone, 1, 2),
                         "MMM", "MSM", "MMM",
@@ -76,7 +81,7 @@ public class RecipeRegistry {
                 ));
             }
 
-            if (seed.getTier() == 2) {
+            if (seed.getTier() == 3) {
                 GameRegistry.addRecipe(new ShapedOreRecipe(
                         new ItemStack(ItemRegistry.stone, 1, 3),
                         "MMM", "MSM", "MMM",
@@ -85,7 +90,7 @@ public class RecipeRegistry {
                 ));
             }
 
-            if (seed.getTier() == 3) {
+            if (seed.getTier() == 4) {
                 GameRegistry.addRecipe(new ShapedOreRecipe(
                         new ItemStack(ItemRegistry.stone, 1, 4),
                         "MMM", "MSM", "MMM",
