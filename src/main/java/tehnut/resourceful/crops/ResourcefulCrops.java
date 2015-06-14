@@ -14,6 +14,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import tehnut.resourceful.crops.base.Seed;
+import tehnut.resourceful.crops.compat.bloodmagic.CompatBloodMagic;
 import tehnut.resourceful.crops.compat.waila.CompatWaila;
 import tehnut.resourceful.crops.proxies.CommonProxy;
 import tehnut.resourceful.crops.registry.BlockRegistry;
@@ -93,6 +94,8 @@ public class ResourcefulCrops {
 
         if (Loader.isModLoaded("Waila"))
             CompatWaila.load();
+        if (Loader.isModLoaded("AWWayofTime"))
+            CompatBloodMagic.load();
     }
 
     @Mod.EventHandler
