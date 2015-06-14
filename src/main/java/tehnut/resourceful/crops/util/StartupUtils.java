@@ -23,11 +23,11 @@ public class StartupUtils {
 
     public static void initDefaults() {
 
-        // Tier 0
+        // Tier 1
         addDefaultSeedOre(new Seed("Inky", 1, 4, "dyeBlack", new ItemStack(getOreStack("dyeBlack").getItem(), 8, getOreStack("dyeBlack").getItemDamage()), new Color(22, 22, 22)), "dyeBlack");
         addDefaultSeed(new Seed("Fleshy", 1, 4, getItemString(Items.rotten_flesh), new ItemStack(Items.rotten_flesh, 8), new Color(255, 160, 136)));
         addDefaultSeed(new Seed("Feathery", 1, 4, getItemString(Items.feather), new ItemStack(Items.feather, 8), new Color(208, 203, 199)));
-        // Tier 1
+        // Tier 2
         addDefaultSeedOre(new Seed("Tin", 2, 4, "ingotTin", new ItemStack(getOreStack("ingotTin").getItem(), 8, getOreStack("ingotTin").getItemDamage()), new Color(135, 154, 168)), "ingotTin");
         addDefaultSeedOre(new Seed("Copper", 2, 4, "ingotCopper", new ItemStack(getOreStack("ingotCopper").getItem(), 8, getOreStack("ingotCopper").getItemDamage()), new Color(204, 102, 51)), "ingotCopper");
         addDefaultSeedOre(new Seed("Aluminum", 2, 4, "ingotAluminum", new ItemStack(getOreStack("ingotAluminum").getItem(), 8, getOreStack("ingotAluminum").getItemDamage()), new Color(198, 206, 130)), "ingotAluminum");
@@ -40,7 +40,7 @@ public class StartupUtils {
         addDefaultSeed(new Seed("Stringy", 2, 4, getItemString(Items.string), new ItemStack(Items.string, 8), new Color(241, 255, 210)));
         addDefaultSeed(new Seed("Boney", 2, 4, getItemString(Items.bone), new ItemStack(Items.bone, 8), new Color(255, 240, 205)));
         addDefaultSeed(new Seed("Slimey", 2, 4, getItemString(Items.slime_ball), new ItemStack(Items.slime_ball, 8), new Color(62, 255, 119)));
-        //Tier 2
+        //Tier 3
         addDefaultSeed(new Seed("Blaze", 3, 4, getItemString(Items.blaze_rod), new ItemStack(Items.blaze_rod, 8), new Color(255, 215, 66)));
         addDefaultSeedOre(new Seed("Iron", 3, 4, "ingotIron", new ItemStack(getOreStack("ingotIron").getItem(), 8, getOreStack("ingotIron").getItemDamage()), new Color(159, 156, 160)), "ingotIron");
         addDefaultSeedOre(new Seed("Gold", 3, 4, "ingotGold", new ItemStack(getOreStack("ingotGold").getItem(), 8, getOreStack("ingotGold").getItemDamage()), new Color(255, 255, 0)), "ingotGold");
@@ -66,7 +66,7 @@ public class StartupUtils {
         addDefaultSeedOre(new Seed("Sapphire", 3, 4, "gemSapphire", new ItemStack(getOreStack("gemSapphire").getItem(), 8, getOreStack("gemSapphire").getItemDamage()), new Color(88, 106, 212)), "gemSapphire");
         addDefaultSeedOre(new Seed("Amber", 3, 4, "gemAmber", new ItemStack(getOreStack("gemAmber").getItem(), 8, getOreStack("gemAmber").getItemDamage()), new Color(212, 121, 60)), "gemAmber");
         addDefaultSeedOre(new Seed("Apatite", 3, 4, "gemApatite", new ItemStack(getOreStack("gemApatite").getItem(), 8, getOreStack("gemApatite").getItemDamage()), new Color(121, 188, 212)), "gemApatite");
-        // Tier 3
+        // Tier 4
         addDefaultSeedOre(new Seed("Diamond", 4, 4, "gemDiamond", new ItemStack(getOreStack("gemDiamond").getItem(), 8, getOreStack("gemDiamond").getItemDamage()), new Color(58, 242, 239)), "gemDiamond");
         addDefaultSeedOre(new Seed("Emerald", 4, 4, "gemEmerald", new ItemStack(getOreStack("gemEmerald").getItem(), 8, getOreStack("gemEmerald").getItemDamage()), new Color(87, 242, 111)), "gemEmerald");
         addDefaultSeedOre(new Seed("Platinum", 4, 4, "ingotPlatinum", new ItemStack(getOreStack("ingotPlatinum").getItem(), 8, getOreStack("ingotPlatinum").getItemDamage()), new Color(30, 208, 243)), "ingotPlatinum");
@@ -104,6 +104,16 @@ public class StartupUtils {
     }
 
     private static ItemStack getOreStack(String entry) {
-        return OreDictionary.doesOreNameExist(entry) ? OreDictionary.getOres(entry).get(0) : new ItemStack(Blocks.fire);
+        if (OreDictionary.getOreNames().length != 0 && OreDictionary.doesOreNameExist(entry)) {
+            if (OreDictionary.getOres(entry).size() != 0)
+                return OreDictionary.getOres(entry).get(0);
+            else
+                return new ItemStack(Blocks.fire);
+        } else
+            return new ItemStack(Blocks.fire);
     }
+
+//    private static ItemStack getOreStack(String entry) {
+//        return OreDictionary.doesOreNameExist(entry) ? OreDictionary.getOres(entry).get(0) : new ItemStack(Blocks.fire);
+//    }
 }
