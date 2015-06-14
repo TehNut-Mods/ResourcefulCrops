@@ -2,6 +2,7 @@ package tehnut.resourceful.crops.util;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import gnu.trove.map.TIntObjectMap;
@@ -193,7 +194,7 @@ public class WorldCache<I> {
     }
 
     public int getID(I obj) {
-        return nameToID.get(getName(obj));
+        return getName(obj) != null ? nameToID.get(getName(obj)) : Lists.newArrayList(getObjects()).size() + 1;
     }
 
     public String getName(I obj) {
