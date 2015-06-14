@@ -24,6 +24,7 @@ import tehnut.resourceful.crops.util.*;
 import tehnut.resourceful.crops.util.serialization.SeedCreator;
 
 import java.io.File;
+import java.util.ArrayList;
 
 @Mod(modid = ModInformation.ID, name = ModInformation.NAME, version = ModInformation.VERSION, dependencies = ModInformation.REQUIRED, guiFactory = ModInformation.GUIFACTORY)
 public class ResourcefulCrops {
@@ -87,6 +88,7 @@ public class ResourcefulCrops {
             StartupUtils.initDefaults();
 
         SeedCreator.registerJsonSeeds(SeedRegistry.seedBuilder, seedsFolder);
+        SeedRegistry.setSeedList(new ArrayList<Seed>(getSeedCache().getEnumeratedObjects().valueCollection()));
         RecipeRegistry.registerItemRecipes();
 
         if (Loader.isModLoaded("Waila"))

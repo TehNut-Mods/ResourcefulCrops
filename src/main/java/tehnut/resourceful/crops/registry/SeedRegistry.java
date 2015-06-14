@@ -11,6 +11,7 @@ import java.util.List;
 public class SeedRegistry {
 
     public static GsonBuilder seedBuilder;
+    public static ArrayList<Seed> seedList;
 
     public static void registerSeed(Seed seed) {
         ResourcefulCrops.getSeedCache().addObject(seed, seed.getName());
@@ -28,20 +29,28 @@ public class SeedRegistry {
         return ResourcefulCrops.getSeedCache().getID(seed);
     }
 
+    public static int getIndexOf(String name) {
+        return ResourcefulCrops.getSeedCache().getID(getSeed(name));
+    }
+
     public static String getNameOf(Seed seed) {
         return ResourcefulCrops.getSeedCache().getName(seed);
     }
 
     public static int getSize() {
-        return ResourcefulCrops.getSeedCache().getEnumeratedObjects().size();
+        return getSeedList().size();
     }
 
     public static boolean isEmpty() {
-        return ResourcefulCrops.getSeedCache().getEnumeratedObjects().isEmpty();
+        return getSeedList().isEmpty();
     }
 
     public static List<Seed> getSeedList() {
-        return new ArrayList<Seed>(ResourcefulCrops.getSeedCache().getEnumeratedObjects().valueCollection());
+        return new ArrayList<Seed>(seedList);
+    }
+
+    public static void setSeedList(ArrayList<Seed> list) {
+        seedList = list;
     }
 
     public static ItemStack getItemStackForSeed(Seed seed) {
