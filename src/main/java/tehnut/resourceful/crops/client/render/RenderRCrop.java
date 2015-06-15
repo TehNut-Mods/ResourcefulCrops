@@ -15,6 +15,8 @@ import tehnut.resourceful.crops.registry.SeedRegistry;
 import tehnut.resourceful.crops.tile.TileRCrop;
 import tehnut.resourceful.crops.util.Utils;
 
+import java.awt.*;
+
 public class RenderRCrop implements ISimpleBlockRenderingHandler {
 
     @Override
@@ -25,21 +27,23 @@ public class RenderRCrop implements ISimpleBlockRenderingHandler {
 
     @Override
     public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer) {
-        IIcon blockIcon = block.getIcon(world, x, y, z, 0);
-        renderer.setOverrideBlockTexture(blockIcon);
+        int meta = world.getBlockMetadata(x, y, z);
+        IIcon blockIcon = ((BlockRCrop) block).cropIcons[meta];
         float renderY = y - 0.06F;
+        TileEntity cropTile = world.getTileEntity(x, y, z);
+        Tessellator tessellator = Tessellator.instance;
+        Color cleared = new Color(16777215);
+
+        renderer.setOverrideBlockTexture(blockIcon);
+        tessellator.setColorRGBA(cleared.getRed(), cleared.getGreen(), cleared.getBlue(), cleared.getAlpha());
         renderer.drawCrossedSquares(blockIcon, x, renderY, z, 1.0F);
         renderer.clearOverrideBlockTexture();
-        int meta = world.getBlockMetadata(x, y, z);
-        TileEntity cropTile = world.getTileEntity(x, y, z);
         if (cropTile instanceof TileRCrop) {
             String seedName = ((TileRCrop) cropTile).getSeedName();
 
             if (Utils.isValidSeed(seedName)) {
                 Seed seed = SeedRegistry.getSeed(seedName);
                 IIcon icon = ((BlockRCrop) block).cropOverlay[meta];
-
-                Tessellator tessellator = Tessellator.instance;
                 tessellator.setColorRGBA(seed.getColor().getRed(), seed.getColor().getGreen(), seed.getColor().getBlue(), seed.getColor().getAlpha());
 
                 if (meta == 0)
