@@ -14,6 +14,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import tehnut.resourceful.crops.base.Seed;
 import tehnut.resourceful.crops.compat.bloodmagic.CompatBloodMagic;
+import tehnut.resourceful.crops.compat.enderio.CompatEnderIO;
 import tehnut.resourceful.crops.compat.waila.CompatWaila;
 import tehnut.resourceful.crops.proxies.CommonProxy;
 import tehnut.resourceful.crops.registry.BlockRegistry;
@@ -93,6 +94,7 @@ public class ResourcefulCrops {
 
         Utils.registerCompat(CompatWaila.class, "Waila");
         Utils.registerCompat(CompatBloodMagic.class, "AWWayofTime");
+        Utils.registerCompat(CompatEnderIO.class, "EnderIO");
     }
 
     @Mod.EventHandler
