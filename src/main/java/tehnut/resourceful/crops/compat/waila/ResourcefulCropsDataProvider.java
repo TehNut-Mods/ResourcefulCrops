@@ -18,7 +18,7 @@ import tehnut.resourceful.crops.util.Utils;
 
 import java.util.List;
 
-public class RCropDataProvider implements IWailaDataProvider {
+public class ResourcefulCropsDataProvider implements IWailaDataProvider {
 
     @Override
     public ItemStack getWailaStack(IWailaDataAccessor accessor, IWailaConfigHandler config) {

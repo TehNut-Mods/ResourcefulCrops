@@ -1,10 +1,9 @@
 package tehnut.resourceful.crops.util;
 
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.registry.GameData;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.oredict.OreDictionary;
-import tehnut.resourceful.crops.ResourcefulCrops;
 import tehnut.resourceful.crops.base.Seed;
 import tehnut.resourceful.crops.registry.SeedRegistry;
 
@@ -44,5 +43,15 @@ public class Utils {
 
     public static boolean isValidSeed(Seed seed) {
         return SeedRegistry.getSeedList().contains(seed);
+    }
+
+    public static void registerCompat(Class clazz, String modid) {
+        if (Loader.isModLoaded(modid)) {
+            try {
+                Class.forName(clazz.getCanonicalName());
+            } catch (ClassNotFoundException e) {
+                LogHelper.error("Could not find compatibility class. Please report this.");
+            }
+        }
     }
 }

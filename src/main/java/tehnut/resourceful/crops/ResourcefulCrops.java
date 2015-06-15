@@ -2,7 +2,6 @@ package tehnut.resourceful.crops;
 
 import com.google.gson.GsonBuilder;
 import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
@@ -92,10 +91,8 @@ public class ResourcefulCrops {
         SeedRegistry.setSeedList(new ArrayList<Seed>(getSeedCache().getEnumeratedObjects().valueCollection()));
         RecipeRegistry.registerItemRecipes();
 
-        if (Loader.isModLoaded("Waila"))
-            CompatWaila.load();
-        if (Loader.isModLoaded("AWWayofTime"))
-            CompatBloodMagic.load();
+        Utils.registerCompat(CompatWaila.class, "Waila");
+        Utils.registerCompat(CompatBloodMagic.class, "AWWayofTime");
     }
 
     @Mod.EventHandler

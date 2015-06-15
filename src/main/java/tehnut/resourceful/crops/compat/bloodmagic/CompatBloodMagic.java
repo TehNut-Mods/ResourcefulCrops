@@ -4,7 +4,7 @@ import WayofTime.alchemicalWizardry.api.harvest.HarvestRegistry;
 
 public class CompatBloodMagic {
 
-    public static void load() {
+    static {
         HarvestRegistry.registerHarvestHandler(new ResourcefulCropsHarvestHandler());
     }
 }
