@@ -25,8 +25,10 @@ public class RenderRCrop implements ISimpleBlockRenderingHandler {
 
     @Override
     public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelId, RenderBlocks renderer) {
-        renderer.setOverrideBlockTexture(block.getIcon(world, x, y, z, 0));
-        renderer.renderCrossedSquares(block, x, y, z);
+        IIcon blockIcon = block.getIcon(world, x, y, z, 0);
+        renderer.setOverrideBlockTexture(blockIcon);
+        float renderY = y - 0.06F;
+        renderer.drawCrossedSquares(blockIcon, x, renderY, z, 1.0F);
         renderer.clearOverrideBlockTexture();
         int meta = world.getBlockMetadata(x, y, z);
         TileEntity cropTile = world.getTileEntity(x, y, z);
@@ -41,21 +43,21 @@ public class RenderRCrop implements ISimpleBlockRenderingHandler {
                 tessellator.setColorRGBA(seed.getColor().getRed(), seed.getColor().getGreen(), seed.getColor().getBlue(), seed.getColor().getAlpha());
 
                 if (meta == 0)
-                    renderer.drawCrossedSquares(icon, x, y, z, 1.0F);
+                    renderer.drawCrossedSquares(icon, x, renderY, z, 1.0F);
                 else if (meta == 1)
-                    renderer.drawCrossedSquares(icon, x, y, z, 1.0F);
+                    renderer.drawCrossedSquares(icon, x, renderY, z, 1.0F);
                 else if (meta == 2)
-                    renderer.drawCrossedSquares(icon, x, y, z, 1.0F);
+                    renderer.drawCrossedSquares(icon, x, renderY, z, 1.0F);
                 else if (meta == 3)
-                    renderer.drawCrossedSquares(icon, x, y, z, 1.0F);
+                    renderer.drawCrossedSquares(icon, x, renderY, z, 1.0F);
                 else if (meta == 4)
-                    renderer.drawCrossedSquares(icon, x, y, z, 1.0F);
+                    renderer.drawCrossedSquares(icon, x, renderY, z, 1.0F);
                 else if (meta == 5)
-                    renderer.drawCrossedSquares(icon, x, y, z, 1.0F);
+                    renderer.drawCrossedSquares(icon, x, renderY, z, 1.0F);
                 else if (meta == 6)
-                    renderer.drawCrossedSquares(icon, x, y + 0.0625F, z, 1.0F);
+                    renderer.drawCrossedSquares(icon, x, renderY + 0.0625F, z, 1.0F);
                 else
-                    renderer.drawCrossedSquares(icon, x, y + 0.125F, z, 1.0F);
+                    renderer.drawCrossedSquares(icon, x, renderY + 0.125F, z, 1.0F);
             }
         }
 
