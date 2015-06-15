@@ -20,6 +20,7 @@ public class ResourcefulCropsHarvestHandler implements IHarvestHandler {
             if (cropTile != null && cropTile instanceof TileRCrop) {
                 if (meta == 7) {
                     world.setBlockMetadataWithNotify(x, y, z, 0, 3);
+                    world.playAuxSFX(2001, x, y, z, Block.getIdFromBlock(block) + (meta << 12));
                     ItemStack seedStack = new ItemStack(ItemRegistry.shard, 1, SeedRegistry.getIndexOf(((TileRCrop) cropTile).getSeedName()));
                     dropItem(world, x, y, z, seedStack);
                     return true;
