@@ -50,7 +50,7 @@ public class Utils {
             try {
                 Class.forName(clazz.getCanonicalName());
             } catch (ClassNotFoundException e) {
-                LogHelper.error("Could not find compatibility class. Please report this.");
+                LogHelper.error("Could not find compatibility class for mod { " + modid + " }. Please report this.");
             }
         }
     }
