@@ -2,8 +2,10 @@ package tehnut.resourceful.crops.registry;
 
 import com.google.gson.GsonBuilder;
 import net.minecraft.item.ItemStack;
+import tehnut.resourceful.crops.ConfigHandler;
 import tehnut.resourceful.crops.ResourcefulCrops;
 import tehnut.resourceful.crops.base.Seed;
+import tehnut.resourceful.crops.util.LogHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,9 +14,20 @@ public class SeedRegistry {
 
     public static GsonBuilder seedBuilder;
     public static ArrayList<Seed> seedList;
+    public static int badSeeds = 0;
 
     public static void registerSeed(Seed seed) {
-        ResourcefulCrops.getSeedCache().addObject(seed, seed.getName());
+        try {
+            ResourcefulCrops.getSeedCache().addObject(seed, seed.getName());
+        } catch (IllegalArgumentException e) {
+            if (ConfigHandler.forceAddDuplicates) {
+                LogHelper.error("Seed { " + seed.getName() + " } has been registered twice. Force adding the copy.");
+                ResourcefulCrops.getSeedCache().addObject(seed, seed.getName() + badSeeds);
+            } else {
+                LogHelper.error("Seed { " + seed.getName() + " } has been registered twice. Skipping the copy and continuing.");
+            }
+            badSeeds++;
+        }
     }
 
     public static Seed getSeed(int index) {

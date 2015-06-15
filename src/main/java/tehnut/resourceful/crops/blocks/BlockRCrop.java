@@ -45,7 +45,7 @@ public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
 
         if (crop != null && crop instanceof TileRCrop) {
             String seedName = ((TileRCrop) crop).getSeedName();
-            seedIndex = SeedRegistry.getIndexOf(SeedRegistry.getSeed(seedName));
+            seedIndex = SeedRegistry.getIndexOf(seedName);
         }
         return seedIndex;
     }
