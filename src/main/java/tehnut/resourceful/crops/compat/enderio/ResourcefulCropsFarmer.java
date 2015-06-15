@@ -34,10 +34,8 @@ public class ResourcefulCropsFarmer extends PlantableFarmer {
             return false;
 
         ItemStack seedStack = farmStation.getSeedTypeInSuppliesFor(coord);
-        if (seedStack == null) {
-            farmStation.setNotification("noSeeds");
+        if (seedStack == null)
             return false;
-        }
 
         if (!canPlant(seedStack))
             return false;
@@ -56,7 +54,9 @@ public class ResourcefulCropsFarmer extends PlantableFarmer {
             return null;
 
         List<ItemStack> dropped = ((BlockRCrop)block).getDrops(farmStation.getWorldObj(), coord.x, coord.y, coord.z, meta);
-        farmStation.getWorldObj().setBlockMetadataWithNotify(coord.x, coord.y, coord.z, 0, 3);
+        BlockRCrop.setShouldDrop(false);
+        farmStation.getWorldObj().setBlockToAir(coord.x, coord.y, coord.z);
+        BlockRCrop.setShouldDrop(true);
         return new HarvestResult(getEntities(farmStation.getWorldObj(), coord, dropped), coord);
     }
 
