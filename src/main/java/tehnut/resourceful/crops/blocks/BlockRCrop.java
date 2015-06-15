@@ -32,6 +32,7 @@ public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
 
     public IIcon[] cropIcons = new IIcon[8];
     public IIcon[] cropOverlay = new IIcon[8];
+    private static boolean shouldDrop = true;
 
     public BlockRCrop() {
         super();
@@ -131,8 +132,9 @@ public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
     }
 
     public void dropItems(World world, int x, int y, int z, int meta) {
-        for (ItemStack stack : getDrops(world, x, y, z, meta))
-            dropBlockAsItem(world, x, y, z, stack);
+        if (shouldDrop)
+            for (ItemStack stack : getDrops(world, x, y, z, meta))
+                dropBlockAsItem(world, x, y, z, stack);
     }
 
     public List<ItemStack> getDrops(World world, int x, int y, int z, int meta) {
@@ -147,6 +149,10 @@ public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
         }
 
         return drops;
+    }
+
+    public static void setShouldDrop(boolean drop) {
+        shouldDrop = drop;
     }
 
     // IGrowable
