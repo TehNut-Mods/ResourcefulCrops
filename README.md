@@ -74,3 +74,13 @@ The only difference is defining the size of the output.
 A cache is kept to ensure that adding/removing crops does not mess with Seed/Shard/Pouch meta's. The cache is global, meaning across all worlds the user creates.
 
 To reset this cache, delete `ResourcefulCropsCache.dat` from `../saves/`.
+
+##Development Setup
+
+This mod requires the following added to the workspace to work without issue:
+
+* EnderIO (1.7.10)
+* BloodMagic (1.7.10)
+* MineFactoryReloaded (1.7.10)
+
+To setup the workspace, simply fork/clone this repository and run `gradlew setupDecompWorkspace idea|eclipse`. 

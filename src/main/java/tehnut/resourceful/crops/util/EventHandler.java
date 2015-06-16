@@ -22,7 +22,6 @@ public class EventHandler {
     public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent eventArgs) {
         if (eventArgs.modID.equals(ModInformation.ID)) {
             ConfigHandler.syncConfig();
-            SeedCreator.registerJsonSeeds(SeedRegistry.seedBuilder);
             LogHelper.info(StatCollector.translateToLocal("config.ResourcefulCrops.console.refresh"));
         }
     }
