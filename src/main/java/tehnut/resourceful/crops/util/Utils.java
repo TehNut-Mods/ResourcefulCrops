@@ -2,6 +2,7 @@ package tehnut.resourceful.crops.util;
 
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.registry.GameData;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 import tehnut.resourceful.crops.base.Seed;
@@ -27,6 +28,10 @@ public class Utils {
         }
 
         return null;
+    }
+
+    public static ItemStack getInvalidSeed(Item item) {
+        return new ItemStack(item, 1, Short.MAX_VALUE);
     }
 
     public static int getItemDamage(ItemStack stack) {

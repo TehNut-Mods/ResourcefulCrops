@@ -42,12 +42,13 @@ public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
 
     public static int getTileSeedIndex(World world, int x, int y, int z) {
         TileEntity crop = world.getTileEntity(x, y, z);
-        int seedIndex = SeedRegistry.getSize() + 1;
+        int seedIndex = Utils.getInvalidSeed(ItemRegistry.seed).getItemDamage();
 
         if (crop != null && crop instanceof TileRCrop) {
             String seedName = ((TileRCrop) crop).getSeedName();
             seedIndex = SeedRegistry.getIndexOf(seedName);
         }
+
         return seedIndex;
     }
 
@@ -91,7 +92,7 @@ public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
         if (crop != null && crop instanceof TileRCrop)
             return new ItemStack(ItemRegistry.seed, 1, getTileSeedIndex(world, x, y, z));
 
-        return new ItemStack(ItemRegistry.seed, 1, 1);
+        return Utils.getInvalidSeed(ItemRegistry.seed);
     }
 
     @Override

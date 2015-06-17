@@ -40,6 +40,9 @@ public class ItemSeed extends Item implements IPlantable {
     public void getSubItems(Item item, CreativeTabs tabs, List list) {
         for (Seed seed : SeedRegistry.getSeedList())
             list.add(new ItemStack(this, 1, SeedRegistry.getIndexOf(seed)));
+
+        if (SeedRegistry.isEmpty())
+            list.add(Utils.getInvalidSeed(this));
     }
 
     public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {

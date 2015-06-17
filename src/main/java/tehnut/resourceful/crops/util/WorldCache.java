@@ -194,7 +194,7 @@ public class WorldCache<I> {
     }
 
     public int getID(I obj) {
-        return getName(obj) != null ? nameToID.get(getName(obj)) : Lists.newArrayList(getObjects()).size() + 1;
+        return getName(obj) != null ? nameToID.get(getName(obj)) : Short.MAX_VALUE;
     }
 
     public String getName(I obj) {

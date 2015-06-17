@@ -32,7 +32,7 @@ public class ResourcefulCropsDataProvider implements IWailaDataProvider {
             }
         }
 
-        return new ItemStack(ItemRegistry.seed, 1, SeedRegistry.getSize() + 1);
+        return Utils.getInvalidSeed(ItemRegistry.seed);
     }
 
     @Override

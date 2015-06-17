@@ -32,6 +32,9 @@ public class ItemShard extends Item {
     public void getSubItems(Item item, CreativeTabs tabs, List list) {
         for (Seed seed : SeedRegistry.getSeedList())
             list.add(new ItemStack(this, 1, SeedRegistry.getIndexOf(seed)));
+
+        if (SeedRegistry.isEmpty())
+            list.add(Utils.getInvalidSeed(this));
     }
 
     @SideOnly(Side.CLIENT)
