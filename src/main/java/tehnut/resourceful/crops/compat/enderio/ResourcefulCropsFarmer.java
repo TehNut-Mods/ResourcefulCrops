@@ -7,11 +7,14 @@ import crazypants.enderio.machine.farm.farmers.PlantableFarmer;
 import crazypants.util.BlockCoord;
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
 import tehnut.resourceful.crops.blocks.BlockRCrop;
 import tehnut.resourceful.crops.items.ItemSeed;
+import tehnut.resourceful.crops.util.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +28,7 @@ public class ResourcefulCropsFarmer extends PlantableFarmer {
 
     @Override
     public boolean canPlant(ItemStack stack) {
-        return stack != null && stack.getItem() instanceof ItemSeed;
+        return stack != null && stack.getItem() instanceof ItemSeed && Utils.getItemDamage(stack) != Short.MAX_VALUE;
     }
 
     @Override
@@ -39,6 +42,14 @@ public class ResourcefulCropsFarmer extends PlantableFarmer {
 
         if (!canPlant(seedStack))
             return false;
+
+        Block plantOn = farmStation.getBlock(coord.getLocation(ForgeDirection.DOWN));
+
+        if (!block.canSustainPlant(farmStation.getWorldObj(), coord.x, coord.y, coord.z, ForgeDirection.UP, new ItemSeed()) && (plantOn == Blocks.dirt || plantOn == Blocks.grass)) {
+            farmStation.getWorldObj().setBlock(coord.x, coord.y + 1, coord.z, Blocks.farmland);
+            farmStation.damageHoe(1, coord);
+        }
+
 
         Item seed = seedStack.getItem();
 
