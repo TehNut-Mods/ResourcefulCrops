@@ -43,10 +43,13 @@ public class ResourcefulCropsFarmer extends PlantableFarmer {
         if (!canPlant(seedStack))
             return false;
 
+        if (!farmStation.hasHoe())
+            return false;
+
         Block plantOn = farmStation.getBlock(coord.getLocation(ForgeDirection.DOWN));
 
         if (!block.canSustainPlant(farmStation.getWorldObj(), coord.x, coord.y, coord.z, ForgeDirection.UP, new ItemSeed()) && (plantOn == Blocks.dirt || plantOn == Blocks.grass)) {
-            farmStation.getWorldObj().setBlock(coord.x, coord.y + 1, coord.z, Blocks.farmland);
+            farmStation.getWorldObj().setBlock(coord.x, coord.y - 1, coord.z, Blocks.farmland);
             farmStation.damageHoe(1, coord);
         }
 
