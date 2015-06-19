@@ -7,7 +7,7 @@ import tehnut.resourceful.crops.items.*;
 
 public class ItemRegistry {
 
-    public static Item seed;
+    public static ItemSeed seed;
     public static Item shard;
     public static Item pouch;
     public static Item stone;

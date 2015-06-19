@@ -14,6 +14,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import tehnut.resourceful.crops.blocks.BlockRCrop;
 import tehnut.resourceful.crops.items.ItemSeed;
+import tehnut.resourceful.crops.registry.ItemRegistry;
 import tehnut.resourceful.crops.util.Utils;
 
 import java.util.ArrayList;
@@ -48,7 +49,7 @@ public class ResourcefulCropsFarmer extends PlantableFarmer {
 
         Block plantOn = farmStation.getBlock(coord.getLocation(ForgeDirection.DOWN));
 
-        if (!block.canSustainPlant(farmStation.getWorldObj(), coord.x, coord.y, coord.z, ForgeDirection.UP, new ItemSeed()) && (plantOn == Blocks.dirt || plantOn == Blocks.grass)) {
+        if (!block.canSustainPlant(farmStation.getWorldObj(), coord.x, coord.y, coord.z, ForgeDirection.UP, ItemRegistry.seed) && (plantOn == Blocks.dirt || plantOn == Blocks.grass)) {
             farmStation.getWorldObj().setBlock(coord.x, coord.y - 1, coord.z, Blocks.farmland);
             farmStation.damageHoe(1, coord);
         }
