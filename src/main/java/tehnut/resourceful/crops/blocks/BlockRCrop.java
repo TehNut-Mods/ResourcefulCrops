@@ -53,6 +53,14 @@ public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
     }
 
     @Override
+    public void updateTick(World world, int x, int y, int z, Random random) {
+        if (getTileSeedIndex(world, x, y, z) == Short.MAX_VALUE)
+            return;
+
+        super.updateTick(world, x, y, z, random);
+    }
+
+    @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
         if (!player.isSneaking() || player.getHeldItem() == null && ConfigHandler.enableRightClickHarvest) {
             if (world.getBlock(x, y, z) == BlockRegistry.crop && world.getBlockMetadata(x, y, z) >= 7) {
