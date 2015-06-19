@@ -5,8 +5,8 @@ import cpw.mods.fml.client.config.IConfigElement;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.common.config.ConfigElement;
-import tehnut.resourceful.crops.ModInformation;
 import tehnut.resourceful.crops.ConfigHandler;
+import tehnut.resourceful.crops.ModInformation;
 
 import java.util.ArrayList;
 import java.util.List;

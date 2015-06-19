@@ -7,8 +7,6 @@ import net.minecraftforge.event.entity.player.BonemealEvent;
 import tehnut.resourceful.crops.ConfigHandler;
 import tehnut.resourceful.crops.ModInformation;
 import tehnut.resourceful.crops.blocks.BlockRCrop;
-import tehnut.resourceful.crops.registry.SeedRegistry;
-import tehnut.resourceful.crops.util.serialization.SeedCreator;
 
 public class EventHandler {
 

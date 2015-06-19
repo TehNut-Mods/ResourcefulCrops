@@ -7,8 +7,6 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import tehnut.resourceful.crops.ResourcefulCrops;
-import tehnut.resourceful.crops.registry.SeedRegistry;
 
 public class TileRCrop extends TileEntity {
 

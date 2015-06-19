@@ -24,7 +24,6 @@ import tehnut.resourceful.crops.registry.SeedRegistry;
 import tehnut.resourceful.crops.tile.TileRCrop;
 import tehnut.resourceful.crops.util.Utils;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 public class ItemPouch extends Item implements IPlantable {

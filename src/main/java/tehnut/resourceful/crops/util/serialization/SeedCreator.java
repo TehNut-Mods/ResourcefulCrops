@@ -10,7 +10,6 @@ import tehnut.resourceful.crops.registry.SeedRegistry;
 import tehnut.resourceful.crops.util.SeedBuilder;
 import tehnut.resourceful.crops.util.Utils;
 
-import javax.annotation.Resource;
 import java.awt.*;
 import java.io.*;
 import java.lang.reflect.Type;

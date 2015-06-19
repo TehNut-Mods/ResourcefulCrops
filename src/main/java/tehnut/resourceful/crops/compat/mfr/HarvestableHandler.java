@@ -1,25 +1,16 @@
 package tehnut.resourceful.crops.compat.mfr;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockCrops;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
 import powercrystals.minefactoryreloaded.api.HarvestType;
 import powercrystals.minefactoryreloaded.api.IFactoryHarvestable;
-import powercrystals.minefactoryreloaded.api.IFactoryPlantable;
-import powercrystals.minefactoryreloaded.api.ReplacementBlock;
 import tehnut.resourceful.crops.blocks.BlockRCrop;
-import tehnut.resourceful.crops.items.ItemSeed;
 import tehnut.resourceful.crops.registry.BlockRegistry;
 import tehnut.resourceful.crops.registry.ItemRegistry;
 import tehnut.resourceful.crops.registry.SeedRegistry;
 import tehnut.resourceful.crops.tile.TileRCrop;
-import tehnut.resourceful.crops.util.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
