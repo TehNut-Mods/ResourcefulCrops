@@ -35,15 +35,15 @@ Each file must start with a `seeds` field which contains a list of seeds. After 
 
 ##Field Explanations
 
-| Field    | Type   | Explanation                                                                                                                   |
-|----------|--------|-------------------------------------------------------------------------------------------------------------------------------|
-| `seeds`  | List   | List of seeds to add to the game                                                                                              |
-| `name`   | String | Name of the seed. Gets run through the localization process, so if you have a resource loader, you can use unlocalized names. |
-| `tier`   | int    | Tier of the seed. Determines how far into the game the user must be to craft that seed.                                       |
-| `amount` | int    | Amount of seeds to return in a craft.                                                                                         |
-| `input`  | String | OreDict entry or ItemStack of the item used to craft the seeds. See below for syntax.                                         |
-| `output` | String | OreDict entry or ItemStack of the item returned from the shard crafting. See below for syntax.                                |
-| `color`  | String | Hex color of the seeds. I suggest [this](http://www.color-hex.com/) page for getting your colors. Does require the "#".       |
+| Field    | Type   | Default      | Explanation                                                                                                                   |
+|----------|--------|--------------|-------------------------------------------------------------------------------------------------------------------------------|
+| `seeds`  | List   | **Required** | List of seeds to add to the game                                                                                              |
+| `name`   | String | **Required** | Name of the seed. Gets run through the localization process, so if you have a resource loader, you can use unlocalized names. |
+| `tier`   | int    | 1            | Tier of the seed. Determines how far into the game the user must be to craft that seed.                                       |
+| `amount` | int    | 1            | Amount of seeds to return in a craft.                                                                                         |
+| `input`  | String | **Required** | OreDict entry or ItemStack of the item used to craft the seeds. See below for syntax.                                         |
+| `output` | String | **Required** | OreDict entry or ItemStack of the item returned from the shard crafting. See below for syntax.                                |
+| `color`  | String | **Required** | Hex color of the seeds. I suggest [this](http://www.color-hex.com/) page for getting your colors. Does require the "#".       |
 
 ###Custom ItemStack
 ItemStacks determine the Amount and Meta of an item. The syntax is:

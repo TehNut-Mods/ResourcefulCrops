@@ -7,6 +7,7 @@ import org.apache.commons.io.filefilter.FileFilterUtils;
 import tehnut.resourceful.crops.ResourcefulCrops;
 import tehnut.resourceful.crops.base.Seed;
 import tehnut.resourceful.crops.registry.SeedRegistry;
+import tehnut.resourceful.crops.util.JsonHelper;
 import tehnut.resourceful.crops.util.SeedBuilder;
 import tehnut.resourceful.crops.util.Utils;
 
@@ -69,12 +70,14 @@ public class SeedCreator {
 
         @Override
         public Seed deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-            String name = json.getAsJsonObject().get("name").getAsString();
-            int tier = json.getAsJsonObject().get("tier").getAsInt();
-            int amount = json.getAsJsonObject().get("amount").getAsInt();
-            String input = json.getAsJsonObject().get("input").getAsString();
-            String output = json.getAsJsonObject().get("output").getAsString();
-            String color = json.getAsJsonObject().get("color").getAsString();
+            JsonHelper helper = new JsonHelper(json);
+
+            String name = helper.getString("name");
+            int tier = helper.getNullableInteger("tier", 1);
+            int amount = helper.getNullableInteger("amount", 1);
+            String input = helper.getString("input");
+            String output = helper.getString("output");
+            String color = helper.getString("color");
 
             SeedBuilder builder = new SeedBuilder();
             builder.setName(name);
