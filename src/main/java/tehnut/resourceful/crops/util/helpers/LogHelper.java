@@ -1,4 +1,4 @@
-package tehnut.resourceful.crops.util;
+package tehnut.resourceful.crops.util.helpers;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

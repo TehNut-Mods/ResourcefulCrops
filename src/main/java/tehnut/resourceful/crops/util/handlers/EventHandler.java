@@ -1,4 +1,4 @@
-package tehnut.resourceful.crops.util;
+package tehnut.resourceful.crops.util.handlers;
 
 import cpw.mods.fml.client.event.ConfigChangedEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -7,6 +7,7 @@ import net.minecraftforge.event.entity.player.BonemealEvent;
 import tehnut.resourceful.crops.ConfigHandler;
 import tehnut.resourceful.crops.ModInformation;
 import tehnut.resourceful.crops.blocks.BlockRCrop;
+import tehnut.resourceful.crops.util.helpers.LogHelper;
 
 public class EventHandler {
 

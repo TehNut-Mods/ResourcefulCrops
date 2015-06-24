@@ -1,7 +1,6 @@
-package tehnut.resourceful.crops.util;
+package tehnut.resourceful.crops.base;
 
 import net.minecraft.item.ItemStack;
-import tehnut.resourceful.crops.base.Seed;
 
 import java.awt.*;
 

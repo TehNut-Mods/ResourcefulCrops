@@ -1,4 +1,4 @@
-package tehnut.resourceful.crops.util;
+package tehnut.resourceful.crops.util.cache;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;

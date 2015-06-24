@@ -1,4 +1,4 @@
-package tehnut.resourceful.crops.util;
+package tehnut.resourceful.crops.util.handlers;
 
 import cpw.mods.fml.common.IWorldGenerator;
 import net.minecraft.init.Blocks;

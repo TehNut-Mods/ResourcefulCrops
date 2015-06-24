@@ -7,8 +7,8 @@ import org.apache.commons.io.filefilter.FileFilterUtils;
 import tehnut.resourceful.crops.ResourcefulCrops;
 import tehnut.resourceful.crops.base.Seed;
 import tehnut.resourceful.crops.registry.SeedRegistry;
-import tehnut.resourceful.crops.util.JsonHelper;
-import tehnut.resourceful.crops.util.SeedBuilder;
+import tehnut.resourceful.crops.util.helpers.JsonHelper;
+import tehnut.resourceful.crops.base.SeedBuilder;
 import tehnut.resourceful.crops.util.Utils;
 
 import java.awt.*;

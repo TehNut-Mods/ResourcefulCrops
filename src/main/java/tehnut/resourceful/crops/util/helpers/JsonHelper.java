@@ -1,4 +1,4 @@
-package tehnut.resourceful.crops.util;
+package tehnut.resourceful.crops.util.helpers;
 
 import com.google.gson.JsonElement;
 
