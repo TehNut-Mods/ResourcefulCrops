@@ -91,7 +91,7 @@ public class ResourcefulCrops {
         File seedsFolder = new File(getConfigDir().getPath() + "/seeds");
         seedsFolder.mkdir();
         File defaultSeedsFile = new File(seedsFolder, "DefaultSeeds.json");
-        if (!defaultSeedsFile.exists())
+        if (!defaultSeedsFile.exists() && ConfigHandler.generateDefaults)
             StartupUtils.initDefaults();
 
         SeedCreator.registerJsonSeeds(SeedRegistry.seedBuilder, seedsFolder);
