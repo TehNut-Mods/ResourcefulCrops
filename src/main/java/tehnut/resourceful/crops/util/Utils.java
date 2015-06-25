@@ -31,6 +31,10 @@ public class Utils {
         return null;
     }
 
+    public static String ItemStackToString(ItemStack stack) {
+        return GameData.getItemRegistry().getNameForObject(stack.getItem()) + ":" + stack.getItemDamage() + "#" + stack.stackSize;
+    }
+
     public static ItemStack getInvalidSeed(Item item) {
         return new ItemStack(item, 1, Short.MAX_VALUE);
     }

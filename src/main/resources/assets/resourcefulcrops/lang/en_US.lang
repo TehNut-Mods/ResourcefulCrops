@@ -27,6 +27,12 @@ info.ResourcefulCrops.torn=Torn
 info.ResourcefulCrops.tier=Tier: %d
 info.ResourcefulCrops.warn=Warning: Invalid entry
 
+# Chat
+chat.ResourcefulCrops.seeds.create=Seed base for ItemStack { %s } created.
+chat.ResourcefulCrops.seeds.create.empty=Your hand is empty.
+chat.ResourcefulCrops.seeds.print=Seed list printed as { %s }.
+chat.ResourcefulCrops.seeds.print.empty=Seed list is currently empty. Add some with /createSeed.
+
 # Waila
 waila.config.render.fancy=Fancy Render
 

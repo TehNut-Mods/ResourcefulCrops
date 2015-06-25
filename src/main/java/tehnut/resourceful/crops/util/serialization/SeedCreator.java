@@ -97,7 +97,7 @@ public class SeedCreator {
             jsonObject.addProperty("tier", src.getTier());
             jsonObject.addProperty("amount", src.getAmount());
             jsonObject.addProperty("input", src.getInput());
-            jsonObject.addProperty("output", GameData.getItemRegistry().getNameForObject(src.getOutput().getItem()) + ":" + src.getOutput().getItemDamage() + "#" + src.getOutput().stackSize);
+            jsonObject.addProperty("output", Utils.ItemStackToString(src.getOutput()));
             jsonObject.addProperty("color", "#" + Integer.toHexString(src.getColor().getRGB()).substring(2).toUpperCase());
 
             return jsonObject;
