@@ -33,20 +33,53 @@ public class CommandCreateSeed extends CommandBase {
         World world = sender.getEntityWorld();
         EntityPlayer player = world.getPlayerEntityByName(sender.getCommandSenderName());
 
+        if (args.length > 0 && args[0].equals("help")) {
+            for (int i = 0; i < 4; i++)
+                sender.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("chat.ResourcefulCrops.seeds.create.help." + i)));
+            return;
+        }
+
         if (player.getHeldItem() != null) {
             ItemStack stack = player.getHeldItem();
             SeedBuilder builder = new SeedBuilder();
 
-            builder.setName(stack.getDisplayName());
-            builder.setTier(1);
-            builder.setAmount(1);
+            String name = stack.getDisplayName();
+            int tier = 1;
+            int amount = 1;
+            Color color = Color.CYAN;
+
+            for (String arg : args) {
+                if (arg.startsWith("name") && arg.contains(":"))
+                    name = arg.split(":")[1].replace("_", " ");
+
+                if (arg.startsWith("tier") && arg.contains(":"))
+                    tier = parseIntBounded(sender, arg.split(":")[1], 1, 4);
+
+                if (arg.startsWith("amount") && arg.contains(":"))
+                    amount = parseIntBounded(sender, arg.split(":")[1], 1, 64);
+
+                if (arg.startsWith("color") && arg.contains(":")) {
+                    try {
+                        String colorString = arg.split(":")[1];
+                        if (!colorString.startsWith("#"))
+                            colorString = "#" + colorString;
+                        color = Color.decode(colorString);
+                    } catch (NumberFormatException e) {
+                        sender.addChatMessage(new ChatComponentText(StatCollector.translateToLocalFormatted("chat.ResourcefulCrops.seeds.create.nfe", "Color")));
+                    }
+                }
+            }
+
+            builder.setName(name);
+            builder.setTier(tier);
+            builder.setAmount(amount);
             builder.setInput(Utils.ItemStackToString(new ItemStack(stack.getItem(), 1, stack.getItemDamage())));
             builder.setOutput(stack);
-            builder.setColor(Color.ORANGE);
+            builder.setColor(color);
 
             commandList.add(builder.build());
 
-            sender.addChatMessage(new ChatComponentText(StatCollector.translateToLocalFormatted("chat.ResourcefulCrops.seeds.create", stack.getDisplayName())));
+            sender.addChatMessage(new ChatComponentText(StatCollector.translateToLocalFormatted("chat.ResourcefulCrops.seeds.create", name)));
         } else {
             sender.addChatMessage(new ChatComponentText(StatCollector.translateToLocal("chat.ResourcefulCrops.seeds.create.empty")));
         }

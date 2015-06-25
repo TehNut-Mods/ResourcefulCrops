@@ -30,6 +30,12 @@ info.ResourcefulCrops.warn=Warning: Invalid entry
 # Chat
 chat.ResourcefulCrops.seeds.create=Seed base for ItemStack { %s } created.
 chat.ResourcefulCrops.seeds.create.empty=Your hand is empty.
+chat.ResourcefulCrops.seeds.create.nfe=%s must be a number.
+chat.ResourcefulCrops.seeds.create.help.0=Each of these are optional. You can use as many or as few as you wish.
+chat.ResourcefulCrops.seeds.create.help.1=To set a custom name for the seed, use "name:NAME"
+chat.ResourcefulCrops.seeds.create.help.2=To set a custom tier for the seed, use "tier:TIER"
+chat.ResourcefulCrops.seeds.create.help.3=To set a custom amount of seeds to return, use "amount:AMOUNT"
+chat.ResourcefulCrops.seeds.create.help.4=To set a custom color for the seed, use "color:#HEX"
 chat.ResourcefulCrops.seeds.print=Seed list printed as { %s }.
 chat.ResourcefulCrops.seeds.print.empty=Seed list is currently empty. Add some with /createSeed.
 
