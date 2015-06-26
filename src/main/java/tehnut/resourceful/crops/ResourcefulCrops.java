@@ -27,6 +27,7 @@ import tehnut.resourceful.crops.util.*;
 import tehnut.resourceful.crops.util.cache.PermanentCache;
 import tehnut.resourceful.crops.util.handlers.EventHandler;
 import tehnut.resourceful.crops.util.handlers.GenerationHandler;
+import tehnut.resourceful.crops.util.handlers.OreDictHandler;
 import tehnut.resourceful.crops.util.helpers.LogHelper;
 import tehnut.resourceful.crops.util.serialization.SeedCreator;
 
@@ -97,6 +98,8 @@ public class ResourcefulCrops {
         SeedCreator.registerJsonSeeds(SeedRegistry.seedBuilder, seedsFolder);
         SeedRegistry.setSeedList(new ArrayList<Seed>(getSeedCache().getEnumeratedObjects().valueCollection()));
         RecipeRegistry.registerItemRecipes();
+
+        OreDictHandler.load();
 
         Utils.registerCompat(CompatWaila.class, "Waila");
         Utils.registerCompat(CompatBloodMagic.class, "AWWayofTime");
