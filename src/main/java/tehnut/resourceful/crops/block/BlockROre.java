@@ -1,4 +1,4 @@
-package tehnut.resourceful.crops.blocks;
+package tehnut.resourceful.crops.block;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;

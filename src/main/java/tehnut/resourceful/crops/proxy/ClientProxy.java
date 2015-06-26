@@ -1,4 +1,4 @@
-package tehnut.resourceful.crops.proxies;
+package tehnut.resourceful.crops.proxy;
 
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import net.minecraft.client.Minecraft;

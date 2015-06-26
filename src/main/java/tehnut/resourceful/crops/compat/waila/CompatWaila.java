@@ -2,7 +2,7 @@ package tehnut.resourceful.crops.compat.waila;
 
 import cpw.mods.fml.common.event.FMLInterModComms;
 import mcp.mobius.waila.api.IWailaRegistrar;
-import tehnut.resourceful.crops.blocks.BlockRCrop;
+import tehnut.resourceful.crops.block.BlockRCrop;
 
 public class CompatWaila {
 

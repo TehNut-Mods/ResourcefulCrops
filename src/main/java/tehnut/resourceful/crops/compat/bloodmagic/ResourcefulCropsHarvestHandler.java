@@ -6,7 +6,7 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import tehnut.resourceful.crops.blocks.BlockRCrop;
+import tehnut.resourceful.crops.block.BlockRCrop;
 import tehnut.resourceful.crops.registry.ItemRegistry;
 import tehnut.resourceful.crops.registry.SeedRegistry;
 import tehnut.resourceful.crops.tile.TileRCrop;

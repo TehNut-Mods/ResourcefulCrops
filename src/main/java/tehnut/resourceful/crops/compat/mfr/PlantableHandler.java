@@ -8,7 +8,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import powercrystals.minefactoryreloaded.api.IFactoryPlantable;
 import powercrystals.minefactoryreloaded.api.ReplacementBlock;
-import tehnut.resourceful.crops.blocks.BlockRCrop;
+import tehnut.resourceful.crops.block.BlockRCrop;
 import tehnut.resourceful.crops.registry.BlockRegistry;
 import tehnut.resourceful.crops.registry.ItemRegistry;
 import tehnut.resourceful.crops.registry.SeedRegistry;

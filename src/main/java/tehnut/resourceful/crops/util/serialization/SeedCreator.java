@@ -2,12 +2,11 @@ package tehnut.resourceful.crops.util.serialization;
 
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
-import cpw.mods.fml.common.registry.GameData;
 import org.apache.commons.io.filefilter.FileFilterUtils;
 import tehnut.resourceful.crops.ResourcefulCrops;
 import tehnut.resourceful.crops.base.Seed;
 import tehnut.resourceful.crops.registry.SeedRegistry;
-import tehnut.resourceful.crops.util.helpers.JsonHelper;
+import tehnut.resourceful.crops.util.helper.JsonHelper;
 import tehnut.resourceful.crops.base.SeedBuilder;
 import tehnut.resourceful.crops.util.Utils;
 

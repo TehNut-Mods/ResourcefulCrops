@@ -1,4 +1,4 @@
-package tehnut.resourceful.crops.util.handlers;
+package tehnut.resourceful.crops.util.handler;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;

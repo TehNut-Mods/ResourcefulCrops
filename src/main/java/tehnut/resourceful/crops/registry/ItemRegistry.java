@@ -3,7 +3,7 @@ package tehnut.resourceful.crops.registry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.item.Item;
 import tehnut.resourceful.crops.ConfigHandler;
-import tehnut.resourceful.crops.items.*;
+import tehnut.resourceful.crops.item.*;
 
 public class ItemRegistry {
 

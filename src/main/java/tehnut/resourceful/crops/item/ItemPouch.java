@@ -1,13 +1,15 @@
-package tehnut.resourceful.crops.items;
+package tehnut.resourceful.crops.item;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -24,15 +26,40 @@ import tehnut.resourceful.crops.util.Utils;
 
 import java.util.List;
 
-public class ItemSeed extends Item implements IPlantable {
+public class ItemPouch extends Item implements IPlantable {
 
-    public ItemSeed() {
+    public IIcon[] icons = new IIcon[2];
+
+    public ItemPouch() {
         super();
 
-        setUnlocalizedName(ModInformation.ID + ".seed");
-        setTextureName(ModInformation.ID + ":seed_base");
+        setUnlocalizedName(ModInformation.ID + ".pouch");
+        setTextureName(ModInformation.ID + ":pouch_base");
         setCreativeTab(ResourcefulCrops.tabResourcefulCrops);
         setHasSubtypes(true);
+    }
+
+    @Override
+    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
+
+        boolean success = false;
+
+        for (int posX = x - 1; posX <= x + 1; posX++) {
+            for (int posZ = z - 1; posZ <= z + 1; posZ++) {
+                Block placed = world.getBlock(posX, y, posZ);
+
+                if (placed.canSustainPlant(world, posX, y, posZ, ForgeDirection.UP, this) && ForgeDirection.getOrientation(side) == ForgeDirection.UP && Utils.isValidSeed(Utils.getItemDamage(stack)) && world.isAirBlock(posX, y + 1, posZ)) {
+                    world.setBlock(posX, y + 1, posZ, BlockRegistry.crop);
+                    ((TileRCrop) world.getTileEntity(posX, y + 1, posZ)).setSeedName(SeedRegistry.getSeed(Utils.getItemDamage(stack)).getName());
+                    if (!player.capabilities.isCreativeMode)
+                        player.inventory.decrStackSize(player.inventory.currentItem, 1);
+
+                    success = true;
+                }
+            }
+        }
+
+        return success;
     }
 
     @SuppressWarnings("unchecked")
@@ -45,29 +72,13 @@ public class ItemSeed extends Item implements IPlantable {
             list.add(Utils.getInvalidSeed(this));
     }
 
-    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
-
-        Block placed = world.getBlock(x, y, z);
-
-        if (placed.canSustainPlant(world, x, y, z, ForgeDirection.UP, this) && ForgeDirection.getOrientation(side) == ForgeDirection.UP && Utils.isValidSeed(Utils.getItemDamage(stack)) && world.isAirBlock(x, y + 1, z)) {
-            world.setBlock(x, y + 1, z, BlockRegistry.crop);
-            ((TileRCrop) world.getTileEntity(x, y + 1, z)).setSeedName(SeedRegistry.getSeed(Utils.getItemDamage(stack)).getName());
-            if (!player.capabilities.isCreativeMode)
-                player.inventory.decrStackSize(player.inventory.currentItem, 1);
-
-            return true;
-        }
-
-        return false;
-    }
-
     @SideOnly(Side.CLIENT)
     @Override
     public String getItemStackDisplayName(ItemStack stack) {
         if (Utils.isValidSeed(Utils.getItemDamage(stack)))
             return String.format(StatCollector.translateToLocal(getUnlocalizedName()), StatCollector.translateToLocal(SeedRegistry.getSeed(Utils.getItemDamage(stack)).getName()));
         else
-            return String.format(StatCollector.translateToLocal(getUnlocalizedName()), StatCollector.translateToLocal("info.ResourcefulCrops.dead"));
+            return String.format(StatCollector.translateToLocal(getUnlocalizedName()), StatCollector.translateToLocal("info.ResourcefulCrops.torn"));
     }
 
     @SuppressWarnings("unchecked")
@@ -76,8 +87,20 @@ public class ItemSeed extends Item implements IPlantable {
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean advanced) {
         if (!Utils.isValidSeed(Utils.getItemDamage(stack)))
             list.add(EnumChatFormatting.RED + StatCollector.translateToLocal("info.ResourcefulCrops.warn"));
-        else
-            list.add(String.format(StatCollector.translateToLocal("info.ResourcefulCrops.tier"), SeedRegistry.getSeed(Utils.getItemDamage(stack)).getTier()));
+    }
+
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void registerIcons(IIconRegister ir) {
+        this.icons[0] = ir.registerIcon(ModInformation.ID + ":pouch_base_color");
+        this.icons[1] = ir.registerIcon(ModInformation.ID + ":pouch_overlay");
+    }
+
+    public IIcon getIcon(ItemStack stack, int pass) {
+        if (pass == 0)
+            return icons[0];
+
+        return icons[1];
     }
 
     @SideOnly(Side.CLIENT)
@@ -113,6 +136,6 @@ public class ItemSeed extends Item implements IPlantable {
 
     @Override
     public int getPlantMetadata(IBlockAccess world, int x, int y, int z) {
-        return 0;
+        return world.getBlockMetadata(x, y, z);
     }
 }

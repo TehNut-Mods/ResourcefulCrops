@@ -5,7 +5,7 @@ import net.minecraft.item.ItemStack;
 import tehnut.resourceful.crops.ConfigHandler;
 import tehnut.resourceful.crops.ResourcefulCrops;
 import tehnut.resourceful.crops.base.Seed;
-import tehnut.resourceful.crops.util.helpers.LogHelper;
+import tehnut.resourceful.crops.util.helper.LogHelper;
 
 import java.util.ArrayList;
 import java.util.List;

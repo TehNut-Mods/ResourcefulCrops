@@ -10,7 +10,7 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import tehnut.resourceful.crops.ResourcefulCrops;
 import tehnut.resourceful.crops.base.Seed;
-import tehnut.resourceful.crops.blocks.BlockRCrop;
+import tehnut.resourceful.crops.block.BlockRCrop;
 import tehnut.resourceful.crops.registry.SeedRegistry;
 import tehnut.resourceful.crops.tile.TileRCrop;
 import tehnut.resourceful.crops.util.Utils;

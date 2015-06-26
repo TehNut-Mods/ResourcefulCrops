@@ -1,4 +1,4 @@
-package tehnut.resourceful.crops.proxies;
+package tehnut.resourceful.crops.proxy;
 
 public class CommonProxy {
 

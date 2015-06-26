@@ -12,8 +12,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
-import tehnut.resourceful.crops.blocks.BlockRCrop;
-import tehnut.resourceful.crops.items.ItemSeed;
+import tehnut.resourceful.crops.block.BlockRCrop;
+import tehnut.resourceful.crops.item.ItemSeed;
 import tehnut.resourceful.crops.registry.ItemRegistry;
 import tehnut.resourceful.crops.util.Utils;
 
