@@ -28,6 +28,20 @@ Each file must start with a `seeds` field which contains a list of seeds. After 
             "input": "minecraft:iron_ingot:0#0", // Input ItemStack. Syntax is: domain:name:meta#amount
             "output": "ingotGold#8", // Output OreDict entry. Syntax is: entry#amount
             "color": "#D0CBC7" // Color of the seed/crop/shard/pouch
+        },
+        {
+            "name": "Example 3", // Sets the name to Example 3
+            "tier": 4, // Sets the tier to 4: Arcane
+            "amount": 6, // Number of seeds to give when crafting them
+            "input": "minecraft:dirt:0#0", // Input ItemStack. Syntax is: domain:name:meta#amount
+            "output": "minecraft:stone:0#8", // Output OreDict entry. Syntax is: entry#amount
+            "color": "#D0CBC7" // Color of the seed/crop/shard/pouch,
+            "seedReq": {
+                "blockStack": {
+                    "name": "minecraft:stone",
+                    "meta": 0
+                }
+            }
         }
     ]
 }
