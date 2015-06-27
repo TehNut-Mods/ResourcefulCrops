@@ -7,6 +7,6 @@ import tehnut.resourceful.crops.block.BlockRCrop;
 public class CompatTorcherino {
 
     static {
-//        FMLInterModComms.sendMessage("Torcherino", "blacklist-block", ModInformation.ID + ":" + BlockRCrop.class.getSimpleName());
+        FMLInterModComms.sendMessage("Torcherino", "blacklist-block", ModInformation.ID + ":" + BlockRCrop.class.getSimpleName());
     }
 }
