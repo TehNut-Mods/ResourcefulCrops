@@ -51,6 +51,10 @@ public class StartupUtils {
         addDefaultSeed(makeSeed("Ender", 3, 4, getItemString(Items.ender_pearl), new ItemStack(Items.ender_pearl, 8), new Color(72, 100, 97)));
         addDefaultSeed(makeSeed("Teary", 3, 4, getItemString(Items.ghast_tear), new ItemStack(Items.ghast_tear, 8), new Color(212, 255, 241)));
         addDefaultSeed(makeSeed("Creepy", 3, 4, getItemString(Items.gunpowder), new ItemStack(Items.gunpowder, 8), new Color(0, 255, 33)));
+        addDefaultSeed(makeSeed("Skelesprout", 3, 2, getItemString(Items.skull), new ItemStack(Items.skull, 1), new Color(159, 164, 155)));
+        addDefaultSeed(makeSeed("Brainy", 3, 2, getItemString(Items.skull, 2), new ItemStack(Items.skull, 1, 2), new Color(49, 105, 50)));
+        addDefaultSeed(makeSeed("Mindful", 3, 2, getItemString(Items.skull, 3), new ItemStack(Items.skull, 1, 3), new Color(232, 186, 131)));
+        addDefaultSeed(makeSeed("Creepots", 3, 2, getItemString(Items.skull, 4), new ItemStack(Items.skull, 1, 4), new Color(71, 178, 74)));
         addDefaultSeedOre(makeSeed("Glowstone", 3, 4, "dustGlowstone", new ItemStack(getOreStack("dustGlowstone").getItem(), 8, getOreStack("dustGlowstone").getItemDamage()), new Color(233, 255, 84)), "dustGlowstone");
         addDefaultSeedOre(makeSeed("Redstone", 3, 4, "dustRedstone", new ItemStack(getOreStack("dustRedstone").getItem(), 8, getOreStack("dustRedstone").getItemDamage()), new Color(159, 13, 0)), "dustRedstone");
         addDefaultSeedOre(makeSeed("Sulfur", 3, 4, "dustSulfur", new ItemStack(getOreStack("dustSulfur").getItem(), 8, getOreStack("dustSulfur").getItemDamage()), new Color(212, 190, 85)), "dustSulfur");
@@ -66,14 +70,15 @@ public class StartupUtils {
         addDefaultSeedOre(makeSeed("Amber", 3, 4, "gemAmber", new ItemStack(getOreStack("gemAmber").getItem(), 8, getOreStack("gemAmber").getItemDamage()), new Color(212, 121, 60)), "gemAmber");
         addDefaultSeedOre(makeSeed("Apatite", 3, 4, "gemApatite", new ItemStack(getOreStack("gemApatite").getItem(), 8, getOreStack("gemApatite").getItemDamage()), new Color(121, 188, 212)), "gemApatite");
         // Tier 4
-        addDefaultSeedOre(makeSeed("Diamond", 4, 4, "gemDiamond", new ItemStack(getOreStack("gemDiamond").getItem(), 8, getOreStack("gemDiamond").getItemDamage()), new Color(58, 242, 239)), "gemDiamond");
-        addDefaultSeedOre(makeSeed("Emerald", 4, 4, "gemEmerald", new ItemStack(getOreStack("gemEmerald").getItem(), 8, getOreStack("gemEmerald").getItemDamage()), new Color(87, 242, 111)), "gemEmerald");
-        addDefaultSeedOre(makeSeed("Platinum", 4, 4, "ingotPlatinum", new ItemStack(getOreStack("ingotPlatinum").getItem(), 8, getOreStack("ingotPlatinum").getItemDamage()), new Color(30, 208, 243)), "ingotPlatinum");
-        addDefaultSeedOre(makeSeed("Yellorium", 4, 4, "ingotYellorium", new ItemStack(getOreStack("ingotYellorium").getItem(), 8, getOreStack("ingotYellorium").getItemDamage()), new Color(142, 160, 19)), "ingotYellorium");
-        addDefaultSeedOre(makeSeed("Titanium", 4, 4, "ingotTitanium", new ItemStack(getOreStack("ingotTitanium").getItem(), 8, getOreStack("ingotTitanium").getItemDamage()), new Color(212, 165, 182)), "ingotTitanium");
-        addDefaultSeedOre(makeSeed("Desh", 4, 4, "ingotDesh", new ItemStack(getOreStack("ingotDesh").getItem(), 8, getOreStack("ingotDesh").getItemDamage()), new Color(39, 39, 40)), "ingotDesh");
-        addDefaultSeedOre(makeSeed("Cobalt", 4, 4, "ingotCobalt", new ItemStack(getOreStack("ingotCobalt").getItem(), 8, getOreStack("ingotCobalt").getItemDamage()), new Color(0, 60, 255)), "ingotCobalt");
-        addDefaultSeedOre(makeSeed("Ardite", 4, 4, "ingotArdite", new ItemStack(getOreStack("ingotArdite").getItem(), 8, getOreStack("ingotArdite").getItemDamage()), new Color(255, 102, 0)), "ingotArdite");
+        addDefaultSeed(makeSeed("Witherwheat", 4, 2, getItemString(Items.skull, 1), new ItemStack(Items.skull, 1, 1), new Color(52, 52, 51)));
+        addDefaultSeedOre(makeSeed("Diamond", 4, 2, "gemDiamond", new ItemStack(getOreStack("gemDiamond").getItem(), 8, getOreStack("gemDiamond").getItemDamage()), new Color(58, 242, 239)), "gemDiamond");
+        addDefaultSeedOre(makeSeed("Emerald", 4, 2, "gemEmerald", new ItemStack(getOreStack("gemEmerald").getItem(), 8, getOreStack("gemEmerald").getItemDamage()), new Color(87, 242, 111)), "gemEmerald");
+        addDefaultSeedOre(makeSeed("Platinum", 4, 2, "ingotPlatinum", new ItemStack(getOreStack("ingotPlatinum").getItem(), 8, getOreStack("ingotPlatinum").getItemDamage()), new Color(30, 208, 243)), "ingotPlatinum");
+        addDefaultSeedOre(makeSeed("Yellorium", 4, 2, "ingotYellorium", new ItemStack(getOreStack("ingotYellorium").getItem(), 8, getOreStack("ingotYellorium").getItemDamage()), new Color(142, 160, 19)), "ingotYellorium");
+        addDefaultSeedOre(makeSeed("Titanium", 4, 2, "ingotTitanium", new ItemStack(getOreStack("ingotTitanium").getItem(), 8, getOreStack("ingotTitanium").getItemDamage()), new Color(212, 165, 182)), "ingotTitanium");
+        addDefaultSeedOre(makeSeed("Desh", 4, 2, "ingotDesh", new ItemStack(getOreStack("ingotDesh").getItem(), 8, getOreStack("ingotDesh").getItemDamage()), new Color(39, 39, 40)), "ingotDesh");
+        addDefaultSeedOre(makeSeed("Cobalt", 4, 2, "ingotCobalt", new ItemStack(getOreStack("ingotCobalt").getItem(), 8, getOreStack("ingotCobalt").getItemDamage()), new Color(0, 60, 255)), "ingotCobalt");
+        addDefaultSeedOre(makeSeed("Ardite", 4, 2, "ingotArdite", new ItemStack(getOreStack("ingotArdite").getItem(), 8, getOreStack("ingotArdite").getItemDamage()), new Color(255, 102, 0)), "ingotArdite");
 
         SeedCreator.createJsonFromSeeds(SeedRegistry.seedBuilder, defaultSeeds, "DefaultSeeds");
     }
