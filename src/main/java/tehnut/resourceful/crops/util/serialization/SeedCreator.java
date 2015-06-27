@@ -2,10 +2,16 @@ package tehnut.resourceful.crops.util.serialization;
 
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
+import cpw.mods.fml.common.registry.GameData;
+import net.minecraft.item.ItemStack;
 import org.apache.commons.io.filefilter.FileFilterUtils;
 import tehnut.resourceful.crops.ResourcefulCrops;
 import tehnut.resourceful.crops.base.Seed;
+import tehnut.resourceful.crops.base.SeedReq;
+import tehnut.resourceful.crops.base.SeedReqBuilder;
+import tehnut.resourceful.crops.registry.ItemRegistry;
 import tehnut.resourceful.crops.registry.SeedRegistry;
+import tehnut.resourceful.crops.util.BlockStack;
 import tehnut.resourceful.crops.util.helper.JsonHelper;
 import tehnut.resourceful.crops.base.SeedBuilder;
 import tehnut.resourceful.crops.util.Utils;
@@ -63,6 +69,8 @@ public class SeedCreator {
     public static void registerCustomSerializers(GsonBuilder gsonBuilder) {
         gsonBuilder.registerTypeAdapter(ArrayList.class, new CustomListJson());
         gsonBuilder.registerTypeAdapter(Seed.class, new CustomSeedJson());
+        gsonBuilder.registerTypeAdapter(BlockStack.class, new CustomBlockStackJson());
+        gsonBuilder.registerTypeAdapter(SeedReq.class, new CustomSeedReqJson());
     }
 
     public static class CustomSeedJson implements JsonDeserializer<Seed>, JsonSerializer<Seed> {
@@ -77,6 +85,10 @@ public class SeedCreator {
             String input = helper.getString("input");
             String output = helper.getString("output");
             String color = helper.getString("color");
+            SeedReq seedReq = new SeedReqBuilder().build();
+            if (json.getAsJsonObject().get("seedReq") != null)
+                seedReq = context.deserialize(json.getAsJsonObject().get("seedReq"), new TypeToken<SeedReq>() {
+                }.getType());
 
             SeedBuilder builder = new SeedBuilder();
             builder.setName(name);
@@ -85,6 +97,7 @@ public class SeedCreator {
             builder.setInput(input);
             builder.setOutput(Utils.parseItemStack(output, false));
             builder.setColor(Color.decode(color));
+            builder.setSeedReq(seedReq);
 
             return builder.build();
         }
@@ -98,6 +111,54 @@ public class SeedCreator {
             jsonObject.addProperty("input", src.getInput());
             jsonObject.addProperty("output", Utils.ItemStackToString(src.getOutput()));
             jsonObject.addProperty("color", "#" + Integer.toHexString(src.getColor().getRGB()).substring(2).toUpperCase());
+            if (src.getSeedReq().getGrowthReq().getBlock() != null)
+                jsonObject.add("seedReq", context.serialize(src.getSeedReq()));
+
+            return jsonObject;
+        }
+    }
+
+    public static class CustomBlockStackJson implements JsonDeserializer<BlockStack>, JsonSerializer<BlockStack> {
+
+        @Override
+        public BlockStack deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+            JsonHelper helper = new JsonHelper(json);
+
+            String name = helper.getString("name");
+            int meta = helper.getNullableInteger("meta", 0);
+
+            return new BlockStack(GameData.getBlockRegistry().containsKey(name) ? GameData.getBlockRegistry().getObject(name) : null, meta);
+        }
+
+        @Override
+        public JsonElement serialize(BlockStack src, Type typeOfSrc, JsonSerializationContext context) {
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("name", GameData.getBlockRegistry().getNameForObject(src.getBlock()));
+            jsonObject.addProperty("meta", src.getMeta());
+
+            return jsonObject;
+        }
+    }
+
+    public static class CustomSeedReqJson implements JsonDeserializer<SeedReq>, JsonSerializer<SeedReq> {
+
+        @Override
+        public SeedReq deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+            JsonHelper helper = new JsonHelper(json);
+
+            BlockStack blockStack = context.deserialize(json.getAsJsonObject().get("blockStack"), new TypeToken<BlockStack>() {
+            }.getType());
+
+            SeedReqBuilder builder = new SeedReqBuilder();
+            builder.setGrowthReq(blockStack);
+
+            return builder.build();
+        }
+
+        @Override
+        public JsonElement serialize(SeedReq src, Type typeOfSrc, JsonSerializationContext context) {
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.add("blockStack", context.serialize(src.getGrowthReq()));
 
             return jsonObject;
         }

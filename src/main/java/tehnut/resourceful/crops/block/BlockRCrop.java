@@ -18,11 +18,14 @@ import net.minecraftforge.common.EnumPlantType;
 import tehnut.resourceful.crops.ConfigHandler;
 import tehnut.resourceful.crops.ModInformation;
 import tehnut.resourceful.crops.ResourcefulCrops;
+import tehnut.resourceful.crops.base.Seed;
 import tehnut.resourceful.crops.registry.BlockRegistry;
 import tehnut.resourceful.crops.registry.ItemRegistry;
 import tehnut.resourceful.crops.registry.SeedRegistry;
 import tehnut.resourceful.crops.tile.TileRCrop;
+import tehnut.resourceful.crops.util.BlockStack;
 import tehnut.resourceful.crops.util.Utils;
+import tehnut.resourceful.crops.util.helper.LogHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,10 +57,17 @@ public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
 
     @Override
     public void updateTick(World world, int x, int y, int z, Random random) {
-        if (getTileSeedIndex(world, x, y, z) == Short.MAX_VALUE)
+
+        int seedIndex = getTileSeedIndex(world, x, y, z);
+        Seed seed = SeedRegistry.getSeed(seedIndex);
+
+        if (seedIndex == Short.MAX_VALUE)
             return;
 
-        super.updateTick(world, x, y, z, random);
+        BlockStack blockReq = new BlockStack(world.getBlock(x, y - 2, z), world.getBlockMetadata(x, y - 2, z));
+
+        if (seed.getSeedReq().getGrowthReq() == null || seed.getSeedReq().getGrowthReq().equals(blockReq))
+            super.updateTick(world, x, y, z, random);
     }
 
     @Override

@@ -25,6 +25,7 @@ info.ResourcefulCrops.dead=Dead
 info.ResourcefulCrops.broken=Broken
 info.ResourcefulCrops.torn=Torn
 info.ResourcefulCrops.tier=Tier: %d
+info.ResourcefulCrops.req.block=Requires %s under the soil to grow.
 info.ResourcefulCrops.warn=Warning: Invalid entry
 
 # Chat

@@ -12,6 +12,7 @@ public class Seed {
     private String input;
     private ItemStack output;
     private Color color;
+    private SeedReq seedReq;
 
     /**
      * To create a seed, use {@link SeedBuilder}
@@ -23,13 +24,14 @@ public class Seed {
      * @param output - Output ItemStack or OreDict entry from crafting the shards.
      * @param color  - Color of the Seed/Shard/Crop
      */
-    protected Seed(String name, int tier, int amount, String input, ItemStack output, Color color) {
+    protected Seed(String name, int tier, int amount, String input, ItemStack output, Color color, SeedReq seedReq) {
         this.name = name;
         this.tier = tier;
         this.amount = amount;
         this.input = input;
         this.output = output;
         this.color = color;
+        this.seedReq = seedReq;
     }
 
     public String getName() {
@@ -56,6 +58,10 @@ public class Seed {
         return color;
     }
 
+    public SeedReq getSeedReq() {
+        return seedReq;
+    }
+
     @Override
     public String toString() {
         return "Seed{" +
@@ -65,6 +71,7 @@ public class Seed {
                 ", input='" + input + '\'' +
                 ", output=" + output +
                 ", color=" + color +
+                ", seedReq=" + seedReq +
                 '}';
     }
 }

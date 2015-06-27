@@ -76,8 +76,14 @@ public class ItemSeed extends Item implements IPlantable {
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean advanced) {
         if (!Utils.isValidSeed(Utils.getItemDamage(stack)))
             list.add(EnumChatFormatting.RED + StatCollector.translateToLocal("info.ResourcefulCrops.warn"));
-        else
+        else {
             list.add(String.format(StatCollector.translateToLocal("info.ResourcefulCrops.tier"), SeedRegistry.getSeed(Utils.getItemDamage(stack)).getTier()));
+
+            Seed seed = SeedRegistry.getSeed(Utils.getItemDamage(stack));
+
+            if (seed.getSeedReq().getGrowthReq() != null)
+                list.add(String.format(StatCollector.translateToLocal("info.ResourcefulCrops.req.block"), seed.getSeedReq().getGrowthReq().toItemStack().getDisplayName()));
+        }
     }
 
     @SideOnly(Side.CLIENT)

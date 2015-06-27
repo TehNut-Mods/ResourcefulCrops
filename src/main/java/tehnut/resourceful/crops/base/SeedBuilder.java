@@ -16,6 +16,7 @@ public class SeedBuilder {
     private String input;
     private ItemStack output;
     private Color color;
+    private SeedReq seedReq = new SeedReqBuilder().build();
 
     public SeedBuilder() {
 
@@ -59,7 +60,12 @@ public class SeedBuilder {
         return this;
     }
 
+    public SeedBuilder setSeedReq(SeedReq seedReq) {
+        this.seedReq = seedReq;
+        return this;
+    }
+
     public Seed build() {
-        return new Seed(name, tier, amount, input, output, color);
+        return new Seed(name, tier, amount, input, output, color, seedReq);
     }
 }
