@@ -14,6 +14,8 @@ public class Seed {
     private Color color;
 
     /**
+     * To create a seed, use {@link SeedBuilder}
+     *
      * @param name   - Name of the seed (Localized or Unlocalized).
      * @param tier   - The tier of the seed. <ul><li>1 - Mundane</li><li>2 - Magical</li><li>3 - Infused</li><li>4 - Arcane</li></ul>
      * @param amount - Amount of seeds to produce per craft.
@@ -21,7 +23,7 @@ public class Seed {
      * @param output - Output ItemStack or OreDict entry from crafting the shards.
      * @param color  - Color of the Seed/Shard/Crop
      */
-    public Seed(String name, int tier, int amount, String input, ItemStack output, Color color) {
+    protected Seed(String name, int tier, int amount, String input, ItemStack output, Color color) {
         this.name = name;
         this.tier = tier;
         this.amount = amount;
