@@ -10,32 +10,32 @@ The current system will find any `.json` file in `../config/ResourcefulCrops/see
 
 Each file must start with a `seeds` field which contains a list of seeds. After that, specify as many seeds as you want in each file.
 
-```
+```json
 {
     "seeds": [
         {
-            "name": "Example", // Sets the name to Example
-            "tier": 2, // Sets the tier to 2: Magical
-            "amount": 4, // Number of seeds to give when crafting them
-            "input": "ingotIron", // Input OreDict entry
-            "output": "minecraft:rotten_flesh:0#8", // Output ItemStack. Syntax is: domain:name:meta#amount
-            "color": "#D0CBC7" // Color of the seed/crop/shard/pouch
+            "name": "Example",
+            "tier": 2,
+            "amount": 4,
+            "input": "ingotIron",
+            "output": "minecraft:rotten_flesh:0#8",
+            "color": "#D0CBC7"
         },
         {
-            "name": "Example 2", // Sets the name to Example 2
-            "tier": 1, // Sets the tier to 1: Mundane
-            "amount": 8, // Number of seeds to give when crafting them
-            "input": "minecraft:iron_ingot:0#0", // Input ItemStack. Syntax is: domain:name:meta#amount
-            "output": "ingotGold#8", // Output OreDict entry. Syntax is: entry#amount
-            "color": "#D0CBC7" // Color of the seed/crop/shard/pouch
+            "name": "Example 2",
+            "tier": 1,
+            "amount": 8,
+            "input": "minecraft:iron_ingot:0#0",
+            "output": "ingotGold#8",
+            "color": "#D0CBC7"
         },
         {
-            "name": "Example 3", // Sets the name to Example 3
-            "tier": 4, // Sets the tier to 4: Arcane
-            "amount": 6, // Number of seeds to give when crafting them
-            "input": "minecraft:dirt:0#0", // Input ItemStack. Syntax is: domain:name:meta#amount
-            "output": "minecraft:stone:0#8", // Output OreDict entry. Syntax is: entry#amount
-            "color": "#D0CBC7" // Color of the seed/crop/shard/pouch,
+            "name": "Example 3",
+            "tier": 4,
+            "amount": 6,
+            "input": "minecraft:dirt:0#0",
+            "output": "minecraft:stone:0#8",
+            "color": "#D0CBC7",
             "seedReq": {
                 "blockStack": {
                     "name": "minecraft:stone",
