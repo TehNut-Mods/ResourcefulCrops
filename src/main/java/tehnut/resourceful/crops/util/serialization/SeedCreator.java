@@ -3,13 +3,11 @@ package tehnut.resourceful.crops.util.serialization;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import cpw.mods.fml.common.registry.GameData;
-import net.minecraft.item.ItemStack;
 import org.apache.commons.io.filefilter.FileFilterUtils;
 import tehnut.resourceful.crops.ResourcefulCrops;
 import tehnut.resourceful.crops.base.Seed;
 import tehnut.resourceful.crops.base.SeedReq;
 import tehnut.resourceful.crops.base.SeedReqBuilder;
-import tehnut.resourceful.crops.registry.ItemRegistry;
 import tehnut.resourceful.crops.registry.SeedRegistry;
 import tehnut.resourceful.crops.util.BlockStack;
 import tehnut.resourceful.crops.util.helper.JsonHelper;
@@ -87,8 +85,7 @@ public class SeedCreator {
             String color = helper.getString("color");
             SeedReq seedReq = new SeedReqBuilder().build();
             if (json.getAsJsonObject().get("seedReq") != null)
-                seedReq = context.deserialize(json.getAsJsonObject().get("seedReq"), new TypeToken<SeedReq>() {
-                }.getType());
+                seedReq = context.deserialize(json.getAsJsonObject().get("seedReq"), new TypeToken<SeedReq>() { }.getType());
 
             SeedBuilder builder = new SeedBuilder();
             builder.setName(name);
@@ -111,8 +108,7 @@ public class SeedCreator {
             jsonObject.addProperty("input", src.getInput());
             jsonObject.addProperty("output", Utils.ItemStackToString(src.getOutput()));
             jsonObject.addProperty("color", "#" + Integer.toHexString(src.getColor().getRGB()).substring(2).toUpperCase());
-            if (src.getSeedReq().getGrowthReq().getBlock() != null)
-                jsonObject.add("seedReq", context.serialize(src.getSeedReq()));
+            jsonObject.add("seedReq", context.serialize(src.getSeedReq()));
 
             return jsonObject;
         }
@@ -146,11 +142,14 @@ public class SeedCreator {
         public SeedReq deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
             JsonHelper helper = new JsonHelper(json);
 
-            BlockStack blockStack = context.deserialize(json.getAsJsonObject().get("blockStack"), new TypeToken<BlockStack>() {
-            }.getType());
+            BlockStack blockStack = context.deserialize(json.getAsJsonObject().get("blockStack"), new TypeToken<BlockStack>() { }.getType());
+            int lightLevelMin = helper.getNullableInteger("lightLevelMin", 9);
+            int lightLevelMax = helper.getNullableInteger("lightLevelMax", Integer.MAX_VALUE);
 
             SeedReqBuilder builder = new SeedReqBuilder();
             builder.setGrowthReq(blockStack);
+            builder.setLightLevelMin(lightLevelMin);
+            builder.setLightLevelMax(lightLevelMax);
 
             return builder.build();
         }
@@ -158,7 +157,12 @@ public class SeedCreator {
         @Override
         public JsonElement serialize(SeedReq src, Type typeOfSrc, JsonSerializationContext context) {
             JsonObject jsonObject = new JsonObject();
-            jsonObject.add("blockStack", context.serialize(src.getGrowthReq()));
+            if (src.getGrowthReq() != null)
+                jsonObject.add("blockStack", context.serialize(src.getGrowthReq()));
+            if (src.getLightLevelMin() != 9)
+                jsonObject.addProperty("lightLevelMin", src.getLightLevelMin());
+            if (src.getLightLevelMax() != Integer.MAX_VALUE)
+                jsonObject.addProperty("lightLevelMax", src.getLightLevelMax());
 
             return jsonObject;
         }

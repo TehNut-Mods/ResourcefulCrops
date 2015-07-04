@@ -9,6 +9,8 @@ import tehnut.resourceful.crops.util.BlockStack;
 public class SeedReqBuilder {
 
     private BlockStack growthReq = null;
+    private int lightLevelMin = 9;
+    private int lightLevelMax = Integer.MAX_VALUE;
 
     public SeedReqBuilder() {
 
@@ -19,7 +21,17 @@ public class SeedReqBuilder {
         return this;
     }
 
+    public SeedReqBuilder setLightLevelMin(int lightLevelMin) {
+        this.lightLevelMin = lightLevelMin;
+        return this;
+    }
+
+    public SeedReqBuilder setLightLevelMax(int lightLevelMax) {
+        this.lightLevelMax = lightLevelMax;
+        return this;
+    }
+
     public SeedReq build() {
-        return new SeedReq(growthReq);
+        return new SeedReq(growthReq, lightLevelMin, lightLevelMax);
     }
 }

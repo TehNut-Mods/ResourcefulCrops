@@ -10,11 +10,13 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.EnumPlantType;
+import net.minecraftforge.common.util.ForgeDirection;
 import tehnut.resourceful.crops.ConfigHandler;
 import tehnut.resourceful.crops.ModInformation;
 import tehnut.resourceful.crops.ResourcefulCrops;
@@ -25,7 +27,6 @@ import tehnut.resourceful.crops.registry.SeedRegistry;
 import tehnut.resourceful.crops.tile.TileRCrop;
 import tehnut.resourceful.crops.util.BlockStack;
 import tehnut.resourceful.crops.util.Utils;
-import tehnut.resourceful.crops.util.helper.LogHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,13 +67,75 @@ public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
 
         BlockStack blockReq = new BlockStack(world.getBlock(x, y - 2, z), world.getBlockMetadata(x, y - 2, z));
 
-        if (seed.getSeedReq().getGrowthReq() == null || seed.getSeedReq().getGrowthReq().equals(blockReq))
-            super.updateTick(world, x, y, z, random);
+        checkAndDropBlock(world, x, y, z);
+
+        if (seed.getSeedReq().getGrowthReq() == null || seed.getSeedReq().getGrowthReq().equals(blockReq)) {
+
+            int lightLevel = world.getBlockLightValue(x, y + 1, z);
+
+            if (lightLevel >= seed.getSeedReq().getLightLevelMin() && lightLevel <= seed.getSeedReq().getLightLevelMax()) {
+                int meta = world.getBlockMetadata(x, y, z);
+
+                if (meta < 7) {
+                    float f = func_149864_n(world, x, y, z);
+
+                    if (random.nextInt((int)(25.0F / f) + 1) == 0) {
+                        ++meta;
+                        world.setBlockMetadataWithNotify(x, y, z, meta, 2);
+                    }
+                }
+            }
+        }
     }
 
+    // Ripped from Minecraft since it's private :(
+    private float func_149864_n(World world, int x, int y, int z) {
+        float f = 1.0F;
+        Block block = world.getBlock(x, y, z - 1);
+        Block block1 = world.getBlock(x, y, z + 1);
+        Block block2 = world.getBlock(x - 1, y, z);
+        Block block3 = world.getBlock(x + 1, y, z);
+        Block block4 = world.getBlock(x - 1, y, z - 1);
+        Block block5 = world.getBlock(x + 1, y, z - 1);
+        Block block6 = world.getBlock(x + 1, y, z + 1);
+        Block block7 = world.getBlock(x - 1, y, z + 1);
+        boolean flag = block2 == this || block3 == this;
+        boolean flag1 = block == this || block1 == this;
+        boolean flag2 = block4 == this || block5 == this || block6 == this || block7 == this;
+
+        for (int l = x - 1; l <= x + 1; ++l) {
+            for (int i1 = z - 1; i1 <= z + 1; ++i1) {
+                float f1 = 0.0F;
+
+                if (world.getBlock(l, y - 1, i1).canSustainPlant(world, l, y - 1, i1, ForgeDirection.UP, this)) {
+                    f1 = 1.0F;
+
+                    if (world.getBlock(l, y - 1, i1).isFertile(world, l, y - 1, i1))
+                        f1 = 3.0F;
+                }
+
+                if (l != x || i1 != z)
+                    f1 /= 4.0F;
+
+                f += f1;
+            }
+        }
+
+        if (flag2 || flag && flag1)
+            f /= 2.0F;
+
+        return f;
+    }
+    
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
-        if (!player.isSneaking() || player.getHeldItem() == null && ConfigHandler.enableRightClickHarvest) {
+
+        if (!world.isRemote)
+            player.addChatComponentMessage(new ChatComponentText(String.valueOf(world.getBlockLightValue(x, y + 1, z))));
+
+        TileEntity cropTile = world.getTileEntity(x, y, z);
+
+        if (!player.isSneaking() || player.getHeldItem() == null && Utils.isValidSeed(((TileRCrop)cropTile).getSeedName()) && ConfigHandler.enableRightClickHarvest) {
             if (world.getBlock(x, y, z) == BlockRegistry.crop && world.getBlockMetadata(x, y, z) >= 7) {
                 if (!world.isRemote) {
                     world.setBlockMetadataWithNotify(x, y, z, 0, 3);
