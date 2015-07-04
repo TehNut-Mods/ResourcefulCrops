@@ -131,7 +131,7 @@ curseforge {
     project {
         id = "${curse_id}"
         changelog = project.hasProperty('changelog') ? project.changelog : ''
-        releaseType = 'release'
+        releaseType = 'alpha'
  
         addArtifact deobfJar
         addArtifact sourceJar
