@@ -1,22 +1,18 @@
 package tehnut.resourceful.crops;
 
 import com.google.gson.GsonBuilder;
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.SidedProxy;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.SidedProxy;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import tehnut.resourceful.crops.base.Seed;
-import tehnut.resourceful.crops.compat.bloodmagic.CompatBloodMagic;
-import tehnut.resourceful.crops.compat.enderio.CompatEnderIO;
-import tehnut.resourceful.crops.compat.mfr.CompatMFR;
-import tehnut.resourceful.crops.compat.torcherino.CompatTorcherino;
 import tehnut.resourceful.crops.compat.waila.CompatWaila;
 import tehnut.resourceful.crops.proxy.CommonProxy;
 import tehnut.resourceful.crops.registry.BlockRegistry;
@@ -102,10 +98,6 @@ public class ResourcefulCrops {
         OreDictHandler.load();
 
         Utils.registerCompat(CompatWaila.class, "Waila");
-        Utils.registerCompat(CompatBloodMagic.class, "AWWayofTime");
-        Utils.registerCompat(CompatEnderIO.class, "EnderIO");
-        Utils.registerCompat(CompatMFR.class, "MineFactoryReloaded");
-        Utils.registerCompat(CompatTorcherino.class, "Torcherino");
     }
 
     @Mod.EventHandler

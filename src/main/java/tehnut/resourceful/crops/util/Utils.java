@@ -1,7 +1,7 @@
 package tehnut.resourceful.crops.util;
 
-import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.registry.GameData;
+import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.registry.GameData;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
@@ -79,7 +79,16 @@ public class Utils {
      * @return      - Metadata of the given ItemStack
      */
     public static int getItemDamage(ItemStack stack) {
-        return stack.getItemDamage();
+
+        int ret = 0;
+
+        try {
+            ret = stack.getItemDamage();
+        } catch (NullPointerException e) {
+
+        }
+
+        return ret;
     }
 
     /**
@@ -128,5 +137,26 @@ public class Utils {
                 LogHelper.error("Could not find compatibility class for mod { " + modid + " }. Please report this.");
             }
         }
+    }
+
+    /**
+     * Since {@code OreDictionary.doesOreNameExist(String)} doesn't exist
+     * in 1.8, I needed to write my own version. Not as good as the 1.7.10
+     * method, but gets the job done.
+     *
+     * @param entry - OreDict entry to check existence of
+     * @return      - If the given entry exists.
+     */
+    public static boolean doesOreNameExist(String entry) {
+        boolean exists = false;
+
+        for (String ore : OreDictionary.getOreNames()) {
+            if (ore.equals(entry)) {
+                exists = true;
+                break;
+            }
+        }
+
+        return exists;
     }
 }

@@ -1,10 +1,12 @@
 package tehnut.resourceful.crops.util.handler;
 
-import cpw.mods.fml.common.IWorldGenerator;
+import net.minecraft.block.state.pattern.BlockHelper;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.feature.WorldGenMinable;
+import net.minecraftforge.fml.common.IWorldGenerator;
 import tehnut.resourceful.crops.ConfigHandler;
 import tehnut.resourceful.crops.registry.BlockRegistry;
 
@@ -26,7 +28,9 @@ public class GenerationHandler implements IWorldGenerator {
             int firstBlockZCoord = chunkZ + random.nextInt(16);
             int gaianiteY = random.nextInt(16);
 
-            new WorldGenMinable(BlockRegistry.ore, 0, 4, Blocks.stone).generate(world, random, firstBlockXCoord, gaianiteY, firstBlockZCoord);
+            BlockPos pos = new BlockPos(firstBlockXCoord, gaianiteY, firstBlockZCoord);
+
+            new WorldGenMinable(BlockRegistry.ore.getStateFromMeta(0), 4, BlockHelper.forBlock(Blocks.stone)).generate(world, random, pos);
         }
     }
 
@@ -36,7 +40,9 @@ public class GenerationHandler implements IWorldGenerator {
             int firstBlockZCoord = chunkZ + random.nextInt(16);
             int gaianiteY = random.nextInt(256);
 
-            new WorldGenMinable(BlockRegistry.ore, 1, 4, Blocks.netherrack).generate(world, random, firstBlockXCoord, gaianiteY, firstBlockZCoord);
+            BlockPos pos = new BlockPos(firstBlockXCoord, gaianiteY, firstBlockZCoord);
+
+            new WorldGenMinable(BlockRegistry.ore.getStateFromMeta(1), 4, BlockHelper.forBlock(Blocks.netherrack)).generate(world, random, pos);
         }
     }
 }

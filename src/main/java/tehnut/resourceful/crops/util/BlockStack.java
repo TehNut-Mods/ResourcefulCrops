@@ -1,6 +1,7 @@
 package tehnut.resourceful.crops.util;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nullable;
@@ -10,24 +11,22 @@ import javax.annotation.Nullable;
  */
 public class BlockStack {
 
-    private Block block;
-    private int meta = 0;
+    private IBlockState state;
 
-    public BlockStack(@Nullable Block block, int meta) {
-        this.block = block;
-        this.meta = meta;
-    }
-
-    public BlockStack(Block block) {
-        this(block, 0);
+    public BlockStack(@Nullable IBlockState state) {
+        this.state = state;
     }
 
     public Block getBlock() {
-        return block;
+        return state.getBlock();
+    }
+
+    public IBlockState getBlockState() {
+        return state;
     }
 
     public int getMeta() {
-        return meta;
+        return getBlock().getMetaFromState(state);
     }
 
     public String getDisplayName() {
@@ -39,31 +38,6 @@ public class BlockStack {
     }
 
     public ItemStack toItemStack(int amount) {
-        return new ItemStack(getBlock(), amount, getMeta());
-    }
-
-    @Override
-    public String toString() {
-        return "BlockStack{" +
-                "block=" + block +
-                ", meta=" + meta +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o)
-            return true;
-
-        if (o == null || getClass() != o.getClass())
-            return false;
-
-        BlockStack that = (BlockStack) o;
-
-        if (meta != that.meta)
-            return false;
-
-        return !(block != null ? !block.equals(that.block) : that.block != null);
-
+        return new ItemStack(getBlock(), amount, getBlock().getMetaFromState(getBlockState()));
     }
 }

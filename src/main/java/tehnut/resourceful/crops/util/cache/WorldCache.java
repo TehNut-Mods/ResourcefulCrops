@@ -3,7 +3,7 @@ package tehnut.resourceful.crops.util.cache;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.google.common.collect.Sets;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import gnu.trove.map.TIntObjectMap;
 import gnu.trove.map.hash.TIntObjectHashMap;
 import lombok.SneakyThrows;
@@ -50,7 +50,7 @@ public class WorldCache<I> {
 
     @SubscribeEvent
     public void onWorldSave(WorldEvent.Save event) {
-        if (!event.world.isRemote && event.world.provider.dimensionId == 0) {
+        if (!event.world.isRemote && event.world.provider.getDimensionId() == 0) {
             saveData(getSaveFile());
         }
     }
@@ -58,7 +58,7 @@ public class WorldCache<I> {
     @SubscribeEvent
     @SneakyThrows
     public void onWorldLoad(WorldEvent.Load event) {
-        if (!event.world.isRemote && event.world.provider.dimensionId == 0) {
+        if (!event.world.isRemote && event.world.provider.getDimensionId() == 0) {
             loadData(getSaveFile());
         }
         locked = true;
@@ -214,11 +214,10 @@ public class WorldCache<I> {
 
     public TIntObjectMap<I> getEnumeratedObjects() {
         TIntObjectMap<I> ret = new TIntObjectHashMap<I>();
-        for (int i = 0; i <= MAX_ID && usedIDs.nextSetBit(i) >= 0; i++) {
-            if (usedIDs.get(i)) {
+        for (int i = 0; i <= MAX_ID && usedIDs.nextSetBit(i) >= 0; i++)
+            if (usedIDs.get(i))
                 ret.put(i, getObject(i));
-            }
-        }
+
         return ret;
     }
 }

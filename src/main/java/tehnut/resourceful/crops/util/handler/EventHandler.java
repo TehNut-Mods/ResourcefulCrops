@@ -1,7 +1,7 @@
 package tehnut.resourceful.crops.util.handler;
 
-import cpw.mods.fml.client.event.ConfigChangedEvent;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.client.event.ConfigChangedEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.event.entity.player.BonemealEvent;
 import tehnut.resourceful.crops.ConfigHandler;

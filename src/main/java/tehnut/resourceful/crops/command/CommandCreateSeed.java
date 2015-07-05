@@ -2,6 +2,7 @@ package tehnut.resourceful.crops.command;
 
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
+import net.minecraft.command.NumberInvalidException;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentText;
@@ -31,7 +32,7 @@ public class CommandCreateSeed extends CommandBase {
     @Override
     public void processCommand(ICommandSender sender, String[] args) {
         World world = sender.getEntityWorld();
-        EntityPlayer player = world.getPlayerEntityByName(sender.getCommandSenderName());
+        EntityPlayer player = world.getPlayerEntityByName(sender.getName());
 
         if (args.length > 0 && args[0].equals("help")) {
             for (int i = 0; i < 4; i++)
@@ -53,10 +54,18 @@ public class CommandCreateSeed extends CommandBase {
                     name = arg.split(":")[1].replace("_", " ");
 
                 if (arg.startsWith("tier") && arg.contains(":"))
-                    tier = parseIntBounded(sender, arg.split(":")[1], 1, 4);
+                    try {
+                        tier = parseInt(arg.split(":")[1], 1, 4);
+                    } catch (NumberInvalidException e) {
+                        sender.addChatMessage(new ChatComponentText(StatCollector.translateToLocalFormatted("chat.ResourcefulCrops.seeds.create.nie", "Tier")));
+                    }
 
                 if (arg.startsWith("amount") && arg.contains(":"))
-                    amount = parseIntBounded(sender, arg.split(":")[1], 1, 64);
+                    try {
+                        amount = parseInt(arg.split(":")[1], 1, 64);
+                    } catch (NumberInvalidException e) {
+                        sender.addChatMessage(new ChatComponentText(StatCollector.translateToLocalFormatted("chat.ResourcefulCrops.seeds.create.nie", "Amount")));
+                    }
 
                 if (arg.startsWith("color") && arg.contains(":")) {
                     try {

@@ -2,7 +2,7 @@ package tehnut.resourceful.crops.util.serialization;
 
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
-import cpw.mods.fml.common.registry.GameData;
+import net.minecraftforge.fml.common.registry.GameData;
 import org.apache.commons.io.filefilter.FileFilterUtils;
 import tehnut.resourceful.crops.ResourcefulCrops;
 import tehnut.resourceful.crops.base.Seed;
@@ -135,13 +135,13 @@ public class SeedCreator {
             String name = helper.getString("name");
             int meta = helper.getNullableInteger("meta", 0);
 
-            return new BlockStack(GameData.getBlockRegistry().containsKey(name) ? GameData.getBlockRegistry().getObject(name) : null, meta);
+            return new BlockStack(GameData.getBlockRegistry().containsKey(name) ? GameData.getBlockRegistry().getObject(name).getStateFromMeta(meta) : null);
         }
 
         @Override
         public JsonElement serialize(BlockStack src, Type typeOfSrc, JsonSerializationContext context) {
             JsonObject jsonObject = new JsonObject();
-            jsonObject.addProperty("name", GameData.getBlockRegistry().getNameForObject(src.getBlock()));
+            jsonObject.addProperty("name", GameData.getBlockRegistry().getNameForObject(src.getBlock()).toString());
             jsonObject.addProperty("meta", src.getMeta());
 
             return jsonObject;

@@ -1,7 +1,7 @@
 package tehnut.resourceful.crops.item;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -22,7 +22,6 @@ public class ItemShard extends Item {
         super();
 
         setUnlocalizedName(ModInformation.ID + ".shard");
-        setTextureName(ModInformation.ID + ":shard_base");
         setCreativeTab(ResourcefulCrops.tabResourcefulCrops);
         setHasSubtypes(true);
     }
@@ -61,15 +60,5 @@ public class ItemShard extends Item {
             return SeedRegistry.getSeed(Utils.getItemDamage(stack)).getColor().getRGB();
         else
             return super.getColorFromItemStack(stack, pass);
-    }
-
-    @Override
-    public int getRenderPasses(int metadata) {
-        return requiresMultipleRenderPasses() ? 2 : 1;
-    }
-
-    @SideOnly(Side.CLIENT)
-    public boolean requiresMultipleRenderPasses() {
-        return true;
     }
 }

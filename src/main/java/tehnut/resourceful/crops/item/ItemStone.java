@@ -1,7 +1,7 @@
 package tehnut.resourceful.crops.item;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
@@ -19,7 +19,6 @@ public class ItemStone extends Item {
         super();
 
         setUnlocalizedName(ModInformation.ID + ".stone");
-        setTextureName(ModInformation.ID + ":stone_base");
         setCreativeTab(ResourcefulCrops.tabResourcefulCrops);
         setMaxStackSize(1);
         setHasSubtypes(true);
@@ -39,7 +38,7 @@ public class ItemStone extends Item {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public boolean hasEffect(ItemStack stack, int pass) {
+    public boolean hasEffect(ItemStack stack) {
         return stack.getItemDamage() == 4;
     }
 
@@ -47,23 +46,18 @@ public class ItemStone extends Item {
     public EnumRarity getRarity(ItemStack stack) {
         switch (stack.getItemDamage()) {
             case 0:
-                return EnumRarity.common;
+                return EnumRarity.COMMON;
             case 1:
-                return EnumRarity.common;
+                return EnumRarity.COMMON;
             case 2:
-                return EnumRarity.uncommon;
+                return EnumRarity.UNCOMMON;
             case 3:
-                return EnumRarity.rare;
+                return EnumRarity.RARE;
             case 4:
-                return EnumRarity.epic;
+                return EnumRarity.EPIC;
             default:
-                return EnumRarity.common;
+                return EnumRarity.COMMON;
         }
-    }
-
-    @Override
-    public boolean doesContainerItemLeaveCraftingGrid(ItemStack stack) {
-        return false;
     }
 
     @Override

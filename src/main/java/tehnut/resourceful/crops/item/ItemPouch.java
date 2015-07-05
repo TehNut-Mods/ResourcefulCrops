@@ -1,21 +1,21 @@
 package tehnut.resourceful.crops.item;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.EnumPlantType;
 import net.minecraftforge.common.IPlantable;
-import net.minecraftforge.common.util.ForgeDirection;
 import tehnut.resourceful.crops.ModInformation;
 import tehnut.resourceful.crops.ResourcefulCrops;
 import tehnut.resourceful.crops.base.Seed;
@@ -28,29 +28,27 @@ import java.util.List;
 
 public class ItemPouch extends Item implements IPlantable {
 
-    public IIcon[] icons = new IIcon[2];
-
     public ItemPouch() {
         super();
 
         setUnlocalizedName(ModInformation.ID + ".pouch");
-        setTextureName(ModInformation.ID + ":pouch_base");
         setCreativeTab(ResourcefulCrops.tabResourcefulCrops);
         setHasSubtypes(true);
     }
 
     @Override
-    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
+    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ) {
 
         boolean success = false;
 
-        for (int posX = x - 1; posX <= x + 1; posX++) {
-            for (int posZ = z - 1; posZ <= z + 1; posZ++) {
-                Block placed = world.getBlock(posX, y, posZ);
+        for (int posX = pos.getX() - 1; posX <= pos.getX() + 1; posX++) {
+            for (int posZ = pos.getZ() - 1; posZ <= pos.getZ() + 1; posZ++) {
 
-                if (placed.canSustainPlant(world, posX, y, posZ, ForgeDirection.UP, this) && ForgeDirection.getOrientation(side) == ForgeDirection.UP && Utils.isValidSeed(Utils.getItemDamage(stack)) && world.isAirBlock(posX, y + 1, posZ)) {
-                    world.setBlock(posX, y + 1, posZ, BlockRegistry.crop);
-                    ((TileRCrop) world.getTileEntity(posX, y + 1, posZ)).setSeedName(SeedRegistry.getSeed(Utils.getItemDamage(stack)).getName());
+                Block placed = world.getBlockState(new BlockPos(posX, pos.getY(), posZ)).getBlock();
+
+                if (placed.canSustainPlant(world, new BlockPos(posX, pos.getY(), posZ), EnumFacing.UP, this) && side == EnumFacing.UP && Utils.isValidSeed(Utils.getItemDamage(stack)) && world.isAirBlock(new BlockPos(posX, pos.getY() + 1, posZ))) {
+                    world.setBlockState(new BlockPos(posX, pos.getY() + 1, posZ), BlockRegistry.crop.getDefaultState());
+                    ((TileRCrop) world.getTileEntity(new BlockPos(posX, pos.getY() + 1, posZ))).setSeedName(SeedRegistry.getSeed(Utils.getItemDamage(stack)).getName());
                     if (!player.capabilities.isCreativeMode)
                         player.inventory.decrStackSize(player.inventory.currentItem, 1);
 
@@ -91,20 +89,6 @@ public class ItemPouch extends Item implements IPlantable {
 
     @SideOnly(Side.CLIENT)
     @Override
-    public void registerIcons(IIconRegister ir) {
-        this.icons[0] = ir.registerIcon(ModInformation.ID + ":pouch_base_color");
-        this.icons[1] = ir.registerIcon(ModInformation.ID + ":pouch_overlay");
-    }
-
-    public IIcon getIcon(ItemStack stack, int pass) {
-        if (pass == 0)
-            return icons[0];
-
-        return icons[1];
-    }
-
-    @SideOnly(Side.CLIENT)
-    @Override
     public int getColorFromItemStack(ItemStack stack, int pass) {
         if (pass == 1 && Utils.isValidSeed(Utils.getItemDamage(stack)))
             return SeedRegistry.getSeed(Utils.getItemDamage(stack)).getColor().getRGB();
@@ -112,30 +96,15 @@ public class ItemPouch extends Item implements IPlantable {
             return super.getColorFromItemStack(stack, pass);
     }
 
-    @Override
-    public int getRenderPasses(int metadata) {
-        return requiresMultipleRenderPasses() ? 2 : 1;
-    }
-
-    @SideOnly(Side.CLIENT)
-    public boolean requiresMultipleRenderPasses() {
-        return true;
-    }
-
     // IPlantable
 
     @Override
-    public EnumPlantType getPlantType(IBlockAccess world, int x, int y, int z) {
+    public EnumPlantType getPlantType(IBlockAccess world, BlockPos pos) {
         return EnumPlantType.Crop;
     }
 
     @Override
-    public Block getPlant(IBlockAccess world, int x, int y, int z) {
-        return BlockRegistry.crop;
-    }
-
-    @Override
-    public int getPlantMetadata(IBlockAccess world, int x, int y, int z) {
-        return world.getBlockMetadata(x, y, z);
+    public IBlockState getPlant(IBlockAccess world, BlockPos pos) {
+        return BlockRegistry.crop.getDefaultState();
     }
 }

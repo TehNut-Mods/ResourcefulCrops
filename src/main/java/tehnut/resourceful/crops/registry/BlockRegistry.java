@@ -1,6 +1,6 @@
 package tehnut.resourceful.crops.registry;
 
-import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
 import tehnut.resourceful.crops.ModInformation;
 import tehnut.resourceful.crops.block.BlockRCrop;

@@ -1,7 +1,10 @@
 package tehnut.resourceful.crops.item;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,7 +16,6 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.EnumPlantType;
 import net.minecraftforge.common.IPlantable;
-import net.minecraftforge.common.util.ForgeDirection;
 import tehnut.resourceful.crops.ModInformation;
 import tehnut.resourceful.crops.ResourcefulCrops;
 import tehnut.resourceful.crops.base.Seed;
@@ -30,7 +32,6 @@ public class ItemSeed extends Item implements IPlantable {
         super();
 
         setUnlocalizedName(ModInformation.ID + ".seed");
-        setTextureName(ModInformation.ID + ":seed_base");
         setCreativeTab(ResourcefulCrops.tabResourcefulCrops);
         setHasSubtypes(true);
     }
@@ -45,13 +46,13 @@ public class ItemSeed extends Item implements IPlantable {
             list.add(Utils.getInvalidSeed(this));
     }
 
-    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
+    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ) {
 
-        Block placed = world.getBlock(x, y, z);
+        Block placed = world.getBlockState(pos).getBlock();
 
-        if (placed.canSustainPlant(world, x, y, z, ForgeDirection.UP, this) && ForgeDirection.getOrientation(side) == ForgeDirection.UP && Utils.isValidSeed(Utils.getItemDamage(stack)) && world.isAirBlock(x, y + 1, z)) {
-            world.setBlock(x, y + 1, z, BlockRegistry.crop);
-            ((TileRCrop) world.getTileEntity(x, y + 1, z)).setSeedName(SeedRegistry.getSeed(Utils.getItemDamage(stack)).getName());
+        if (placed.canSustainPlant(world, pos,  EnumFacing.UP, this) && side == EnumFacing.UP && Utils.isValidSeed(Utils.getItemDamage(stack)) && world.isAirBlock(pos.offset(EnumFacing.UP))) {
+            world.setBlockState(pos.offset(EnumFacing.UP), BlockRegistry.crop.getDefaultState());
+            ((TileRCrop) world.getTileEntity(pos.offset(EnumFacing.UP))).setSeedName(SeedRegistry.getSeed(Utils.getItemDamage(stack)).getName());
             if (!player.capabilities.isCreativeMode)
                 player.inventory.decrStackSize(player.inventory.currentItem, 1);
 
@@ -89,30 +90,15 @@ public class ItemSeed extends Item implements IPlantable {
             return super.getColorFromItemStack(stack, pass);
     }
 
-    @Override
-    public int getRenderPasses(int metadata) {
-        return requiresMultipleRenderPasses() ? 2 : 1;
-    }
-
-    @SideOnly(Side.CLIENT)
-    public boolean requiresMultipleRenderPasses() {
-        return true;
-    }
-
     // IPlantable
 
     @Override
-    public EnumPlantType getPlantType(IBlockAccess world, int x, int y, int z) {
+    public EnumPlantType getPlantType(IBlockAccess world, BlockPos pos) {
         return EnumPlantType.Crop;
     }
 
     @Override
-    public Block getPlant(IBlockAccess world, int x, int y, int z) {
-        return BlockRegistry.crop;
-    }
-
-    @Override
-    public int getPlantMetadata(IBlockAccess world, int x, int y, int z) {
-        return 0;
+    public IBlockState getPlant(IBlockAccess world, BlockPos pos) {
+        return BlockRegistry.crop.getDefaultState();
     }
 }

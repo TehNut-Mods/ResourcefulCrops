@@ -1,14 +1,14 @@
 package tehnut.resourceful.crops.block;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.util.BlockPos;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import tehnut.resourceful.crops.ModInformation;
 import tehnut.resourceful.crops.ResourcefulCrops;
@@ -19,30 +19,16 @@ import java.util.Random;
 
 public class BlockROre extends Block {
 
-    public IIcon[] icons = new IIcon[2];
     Random random = new Random();
 
     public BlockROre() {
         super(Material.rock);
 
-        setBlockName(ModInformation.ID + ".ore");
+        setUnlocalizedName(ModInformation.ID + ".ore");
         setStepSound(soundTypeStone);
         setHardness(4.0F);
         setCreativeTab(ResourcefulCrops.tabResourcefulCrops);
         setHarvestLevel("pickaxe", 3);
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister iconRegister) {
-        this.icons[0] = iconRegister.registerIcon(ModInformation.ID + ":oreGaianite");
-        this.icons[1] = iconRegister.registerIcon(ModInformation.ID + ":oreGaianite_nether");
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public IIcon getIcon(int side, int meta) {
-        return this.icons[meta];
     }
 
     @SuppressWarnings("unchecked")
@@ -54,13 +40,8 @@ public class BlockROre extends Block {
     }
 
     @Override
-    public Item getItemDropped(int int1, Random random, int in2) {
+    public Item getItemDropped(IBlockState state, Random rand, int fortune) {
         return ItemRegistry.material;
-    }
-
-    @Override
-    public int damageDropped(int meta) {
-        return 0;
     }
 
     @Override
@@ -72,7 +53,7 @@ public class BlockROre extends Block {
     }
 
     @Override
-    public int getExpDrop(IBlockAccess world, int meta, int fortune) {
+    public int getExpDrop(IBlockAccess world, BlockPos pos, int fortune) {
         return random.nextInt(4);
     }
 }
