@@ -2,6 +2,9 @@ package tehnut.resourceful.crops.util.helper;
 
 import com.google.gson.JsonElement;
 
+/**
+ * Provides some basic JSON helper utilities.
+ */
 public class JsonHelper {
 
     JsonElement json;

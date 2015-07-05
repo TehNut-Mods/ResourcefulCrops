@@ -35,7 +35,11 @@ public class BlockStack {
     }
 
     public ItemStack toItemStack() {
-        return new ItemStack(getBlock(), 1, getMeta());
+        return toItemStack(1);
+    }
+
+    public ItemStack toItemStack(int amount) {
+        return new ItemStack(getBlock(), amount, getMeta());
     }
 
     @Override

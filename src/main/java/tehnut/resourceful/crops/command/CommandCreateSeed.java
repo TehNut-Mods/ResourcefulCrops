@@ -73,7 +73,7 @@ public class CommandCreateSeed extends CommandBase {
             builder.setName(name);
             builder.setTier(tier);
             builder.setAmount(amount);
-            builder.setInput(Utils.ItemStackToString(new ItemStack(stack.getItem(), 1, stack.getItemDamage())));
+            builder.setInput(Utils.itemStackToString(new ItemStack(stack.getItem(), 1, stack.getItemDamage())));
             builder.setOutput(stack);
             builder.setColor(color);
 

@@ -106,11 +106,23 @@ public class SeedCreator {
             jsonObject.addProperty("tier", src.getTier());
             jsonObject.addProperty("amount", src.getAmount());
             jsonObject.addProperty("input", src.getInput());
-            jsonObject.addProperty("output", Utils.ItemStackToString(src.getOutput()));
+            jsonObject.addProperty("output", Utils.itemStackToString(src.getOutput()));
             jsonObject.addProperty("color", "#" + Integer.toHexString(src.getColor().getRGB()).substring(2).toUpperCase());
-            jsonObject.add("seedReq", context.serialize(src.getSeedReq()));
+            if (!isSeedReqDefault(src.getSeedReq()))
+                jsonObject.add("seedReq", context.serialize(src.getSeedReq()));
 
             return jsonObject;
+        }
+
+        /**
+         * Used to determine whether to add the seedReq
+         * field to the JSON printing.
+         *
+         * @param seedReq - SeedReq to check if default
+         * @return        - Whether the given SeedReq is default
+         */
+        private static boolean isSeedReqDefault(SeedReq seedReq) {
+            return seedReq.getGrowthReq() == null && seedReq.getLightLevelMin() == 9 && seedReq.getLightLevelMax() == Short.MAX_VALUE;
         }
     }
 

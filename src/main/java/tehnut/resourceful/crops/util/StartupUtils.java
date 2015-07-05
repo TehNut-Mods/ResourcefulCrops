@@ -20,6 +20,9 @@ public class StartupUtils {
 
     private static List<Seed> defaultSeeds = new ArrayList<Seed>();
 
+    /**
+     * Creates a list of default seeds to add to the game.
+     */
     public static void initDefaults() {
         
         // Tier 1
@@ -83,6 +86,9 @@ public class StartupUtils {
         SeedCreator.createJsonFromSeeds(SeedRegistry.seedBuilder, defaultSeeds, "DefaultSeeds");
     }
 
+    /**
+     * Builds a seed based on the given parameters
+     */
     private static Seed makeSeed(String name, int tier, int amount, String input, ItemStack output, Color color) {
         SeedBuilder builder = new SeedBuilder();
 
@@ -96,30 +102,70 @@ public class StartupUtils {
         return builder.build();
     }
 
+    /**
+     * Adds a default seed for a given mod
+     *
+     * @param seed  - Seed to add to defaults
+     * @param modid - Modid required to add
+     */
     private static void addDefaultSeedMod(Seed seed, String modid) {
         if (Loader.isModLoaded(modid))
             defaultSeeds.add(seed);
     }
 
+    /**
+     * Adds a default seed for a OreDict entry
+     *
+     * @param seed - Seed to add to defaults
+     * @param ore  - OreDict entry required to add
+     */
     private static void addDefaultSeedOre(Seed seed, String ore) {
         if (OreDictionary.doesOreNameExist(ore))
             defaultSeeds.add(seed);
     }
 
+    /**
+     * Adds a default seed
+     *
+     * @param seed - Seed to add to defaults
+     */
     private static void addDefaultSeed(Seed seed) {
         String[] split = seed.getInput().split(":");
         if (GameData.getItemRegistry().containsKey(split[0] + ":" + split[1]))
             defaultSeeds.add(seed);
     }
 
+    /**
+     * Converts an Item into a string with the formatting of:
+     *
+     * domain:regname:meta#amount
+     *
+     * @param item - Item to create a string of
+     * @return     - A string with the formatting of an ItemStack
+     */
     private static String getItemString(Item item) {
         return GameData.getItemRegistry().getNameForObject(item) + ":0#0";
     }
 
+    /**
+     * Converts an Item into a string with the formatting of:
+     *
+     * domain:regname:meta#amount
+     *
+     * @param item - Item to create a string of
+     * @param meta - The damage value of the item
+     * @return     - A string with the formatting of an ItemStack
+     */
     private static String getItemString(Item item, int meta) {
         return GameData.getItemRegistry().getNameForObject(item) + ":" + meta + "#0";
     }
 
+    /**
+     * Provides an ItemStack obtained from a given OreDict entry
+     *
+     * @param entry - OreDict entry to get the ItemStack of
+     * @return      - An ItemStack retrieved from the entry
+     */
     private static ItemStack getOreStack(String entry) {
         if (OreDictionary.getOreNames().length != 0 && OreDictionary.doesOreNameExist(entry)) {
             if (OreDictionary.getOres(entry).size() != 0)
