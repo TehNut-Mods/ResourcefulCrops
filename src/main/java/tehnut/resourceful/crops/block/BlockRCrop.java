@@ -8,11 +8,13 @@ import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemHoe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.EnumPlantType;
@@ -129,20 +131,33 @@ public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
     
     @Override
     public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
-
-        if (!world.isRemote)
-            player.addChatComponentMessage(new ChatComponentText(String.valueOf(world.getBlockLightValue(x, y + 1, z))));
-
         TileEntity cropTile = world.getTileEntity(x, y, z);
 
-        if (!player.isSneaking() || player.getHeldItem() == null && Utils.isValidSeed(((TileRCrop)cropTile).getSeedName()) && ConfigHandler.enableRightClickHarvest) {
-            if (world.getBlock(x, y, z) == BlockRegistry.crop && world.getBlockMetadata(x, y, z) >= 7) {
-                if (!world.isRemote) {
-                    world.setBlockMetadataWithNotify(x, y, z, 0, 3);
-                    dropBlockAsItem(world, x, y, z, new ItemStack(ItemRegistry.shard, 1, getTileSeedIndex(world, x, y, z)));
-                }
-                player.swingItem();
+        if (Utils.isValidSeed(((TileRCrop)cropTile).getSeedName())) {
+            if (player.getHeldItem() != null && player.getHeldItem().getItem() instanceof ItemHoe) {
+                Seed seed = SeedRegistry.getSeed(((TileRCrop) cropTile).getSeedName());
+
+                ResourcefulCrops.proxy.addChatMessage(String.format(StatCollector.translateToLocal("chat.ResourcefulCrops.req.growth"), seed.getSeedReq().getGrowthReq() != null ? seed.getSeedReq().getGrowthReq().getDisplayName() : StatCollector.translateToLocal("info.ResourcefulCrops.anything")), 1);
+
+                if (seed.getSeedReq().getLightLevelMax() == Integer.MAX_VALUE)
+                    ResourcefulCrops.proxy.addChatMessage(String.format(StatCollector.translateToLocal("chat.ResourcefulCrops.req.light.above"), seed.getSeedReq().getLightLevelMin()), 2);
+                else if (seed.getSeedReq().getLightLevelMin() == 0)
+                    ResourcefulCrops.proxy.addChatMessage(String.format(StatCollector.translateToLocal("chat.ResourcefulCrops.req.light.below"), seed.getSeedReq().getLightLevelMax()), 2);
+                else
+                    ResourcefulCrops.proxy.addChatMessage(String.format(StatCollector.translateToLocal("chat.ResourcefulCrops.req.light.between"), seed.getSeedReq().getLightLevelMin(), seed.getSeedReq().getLightLevelMax()), 2);
+
                 return true;
+            }
+
+            if (!player.isSneaking() || player.getHeldItem() == null && ConfigHandler.enableRightClickHarvest) {
+                if (world.getBlock(x, y, z) == BlockRegistry.crop && world.getBlockMetadata(x, y, z) >= 7) {
+                    if (!world.isRemote) {
+                        world.setBlockMetadataWithNotify(x, y, z, 0, 3);
+                        dropBlockAsItem(world, x, y, z, new ItemStack(ItemRegistry.shard, 1, getTileSeedIndex(world, x, y, z)));
+                    }
+                    player.swingItem();
+                    return true;
+                }
             }
         }
 

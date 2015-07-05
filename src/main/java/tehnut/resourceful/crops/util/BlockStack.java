@@ -30,6 +30,10 @@ public class BlockStack {
         return meta;
     }
 
+    public String getDisplayName() {
+        return toItemStack().getDisplayName();
+    }
+
     public ItemStack toItemStack() {
         return new ItemStack(getBlock(), 1, getMeta());
     }
