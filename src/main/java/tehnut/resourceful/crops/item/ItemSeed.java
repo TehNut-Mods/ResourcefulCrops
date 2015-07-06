@@ -84,7 +84,7 @@ public class ItemSeed extends Item implements IPlantable {
     @SideOnly(Side.CLIENT)
     @Override
     public int getColorFromItemStack(ItemStack stack, int pass) {
-        if (pass == 1 && Utils.isValidSeed(Utils.getItemDamage(stack)))
+        if (pass == 0 && Utils.isValidSeed(Utils.getItemDamage(stack)))
             return SeedRegistry.getSeed(Utils.getItemDamage(stack)).getColor().getRGB();
         else
             return super.getColorFromItemStack(stack, pass);

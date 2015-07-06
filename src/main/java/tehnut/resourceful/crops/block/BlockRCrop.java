@@ -2,8 +2,7 @@ package tehnut.resourceful.crops.block;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.*;
 import net.minecraft.block.BlockCrops;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.entity.player.EntityPlayer;
@@ -11,8 +10,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemHoe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.StatCollector;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.EnumPlantType;
@@ -26,6 +23,7 @@ import tehnut.resourceful.crops.registry.SeedRegistry;
 import tehnut.resourceful.crops.tile.TileRCrop;
 import tehnut.resourceful.crops.util.BlockStack;
 import tehnut.resourceful.crops.util.Utils;
+import tehnut.resourceful.crops.util.helper.LogHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,6 +88,9 @@ public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ) {
         TileEntity cropTile = world.getTileEntity(pos);
 
+        if (!world.isRemote)
+            player.addChatComponentMessage(new ChatComponentText("Meta: " + this.getMetaFromState(world.getBlockState(pos))));
+
         if (Utils.isValidSeed(((TileRCrop)cropTile).getSeedName())) {
             if (player.getHeldItem() != null && player.getHeldItem().getItem() instanceof ItemHoe) {
                 Seed seed = SeedRegistry.getSeed(((TileRCrop) cropTile).getSeedName());
@@ -140,9 +141,11 @@ public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
 
     @Override
     public ItemStack getPickBlock(MovingObjectPosition target, World world, BlockPos pos, EntityPlayer player) {
-        TileEntity crop = world.getTileEntity(pos);
+        TileEntity cropTile = world.getTileEntity(pos);
 
-        if (crop != null && crop instanceof TileRCrop)
+        LogHelper.info(cropTile);
+
+        if (cropTile != null && cropTile instanceof TileRCrop)
             return new ItemStack(ItemRegistry.seed, 1, getTileSeedIndex(world, pos));
 
         return Utils.getInvalidSeed(ItemRegistry.seed);

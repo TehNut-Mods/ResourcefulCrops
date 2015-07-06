@@ -4,6 +4,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraft.item.Item;
 import tehnut.resourceful.crops.ConfigHandler;
 import tehnut.resourceful.crops.item.*;
+import tehnut.resourceful.crops.util.helper.RenderHelper;
 
 public class ItemRegistry {
 
@@ -30,5 +31,17 @@ public class ItemRegistry {
             pouch = new ItemPouch();
             GameRegistry.registerItem(pouch, "ItemPouch");
         }
+    }
+
+    public static void registerRenders() {
+        RenderHelper.inventoryItemRenderAll(stone);
+        RenderHelper.inventoryItemRenderAll(shard);
+        RenderHelper.inventoryItemRenderAll(seed);
+        RenderHelper.inventoryItemRenderAll(pouch);
+        RenderHelper.inventoryItemRender(material);
+        RenderHelper.inventoryItemRender(material, 1);
+        RenderHelper.inventoryItemRender(material, 2);
+        RenderHelper.inventoryItemRender(material, 3);
+        RenderHelper.inventoryItemRender(material, 4);
     }
 }

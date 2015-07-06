@@ -68,8 +68,6 @@ public class ResourcefulCrops {
         configDir.mkdirs();
         ConfigHandler.init(new File(configDir.getPath(), ModInformation.ID + ".cfg"));
 
-        proxy.load();
-
         seedCache = new PermanentCache<Seed>(ModInformation.ID + "Cache");
 
         BlockRegistry.registerBlocks();
@@ -105,5 +103,6 @@ public class ResourcefulCrops {
         LogHelper.info(SeedRegistry.badSeeds + " Seeds failed to register.");
 
         proxy.loadCommands();
+        proxy.loadRenders();
     }
 }

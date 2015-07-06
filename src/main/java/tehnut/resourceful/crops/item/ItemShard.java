@@ -56,7 +56,7 @@ public class ItemShard extends Item {
     @SideOnly(Side.CLIENT)
     @Override
     public int getColorFromItemStack(ItemStack stack, int pass) {
-        if (pass == 1 && Utils.isValidSeed(stack.getItemDamage()))
+        if (pass == 0 && Utils.isValidSeed(stack.getItemDamage()))
             return SeedRegistry.getSeed(Utils.getItemDamage(stack)).getColor().getRGB();
         else
             return super.getColorFromItemStack(stack, pass);

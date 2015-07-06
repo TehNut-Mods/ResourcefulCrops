@@ -18,7 +18,6 @@ public class ConfigHandler {
     public static boolean enableWorldGeneration;
 
     public static boolean enableConsoleLogging;
-    public static boolean enableFancyRender;
     public static boolean enableRightClickHarvest;
     public static boolean forceAddDuplicates;
     public static boolean generateDefaults;
