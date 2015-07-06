@@ -50,7 +50,6 @@ public class ResourcefulCrops {
 
     @Mod.Instance
     public static ResourcefulCrops instance;
-    public static int renderIDCrop;
     private static File configDir;
     private static PermanentCache<Seed> seedCache;
 

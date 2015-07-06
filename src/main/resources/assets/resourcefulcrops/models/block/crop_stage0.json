@@ -1,6 +1,7 @@
 {
     "parent": "resourcefulcrops:block/crossflower",
     "textures": {
-        "cross": "resourcefulcrops:blocks/crop_base_0"
+        "cross": "resourcefulcrops:blocks/crop_base_0",
+        "overlay": "resourcefulcrops:blocks/crop_overlay_0"
     }
 }

@@ -1,7 +1,13 @@
 package tehnut.resourceful.crops.block;
 
+import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyInteger;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
@@ -20,6 +26,7 @@ import java.util.Random;
 public class BlockROre extends Block {
 
     Random random = new Random();
+    public static final PropertyInteger META = PropertyInteger.create("meta", 0, 1);
 
     public BlockROre() {
         super(Material.rock);
@@ -40,6 +47,11 @@ public class BlockROre extends Block {
     }
 
     @Override
+    public ItemStack getPickBlock(MovingObjectPosition target, World world, BlockPos pos, EntityPlayer player) {
+        return new ItemStack(this, 1, this.getMetaFromState(world.getBlockState(pos)));
+    }
+
+    @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune) {
         return ItemRegistry.material;
     }
@@ -50,6 +62,18 @@ public class BlockROre extends Block {
         int drop = random.nextInt(4);
 
         return drop != 0 ? drop : 1;
+    }
+
+    public IBlockState getStateFromMeta(int meta) {
+        return this.getDefaultState().withProperty(META, Integer.valueOf(meta));
+    }
+
+    public int getMetaFromState(IBlockState state) {
+        return ((Integer)state.getValue(META)).intValue();
+    }
+
+    protected BlockState createBlockState() {
+        return new BlockState(this, new IProperty[] {META});
     }
 
     @Override

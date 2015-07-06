@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "meta=0": { "model": "resourcefulcrops:ore_overworld" },
+    "meta=1": { "model": "resourcefulcrops:ore_nether" }
+  }
+}

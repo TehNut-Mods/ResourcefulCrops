@@ -73,9 +73,9 @@ public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
                 int meta = this.getMetaFromState(world.getBlockState(pos));
 
                 if (meta < 7) {
-                    float f = getGrowthChance(this, world, pos);
+                    float growthChance = getGrowthChance(this, world, pos);
 
-                    if (random.nextInt((int)(25.0F / f) + 1) == 0) {
+                    if (random.nextInt((int)(25.0F / growthChance) + 1) == 0) {
                         ++meta;
                         world.setBlockState(pos, this.getStateFromMeta(meta), 2);
                     }
@@ -141,14 +141,7 @@ public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
 
     @Override
     public ItemStack getPickBlock(MovingObjectPosition target, World world, BlockPos pos, EntityPlayer player) {
-        TileEntity cropTile = world.getTileEntity(pos);
-
-        LogHelper.info(cropTile);
-
-        if (cropTile != null && cropTile instanceof TileRCrop)
-            return new ItemStack(ItemRegistry.seed, 1, getTileSeedIndex(world, pos));
-
-        return Utils.getInvalidSeed(ItemRegistry.seed);
+        return new ItemStack(ItemRegistry.seed, 1, getTileSeedIndex(world, pos));
     }
 
     public void dropItems(World world, BlockPos pos, IBlockState state) {

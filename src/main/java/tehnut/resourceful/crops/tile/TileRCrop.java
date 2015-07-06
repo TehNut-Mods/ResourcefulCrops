@@ -8,6 +8,7 @@ import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
+import tehnut.resourceful.crops.util.helper.LogHelper;
 
 public class TileRCrop extends TileEntity {
 
@@ -23,21 +24,21 @@ public class TileRCrop extends TileEntity {
 
     @Override
     public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newState) {
-        return oldState != newState;
+        return oldState.getBlock() != newState.getBlock();
     }
 
     @Override
     public void writeToNBT(NBTTagCompound tag) {
-        super.writeToNBT(tag);
-
         tag.setString("seedName", getSeedName());
+
+        super.writeToNBT(tag);
     }
 
     @Override
     public void readFromNBT(NBTTagCompound tag) {
-        super.readFromNBT(tag);
-
         setSeedName(tag.getString("seedName"));
+
+        super.readFromNBT(tag);
     }
 
     @Override
@@ -45,7 +46,7 @@ public class TileRCrop extends TileEntity {
         NBTTagCompound tagCompound = new NBTTagCompound();
         this.writeToNBT(tagCompound);
 
-        return new S35PacketUpdateTileEntity(getPos(), 1, tagCompound);
+        return new S35PacketUpdateTileEntity(this.getPos(), 1, tagCompound);
     }
 
     @Override
