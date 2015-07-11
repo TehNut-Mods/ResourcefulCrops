@@ -9,6 +9,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import tehnut.resourceful.crops.ModInformation;
 import tehnut.resourceful.crops.ResourcefulCrops;
@@ -54,25 +55,29 @@ public class BlockROre extends Block {
     }
 
     @Override
-    public Item getItemDropped(int int1, Random random, int in2) {
+    protected boolean canSilkHarvest() {
+        return true;
+    }
+
+    public Item getItemDropped(int damage, Random random, int fortune) {
         return ItemRegistry.material;
     }
 
-    @Override
-    public int damageDropped(int meta) {
-        return 0;
-    }
+    public int quantityDroppedWithBonus(int fortune, Random random) {
+        if (fortune > 0) {
+            int bonus = random.nextInt(fortune + 2) - 1;
 
-    @Override
-    public int quantityDropped(Random random) {
+           if (bonus < 0)
+               bonus = 0;
 
-        int drop = random.nextInt(4);
-
-        return drop != 0 ? drop : 1;
+            return quantityDropped(random) * (bonus + 1);
+        } else {
+            return 1;
+        }
     }
 
     @Override
     public int getExpDrop(IBlockAccess world, int meta, int fortune) {
-        return random.nextInt(4);
+        return MathHelper.getRandomIntegerInRange(random, 3, 7);
     }
 }
