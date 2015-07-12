@@ -55,6 +55,7 @@ public class RenderRCrop implements ISimpleBlockRenderingHandler {
                     case 5: renderer.drawCrossedSquares(icon, x, renderY, z, 1.0F); break;
                     case 6: renderer.drawCrossedSquares(icon, x, renderY + 0.0625F, z, 1.0F); break;
                     case 7: renderer.drawCrossedSquares(icon, x, renderY + 0.125F, z, 1.0F); break;
+                    default: renderer.drawCrossedSquares(icon, x, renderY, z, 1.0F); break;
                 }
             }
         }
