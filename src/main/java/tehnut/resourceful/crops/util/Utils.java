@@ -80,7 +80,7 @@ public class Utils {
      * If I ever decide to stop determining things based on
      * damage value, this makes find/replace that much easier.
      * Otherwise it's just a redundant method that's longer than
-     * @{code stack.getItemDamage()}
+     * {@code stack.getItemDamage()}
      *
      * @param stack - ItemStack to get the metadata of.
      * @return      - Metadata of the given ItemStack
