@@ -23,6 +23,8 @@ public class ConfigHandler {
     public static boolean forceAddDuplicates;
     public static boolean generateDefaults;
 
+    public static boolean enableTorcherinoAccelerator;
+
     public static void init(File file) {
         config = new Configuration(file);
         syncConfig();
@@ -52,6 +54,10 @@ public class ConfigHandler {
         forceAddDuplicates = config.getBoolean("forceAddDuplicates", category, false, "Forces duplicate seeds to be registered");
         generateDefaults = config.getBoolean("generateDefaults", category, true, "Generates a list of default seeds.");
 
+        category = "Compat";
+        config.addCustomCategoryComment(category, "Compatibility settings");
+        category = "Compat.Torcherino";
+        enableTorcherinoAccelerator = config.getBoolean("enableTorcherinoAccelerator", category, false, "Allows the Torcherino from Torcherino to accelerate crop growth.");
 
         config.save();
     }
