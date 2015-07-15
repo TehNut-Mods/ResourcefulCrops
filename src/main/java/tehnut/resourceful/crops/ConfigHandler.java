@@ -19,6 +19,7 @@ public class ConfigHandler {
 
     public static boolean enableConsoleLogging;
     public static boolean enableFancyRender;
+    public static boolean forceFancyRender;
     public static boolean enableRightClickHarvest;
     public static boolean forceAddDuplicates;
     public static boolean generateDefaults;
@@ -53,6 +54,7 @@ public class ConfigHandler {
         enableRightClickHarvest = config.getBoolean("enableRightClickHarvest", category, true, "Allows crops to be right clicked to automatically harvest and replant if the crop is mature.");
         forceAddDuplicates = config.getBoolean("forceAddDuplicates", category, false, "Forces duplicate seeds to be registered");
         generateDefaults = config.getBoolean("generateDefaults", category, true, "Generates a list of default seeds.");
+        forceFancyRender = config.getBoolean("forceFancyRender", category, false, "Forces the fancy render for crops if you have fast graphics enabled.");
 
         category = "Compat";
         config.addCustomCategoryComment(category, "Compatibility settings");

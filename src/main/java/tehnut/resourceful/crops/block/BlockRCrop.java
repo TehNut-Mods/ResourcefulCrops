@@ -214,7 +214,7 @@ public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
 
     @Override
     public int getRenderType() {
-        return ConfigHandler.enableFancyRender ? ResourcefulCrops.renderIDCrop : 1;
+        return ConfigHandler.enableFancyRender || ConfigHandler.forceFancyRender ? ResourcefulCrops.renderIDCrop : 1;
     }
 
     @Override
