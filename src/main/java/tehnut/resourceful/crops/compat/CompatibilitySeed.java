@@ -35,6 +35,10 @@ public enum CompatibilitySeed {
         return null;
     }
 
+    String getCompatSuffix() {
+        return "-Compat";
+    }
+
     Seed getSeed(ItemStack stack) {
         return SeedRegistry.getSeed(Utils.getItemDamage(stack));
     }

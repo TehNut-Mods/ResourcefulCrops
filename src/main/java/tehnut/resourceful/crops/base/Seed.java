@@ -13,18 +13,21 @@ public class Seed {
     private ItemStack output;
     private Color color;
     private SeedReq seedReq;
+    private boolean compat;
 
     /**
      * To create a seed, use {@link SeedBuilder}
      *
-     * @param name   - Name of the seed (Localized or Unlocalized).
-     * @param tier   - The tier of the seed. <ul><li>1 - Mundane</li><li>2 - Magical</li><li>3 - Infused</li><li>4 - Arcane</li></ul>
-     * @param amount - Amount of seeds to produce per craft.
-     * @param input  - Input ItemStack or OreDict entry for creating the seeds.
-     * @param output - Output ItemStack or OreDict entry from crafting the shards.
-     * @param color  - Color of the Seed/Shard/Crop
+     * @param name    - Name of the seed (Localized or Unlocalized).
+     * @param tier    - The tier of the seed. <ul><li>1 - Mundane</li><li>2 - Magical</li><li>3 - Infused</li><li>4 - Arcane</li></ul>
+     * @param amount  - Amount of seeds to produce per craft.
+     * @param input   - Input ItemStack or OreDict entry for creating the seeds.
+     * @param output  - Output ItemStack or OreDict entry from crafting the shards.
+     * @param color   - Color of the Seed/Shard/Crop
+     * @param seedReq - Special conditions for Seeds
+     * @param compat  - Whether or not this seed is for a {@link tehnut.resourceful.crops.compat.CompatibilitySeed}
      */
-    protected Seed(String name, int tier, int amount, String input, ItemStack output, Color color, SeedReq seedReq) {
+    protected Seed(String name, int tier, int amount, String input, ItemStack output, Color color, SeedReq seedReq, boolean compat) {
         this.name = name;
         this.tier = tier;
         this.amount = amount;
@@ -32,6 +35,7 @@ public class Seed {
         this.output = output;
         this.color = color;
         this.seedReq = seedReq;
+        this.compat = compat;
     }
 
     public String getName() {
@@ -62,6 +66,10 @@ public class Seed {
         return seedReq;
     }
 
+    public boolean getCompat() {
+        return compat;
+    }
+
     @Override
     public String toString() {
         return "Seed{" +
@@ -72,6 +80,7 @@ public class Seed {
                 ", output=" + output +
                 ", color=" + color +
                 ", seedReq=" + seedReq +
+                ", compat=" + compat+
                 '}';
     }
 }
