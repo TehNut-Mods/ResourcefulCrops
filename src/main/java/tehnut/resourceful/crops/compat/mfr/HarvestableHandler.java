@@ -11,6 +11,8 @@ import tehnut.resourceful.crops.registry.BlockRegistry;
 import tehnut.resourceful.crops.registry.ItemRegistry;
 import tehnut.resourceful.crops.registry.SeedRegistry;
 import tehnut.resourceful.crops.tile.TileRCrop;
+import tehnut.resourceful.crops.util.BlockStack;
+import tehnut.resourceful.crops.util.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,7 +69,7 @@ public class HarvestableHandler implements IFactoryHarvestable {
 
     @Override
     public void preHarvest(World world, int x, int y, int z) {
-        world.playAuxSFX(2001, x, y, z, Block.getIdFromBlock(getPlant()) + (world.getBlockMetadata(x, y, z) << 12));
+        Utils.playBlockBreakAnim(world, x, y, z, new BlockStack(getPlant(), world.getBlockMetadata(x, y, z)));
         world.setBlockMetadataWithNotify(x, y, z, 0, 3);
         BlockRCrop.setShouldDrop(false);
         world.setBlockToAir(x, y, z);

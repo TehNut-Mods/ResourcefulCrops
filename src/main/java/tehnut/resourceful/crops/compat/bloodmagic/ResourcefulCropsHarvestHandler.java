@@ -10,6 +10,8 @@ import tehnut.resourceful.crops.block.BlockRCrop;
 import tehnut.resourceful.crops.registry.ItemRegistry;
 import tehnut.resourceful.crops.registry.SeedRegistry;
 import tehnut.resourceful.crops.tile.TileRCrop;
+import tehnut.resourceful.crops.util.BlockStack;
+import tehnut.resourceful.crops.util.Utils;
 
 public class ResourcefulCropsHarvestHandler implements IHarvestHandler {
 
@@ -20,7 +22,7 @@ public class ResourcefulCropsHarvestHandler implements IHarvestHandler {
             if (cropTile != null && cropTile instanceof TileRCrop) {
                 if (meta == 7) {
                     world.setBlockMetadataWithNotify(x, y, z, 0, 3);
-                    world.playAuxSFX(2001, x, y, z, Block.getIdFromBlock(block) + (meta << 12));
+                    Utils.playBlockBreakAnim(world, x, y, z, new BlockStack(block, world.getBlockMetadata(x, y, z)));
                     ItemStack seedStack = new ItemStack(ItemRegistry.shard, 1, SeedRegistry.getIndexOf(((TileRCrop) cropTile).getSeedName()));
                     dropItem(world, x, y, z, seedStack);
                     return true;

@@ -2,8 +2,10 @@ package tehnut.resourceful.crops.util;
 
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.registry.GameData;
+import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 import tehnut.resourceful.crops.base.Seed;
 import tehnut.resourceful.crops.registry.SeedRegistry;
@@ -112,6 +114,20 @@ public class Utils {
      */
     public static boolean isValidSeed(Seed seed) {
         return SeedRegistry.getSeedList().contains(seed);
+    }
+
+    /**
+     * Causes a break animation at the given coordinates.
+     * No reason to use this except for possible future proofing.
+     *
+     * @param world      - The world object
+     * @param x          - X coordinate to play at
+     * @param y          - Y coordinate to play at
+     * @param z          - Z coordinate to play at
+     * @param blockStack - {@link BlockStack} to get the particle texture from
+     */
+    public static void playBlockBreakAnim(World world, int x, int y, int z, BlockStack blockStack) {
+        world.playAuxSFX(2001, x, y, z, Block.getIdFromBlock(blockStack.getBlock()) + (blockStack.getMeta() << 12));
     }
 
     /**
