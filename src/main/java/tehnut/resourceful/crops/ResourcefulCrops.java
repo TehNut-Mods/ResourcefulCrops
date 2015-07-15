@@ -110,7 +110,8 @@ public class ResourcefulCrops {
 
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event) {
-        LogHelper.info(SeedRegistry.badSeeds + " Seeds failed to register.");
+        if (SeedRegistry.badSeeds > 0)
+            LogHelper.error(SeedRegistry.badSeeds + " Seeds failed to register.");
 
         proxy.loadCommands();
     }
