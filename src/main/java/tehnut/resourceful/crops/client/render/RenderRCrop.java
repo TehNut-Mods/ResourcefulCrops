@@ -47,12 +47,6 @@ public class RenderRCrop implements ISimpleBlockRenderingHandler {
                 tessellator.setColorRGBA(seed.getColor().getRed(), seed.getColor().getGreen(), seed.getColor().getBlue(), seed.getColor().getAlpha());
 
                 switch (meta) {
-                    case 0:
-                    case 1:
-                    case 2:
-                    case 3:
-                    case 4:
-                    case 5: renderer.drawCrossedSquares(icon, x, renderY, z, 1.0F); break;
                     case 6: renderer.drawCrossedSquares(icon, x, renderY + 0.0625F, z, 1.0F); break;
                     case 7: renderer.drawCrossedSquares(icon, x, renderY + 0.125F, z, 1.0F); break;
                     default: renderer.drawCrossedSquares(icon, x, renderY, z, 1.0F); break;
