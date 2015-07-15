@@ -79,9 +79,9 @@ public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
                 int meta = world.getBlockMetadata(x, y, z);
 
                 if (meta < 7) {
-                    float f = func_149864_n(world, x, y, z);
+                    float growthChance = getGrowthChance(world, x, y, z);
 
-                    if (random.nextInt((int)(25.0F / f) + 1) == 0) {
+                    if (random.nextInt((int)(25.0F / growthChance) + 1) == 0) {
                         ++meta;
                         world.setBlockMetadataWithNotify(x, y, z, meta, 2);
                     }
@@ -90,9 +90,9 @@ public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
         }
     }
 
-    // Ripped from Minecraft since it's private :(
-    private float func_149864_n(World world, int x, int y, int z) {
-        float f = 1.0F;
+    // Ripped from Minecraft since it's private until 1.8 :(
+    private float getGrowthChance(World world, int x, int y, int z) {
+        float growthChance = 1.0F;
         Block block = world.getBlock(x, y, z - 1);
         Block block1 = world.getBlock(x, y, z + 1);
         Block block2 = world.getBlock(x - 1, y, z);
@@ -119,14 +119,14 @@ public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
                 if (l != x || i1 != z)
                     f1 /= 4.0F;
 
-                f += f1;
+                growthChance += f1;
             }
         }
 
         if (flag2 || flag && flag1)
-            f /= 2.0F;
+            growthChance /= 2.0F;
 
-        return f;
+        return growthChance;
     }
     
     @Override
