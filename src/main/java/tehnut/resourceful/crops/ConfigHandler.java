@@ -58,6 +58,11 @@ public class ConfigHandler {
         config.addCustomCategoryComment(category, "Compatibility settings");
         category = "Compat.Torcherino";
         enableTorcherinoAccelerator = config.getBoolean("enableTorcherinoAccelerator", category, false, "Allows the Torcherino from Torcherino to accelerate crop growth.");
+        category = "Compat.Seeds";
+        config.addCustomCategoryComment(category, "Custom compatibility seeds. For seeds that do unique things.\n" +
+                "This is based on the seed name. If you want to use the name for something else, you must disable it in the config here.\n" +
+                "Reserved names include:\n" +
+                "-");
 
         config.save();
     }

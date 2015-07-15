@@ -9,7 +9,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 import tehnut.resourceful.crops.base.Seed;
 import tehnut.resourceful.crops.base.SeedBuilder;
+import tehnut.resourceful.crops.compat.CompatibilitySeed;
 import tehnut.resourceful.crops.registry.SeedRegistry;
+import tehnut.resourceful.crops.util.helper.LogHelper;
 import tehnut.resourceful.crops.util.serialization.SeedCreator;
 
 import java.awt.*;
@@ -83,6 +85,10 @@ public class StartupUtils {
         addDefaultSeedOre(makeSeed("Cobalt", 4, 2, "ingotCobalt", new ItemStack(getOreStack("ingotCobalt").getItem(), 1, getOreStack("ingotCobalt").getItemDamage()), new Color(0, 60, 255)), "ingotCobalt");
         addDefaultSeedOre(makeSeed("Ardite", 4, 2, "ingotArdite", new ItemStack(getOreStack("ingotArdite").getItem(), 1, getOreStack("ingotArdite").getItemDamage()), new Color(255, 102, 0)), "ingotArdite");
 
+        // Compatibility
+        for (CompatibilitySeed compatSeed : CompatibilitySeed.values())
+            addDefaultSeedMod(compatSeed);
+
         SeedCreator.createJsonFromSeeds(SeedRegistry.seedBuilder, defaultSeeds, "DefaultSeeds");
     }
 
@@ -105,12 +111,14 @@ public class StartupUtils {
     /**
      * Adds a default seed for a given mod
      *
-     * @param seed  - Seed to add to defaults
-     * @param modid - Modid required to add
+     * @param compatibilitySeed - {@link CompatibilitySeed} to check and register
      */
-    private static void addDefaultSeedMod(Seed seed, String modid) {
-        if (Loader.isModLoaded(modid))
-            defaultSeeds.add(seed);
+    private static void addDefaultSeedMod(CompatibilitySeed compatibilitySeed) {
+
+        LogHelper.info("Adding compatibility Seed for { " + compatibilitySeed.getModid() + " }");
+
+        if (Loader.isModLoaded(compatibilitySeed.getModid()) && compatibilitySeed.getConfig())
+            defaultSeeds.add(compatibilitySeed.getCompatSeed());
     }
 
     /**

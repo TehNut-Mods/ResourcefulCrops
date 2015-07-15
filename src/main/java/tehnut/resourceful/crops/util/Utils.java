@@ -33,6 +33,8 @@ public class Utils {
             int amount = Integer.parseInt(stackInfo[1]);
 
             return new ItemStack(GameData.getItemRegistry().getObject(name), amount, meta);
+        } else if(stackString.equals("null")) {
+            return null;
         } else if (!input) {
             String[] stackInfo = stackString.split("#");
             ItemStack oreStack = OreDictionary.getOres(stackInfo[0]).get(0);
@@ -55,7 +57,10 @@ public class Utils {
      * @return      - A string with the formatting of an ItemStack
      */
     public static String itemStackToString(ItemStack stack) {
-        return GameData.getItemRegistry().getNameForObject(stack.getItem()) + ":" + stack.getItemDamage() + "#" + stack.stackSize;
+        if (stack != null)
+            return GameData.getItemRegistry().getNameForObject(stack.getItem()) + ":" + stack.getItemDamage() + "#" + stack.stackSize;
+        else
+            return "null";
     }
 
     /**

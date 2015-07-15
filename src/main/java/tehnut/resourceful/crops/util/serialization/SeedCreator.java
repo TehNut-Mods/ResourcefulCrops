@@ -81,7 +81,7 @@ public class SeedCreator {
             int tier = helper.getNullableInteger("tier", 1);
             int amount = helper.getNullableInteger("amount", 1);
             String input = helper.getString("input");
-            String output = helper.getString("output");
+            String output = helper.getNullableString("output", null);
             String color = helper.getString("color");
             SeedReq seedReq = new SeedReqBuilder().build();
             if (json.getAsJsonObject().get("seedReq") != null)

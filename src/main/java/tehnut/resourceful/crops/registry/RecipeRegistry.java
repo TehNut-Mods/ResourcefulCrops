@@ -26,11 +26,13 @@ public class RecipeRegistry {
             }
 
             if (ConfigHandler.enableShardCrafting) {
-                GameRegistry.addRecipe(new ShapedOreRecipe(
-                        seed.getOutput(),
-                        "SSS", "S S", "SSS",
-                        'S', new ItemStack(ItemRegistry.shard, 1, SeedRegistry.getIndexOf(seed)))
-                );
+                if (seed.getOutput() != null) {
+                    GameRegistry.addRecipe(new ShapedOreRecipe(
+                                    seed.getOutput(),
+                                    "SSS", "S S", "SSS",
+                                    'S', new ItemStack(ItemRegistry.shard, 1, SeedRegistry.getIndexOf(seed)))
+                    );
+                }
             }
 
             if (ConfigHandler.enableSeedPouches && ConfigHandler.enableSeedCrafting) {

@@ -1,5 +1,6 @@
 package tehnut.resourceful.crops.item;
 
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.creativetab.CreativeTabs;
@@ -8,9 +9,11 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
+import net.minecraft.world.World;
 import tehnut.resourceful.crops.ModInformation;
 import tehnut.resourceful.crops.ResourcefulCrops;
 import tehnut.resourceful.crops.base.Seed;
+import tehnut.resourceful.crops.compat.CompatibilitySeed;
 import tehnut.resourceful.crops.registry.SeedRegistry;
 import tehnut.resourceful.crops.util.Utils;
 
@@ -35,6 +38,16 @@ public class ItemShard extends Item {
 
         if (SeedRegistry.isEmpty())
             list.add(Utils.getInvalidSeed(this));
+    }
+
+    @Override
+    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
+
+        for (CompatibilitySeed compatSeed : CompatibilitySeed.values())
+            if (Loader.isModLoaded(compatSeed.getModid()) && compatSeed.getConfig())
+                stack = compatSeed.onRightClick(stack, world, player);
+
+        return stack;
     }
 
     @SideOnly(Side.CLIENT)
