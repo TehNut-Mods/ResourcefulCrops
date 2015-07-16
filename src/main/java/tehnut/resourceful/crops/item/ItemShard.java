@@ -25,7 +25,7 @@ public class ItemShard extends Item {
         super();
 
         setUnlocalizedName(ModInformation.ID + ".shard");
-        setTextureName(ModInformation.ID + ":shard_base");
+        setTextureName(ModInformation.TEXLOC + "shard_base");
         setCreativeTab(ResourcefulCrops.tabResourcefulCrops);
         setHasSubtypes(true);
     }

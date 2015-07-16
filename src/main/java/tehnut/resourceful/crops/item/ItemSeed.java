@@ -30,7 +30,7 @@ public class ItemSeed extends Item implements IPlantable {
         super();
 
         setUnlocalizedName(ModInformation.ID + ".seed");
-        setTextureName(ModInformation.ID + ":seed_base");
+        setTextureName(ModInformation.TEXLOC + "seed_base");
         setCreativeTab(ResourcefulCrops.tabResourcefulCrops);
         setHasSubtypes(true);
     }

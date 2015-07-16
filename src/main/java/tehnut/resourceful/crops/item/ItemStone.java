@@ -19,7 +19,7 @@ public class ItemStone extends Item {
         super();
 
         setUnlocalizedName(ModInformation.ID + ".stone");
-        setTextureName(ModInformation.ID + ":stone_base");
+        setTextureName(ModInformation.TEXLOC + "stone_base");
         setCreativeTab(ResourcefulCrops.tabResourcefulCrops);
         setMaxStackSize(1);
         setHasSubtypes(true);

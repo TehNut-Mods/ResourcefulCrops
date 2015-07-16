@@ -47,7 +47,7 @@ public class ItemMaterial extends Item {
     @SideOnly(Side.CLIENT)
     public void registerIcons(IIconRegister register) {
         for (int i = 0; i < materials.length; i++)
-            icons[i] = register.registerIcon(ModInformation.ID + ":dust_" + i);
+            icons[i] = register.registerIcon(ModInformation.TEXLOC + "dust_" + i);
     }
 
     @Override

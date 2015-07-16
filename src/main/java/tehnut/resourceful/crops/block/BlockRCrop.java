@@ -196,10 +196,10 @@ public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
     public void registerBlockIcons(IIconRegister ir) {
         for (int i = 0; i < cropIcons.length; i++) {
             if (ConfigHandler.enableFancyRender) {
-                cropIcons[i] = ir.registerIcon(ModInformation.ID + ":crop_base_" + i);
-                cropOverlay[i] = ir.registerIcon(ModInformation.ID + ":crop_overlay_" + i);
+                cropIcons[i] = ir.registerIcon(ModInformation.TEXLOC + "crop_base_" + i);
+                cropOverlay[i] = ir.registerIcon(ModInformation.TEXLOC + "crop_overlay_" + i);
             } else {
-                cropIcons[i] = ir.registerIcon(ModInformation.ID + ":crop_base_" + i + "_fast");
+                cropIcons[i] = ir.registerIcon(ModInformation.TEXLOC + "crop_base_" + i + "_fast");
             }
         }
 

@@ -36,8 +36,8 @@ public class BlockROre extends Block {
     @Override
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister iconRegister) {
-        this.icons[0] = iconRegister.registerIcon(ModInformation.ID + ":oreGaianite");
-        this.icons[1] = iconRegister.registerIcon(ModInformation.ID + ":oreGaianite_nether");
+        this.icons[0] = iconRegister.registerIcon(ModInformation.TEXLOC + "oreGaianite");
+        this.icons[1] = iconRegister.registerIcon(ModInformation.TEXLOC + "oreGaianite_nether");
     }
 
     @Override

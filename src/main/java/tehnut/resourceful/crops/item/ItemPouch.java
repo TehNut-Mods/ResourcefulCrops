@@ -34,7 +34,7 @@ public class ItemPouch extends Item implements IPlantable {
         super();
 
         setUnlocalizedName(ModInformation.ID + ".pouch");
-        setTextureName(ModInformation.ID + ":pouch_base");
+        setTextureName(ModInformation.TEXLOC + "pouch_base");
         setCreativeTab(ResourcefulCrops.tabResourcefulCrops);
         setHasSubtypes(true);
     }
@@ -92,8 +92,8 @@ public class ItemPouch extends Item implements IPlantable {
     @SideOnly(Side.CLIENT)
     @Override
     public void registerIcons(IIconRegister ir) {
-        this.icons[0] = ir.registerIcon(ModInformation.ID + ":pouch_base_color");
-        this.icons[1] = ir.registerIcon(ModInformation.ID + ":pouch_overlay");
+        this.icons[0] = ir.registerIcon(ModInformation.TEXLOC + "pouch_base_color");
+        this.icons[1] = ir.registerIcon(ModInformation.TEXLOC + "pouch_overlay");
     }
 
     public IIcon getIcon(ItemStack stack, int pass) {
