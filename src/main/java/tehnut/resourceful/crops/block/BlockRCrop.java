@@ -37,6 +37,7 @@ import java.util.Random;
 public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
 
     public IIcon[] cropIcons = new IIcon[8];
+    public IIcon[] fastIcons = new IIcon[8];
     public IIcon[] cropOverlay = new IIcon[8];
     private static boolean shouldDrop = true;
 
@@ -105,21 +106,21 @@ public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
         boolean flag1 = block == this || block1 == this;
         boolean flag2 = block4 == this || block5 == this || block6 == this || block7 == this;
 
-        for (int l = x - 1; l <= x + 1; ++l) {
-            for (int i1 = z - 1; i1 <= z + 1; ++i1) {
-                float f1 = 0.0F;
+        for (int coordX = x - 1; coordX <= x + 1; ++coordX) {
+            for (int coordZ = z - 1; coordZ <= z + 1; ++coordZ) {
+                float chance = 0.0F;
 
-                if (world.getBlock(l, y - 1, i1).canSustainPlant(world, l, y - 1, i1, ForgeDirection.UP, this)) {
-                    f1 = 1.0F;
+                if (world.getBlock(coordX, y - 1, coordZ).canSustainPlant(world, coordX, y - 1, coordZ, ForgeDirection.UP, this)) {
+                    chance = 1.0F;
 
-                    if (world.getBlock(l, y - 1, i1).isFertile(world, l, y - 1, i1))
-                        f1 = 3.0F;
+                    if (world.getBlock(coordX, y - 1, coordZ).isFertile(world, coordX, y - 1, coordZ))
+                        chance = 3.0F;
                 }
 
-                if (l != x || i1 != z)
-                    f1 /= 4.0F;
+                if (coordX != x || coordZ != z)
+                    chance /= 4.0F;
 
-                growthChance += f1;
+                growthChance += chance;
             }
         }
 
@@ -195,12 +196,9 @@ public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister ir) {
         for (int i = 0; i < cropIcons.length; i++) {
-            if (ConfigHandler.enableFancyRender) {
-                cropIcons[i] = ir.registerIcon(ModInformation.TEXLOC + "crop_base_" + i);
-                cropOverlay[i] = ir.registerIcon(ModInformation.TEXLOC + "crop_overlay_" + i);
-            } else {
-                cropIcons[i] = ir.registerIcon(ModInformation.TEXLOC + "crop_base_" + i + "_fast");
-            }
+            cropIcons[i] = ir.registerIcon(ModInformation.TEXLOC + "crop_base_" + i);
+            cropOverlay[i] = ir.registerIcon(ModInformation.TEXLOC + "crop_overlay_" + i);
+            fastIcons[i] = ir.registerIcon(ModInformation.TEXLOC + "crop_base_" + i + "_fast");
         }
 
         blockIcon = cropIcons[4];
@@ -209,7 +207,7 @@ public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
     @Override
     @SideOnly(Side.CLIENT)
     public IIcon getIcon(int side, int meta) {
-        return cropIcons[meta];
+        return ConfigHandler.enableFancyRender || ConfigHandler.forceFancyRender ? cropIcons[meta] : fastIcons[meta];
     }
 
     @Override
