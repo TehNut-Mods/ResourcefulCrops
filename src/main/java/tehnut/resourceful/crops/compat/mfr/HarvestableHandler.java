@@ -6,6 +6,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import powercrystals.minefactoryreloaded.api.HarvestType;
 import powercrystals.minefactoryreloaded.api.IFactoryHarvestable;
+import tehnut.resourceful.crops.ConfigHandler;
 import tehnut.resourceful.crops.block.BlockRCrop;
 import tehnut.resourceful.crops.registry.BlockRegistry;
 import tehnut.resourceful.crops.registry.ItemRegistry;
@@ -41,7 +42,7 @@ public class HarvestableHandler implements IFactoryHarvestable {
     @Override
     public boolean canBeHarvested(World world, Map<String, Boolean> harvesterSettings, int x, int y, int z) {
 
-        if (world.getBlock(x, y, z) instanceof BlockRCrop) {
+        if (world.getBlock(x, y, z) instanceof BlockRCrop && ConfigHandler.enableMFRAutomation) {
             TileEntity cropTile = world.getTileEntity(x, y, z);
 
             if (cropTile != null && cropTile instanceof TileRCrop)

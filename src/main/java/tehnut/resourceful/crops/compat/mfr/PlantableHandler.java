@@ -8,6 +8,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import powercrystals.minefactoryreloaded.api.IFactoryPlantable;
 import powercrystals.minefactoryreloaded.api.ReplacementBlock;
+import tehnut.resourceful.crops.ConfigHandler;
 import tehnut.resourceful.crops.block.BlockRCrop;
 import tehnut.resourceful.crops.registry.BlockRegistry;
 import tehnut.resourceful.crops.registry.ItemRegistry;
@@ -26,7 +27,7 @@ public class PlantableHandler implements IFactoryPlantable {
 
     @Override
     public boolean canBePlanted(ItemStack stack, boolean forFermenting) {
-        return Utils.isValidSeed(Utils.getItemDamage(stack));
+        return Utils.isValidSeed(Utils.getItemDamage(stack)) && ConfigHandler.enableMFRAutomation;
     }
 
     @Override
@@ -38,7 +39,7 @@ public class PlantableHandler implements IFactoryPlantable {
     public boolean canBePlantedHere(World world, int x, int y, int z, ItemStack stack) {
         Block placed = world.getBlock(x, y - 1, z);
 
-        return placed.canSustainPlant(world, x, y - 1, z, ForgeDirection.UP, ItemRegistry.seed) && Utils.isValidSeed(Utils.getItemDamage(stack)) && world.isAirBlock(x, y, z);
+        return placed.canSustainPlant(world, x, y - 1, z, ForgeDirection.UP, ItemRegistry.seed) && Utils.isValidSeed(Utils.getItemDamage(stack)) && world.isAirBlock(x, y, z) && ConfigHandler.enableMFRAutomation;
     }
 
     @Override

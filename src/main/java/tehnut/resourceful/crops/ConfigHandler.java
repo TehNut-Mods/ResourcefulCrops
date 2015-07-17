@@ -25,6 +25,9 @@ public class ConfigHandler {
     public static boolean generateDefaults;
 
     public static boolean enableTorcherinoAccelerator;
+    public static boolean enableMFRAutomation;
+    public static boolean enableEnderIOAutomation;
+    public static boolean enableBloodMagicAutomation;
 
     public static void init(File file) {
         config = new Configuration(file);
@@ -60,6 +63,12 @@ public class ConfigHandler {
         config.addCustomCategoryComment(category, "Compatibility settings");
         category = "Compat.Torcherino";
         enableTorcherinoAccelerator = config.getBoolean("enableTorcherinoAccelerator", category, false, "Allows the Torcherino from Torcherino to accelerate crop growth.");
+        category = "Compat.MinefactoryReloaded";
+        enableMFRAutomation = config.getBoolean("enableMFRAutomation", category, true, "Allows the MFR Planter/Harvester to work with Seeds/Crops.");
+        category = "Compat.EnderIO";
+        enableEnderIOAutomation = config.getBoolean("enableEnderIOAutomation", category, true, "Allows the EnderIO Farming Station to work with Seeds/Crops.");
+        category = "Compat.BloodMagic";
+        enableBloodMagicAutomation = config.getBoolean("enableBloodMagicAutomation", category, true, "Allows the BloodMagic Ritual of the Harvest Moon to work with Seeds/Crops");
         category = "Compat.Seeds";
         config.addCustomCategoryComment(category, "Custom compatibility seeds. For seeds that do unique things.\n" +
                 "This is based on the seed name. If you want to use the name for something else, you must disable it in the config here.\n" +

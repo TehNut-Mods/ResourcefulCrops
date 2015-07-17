@@ -12,6 +12,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+import tehnut.resourceful.crops.ConfigHandler;
 import tehnut.resourceful.crops.block.BlockRCrop;
 import tehnut.resourceful.crops.item.ItemSeed;
 import tehnut.resourceful.crops.registry.ItemRegistry;
@@ -24,12 +25,12 @@ public class ResourcefulCropsFarmer extends PlantableFarmer {
 
     @Override
     public boolean canHarvest(TileFarmStation farmStation, BlockCoord coord, Block block, int meta) {
-        return block instanceof BlockRCrop && farmStation.getWorldObj().getBlockMetadata(coord.x, coord.y, coord.z) == 7;
+        return ConfigHandler.enableEnderIOAutomation && block instanceof BlockRCrop && farmStation.getWorldObj().getBlockMetadata(coord.x, coord.y, coord.z) == 7;
     }
 
     @Override
     public boolean canPlant(ItemStack stack) {
-        return stack != null && stack.getItem() instanceof ItemSeed && Utils.getItemDamage(stack) != Short.MAX_VALUE;
+        return ConfigHandler.enableEnderIOAutomation && stack != null && stack.getItem() instanceof ItemSeed && Utils.getItemDamage(stack) != Short.MAX_VALUE;
     }
 
     @Override
