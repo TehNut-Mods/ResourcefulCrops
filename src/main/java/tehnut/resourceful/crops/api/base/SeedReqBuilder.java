@@ -1,5 +1,6 @@
 package tehnut.resourceful.crops.api.base;
 
+import net.minecraft.world.EnumDifficulty;
 import tehnut.resourceful.crops.api.util.BlockStack;
 
 /**
@@ -9,6 +10,7 @@ import tehnut.resourceful.crops.api.util.BlockStack;
 public class SeedReqBuilder {
 
     private BlockStack growthReq = null;
+    private EnumDifficulty difficulty = EnumDifficulty.PEACEFUL;
     private int lightLevelMin = 9;
     private int lightLevelMax = Integer.MAX_VALUE;
 
@@ -18,6 +20,11 @@ public class SeedReqBuilder {
 
     public SeedReqBuilder setGrowthReq(BlockStack growthReq) {
         this.growthReq = growthReq;
+        return this;
+    }
+
+    public SeedReqBuilder setDifficulty(EnumDifficulty difficulty) {
+        this.difficulty = difficulty;
         return this;
     }
 
@@ -32,6 +39,6 @@ public class SeedReqBuilder {
     }
 
     public SeedReq build() {
-        return new SeedReq(growthReq, lightLevelMin, lightLevelMax);
+        return new SeedReq(growthReq, difficulty, lightLevelMin, lightLevelMax);
     }
 }

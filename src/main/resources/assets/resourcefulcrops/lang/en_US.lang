@@ -43,6 +43,7 @@ chat.ResourcefulCrops.req.growth=Requires %s under the soil.
 chat.ResourcefulCrops.req.light.above=Only grows above light level %d
 chat.ResourcefulCrops.req.light.below=Only grows below light level %d
 chat.ResourcefulCrops.req.light.between=Only grows between light levels %d and %d
+chat.ResourcefulCrops.req.difficulty=Requires the game to be on at least %s difficulty.
 
 # Waila
 waila.config.render.fancy=Fancy Render

@@ -14,6 +14,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.StatCollector;
+import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.EnumPlantType;
@@ -74,6 +75,9 @@ public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
     }
 
     public void doGrowth(World world, int x, int y, int z, Seed seed, BlockStack blockReq, Random random) {
+        if (seed.getSeedReq().getDifficulty().getDifficultyId() > world.difficultySetting.getDifficultyId())
+            return;
+
         if (seed.getSeedReq().getGrowthReq() == null || seed.getSeedReq().getGrowthReq().equals(blockReq)) {
 
             int lightLevel = world.getBlockLightValue(x, y + 1, z);
@@ -260,6 +264,9 @@ public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
             ResourcefulCrops.proxy.addChatMessage(String.format(StatCollector.translateToLocal("chat.ResourcefulCrops.req.light.below"), seed.getSeedReq().getLightLevelMax()), 2);
         else
             ResourcefulCrops.proxy.addChatMessage(String.format(StatCollector.translateToLocal("chat.ResourcefulCrops.req.light.between"), seed.getSeedReq().getLightLevelMin(), seed.getSeedReq().getLightLevelMax()), 2);
+
+        if (seed.getSeedReq().getDifficulty() != EnumDifficulty.PEACEFUL)
+            ResourcefulCrops.proxy.addChatMessage(String.format(StatCollector.translateToLocal("chat.ResourcefulCrops.req.difficulty"), seed.getSeedReq().getDifficulty().toString()), 3);
 
         return true;
     }
