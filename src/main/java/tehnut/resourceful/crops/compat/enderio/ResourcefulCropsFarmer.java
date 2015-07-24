@@ -1,10 +1,10 @@
 package tehnut.resourceful.crops.compat.enderio;
 
+import com.enderio.core.common.util.BlockCoord;
 import crazypants.enderio.machine.farm.TileFarmStation;
 import crazypants.enderio.machine.farm.farmers.HarvestResult;
 import crazypants.enderio.machine.farm.farmers.IHarvestResult;
 import crazypants.enderio.machine.farm.farmers.PlantableFarmer;
-import crazypants.util.BlockCoord;
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Blocks;
