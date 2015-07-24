@@ -1,11 +1,10 @@
-package tehnut.resourceful.crops.compat;
+package tehnut.resourceful.crops.api.compat;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import tehnut.resourceful.crops.api.base.Seed;
 import tehnut.resourceful.crops.api.registry.SeedRegistry;
-import tehnut.resourceful.crops.util.Utils;
 
 public enum CompatibilitySeed {
 
@@ -40,6 +39,6 @@ public enum CompatibilitySeed {
     }
 
     Seed getSeed(ItemStack stack) {
-        return SeedRegistry.getSeed(Utils.getItemDamage(stack));
+        return SeedRegistry.getSeed(stack.getItemDamage());
     }
 }
