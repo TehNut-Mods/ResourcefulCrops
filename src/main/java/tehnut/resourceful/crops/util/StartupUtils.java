@@ -10,7 +10,7 @@ import net.minecraftforge.oredict.OreDictionary;
 import tehnut.resourceful.crops.api.base.Seed;
 import tehnut.resourceful.crops.api.base.SeedBuilder;
 import tehnut.resourceful.crops.compat.CompatibilitySeed;
-import tehnut.resourceful.crops.registry.SeedRegistry;
+import tehnut.resourceful.crops.api.registry.SeedRegistry;
 import tehnut.resourceful.crops.util.helper.LogHelper;
 import tehnut.resourceful.crops.util.serialization.SeedCreator;
 

@@ -14,7 +14,7 @@ import tehnut.resourceful.crops.api.ModInformation;
 import tehnut.resourceful.crops.ResourcefulCrops;
 import tehnut.resourceful.crops.api.base.Seed;
 import tehnut.resourceful.crops.compat.CompatibilitySeed;
-import tehnut.resourceful.crops.registry.SeedRegistry;
+import tehnut.resourceful.crops.api.registry.SeedRegistry;
 import tehnut.resourceful.crops.util.Utils;
 
 import java.util.List;

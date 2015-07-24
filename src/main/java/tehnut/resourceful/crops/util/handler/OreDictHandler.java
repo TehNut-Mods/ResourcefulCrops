@@ -6,7 +6,7 @@ import tehnut.resourceful.crops.ConfigHandler;
 import tehnut.resourceful.crops.api.base.Seed;
 import tehnut.resourceful.crops.registry.BlockRegistry;
 import tehnut.resourceful.crops.registry.ItemRegistry;
-import tehnut.resourceful.crops.registry.SeedRegistry;
+import tehnut.resourceful.crops.api.registry.SeedRegistry;
 
 public class OreDictHandler {
 

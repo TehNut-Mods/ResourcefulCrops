@@ -4,7 +4,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import tehnut.resourceful.crops.api.base.Seed;
-import tehnut.resourceful.crops.registry.SeedRegistry;
+import tehnut.resourceful.crops.api.registry.SeedRegistry;
 import tehnut.resourceful.crops.util.Utils;
 
 public enum CompatibilitySeed {

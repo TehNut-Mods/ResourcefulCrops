@@ -8,7 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 import tehnut.resourceful.crops.api.base.Seed;
-import tehnut.resourceful.crops.registry.SeedRegistry;
+import tehnut.resourceful.crops.api.registry.SeedRegistry;
 import tehnut.resourceful.crops.api.util.BlockStack;
 import tehnut.resourceful.crops.util.helper.LogHelper;
 

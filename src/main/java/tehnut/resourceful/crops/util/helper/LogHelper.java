@@ -35,4 +35,8 @@ public class LogHelper {
         if (ConfigHandler.enableConsoleLogging)
             logger.debug(debug);
     }
+
+    public static Logger getLogger() {
+        return logger;
+    }
 }

@@ -24,7 +24,7 @@ import tehnut.resourceful.crops.proxy.CommonProxy;
 import tehnut.resourceful.crops.registry.BlockRegistry;
 import tehnut.resourceful.crops.registry.ItemRegistry;
 import tehnut.resourceful.crops.registry.RecipeRegistry;
-import tehnut.resourceful.crops.registry.SeedRegistry;
+import tehnut.resourceful.crops.api.registry.SeedRegistry;
 import tehnut.resourceful.crops.util.*;
 import tehnut.resourceful.crops.api.util.cache.PermanentCache;
 import tehnut.resourceful.crops.util.handler.EventHandler;
@@ -78,7 +78,10 @@ public class ResourcefulCrops {
         proxy.load();
 
         seedCache = new PermanentCache<Seed>(ModInformation.ID + "Cache");
+
         ResourcefulAPI.seedCache = seedCache;
+        ResourcefulAPI.logger = LogHelper.getLogger();
+        ResourcefulAPI.forceAddDuplicates = ConfigHandler.forceAddDuplicates;
 
         BlockRegistry.registerBlocks();
         ItemRegistry.registerItems();
