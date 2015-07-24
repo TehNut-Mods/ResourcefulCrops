@@ -13,6 +13,7 @@ public class Seed {
     private ItemStack output;
     private Color color;
     private SeedReq seedReq;
+    private Chance chance;
     private boolean compat;
 
     /**
@@ -25,9 +26,10 @@ public class Seed {
      * @param output  - Output ItemStack or OreDict entry from crafting the shards.
      * @param color   - Color of the Seed/Shard/Crop
      * @param seedReq - Special conditions for Seeds
+     * @param chance  - Chances for events to happen
      * @param compat  - Whether or not this seed is for a {@link tehnut.resourceful.crops.compat.CompatibilitySeed}
      */
-    protected Seed(String name, int tier, int amount, String input, ItemStack output, Color color, SeedReq seedReq, boolean compat) {
+    protected Seed(String name, int tier, int amount, String input, ItemStack output, Color color, SeedReq seedReq, Chance chance, boolean compat) {
         this.name = name;
         this.tier = tier;
         this.amount = amount;
@@ -35,6 +37,7 @@ public class Seed {
         this.output = output;
         this.color = color;
         this.seedReq = seedReq;
+        this.chance = chance;
         this.compat = compat;
     }
 
@@ -66,6 +69,10 @@ public class Seed {
         return seedReq;
     }
 
+    public Chance getChance() {
+        return chance;
+    }
+
     public boolean getCompat() {
         return compat;
     }
@@ -80,6 +87,7 @@ public class Seed {
                 ", output=" + output +
                 ", color=" + color +
                 ", seedReq=" + seedReq +
+                ", chance=" + chance +
                 ", compat=" + compat+
                 '}';
     }

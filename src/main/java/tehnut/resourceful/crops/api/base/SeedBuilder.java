@@ -17,6 +17,7 @@ public class SeedBuilder {
     private ItemStack output;
     private Color color;
     private SeedReq seedReq = new SeedReqBuilder().build();
+    private Chance chance = new ChanceBuilder().build();
     private boolean compat = false;
 
     public SeedBuilder() {
@@ -66,12 +67,17 @@ public class SeedBuilder {
         return this;
     }
 
+    public SeedBuilder setChance(Chance chance) {
+        this.chance = chance;
+        return this;
+    }
+
     public SeedBuilder setCompat(boolean compat) {
         this.compat = compat;
         return this;
     }
 
     public Seed build() {
-        return new Seed(name, tier, amount, input, output, color, seedReq, compat);
+        return new Seed(name, tier, amount, input, output, color, seedReq, chance, compat);
     }
 }

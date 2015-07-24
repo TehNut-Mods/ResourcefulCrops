@@ -68,9 +68,12 @@ public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
             return;
 
         BlockStack blockReq = new BlockStack(world.getBlock(x, y - 2, z), world.getBlockMetadata(x, y - 2, z));
-
         checkAndDropBlock(world, x, y, z);
 
+        doGrowth(world, x, y, z, seed, blockReq, random);
+    }
+
+    public void doGrowth(World world, int x, int y, int z, Seed seed, BlockStack blockReq, Random random) {
         if (seed.getSeedReq().getGrowthReq() == null || seed.getSeedReq().getGrowthReq().equals(blockReq)) {
 
             int lightLevel = world.getBlockLightValue(x, y + 1, z);
@@ -134,31 +137,11 @@ public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
         TileEntity cropTile = world.getTileEntity(x, y, z);
 
         if (Utils.isValidSeed(((TileRCrop)cropTile).getSeedName())) {
-            if (player.getHeldItem() != null && player.getHeldItem().getItem() instanceof ItemHoe) {
-                Seed seed = SeedRegistry.getSeed(((TileRCrop) cropTile).getSeedName());
+            if (player.getHeldItem() != null && player.getHeldItem().getItem() instanceof ItemHoe)
+                return doReqInfo(((TileRCrop) cropTile).getSeedName());
 
-                ResourcefulCrops.proxy.addChatMessage(String.format(StatCollector.translateToLocal("chat.ResourcefulCrops.req.growth"), seed.getSeedReq().getGrowthReq() != null ? seed.getSeedReq().getGrowthReq().getDisplayName() : StatCollector.translateToLocal("info.ResourcefulCrops.anything")), 1);
-
-                if (seed.getSeedReq().getLightLevelMax() == Integer.MAX_VALUE)
-                    ResourcefulCrops.proxy.addChatMessage(String.format(StatCollector.translateToLocal("chat.ResourcefulCrops.req.light.above"), seed.getSeedReq().getLightLevelMin()), 2);
-                else if (seed.getSeedReq().getLightLevelMin() == 0)
-                    ResourcefulCrops.proxy.addChatMessage(String.format(StatCollector.translateToLocal("chat.ResourcefulCrops.req.light.below"), seed.getSeedReq().getLightLevelMax()), 2);
-                else
-                    ResourcefulCrops.proxy.addChatMessage(String.format(StatCollector.translateToLocal("chat.ResourcefulCrops.req.light.between"), seed.getSeedReq().getLightLevelMin(), seed.getSeedReq().getLightLevelMax()), 2);
-
-                return true;
-            }
-
-            if (!player.isSneaking() || player.getHeldItem() == null && ConfigHandler.enableRightClickHarvest) {
-                if (world.getBlock(x, y, z) == BlockRegistry.crop && world.getBlockMetadata(x, y, z) >= 7) {
-                    if (!world.isRemote) {
-                        world.setBlockMetadataWithNotify(x, y, z, 0, 3);
-                        dropBlockAsItem(world, x, y, z, new ItemStack(ItemRegistry.shard, 1, getTileSeedIndex(world, x, y, z)));
-                    }
-                    player.swingItem();
-                    return true;
-                }
-            }
+            if (!player.isSneaking() || player.getHeldItem() == null && ConfigHandler.enableRightClickHarvest)
+                return doHarvest(world, x, y, z, player);
         }
 
         return false;
@@ -234,15 +217,70 @@ public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
     public List<ItemStack> getDrops(World world, int x, int y, int z, int meta) {
         List<ItemStack> drops = new ArrayList<ItemStack>();
         int seedIndex = getTileSeedIndex(world, x, y, z);
+        double chance = new Random().nextDouble();
+        Seed seed = SeedRegistry.getSeed(seedIndex);
 
         if (meta <= 6) {
             drops.add(new ItemStack(ItemRegistry.seed, 1, seedIndex));
         } else {
             drops.add(new ItemStack(ItemRegistry.seed, 1, seedIndex));
             drops.add(new ItemStack(ItemRegistry.shard, 1, seedIndex));
+
+            if (chance <= seed.getChance().getExtraSeed())
+                drops.add(new ItemStack(ItemRegistry.seed, 1, seedIndex));
+
+            if (chance <= seed.getChance().getEssenceDrop())
+                drops.add(new ItemStack(ItemRegistry.material));
         }
 
         return drops;
+    }
+
+    public boolean doHarvest(World world, int x, int y, int z, EntityPlayer player) {
+        if (world.getBlock(x, y, z) == BlockRegistry.crop && world.getBlockMetadata(x, y, z) >= 7) {
+            if (!world.isRemote) {
+                world.setBlockMetadataWithNotify(x, y, z, 0, 3);
+                doRightClickDrops(world, x, y, z);
+            }
+            player.swingItem();
+            return true;
+        }
+
+        return false;
+    }
+
+    public boolean doReqInfo(String seedName) {
+        Seed seed = SeedRegistry.getSeed(seedName);
+
+        ResourcefulCrops.proxy.addChatMessage(String.format(StatCollector.translateToLocal("chat.ResourcefulCrops.req.growth"), seed.getSeedReq().getGrowthReq() != null ? seed.getSeedReq().getGrowthReq().getDisplayName() : StatCollector.translateToLocal("info.ResourcefulCrops.anything")), 1);
+
+        if (seed.getSeedReq().getLightLevelMax() == Integer.MAX_VALUE)
+            ResourcefulCrops.proxy.addChatMessage(String.format(StatCollector.translateToLocal("chat.ResourcefulCrops.req.light.above"), seed.getSeedReq().getLightLevelMin()), 2);
+        else if (seed.getSeedReq().getLightLevelMin() == 0)
+            ResourcefulCrops.proxy.addChatMessage(String.format(StatCollector.translateToLocal("chat.ResourcefulCrops.req.light.below"), seed.getSeedReq().getLightLevelMax()), 2);
+        else
+            ResourcefulCrops.proxy.addChatMessage(String.format(StatCollector.translateToLocal("chat.ResourcefulCrops.req.light.between"), seed.getSeedReq().getLightLevelMin(), seed.getSeedReq().getLightLevelMax()), 2);
+
+        return true;
+    }
+
+    public void doRightClickDrops(World world, int x, int y, int z) {
+
+        Random random = new Random();
+        int seedIndex = getTileSeedIndex(world, x, y, z);
+        Seed seed = SeedRegistry.getSeed(seedIndex);
+
+        dropBlockAsItem(world, x, y, z, new ItemStack(ItemRegistry.shard, 1, seedIndex));
+
+        double extraSeedChance = seed.getChance().getExtraSeed();
+        double essenceDropChance = seed.getChance().getEssenceDrop();
+        double randomDouble = random.nextDouble();
+
+        if (randomDouble <= extraSeedChance)
+            dropBlockAsItem(world, x, y, z, new ItemStack(ItemRegistry.seed, 1, seedIndex));
+
+        if (randomDouble <= essenceDropChance)
+            dropBlockAsItem(world, x, y, z, new ItemStack(ItemRegistry.material));
     }
 
     public static void setShouldDrop(boolean drop) {

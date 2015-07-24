@@ -2,10 +2,7 @@ package tehnut.resourceful.crops.util.serialization.serializers;
 
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
-import tehnut.resourceful.crops.api.base.Seed;
-import tehnut.resourceful.crops.api.base.SeedBuilder;
-import tehnut.resourceful.crops.api.base.SeedReq;
-import tehnut.resourceful.crops.api.base.SeedReqBuilder;
+import tehnut.resourceful.crops.api.base.*;
 import tehnut.resourceful.crops.util.Utils;
 import tehnut.resourceful.crops.util.helper.JsonHelper;
 
@@ -25,8 +22,11 @@ public class CustomSeedJson implements JsonDeserializer<Seed>, JsonSerializer<Se
         String output = helper.getNullableString("output", null);
         String color = helper.getString("color");
         SeedReq seedReq = new SeedReqBuilder().build();
+        Chance chance = new ChanceBuilder().build();
         if (json.getAsJsonObject().get("seedReq") != null)
             seedReq = context.deserialize(json.getAsJsonObject().get("seedReq"), new TypeToken<SeedReq>() { }.getType());
+        if (json.getAsJsonObject().get("chance") != null)
+            chance = context.deserialize(json.getAsJsonObject().get("chance"), new TypeToken<Chance>() { }.getType());
 
         SeedBuilder builder = new SeedBuilder();
         builder.setName(name);
@@ -36,6 +36,7 @@ public class CustomSeedJson implements JsonDeserializer<Seed>, JsonSerializer<Se
         builder.setOutput(Utils.parseItemStack(output, false));
         builder.setColor(Color.decode(color));
         builder.setSeedReq(seedReq);
+        builder.setChance(chance);
 
         return builder.build();
     }
@@ -51,6 +52,8 @@ public class CustomSeedJson implements JsonDeserializer<Seed>, JsonSerializer<Se
         jsonObject.addProperty("color", "#" + Integer.toHexString(src.getColor().getRGB()).substring(2).toUpperCase());
         if (!isSeedReqDefault(src.getSeedReq()))
             jsonObject.add("seedReq", context.serialize(src.getSeedReq()));
+        if (!isChanceDefault(src.getChance()))
+            jsonObject.add("chance", context.serialize(src.getChance()));
 
         return jsonObject;
     }
@@ -64,5 +67,16 @@ public class CustomSeedJson implements JsonDeserializer<Seed>, JsonSerializer<Se
      */
     private static boolean isSeedReqDefault(SeedReq seedReq) {
         return seedReq.getGrowthReq() == null && seedReq.getLightLevelMin() == 9 && seedReq.getLightLevelMax() == Short.MAX_VALUE;
+    }
+
+    /**
+     * Used to determine whether to add the seedReq
+     * field to the JSON printing.
+     *
+     * @param chance - {@link Chance} to check if default
+     * @return       - Whether the given Chance is default
+     */
+    private static boolean isChanceDefault(Chance chance) {
+        return chance.getExtraSeed() == 0.0 && chance.getEssenceDrop() == 0.0;
     }
 }
