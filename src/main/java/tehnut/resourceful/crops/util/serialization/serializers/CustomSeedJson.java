@@ -11,6 +11,9 @@ import java.lang.reflect.Type;
 
 public class CustomSeedJson implements JsonDeserializer<Seed>, JsonSerializer<Seed> {
 
+    static SeedReq defaultReq = new SeedReqBuilder().build();
+    static Chance defaultChance = new ChanceBuilder().build();
+
     @Override
     public Seed deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         JsonHelper helper = new JsonHelper(json);
@@ -66,7 +69,7 @@ public class CustomSeedJson implements JsonDeserializer<Seed>, JsonSerializer<Se
      * @return        - Whether the given SeedReq is default
      */
     private static boolean isSeedReqDefault(SeedReq seedReq) {
-        return seedReq.getGrowthReq() == null && seedReq.getLightLevelMin() == 9 && seedReq.getLightLevelMax() == Short.MAX_VALUE;
+        return seedReq.equals(defaultReq);
     }
 
     /**
@@ -77,6 +80,6 @@ public class CustomSeedJson implements JsonDeserializer<Seed>, JsonSerializer<Se
      * @return       - Whether the given Chance is default
      */
     private static boolean isChanceDefault(Chance chance) {
-        return chance.getExtraSeed() == 0.0 && chance.getEssenceDrop() == 0.0;
+        return chance.equals(defaultChance);
     }
 }
