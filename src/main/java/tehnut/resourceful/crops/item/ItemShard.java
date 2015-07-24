@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 import tehnut.resourceful.crops.api.ModInformation;
 import tehnut.resourceful.crops.ResourcefulCrops;
 import tehnut.resourceful.crops.api.base.Seed;
-import tehnut.resourceful.crops.compat.CompatibilitySeed;
+import tehnut.resourceful.crops.api.compat.CompatibilitySeed;
 import tehnut.resourceful.crops.api.registry.SeedRegistry;
 import tehnut.resourceful.crops.util.Utils;
 

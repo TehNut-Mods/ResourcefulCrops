@@ -34,6 +34,23 @@ public class RecipeRegistry {
                                     'S', new ItemStack(ItemRegistry.shard, 1, SeedRegistry.getIndexOf(seed)))
                     );
                 }
+
+
+                if (seed.getSecondOutput() != null) {
+                    GameRegistry.addRecipe(new ShapedOreRecipe(
+                                    seed.getSecondOutput(),
+                                    " S ", "SSS", " S ",
+                                    'S', new ItemStack(ItemRegistry.shard, 1, SeedRegistry.getIndexOf(seed)))
+                    );
+                }
+
+                if (seed.getThirdOutput() != null) {
+                    GameRegistry.addRecipe(new ShapedOreRecipe(
+                                    seed.getThirdOutput(),
+                                    "SS", "SS",
+                                    'S', new ItemStack(ItemRegistry.shard, 1, SeedRegistry.getIndexOf(seed)))
+                    );
+                }
             }
 
             if (ConfigHandler.enableSeedPouches && ConfigHandler.enableSeedCrafting) {

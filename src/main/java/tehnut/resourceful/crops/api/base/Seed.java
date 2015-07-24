@@ -1,7 +1,9 @@
 package tehnut.resourceful.crops.api.base;
 
 import net.minecraft.item.ItemStack;
+import tehnut.resourceful.crops.api.compat.CompatibilitySeed;
 
+import javax.annotation.Nullable;
 import java.awt.*;
 
 public class Seed {
@@ -11,6 +13,8 @@ public class Seed {
     private int amount;
     private String input;
     private ItemStack output;
+    private ItemStack secondOutput;
+    private ItemStack thirdOutput;
     private Color color;
     private SeedReq seedReq;
     private Chance chance;
@@ -19,22 +23,26 @@ public class Seed {
     /**
      * To create a seed, use {@link SeedBuilder}
      *
-     * @param name    - Name of the seed (Localized or Unlocalized).
-     * @param tier    - The tier of the seed. <ul><li>1 - Mundane</li><li>2 - Magical</li><li>3 - Infused</li><li>4 - Arcane</li></ul>
-     * @param amount  - Amount of seeds to produce per craft.
-     * @param input   - Input ItemStack or OreDict entry for creating the seeds.
-     * @param output  - Output ItemStack or OreDict entry from crafting the shards.
-     * @param color   - Color of the Seed/Shard/Crop
-     * @param seedReq - Special conditions for Seeds
-     * @param chance  - Chances for events to happen
-     * @param compat  - Whether or not this seed is for a {@link tehnut.resourceful.crops.compat.CompatibilitySeed}
+     * @param name         - Name of the seed (Localized or Unlocalized).
+     * @param tier         - The tier of the seed. <ul><li>1 - Mundane</li><li>2 - Magical</li><li>3 - Infused</li><li>4 - Arcane</li></ul>
+     * @param amount       - Amount of seeds to produce per craft.
+     * @param input        - Input ItemStack or OreDict entry for creating the seeds.
+     * @param output       - Output ItemStack or OreDict entry from crafting the shards.
+     * @param secondOutput - Secondary output ItemStack or OreDict entry from crafting shards
+     * @param thirdOutput  - Third output ItemStack or OreDict entry from crafting shards
+     * @param color        - Color of the Seed/Shard/Crop
+     * @param seedReq      - Special conditions for Seeds
+     * @param chance       - Chances for events to happen
+     * @param compat       - Whether or not this seed is for a {@link CompatibilitySeed}
      */
-    protected Seed(String name, int tier, int amount, String input, ItemStack output, Color color, SeedReq seedReq, Chance chance, boolean compat) {
+    protected Seed(String name, int tier, int amount, String input, ItemStack output, @Nullable ItemStack secondOutput, @Nullable ItemStack thirdOutput, Color color, SeedReq seedReq, Chance chance, boolean compat) {
         this.name = name;
         this.tier = tier;
         this.amount = amount;
         this.input = input;
         this.output = output;
+        this.secondOutput = secondOutput;
+        this.thirdOutput = thirdOutput;
         this.color = color;
         this.seedReq = seedReq;
         this.chance = chance;
@@ -59,6 +67,14 @@ public class Seed {
 
     public ItemStack getOutput() {
         return output;
+    }
+
+    public ItemStack getSecondOutput() {
+        return secondOutput;
+    }
+
+    public ItemStack getThirdOutput() {
+        return thirdOutput;
     }
 
     public Color getColor() {

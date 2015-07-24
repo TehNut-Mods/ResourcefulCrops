@@ -26,6 +26,9 @@ public class Utils {
      * @return            - An ItemStack built from the string
      */
     public static ItemStack parseItemStack(String stackString, boolean input) {
+        if (stackString == null)
+            return null;
+
         if (stackString.contains(":")) {
             String[] nameInfo = stackString.split(":");
             String name = nameInfo[0] + ":" + nameInfo[1];

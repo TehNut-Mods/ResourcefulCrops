@@ -23,6 +23,8 @@ public class CustomSeedJson implements JsonDeserializer<Seed>, JsonSerializer<Se
         int amount = helper.getNullableInteger("amount", 1);
         String input = helper.getString("input");
         String output = helper.getNullableString("output", null);
+        String secondOutput = helper.getNullableString("secondOutput", null);
+        String thirdOutput = helper.getNullableString("thirdOutput", null);
         String color = helper.getString("color");
         SeedReq seedReq = new SeedReqBuilder().build();
         Chance chance = new ChanceBuilder().build();
@@ -37,6 +39,8 @@ public class CustomSeedJson implements JsonDeserializer<Seed>, JsonSerializer<Se
         builder.setAmount(amount);
         builder.setInput(input);
         builder.setOutput(Utils.parseItemStack(output, false));
+        builder.setSecondOutput(Utils.parseItemStack(secondOutput, false));
+        builder.setThirdOutput(Utils.parseItemStack(thirdOutput, false));
         builder.setColor(Color.decode(color));
         builder.setSeedReq(seedReq);
         builder.setChance(chance);
@@ -52,6 +56,10 @@ public class CustomSeedJson implements JsonDeserializer<Seed>, JsonSerializer<Se
         jsonObject.addProperty("amount", src.getAmount());
         jsonObject.addProperty("input", src.getInput());
         jsonObject.addProperty("output", Utils.itemStackToString(src.getOutput()));
+        if (src.getSecondOutput() != null)
+            jsonObject.addProperty("secondOutput", Utils.itemStackToString(src.getSecondOutput()));
+        if (src.getThirdOutput() != null)
+            jsonObject.addProperty("thirdOutput", Utils.itemStackToString(src.getThirdOutput()));
         jsonObject.addProperty("color", "#" + Integer.toHexString(src.getColor().getRGB()).substring(2).toUpperCase());
         if (!isSeedReqDefault(src.getSeedReq()))
             jsonObject.add("seedReq", context.serialize(src.getSeedReq()));
