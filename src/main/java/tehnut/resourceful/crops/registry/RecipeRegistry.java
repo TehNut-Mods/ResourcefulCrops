@@ -6,7 +6,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 import tehnut.resourceful.crops.ConfigHandler;
-import tehnut.resourceful.crops.base.Seed;
+import tehnut.resourceful.crops.api.base.Seed;
 import tehnut.resourceful.crops.util.Utils;
 
 public class RecipeRegistry {

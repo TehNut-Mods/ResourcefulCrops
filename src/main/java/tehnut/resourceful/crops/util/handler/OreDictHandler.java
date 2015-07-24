@@ -3,7 +3,7 @@ package tehnut.resourceful.crops.util.handler;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 import tehnut.resourceful.crops.ConfigHandler;
-import tehnut.resourceful.crops.base.Seed;
+import tehnut.resourceful.crops.api.base.Seed;
 import tehnut.resourceful.crops.registry.BlockRegistry;
 import tehnut.resourceful.crops.registry.ItemRegistry;
 import tehnut.resourceful.crops.registry.SeedRegistry;

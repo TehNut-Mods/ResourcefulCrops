@@ -1,6 +1,6 @@
-package tehnut.resourceful.crops.base;
+package tehnut.resourceful.crops.api.base;
 
-import tehnut.resourceful.crops.util.BlockStack;
+import tehnut.resourceful.crops.api.util.BlockStack;
 
 /**
  * Factory for creating SeedReqs.

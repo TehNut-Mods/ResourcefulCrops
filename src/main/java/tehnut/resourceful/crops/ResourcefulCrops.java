@@ -12,7 +12,9 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
-import tehnut.resourceful.crops.base.Seed;
+import tehnut.resourceful.crops.api.ModInformation;
+import tehnut.resourceful.crops.api.ResourcefulAPI;
+import tehnut.resourceful.crops.api.base.Seed;
 import tehnut.resourceful.crops.compat.bloodmagic.CompatBloodMagic;
 import tehnut.resourceful.crops.compat.enderio.CompatEnderIO;
 import tehnut.resourceful.crops.compat.mfr.CompatMFR;
@@ -24,7 +26,7 @@ import tehnut.resourceful.crops.registry.ItemRegistry;
 import tehnut.resourceful.crops.registry.RecipeRegistry;
 import tehnut.resourceful.crops.registry.SeedRegistry;
 import tehnut.resourceful.crops.util.*;
-import tehnut.resourceful.crops.util.cache.PermanentCache;
+import tehnut.resourceful.crops.api.util.cache.PermanentCache;
 import tehnut.resourceful.crops.util.handler.EventHandler;
 import tehnut.resourceful.crops.util.handler.GenerationHandler;
 import tehnut.resourceful.crops.util.handler.OreDictHandler;
@@ -54,6 +56,7 @@ public class ResourcefulCrops {
 
     @Mod.Instance
     public static ResourcefulCrops instance;
+
     public static int renderIDCrop;
     private static File configDir;
     private static PermanentCache<Seed> seedCache;
@@ -75,6 +78,7 @@ public class ResourcefulCrops {
         proxy.load();
 
         seedCache = new PermanentCache<Seed>(ModInformation.ID + "Cache");
+        ResourcefulAPI.seedCache = seedCache;
 
         BlockRegistry.registerBlocks();
         ItemRegistry.registerItems();

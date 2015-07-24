@@ -5,13 +5,13 @@ import com.google.gson.reflect.TypeToken;
 import cpw.mods.fml.common.registry.GameData;
 import org.apache.commons.io.filefilter.FileFilterUtils;
 import tehnut.resourceful.crops.ResourcefulCrops;
-import tehnut.resourceful.crops.base.Seed;
-import tehnut.resourceful.crops.base.SeedReq;
-import tehnut.resourceful.crops.base.SeedReqBuilder;
+import tehnut.resourceful.crops.api.base.Seed;
+import tehnut.resourceful.crops.api.base.SeedReq;
+import tehnut.resourceful.crops.api.base.SeedReqBuilder;
 import tehnut.resourceful.crops.registry.SeedRegistry;
-import tehnut.resourceful.crops.util.BlockStack;
+import tehnut.resourceful.crops.api.util.BlockStack;
 import tehnut.resourceful.crops.util.helper.JsonHelper;
-import tehnut.resourceful.crops.base.SeedBuilder;
+import tehnut.resourceful.crops.api.base.SeedBuilder;
 import tehnut.resourceful.crops.util.Utils;
 
 import java.awt.*;

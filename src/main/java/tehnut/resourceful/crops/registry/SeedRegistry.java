@@ -4,7 +4,7 @@ import com.google.gson.GsonBuilder;
 import net.minecraft.item.ItemStack;
 import tehnut.resourceful.crops.ConfigHandler;
 import tehnut.resourceful.crops.ResourcefulCrops;
-import tehnut.resourceful.crops.base.Seed;
+import tehnut.resourceful.crops.api.base.Seed;
 import tehnut.resourceful.crops.util.helper.LogHelper;
 
 import java.util.ArrayList;
