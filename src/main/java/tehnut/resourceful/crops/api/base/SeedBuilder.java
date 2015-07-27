@@ -13,6 +13,7 @@ public class SeedBuilder {
     private String name;
     private int tier;
     private int amount;
+    private boolean nether = false;
     private String input;
     private ItemStack output;
     private ItemStack secondOutput = null;
@@ -46,6 +47,11 @@ public class SeedBuilder {
             this.amount = 64;
         else
             this.amount = amount;
+        return this;
+    }
+
+    public SeedBuilder setNether(boolean nether) {
+        this.nether = nether;
         return this;
     }
 
@@ -90,6 +96,6 @@ public class SeedBuilder {
     }
 
     public Seed build() {
-        return new Seed(name, tier, amount, input, output, secondOutput, thirdOutput, color, seedReq, chance, compat);
+        return new Seed(name, tier, amount, nether, input, output, secondOutput, thirdOutput, color, seedReq, chance, compat);
     }
 }

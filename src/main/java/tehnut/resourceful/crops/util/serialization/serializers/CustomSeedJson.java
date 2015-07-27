@@ -21,6 +21,7 @@ public class CustomSeedJson implements JsonDeserializer<Seed>, JsonSerializer<Se
         String name = helper.getString("name");
         int tier = helper.getNullableInteger("tier", 1);
         int amount = helper.getNullableInteger("amount", 1);
+        boolean farmland = helper.getNullableBoolean("nether", false);
         String input = helper.getString("input");
         String output = helper.getNullableString("output", null);
         String secondOutput = helper.getNullableString("secondOutput", null);
@@ -37,6 +38,7 @@ public class CustomSeedJson implements JsonDeserializer<Seed>, JsonSerializer<Se
         builder.setName(name);
         builder.setTier(tier);
         builder.setAmount(amount);
+        builder.setNether(farmland);
         builder.setInput(input);
         builder.setOutput(Utils.parseItemStack(output, false));
         builder.setSecondOutput(Utils.parseItemStack(secondOutput, false));
@@ -54,6 +56,8 @@ public class CustomSeedJson implements JsonDeserializer<Seed>, JsonSerializer<Se
         jsonObject.addProperty("name", src.getName());
         jsonObject.addProperty("tier", src.getTier());
         jsonObject.addProperty("amount", src.getAmount());
+        if (!src.getNether())
+            jsonObject.addProperty("nether", src.getNether());
         jsonObject.addProperty("input", src.getInput());
         jsonObject.addProperty("output", Utils.itemStackToString(src.getOutput()));
         if (src.getSecondOutput() != null)

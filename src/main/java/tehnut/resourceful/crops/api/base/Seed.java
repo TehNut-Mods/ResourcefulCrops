@@ -11,6 +11,7 @@ public class Seed {
     private String name;
     private int tier;
     private int amount;
+    private boolean nether;
     private String input;
     private ItemStack output;
     private ItemStack secondOutput;
@@ -26,6 +27,7 @@ public class Seed {
      * @param name         - Name of the seed (Localized or Unlocalized).
      * @param tier         - The tier of the seed. <ul><li>1 - Mundane</li><li>2 - Magical</li><li>3 - Infused</li><li>4 - Arcane</li></ul>
      * @param amount       - Amount of seeds to produce per craft.
+     * @param nether       - If true, the crop can only be planted on Soul Sand.
      * @param input        - Input ItemStack or OreDict entry for creating the seeds.
      * @param output       - Output ItemStack or OreDict entry from crafting the shards.
      * @param secondOutput - Secondary output ItemStack or OreDict entry from crafting shards
@@ -35,10 +37,11 @@ public class Seed {
      * @param chance       - Chances for events to happen
      * @param compat       - Whether or not this seed is for a {@link CompatibilitySeed}
      */
-    protected Seed(String name, int tier, int amount, String input, ItemStack output, @Nullable ItemStack secondOutput, @Nullable ItemStack thirdOutput, Color color, SeedReq seedReq, Chance chance, boolean compat) {
+    protected Seed(String name, int tier, int amount, boolean nether, String input, ItemStack output, @Nullable ItemStack secondOutput, @Nullable ItemStack thirdOutput, Color color, SeedReq seedReq, Chance chance, boolean compat) {
         this.name = name;
         this.tier = tier;
         this.amount = amount;
+        this.nether = nether;
         this.input = input;
         this.output = output;
         this.secondOutput = secondOutput;
@@ -59,6 +62,10 @@ public class Seed {
 
     public int getAmount() {
         return amount;
+    }
+
+    public boolean getNether() {
+        return nether;
     }
 
     public String getInput() {

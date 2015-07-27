@@ -6,6 +6,7 @@ import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
@@ -43,14 +44,15 @@ public class ItemPouch extends Item implements IPlantable {
     public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
 
         boolean success = false;
+        Seed seed = SeedRegistry.getSeed(Utils.getItemDamage(stack));
 
         for (int posX = x - 1; posX <= x + 1; posX++) {
             for (int posZ = z - 1; posZ <= z + 1; posZ++) {
                 Block placed = world.getBlock(posX, y, posZ);
 
-                if (placed.canSustainPlant(world, posX, y, posZ, ForgeDirection.UP, this) && ForgeDirection.getOrientation(side) == ForgeDirection.UP && Utils.isValidSeed(Utils.getItemDamage(stack)) && world.isAirBlock(posX, y + 1, posZ)) {
+                if (isSoil(world, x, y, z, placed, seed) && ForgeDirection.getOrientation(side) == ForgeDirection.UP && Utils.isValidSeed(Utils.getItemDamage(stack)) && world.isAirBlock(posX, y + 1, posZ)) {
                     world.setBlock(posX, y + 1, posZ, BlockRegistry.crop);
-                    ((TileRCrop) world.getTileEntity(posX, y + 1, posZ)).setSeedName(SeedRegistry.getSeed(Utils.getItemDamage(stack)).getName());
+                    ((TileRCrop) world.getTileEntity(posX, y + 1, posZ)).setSeedName(seed.getName());
                     if (!player.capabilities.isCreativeMode)
                         player.inventory.decrStackSize(player.inventory.currentItem, 1);
 
@@ -60,6 +62,10 @@ public class ItemPouch extends Item implements IPlantable {
         }
 
         return success;
+    }
+
+    public boolean isSoil(World world, int x, int y, int z, Block block, Seed seed) {
+        return (!seed.getNether() && block.canSustainPlant(world, x, y, z, ForgeDirection.UP, this)) || (seed.getNether() && world.getBlock(x, y, z) == Blocks.soul_sand);
     }
 
     @SuppressWarnings("unchecked")

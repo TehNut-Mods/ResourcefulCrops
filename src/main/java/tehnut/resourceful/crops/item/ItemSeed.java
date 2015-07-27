@@ -5,6 +5,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
@@ -48,10 +49,11 @@ public class ItemSeed extends Item implements IPlantable {
     public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
 
         Block placed = world.getBlock(x, y, z);
+        Seed seed = SeedRegistry.getSeed(Utils.getItemDamage(stack));
 
-        if (placed.canSustainPlant(world, x, y, z, ForgeDirection.UP, this) && ForgeDirection.getOrientation(side) == ForgeDirection.UP && Utils.isValidSeed(Utils.getItemDamage(stack)) && world.isAirBlock(x, y + 1, z)) {
+        if (isSoil(world, x, y, z, placed, seed)&& ForgeDirection.getOrientation(side) == ForgeDirection.UP && Utils.isValidSeed(Utils.getItemDamage(stack)) && world.isAirBlock(x, y + 1, z)) {
             world.setBlock(x, y + 1, z, BlockRegistry.crop);
-            ((TileRCrop) world.getTileEntity(x, y + 1, z)).setSeedName(SeedRegistry.getSeed(Utils.getItemDamage(stack)).getName());
+            ((TileRCrop) world.getTileEntity(x, y + 1, z)).setSeedName(seed.getName());
             if (!player.capabilities.isCreativeMode)
                 player.inventory.decrStackSize(player.inventory.currentItem, 1);
 
@@ -59,6 +61,10 @@ public class ItemSeed extends Item implements IPlantable {
         }
 
         return false;
+    }
+
+    public boolean isSoil(World world, int x, int y, int z, Block block, Seed seed) {
+        return (!seed.getNether() && block.canSustainPlant(world, x, y, z, ForgeDirection.UP, this)) || (seed.getNether() && world.getBlock(x, y, z) == Blocks.soul_sand);
     }
 
     @SideOnly(Side.CLIENT)
