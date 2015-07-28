@@ -21,6 +21,7 @@ import tehnut.resourceful.crops.compat.mfr.CompatMFR;
 import tehnut.resourceful.crops.compat.torcherino.CompatTorcherino;
 import tehnut.resourceful.crops.compat.waila.CompatWaila;
 import tehnut.resourceful.crops.proxy.CommonProxy;
+import tehnut.resourceful.crops.registry.AchievementRegistry;
 import tehnut.resourceful.crops.registry.BlockRegistry;
 import tehnut.resourceful.crops.registry.ItemRegistry;
 import tehnut.resourceful.crops.registry.RecipeRegistry;
@@ -85,6 +86,7 @@ public class ResourcefulCrops {
 
         BlockRegistry.registerBlocks();
         ItemRegistry.registerItems();
+        AchievementRegistry.registerAchievements();
         GameRegistry.registerWorldGenerator(new GenerationHandler(), 2);
     }
 

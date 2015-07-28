@@ -51,3 +51,26 @@ waila.config.render.fancy=Fancy Render
 # Config
 config.ResourcefulCrops.title=ResourcefulCrops Configuration
 config.ResourcefulCrops.console.refresh=Refreshing configuration file.
+
+# Achievement
+achievement.ResourcefulCrops.page=Resourceful Crops
+achievement.ResourcefulCrops.get.essence=The Purple
+achievement.ResourcefulCrops.get.essence.desc=Found some Gaianite Essence
+achievement.ResourcefulCrops.get.stone.0=Starting out
+achievement.ResourcefulCrops.get.stone.0.desc=Crafted the Mundane Stone of Creation
+achievement.ResourcefulCrops.get.stone.1=On the way
+achievement.ResourcefulCrops.get.stone.1.desc=Crafted the Magical Stone of Creation
+achievement.ResourcefulCrops.get.stone.2=Getting there
+achievement.ResourcefulCrops.get.stone.2.desc=Crafted the Infused Stone of Creation
+achievement.ResourcefulCrops.get.stone.3=So close!
+achievement.ResourcefulCrops.get.stone.3.desc=Crafted the Arcane Stone of Creation
+achievement.ResourcefulCrops.get.stone.4=So worth.
+achievement.ResourcefulCrops.get.stone.4.desc=Crafted the True Stone of Creation
+achievement.ResourcefulCrops.get.seed=Let's grow it
+achievement.ResourcefulCrops.get.seed.desc=Crafted your first Seed
+achievement.ResourcefulCrops.get.pouch=Condensinator
+achievement.ResourcefulCrops.get.pouch.desc=Condensed your seeds into a pouch for quick planting.
+achievement.ResourcefulCrops.get.shard=How does that work?
+achievement.ResourcefulCrops.get.shard.desc=Got some stone shards out of your plant. What?
+achievement.ResourcefulCrops.get.info=Prerequisites
+achievement.ResourcefulCrops.get.info.desc=Used a Hoe to learn the requirements of your crop.

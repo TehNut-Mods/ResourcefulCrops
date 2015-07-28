@@ -20,6 +20,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.EnumPlantType;
 import net.minecraftforge.common.util.ForgeDirection;
 import tehnut.resourceful.crops.ConfigHandler;
+import tehnut.resourceful.crops.achievement.AchievementTrigger;
 import tehnut.resourceful.crops.api.ModInformation;
 import tehnut.resourceful.crops.ResourcefulCrops;
 import tehnut.resourceful.crops.api.base.Seed;
@@ -150,8 +151,10 @@ public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
         TileEntity cropTile = world.getTileEntity(x, y, z);
 
         if (Utils.isValidSeed(((TileRCrop)cropTile).getSeedName())) {
-            if (player.getHeldItem() != null && player.getHeldItem().getItem() instanceof ItemHoe)
+            if (player.getHeldItem() != null && player.getHeldItem().getItem() instanceof ItemHoe) {
+                AchievementTrigger.triggerInfo(player);
                 return doReqInfo(((TileRCrop) cropTile).getSeedName());
+            }
 
             if (!player.isSneaking() || player.getHeldItem() == null && ConfigHandler.enableRightClickHarvest)
                 return doHarvest(world, x, y, z, player);
