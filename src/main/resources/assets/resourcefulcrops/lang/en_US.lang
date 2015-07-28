@@ -72,5 +72,7 @@ achievement.ResourcefulCrops.get.pouch=Condensinator
 achievement.ResourcefulCrops.get.pouch.desc=Condensed your seeds into a pouch for quick planting.
 achievement.ResourcefulCrops.get.shard=How does that work?
 achievement.ResourcefulCrops.get.shard.desc=Got some stone shards out of your plant. What?
+achievement.ResourcefulCrops.get.harvest=Did you know
+achievement.ResourcefulCrops.get.harvest.desc=Right clicked a crop to harvest it quicker.
 achievement.ResourcefulCrops.get.info=Prerequisites
 achievement.ResourcefulCrops.get.info.desc=Used a Hoe to learn the requirements of your crop.

@@ -4,6 +4,7 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.stats.Achievement;
 import tehnut.resourceful.crops.registry.AchievementRegistry;
 import tehnut.resourceful.crops.registry.ItemRegistry;
 import tehnut.resourceful.crops.util.Utils;
@@ -38,7 +39,7 @@ public class AchievementTrigger {
             event.player.addStat(AchievementRegistry.getPouch, 1);
     }
 
-    public static void triggerInfo(EntityPlayer player) {
-        player.addStat(AchievementRegistry.getInfo, 1);
+    public static void triggerAchievement(EntityPlayer player, Achievement achievement) {
+        player.addStat(achievement, 1);
     }
 }

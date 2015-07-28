@@ -24,6 +24,7 @@ import tehnut.resourceful.crops.achievement.AchievementTrigger;
 import tehnut.resourceful.crops.api.ModInformation;
 import tehnut.resourceful.crops.ResourcefulCrops;
 import tehnut.resourceful.crops.api.base.Seed;
+import tehnut.resourceful.crops.registry.AchievementRegistry;
 import tehnut.resourceful.crops.registry.BlockRegistry;
 import tehnut.resourceful.crops.registry.ItemRegistry;
 import tehnut.resourceful.crops.api.registry.SeedRegistry;
@@ -152,12 +153,14 @@ public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
 
         if (Utils.isValidSeed(((TileRCrop)cropTile).getSeedName())) {
             if (player.getHeldItem() != null && player.getHeldItem().getItem() instanceof ItemHoe) {
-                AchievementTrigger.triggerInfo(player);
+                AchievementTrigger.triggerAchievement(player, AchievementRegistry.getInfo);
                 return doReqInfo(((TileRCrop) cropTile).getSeedName());
             }
 
-            if (!player.isSneaking() || player.getHeldItem() == null && ConfigHandler.enableRightClickHarvest)
+            if (!player.isSneaking() || player.getHeldItem() == null && ConfigHandler.enableRightClickHarvest) {
+                AchievementTrigger.triggerAchievement(player, AchievementRegistry.getHarvest);
                 return doHarvest(world, x, y, z, player);
+            }
         }
 
         return false;
