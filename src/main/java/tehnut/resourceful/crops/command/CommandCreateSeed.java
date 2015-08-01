@@ -8,8 +8,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
-import tehnut.resourceful.crops.base.Seed;
-import tehnut.resourceful.crops.base.SeedBuilder;
+import tehnut.resourceful.crops.api.base.Seed;
+import tehnut.resourceful.crops.api.base.SeedBuilder;
 import tehnut.resourceful.crops.util.Utils;
 
 import java.awt.*;

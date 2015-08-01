@@ -7,9 +7,11 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
-import tehnut.resourceful.crops.base.Seed;
-import tehnut.resourceful.crops.base.SeedBuilder;
-import tehnut.resourceful.crops.registry.SeedRegistry;
+import tehnut.resourceful.crops.api.base.Seed;
+import tehnut.resourceful.crops.api.base.SeedBuilder;
+import tehnut.resourceful.crops.api.compat.CompatibilitySeed;
+import tehnut.resourceful.crops.api.registry.SeedRegistry;
+import tehnut.resourceful.crops.util.helper.LogHelper;
 import tehnut.resourceful.crops.util.serialization.SeedCreator;
 
 import java.awt.*;
@@ -24,7 +26,7 @@ public class StartupUtils {
      * Creates a list of default seeds to add to the game.
      */
     public static void initDefaults() {
-        
+
         // Tier 1
         addDefaultSeedOre(makeSeed("Inky", 1, 4, "dyeBlack", new ItemStack(getOreStack("dyeBlack").getItem(), 8, getOreStack("dyeBlack").getItemDamage()), new Color(22, 22, 22)), "dyeBlack");
         addDefaultSeed(makeSeed("Fleshy", 1, 4, getItemString(Items.rotten_flesh), new ItemStack(Items.rotten_flesh, 8), new Color(255, 160, 136)));
@@ -105,12 +107,14 @@ public class StartupUtils {
     /**
      * Adds a default seed for a given mod
      *
-     * @param seed  - Seed to add to defaults
-     * @param modid - Modid required to add
+     * @param compatibilitySeed - {@link CompatibilitySeed} to check and register
      */
-    private static void addDefaultSeedMod(Seed seed, String modid) {
-        if (Loader.isModLoaded(modid))
-            defaultSeeds.add(seed);
+    private static void addDefaultSeedMod(CompatibilitySeed compatibilitySeed) {
+
+        LogHelper.info("Adding compatibility Seed for { " + compatibilitySeed.getModid() + " }");
+
+        if (Loader.isModLoaded(compatibilitySeed.getModid()) && compatibilitySeed.getConfig())
+            defaultSeeds.add(compatibilitySeed.getCompatSeed());
     }
 
     /**

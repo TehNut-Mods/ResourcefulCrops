@@ -1,4 +1,4 @@
-package tehnut.resourceful.crops.base;
+package tehnut.resourceful.crops.api.base;
 
 public class ChanceBuilder {
 

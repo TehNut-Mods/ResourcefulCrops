@@ -1,12 +1,16 @@
 package tehnut.resourceful.crops.util;
 
+import net.minecraft.block.Block;
+import net.minecraft.util.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.registry.GameData;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
-import tehnut.resourceful.crops.base.Seed;
-import tehnut.resourceful.crops.registry.SeedRegistry;
+import tehnut.resourceful.crops.api.base.Seed;
+import tehnut.resourceful.crops.api.registry.SeedRegistry;
+import tehnut.resourceful.crops.api.util.BlockStack;
 import tehnut.resourceful.crops.util.helper.LogHelper;
 
 public class Utils {
@@ -23,6 +27,9 @@ public class Utils {
      * @return            - An ItemStack built from the string
      */
     public static ItemStack parseItemStack(String stackString, boolean input) {
+        if (stackString == null)
+            return null;
+
         if (stackString.contains(":")) {
             String[] nameInfo = stackString.split(":");
             String name = nameInfo[0] + ":" + nameInfo[1];
@@ -31,6 +38,8 @@ public class Utils {
             int amount = Integer.parseInt(stackInfo[1]);
 
             return new ItemStack(GameData.getItemRegistry().getObject(name), amount, meta);
+        } else if(stackString.equals("null")) {
+            return null;
         } else if (!input) {
             String[] stackInfo = stackString.split("#");
             ItemStack oreStack = OreDictionary.getOres(stackInfo[0]).get(0);
@@ -53,7 +62,10 @@ public class Utils {
      * @return      - A string with the formatting of an ItemStack
      */
     public static String itemStackToString(ItemStack stack) {
-        return GameData.getItemRegistry().getNameForObject(stack.getItem()) + ":" + stack.getItemDamage() + "#" + stack.stackSize;
+        if (stack != null)
+            return GameData.getItemRegistry().getNameForObject(stack.getItem()) + ":" + stack.getItemDamage() + "#" + stack.stackSize;
+        else
+            return "null";
     }
 
     /**
@@ -73,7 +85,7 @@ public class Utils {
      * If I ever decide to stop determining things based on
      * damage value, this makes find/replace that much easier.
      * Otherwise it's just a redundant method that's longer than
-     * @{code stack.getItemDamage()}
+     * {@code stack.getItemDamage()}
      *
      * @param stack - ItemStack to get the metadata of.
      * @return      - Metadata of the given ItemStack
@@ -124,6 +136,18 @@ public class Utils {
     }
 
     /**
+     * Causes a break animation at the given coordinates.
+     * No reason to use this except for possible future proofing.
+     *
+     * @param world      - The world object
+     * @param pos        - Position in the world to play the animation at
+     * @param blockStack - {@link BlockStack} to get the particle texture from
+     */
+    public static void playBlockBreakAnim(World world, BlockPos pos, BlockStack blockStack) {
+        world.playAuxSFX(2001, pos, Block.getIdFromBlock(blockStack.getBlock()) + (blockStack.getMeta() << 12));
+    }
+
+    /**
      * Loads a class if the given modid is found
      *
      * @param clazz - Compatibility class
@@ -157,6 +181,7 @@ public class Utils {
             }
         }
 
+        LogHelper.info(entry + " - " + exists);
         return exists;
     }
 }

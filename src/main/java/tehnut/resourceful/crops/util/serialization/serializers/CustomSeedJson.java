@@ -2,7 +2,7 @@ package tehnut.resourceful.crops.util.serialization.serializers;
 
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
-import tehnut.resourceful.crops.base.*;
+import tehnut.resourceful.crops.api.base.*;
 import tehnut.resourceful.crops.util.Utils;
 import tehnut.resourceful.crops.util.helper.JsonHelper;
 

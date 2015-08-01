@@ -2,7 +2,7 @@ package tehnut.resourceful.crops.util.serialization.serializers;
 
 import com.google.gson.*;
 import net.minecraftforge.fml.common.registry.GameData;
-import tehnut.resourceful.crops.util.BlockStack;
+import tehnut.resourceful.crops.api.util.BlockStack;
 import tehnut.resourceful.crops.util.helper.JsonHelper;
 
 import java.lang.reflect.Type;

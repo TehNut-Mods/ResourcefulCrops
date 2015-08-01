@@ -8,7 +8,7 @@ import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import tehnut.resourceful.crops.ModInformation;
+import tehnut.resourceful.crops.api.ModInformation;
 
 public class RenderHelper {
 

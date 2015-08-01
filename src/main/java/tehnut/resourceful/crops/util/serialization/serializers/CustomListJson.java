@@ -2,8 +2,8 @@ package tehnut.resourceful.crops.util.serialization.serializers;
 
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
-import tehnut.resourceful.crops.base.Seed;
-import tehnut.resourceful.crops.registry.SeedRegistry;
+import tehnut.resourceful.crops.api.base.Seed;
+import tehnut.resourceful.crops.api.registry.SeedRegistry;
 
 import java.lang.reflect.Type;
 import java.util.List;

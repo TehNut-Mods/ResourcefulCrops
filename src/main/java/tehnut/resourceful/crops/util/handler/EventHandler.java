@@ -5,7 +5,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.event.entity.player.BonemealEvent;
 import tehnut.resourceful.crops.ConfigHandler;
-import tehnut.resourceful.crops.ModInformation;
+import tehnut.resourceful.crops.api.ModInformation;
 import tehnut.resourceful.crops.block.BlockRCrop;
 import tehnut.resourceful.crops.util.helper.LogHelper;
 

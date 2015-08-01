@@ -1,7 +1,7 @@
-package tehnut.resourceful.crops.base;
+package tehnut.resourceful.crops.api.base;
 
 import net.minecraft.world.EnumDifficulty;
-import tehnut.resourceful.crops.util.BlockStack;
+import tehnut.resourceful.crops.api.util.BlockStack;
 
 public class SeedReq {
 

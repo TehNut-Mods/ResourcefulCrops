@@ -1,8 +1,8 @@
 package tehnut.resourceful.crops.util.serialization.serializers;
 
 import com.google.gson.*;
-import tehnut.resourceful.crops.base.Chance;
-import tehnut.resourceful.crops.base.ChanceBuilder;
+import tehnut.resourceful.crops.api.base.Chance;
+import tehnut.resourceful.crops.api.base.ChanceBuilder;
 import tehnut.resourceful.crops.util.helper.JsonHelper;
 
 import java.lang.reflect.Type;

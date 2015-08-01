@@ -6,10 +6,10 @@
 //import net.minecraft.nbt.NBTTagCompound;
 //import net.minecraft.tileentity.TileEntity;
 //import net.minecraft.world.World;
-//import tehnut.resourceful.crops.base.Seed;
+//import tehnut.resourceful.crops.api.base.Seed;
 //import tehnut.resourceful.crops.block.BlockRCrop;
 //import tehnut.resourceful.crops.registry.ItemRegistry;
-//import tehnut.resourceful.crops.registry.SeedRegistry;
+//import tehnut.resourceful.crops.api.registry.SeedRegistry;
 //import tehnut.resourceful.crops.tile.TileRCrop;
 //import tehnut.resourceful.crops.util.Utils;
 //

@@ -3,9 +3,9 @@ package tehnut.resourceful.crops.util.serialization.serializers;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import net.minecraft.world.EnumDifficulty;
-import tehnut.resourceful.crops.base.SeedReq;
-import tehnut.resourceful.crops.base.SeedReqBuilder;
-import tehnut.resourceful.crops.util.BlockStack;
+import tehnut.resourceful.crops.api.base.SeedReq;
+import tehnut.resourceful.crops.api.base.SeedReqBuilder;
+import tehnut.resourceful.crops.api.util.BlockStack;
 import tehnut.resourceful.crops.util.helper.JsonHelper;
 
 import java.lang.reflect.Type;

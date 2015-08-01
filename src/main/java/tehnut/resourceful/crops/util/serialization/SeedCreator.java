@@ -3,10 +3,10 @@ package tehnut.resourceful.crops.util.serialization;
 import com.google.gson.*;
 import org.apache.commons.io.filefilter.FileFilterUtils;
 import tehnut.resourceful.crops.ResourcefulCrops;
-import tehnut.resourceful.crops.base.Chance;
-import tehnut.resourceful.crops.base.Seed;
-import tehnut.resourceful.crops.base.SeedReq;
-import tehnut.resourceful.crops.util.BlockStack;
+import tehnut.resourceful.crops.api.base.Chance;
+import tehnut.resourceful.crops.api.base.Seed;
+import tehnut.resourceful.crops.api.base.SeedReq;
+import tehnut.resourceful.crops.api.util.BlockStack;
 import tehnut.resourceful.crops.util.serialization.serializers.*;
 
 import java.io.*;

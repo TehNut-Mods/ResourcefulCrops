@@ -12,12 +12,15 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import tehnut.resourceful.crops.base.Seed;
+import tehnut.resourceful.crops.api.ModInformation;
+import tehnut.resourceful.crops.api.ResourcefulAPI;
+import tehnut.resourceful.crops.api.base.Seed;
+import tehnut.resourceful.crops.api.registry.SeedRegistry;
 import tehnut.resourceful.crops.compat.waila.CompatWaila;
 import tehnut.resourceful.crops.proxy.CommonProxy;
 import tehnut.resourceful.crops.registry.*;
 import tehnut.resourceful.crops.util.*;
-import tehnut.resourceful.crops.util.cache.PermanentCache;
+import tehnut.resourceful.crops.api.util.cache.PermanentCache;
 import tehnut.resourceful.crops.util.handler.EventHandler;
 import tehnut.resourceful.crops.util.handler.GenerationHandler;
 import tehnut.resourceful.crops.util.handler.OreDictHandler;
@@ -66,10 +69,14 @@ public class ResourcefulCrops {
 
         seedCache = new PermanentCache<Seed>(ModInformation.ID + "Cache");
 
+        ResourcefulAPI.seedCache = seedCache;
+        ResourcefulAPI.logger = LogHelper.getLogger();
+        ResourcefulAPI.forceAddDuplicates = ConfigHandler.forceAddDuplicates;
+
         BlockRegistry.registerBlocks();
         ItemRegistry.registerItems();
-        GameRegistry.registerWorldGenerator(new GenerationHandler(), 2);
         AchievementRegistry.registerAchievements();
+        GameRegistry.registerWorldGenerator(new GenerationHandler(), 2);
     }
 
     @Mod.EventHandler
@@ -97,7 +104,8 @@ public class ResourcefulCrops {
 
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event) {
-        LogHelper.info(SeedRegistry.badSeeds + " Seeds failed to register.");
+        if (SeedRegistry.badSeeds > 0)
+            LogHelper.error(SeedRegistry.badSeeds + " Seeds failed to register.");
 
         proxy.loadCommands();
         proxy.loadRenders();

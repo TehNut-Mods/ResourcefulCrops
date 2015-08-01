@@ -1,11 +1,9 @@
-package tehnut.resourceful.crops.registry;
+package tehnut.resourceful.crops.api.registry;
 
 import com.google.gson.GsonBuilder;
 import net.minecraft.item.ItemStack;
-import tehnut.resourceful.crops.ConfigHandler;
-import tehnut.resourceful.crops.ResourcefulCrops;
-import tehnut.resourceful.crops.base.Seed;
-import tehnut.resourceful.crops.util.helper.LogHelper;
+import tehnut.resourceful.crops.api.ResourcefulAPI;
+import tehnut.resourceful.crops.api.base.Seed;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,36 +16,36 @@ public class SeedRegistry {
 
     public static void registerSeed(Seed seed) {
         try {
-            ResourcefulCrops.getSeedCache().addObject(seed, seed.getName());
+            ResourcefulAPI.seedCache.addObject(seed, !seed.getCompat() ? seed.getName() : seed.getName() + "-Compat");
         } catch (IllegalArgumentException e) {
-            if (ConfigHandler.forceAddDuplicates) {
-                LogHelper.error("Seed { " + seed.getName() + " } has been registered twice. Force adding the copy.");
-                ResourcefulCrops.getSeedCache().addObject(seed, seed.getName() + badSeeds);
+            if (ResourcefulAPI.forceAddDuplicates) {
+                ResourcefulAPI.logger.error("Seed { " + seed.getName() + " } has been registered twice. Force adding the copy.");
+                ResourcefulAPI.seedCache.addObject(seed, seed.getName() + badSeeds);
             } else {
-                LogHelper.error("Seed { " + seed.getName() + " } has been registered twice. Skipping the copy and continuing.");
+                ResourcefulAPI.logger.error("Seed { " + seed.getName() + " } has been registered twice. Skipping the copy and continuing.");
             }
             badSeeds++;
         }
     }
 
     public static Seed getSeed(int index) {
-        return ResourcefulCrops.getSeedCache().getObject(index);
+        return ResourcefulAPI.seedCache.getObject(index);
     }
 
     public static Seed getSeed(String name) {
-        return ResourcefulCrops.getSeedCache().getObject(name);
+        return ResourcefulAPI.seedCache.getObject(name);
     }
 
     public static int getIndexOf(Seed seed) {
-        return ResourcefulCrops.getSeedCache().getID(seed);
+        return ResourcefulAPI.seedCache.getID(seed);
     }
 
     public static int getIndexOf(String name) {
-        return ResourcefulCrops.getSeedCache().getID(getSeed(name));
+        return ResourcefulAPI.seedCache.getID(getSeed(name));
     }
 
     public static String getNameOf(Seed seed) {
-        return ResourcefulCrops.getSeedCache().getName(seed);
+        return ResourcefulAPI.seedCache.getName(seed);
     }
 
     public static int getSize() {
@@ -67,6 +65,6 @@ public class SeedRegistry {
     }
 
     public static ItemStack getItemStackForSeed(Seed seed) {
-        return new ItemStack(ItemRegistry.seed, 1, getIndexOf(seed));
+        return new ItemStack(ResourcefulAPI.seed, 1, getIndexOf(seed));
     }
 }

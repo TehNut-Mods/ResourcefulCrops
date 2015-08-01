@@ -1,4 +1,4 @@
-package tehnut.resourceful.crops.util;
+package tehnut.resourceful.crops.api.util;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;

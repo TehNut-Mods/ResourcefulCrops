@@ -3,7 +3,8 @@ package tehnut.resourceful.crops.registry;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
-import tehnut.resourceful.crops.ModInformation;
+import tehnut.resourceful.crops.api.ModInformation;
+import tehnut.resourceful.crops.api.ResourcefulAPI;
 import tehnut.resourceful.crops.block.BlockRCrop;
 import tehnut.resourceful.crops.block.BlockROre;
 import tehnut.resourceful.crops.item.block.ItemBlockROre;
@@ -18,10 +19,12 @@ public class BlockRegistry {
     public static void registerBlocks() {
         ore = new BlockROre();
         GameRegistry.registerBlock(ore, ItemBlockROre.class, "BlockROre");
+        ResourcefulAPI.ore = ore;
 
         crop = new BlockRCrop();
         GameRegistry.registerBlock(crop, "BlockRCrop");
         GameRegistry.registerTileEntity(TileRCrop.class, ModInformation.ID + ":TileRCrop");
+        ResourcefulAPI.crop = crop;
     }
 
     public static void registerRenders() {

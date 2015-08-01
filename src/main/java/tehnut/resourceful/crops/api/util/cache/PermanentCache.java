@@ -1,4 +1,4 @@
-package tehnut.resourceful.crops.util.cache;
+package tehnut.resourceful.crops.api.util.cache;
 
 import com.google.common.collect.Lists;
 import lombok.SneakyThrows;
