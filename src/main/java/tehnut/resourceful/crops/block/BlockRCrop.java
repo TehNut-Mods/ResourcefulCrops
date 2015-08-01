@@ -10,6 +10,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemHoe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.EnumPlantType;
@@ -172,6 +173,9 @@ public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
         else
             ResourcefulCrops.proxy.addChatMessage(String.format(StatCollector.translateToLocal("chat.ResourcefulCrops.req.light.between"), seed.getSeedReq().getLightLevelMin(), seed.getSeedReq().getLightLevelMax()), 2);
 
+        if (seed.getSeedReq().getDifficulty() != EnumDifficulty.PEACEFUL)
+            ResourcefulCrops.proxy.addChatMessage(String.format(StatCollector.translateToLocal("chat.ResourcefulCrops.req.difficulty"), seed.getSeedReq().getDifficulty().toString()), 3);
+
         return true;
     }
 
@@ -181,7 +185,17 @@ public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
         int seedIndex = getTileSeedIndex(world, pos);
         Seed seed = SeedRegistry.getSeed(seedIndex);
 
-        world.spawnEntityInWorld(new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ItemRegistry.shard, 1, getTileSeedIndex(world, pos))));
+        world.spawnEntityInWorld(new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ItemRegistry.shard, 1, seedIndex)));
+
+        double extraSeedChance = seed.getChance().getExtraSeed();
+        double essenceDropChance = seed.getChance().getEssenceDrop();
+        double randomDouble = random.nextDouble();
+
+        if (randomDouble <= extraSeedChance)
+            world.spawnEntityInWorld(new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ItemRegistry.seed, 1, seedIndex)));
+
+        if (randomDouble <= essenceDropChance)
+            world.spawnEntityInWorld(new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ItemRegistry.material)));
     }
 
     public static void setShouldDrop(boolean drop) {
