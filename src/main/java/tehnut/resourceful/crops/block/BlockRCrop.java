@@ -16,7 +16,9 @@ import net.minecraftforge.common.EnumPlantType;
 import tehnut.resourceful.crops.ConfigHandler;
 import tehnut.resourceful.crops.ModInformation;
 import tehnut.resourceful.crops.ResourcefulCrops;
+import tehnut.resourceful.crops.achievement.AchievementTrigger;
 import tehnut.resourceful.crops.base.Seed;
+import tehnut.resourceful.crops.registry.AchievementRegistry;
 import tehnut.resourceful.crops.registry.BlockRegistry;
 import tehnut.resourceful.crops.registry.ItemRegistry;
 import tehnut.resourceful.crops.registry.SeedRegistry;
@@ -82,37 +84,20 @@ public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
             }
         }
     }
-    
+
     @Override
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ) {
         TileEntity cropTile = world.getTileEntity(pos);
 
         if (Utils.isValidSeed(((TileRCrop)cropTile).getSeedName())) {
             if (player.getHeldItem() != null && player.getHeldItem().getItem() instanceof ItemHoe) {
-                Seed seed = SeedRegistry.getSeed(((TileRCrop) cropTile).getSeedName());
-
-                ResourcefulCrops.proxy.addChatMessage(String.format(StatCollector.translateToLocal("chat.ResourcefulCrops.crop.name"), seed.getName()), 1);
-                ResourcefulCrops.proxy.addChatMessage(String.format(StatCollector.translateToLocal("chat.ResourcefulCrops.req.growth"), seed.getSeedReq().getGrowthReq() != null ? seed.getSeedReq().getGrowthReq().getDisplayName() : StatCollector.translateToLocal("info.ResourcefulCrops.anything")), 2);
-
-                if (seed.getSeedReq().getLightLevelMax() == Integer.MAX_VALUE)
-                    ResourcefulCrops.proxy.addChatMessage(String.format(StatCollector.translateToLocal("chat.ResourcefulCrops.req.light.above"), seed.getSeedReq().getLightLevelMin()), 3);
-                else if (seed.getSeedReq().getLightLevelMin() == 0)
-                    ResourcefulCrops.proxy.addChatMessage(String.format(StatCollector.translateToLocal("chat.ResourcefulCrops.req.light.below"), seed.getSeedReq().getLightLevelMax()), 3);
-                else
-                    ResourcefulCrops.proxy.addChatMessage(String.format(StatCollector.translateToLocal("chat.ResourcefulCrops.req.light.between"), seed.getSeedReq().getLightLevelMin(), seed.getSeedReq().getLightLevelMax()), 3);
-
-                return true;
+                AchievementTrigger.triggerAchievement(player, AchievementRegistry.getInfo);
+                return doReqInfo(((TileRCrop) cropTile).getSeedName());
             }
 
             if (!player.isSneaking() || player.getHeldItem() == null && ConfigHandler.enableRightClickHarvest) {
-                if (world.getBlockState(pos) == BlockRegistry.crop.getDefaultState() && this.getMetaFromState(world.getBlockState(pos)) >= 7) {
-                    if (!world.isRemote) {
-                        world.setBlockState(pos, this.getDefaultState(), 3);
-                        world.spawnEntityInWorld(new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ItemRegistry.shard, 1, getTileSeedIndex(world, pos))));
-                    }
-                    player.swingItem();
-                    return true;
-                }
+                AchievementTrigger.triggerAchievement(player, AchievementRegistry.getHarvest);
+                return doHarvest(world, pos, player);
             }
         }
 
@@ -159,6 +144,44 @@ public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
         }
 
         return drops;
+    }
+
+    public boolean doHarvest(World world, BlockPos pos, EntityPlayer player) {
+        if (world.getBlockState(pos).getBlock() == BlockRegistry.crop && getMetaFromState(world.getBlockState(pos)) >= 7) {
+            if (!world.isRemote) {
+                world.setBlockState(pos, getDefaultState(), 3);
+                doRightClickDrops(world, pos);
+            }
+            player.swingItem();
+            return true;
+        }
+
+        return false;
+    }
+
+    public boolean doReqInfo(String seedName) {
+        Seed seed = SeedRegistry.getSeed(seedName);
+
+        ResourcefulCrops.proxy.addChatMessage(String.format(StatCollector.translateToLocal("chat.ResourcefulCrops.crop.name"), seed.getName()), 1);
+        ResourcefulCrops.proxy.addChatMessage(String.format(StatCollector.translateToLocal("chat.ResourcefulCrops.req.growth"), seed.getSeedReq().getGrowthReq() != null ? seed.getSeedReq().getGrowthReq().getDisplayName() : StatCollector.translateToLocal("info.ResourcefulCrops.anything")), 1);
+
+        if (seed.getSeedReq().getLightLevelMax() == Integer.MAX_VALUE)
+            ResourcefulCrops.proxy.addChatMessage(String.format(StatCollector.translateToLocal("chat.ResourcefulCrops.req.light.above"), seed.getSeedReq().getLightLevelMin()), 2);
+        else if (seed.getSeedReq().getLightLevelMin() == 0)
+            ResourcefulCrops.proxy.addChatMessage(String.format(StatCollector.translateToLocal("chat.ResourcefulCrops.req.light.below"), seed.getSeedReq().getLightLevelMax()), 2);
+        else
+            ResourcefulCrops.proxy.addChatMessage(String.format(StatCollector.translateToLocal("chat.ResourcefulCrops.req.light.between"), seed.getSeedReq().getLightLevelMin(), seed.getSeedReq().getLightLevelMax()), 2);
+
+        return true;
+    }
+
+    public void doRightClickDrops(World world, BlockPos pos) {
+
+        Random random = new Random();
+        int seedIndex = getTileSeedIndex(world, pos);
+        Seed seed = SeedRegistry.getSeed(seedIndex);
+
+        world.spawnEntityInWorld(new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ItemRegistry.shard, 1, getTileSeedIndex(world, pos))));
     }
 
     public static void setShouldDrop(boolean drop) {

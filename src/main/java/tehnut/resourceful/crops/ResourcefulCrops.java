@@ -15,10 +15,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import tehnut.resourceful.crops.base.Seed;
 import tehnut.resourceful.crops.compat.waila.CompatWaila;
 import tehnut.resourceful.crops.proxy.CommonProxy;
-import tehnut.resourceful.crops.registry.BlockRegistry;
-import tehnut.resourceful.crops.registry.ItemRegistry;
-import tehnut.resourceful.crops.registry.RecipeRegistry;
-import tehnut.resourceful.crops.registry.SeedRegistry;
+import tehnut.resourceful.crops.registry.*;
 import tehnut.resourceful.crops.util.*;
 import tehnut.resourceful.crops.util.cache.PermanentCache;
 import tehnut.resourceful.crops.util.handler.EventHandler;
@@ -72,6 +69,7 @@ public class ResourcefulCrops {
         BlockRegistry.registerBlocks();
         ItemRegistry.registerItems();
         GameRegistry.registerWorldGenerator(new GenerationHandler(), 2);
+        AchievementRegistry.registerAchievements();
     }
 
     @Mod.EventHandler
