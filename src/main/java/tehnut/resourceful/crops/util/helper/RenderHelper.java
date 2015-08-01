@@ -17,7 +17,7 @@ public class RenderHelper {
             name = name.replace("Item", "");
 
         RenderItem renderItem = Minecraft.getMinecraft().getRenderItem();
-        String resName = ModInformation.ID.toLowerCase() + ":" + name;
+        String resName = ModInformation.RESLOC + name;
 
         ModelBakery.addVariantName(item, resName);
         renderItem.getItemModelMesher().register(item, meta, new ModelResourceLocation(resName, "inventory"));
@@ -38,7 +38,7 @@ public class RenderHelper {
         renderItem.getItemModelMesher().register(item, new ItemMeshDefinition() {
             @Override
             public ModelResourceLocation getModelLocation(ItemStack stack) {
-                return new ModelResourceLocation(ModInformation.ID + ":" + toRender.getClass().getSimpleName(), "inventory");
+                return new ModelResourceLocation(ModInformation.RESLOC + toRender.getClass().getSimpleName(), "inventory");
             }
         });
     }
