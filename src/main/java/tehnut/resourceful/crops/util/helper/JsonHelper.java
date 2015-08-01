@@ -43,6 +43,19 @@ public class JsonHelper {
         return ret;
     }
 
+    public double getDouble(String object) {
+        return json.getAsJsonObject().get(object).getAsDouble();
+    }
+
+    public double getNullableDouble(String object, double def) {
+        double ret = def;
+
+        if (json.getAsJsonObject().get(object) != null)
+            ret = json.getAsJsonObject().get(object).getAsDouble();
+
+        return ret;
+    }
+
     public String getString(String object) {
         return json.getAsJsonObject().get(object).getAsString();
     }
