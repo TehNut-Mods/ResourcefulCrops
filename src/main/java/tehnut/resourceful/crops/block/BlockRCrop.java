@@ -88,9 +88,6 @@ public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ) {
         TileEntity cropTile = world.getTileEntity(pos);
 
-        if (!world.isRemote)
-            player.addChatComponentMessage(new ChatComponentText("Meta: " + this.getMetaFromState(world.getBlockState(pos))));
-
         if (Utils.isValidSeed(((TileRCrop)cropTile).getSeedName())) {
             if (player.getHeldItem() != null && player.getHeldItem().getItem() instanceof ItemHoe) {
                 Seed seed = SeedRegistry.getSeed(((TileRCrop) cropTile).getSeedName());
