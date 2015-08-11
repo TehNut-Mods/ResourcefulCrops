@@ -62,12 +62,13 @@ public class BlockROre extends Block {
     	int iQuantity = 1;
     	int fortuneLevel = 0;
     	if (player instanceof FakePlayer && ConfigHandler.enableFakePlayerMining != true){
-    		//This is a fake player, do nothing
+    		//This is a fake player, they get cobble
+    		Block blockItem = Blocks.cobblestone;
+			BlockROre.dropItem(world, x, y, z, new ItemStack(blockItem,1,0));
     		return;
     	}
     	else{	
     		//This is an actual player, generate items based on enchantment
-    		System.out.println( "This is not a fake miner" );
     		boolean silk = EnchantmentHelper.getSilkTouchModifier(player);
     		if (silk) {
     			Block blockItem = BlockRegistry.ore;
