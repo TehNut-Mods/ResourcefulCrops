@@ -90,7 +90,6 @@ public class BlockROre extends Block {
     			}
 
     			Item droppedItem = ItemRegistry.material;
-    			System.out.println( "Not silktouch, dropped items" );
     			BlockROre.dropItem(world, x, y, z, new ItemStack(droppedItem,iQuantity,0));
     		}
     	}
