@@ -14,6 +14,7 @@ public class ItemRegistry {
     public static Item stone;
     public static Item material;
 
+    
     public static void registerItems() {
         stone = new ItemStone();
         GameRegistry.registerItem(stone, "ItemStone");
@@ -30,7 +31,7 @@ public class ItemRegistry {
         shard = new ItemShard();
         GameRegistry.registerItem(shard, "ItemShard");
         ResourcefulAPI.shard = shard;
-
+        
         if (ConfigHandler.enableSeedPouches) {
             pouch = new ItemPouch();
             GameRegistry.registerItem(pouch, "ItemPouch");
