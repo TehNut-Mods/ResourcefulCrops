@@ -28,6 +28,8 @@ public class ConfigHandler {
     public static boolean enableMFRAutomation;
     public static boolean enableEnderIOAutomation;
     public static boolean enableBloodMagicAutomation;
+    
+    public static boolean enableFakePlayerMining;
 
     public static void init(File file) {
         config = new Configuration(file);
@@ -46,6 +48,7 @@ public class ConfigHandler {
         category = "Balance";
         config.addCustomCategoryComment(category, "Balance settings");
         enableSeedPouches = config.getBoolean("enableSeedPouches", category, true, "Allows registering of seed pouches. These plant a 3x3 (9 total) seeds around a central block.");
+        enableFakePlayerMining = config.getBoolean("enableFakePlayerMining", category, true, "Allows ore to be mined by Quarries and Miners");
 
         category = "World";
         config.addCustomCategoryComment(category, "World settings");
