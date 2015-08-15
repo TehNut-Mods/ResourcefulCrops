@@ -1,7 +1,6 @@
 package tehnut.resourceful.crops.api.base;
 
 import net.minecraft.item.ItemStack;
-import tehnut.resourceful.crops.api.compat.CompatibilitySeed;
 
 import javax.annotation.Nullable;
 import java.awt.*;
@@ -19,7 +18,8 @@ public class Seed {
     private Color color;
     private SeedReq seedReq;
     private Chance chance;
-    private boolean compat;
+    private boolean compatSeed;
+    private Compat compat;
 
     /**
      * To create a seed, use {@link SeedBuilder}
@@ -35,9 +35,10 @@ public class Seed {
      * @param color        - Color of the Seed/Shard/Crop
      * @param seedReq      - Special conditions for Seeds
      * @param chance       - Chances for events to happen
-     * @param compat       - Whether or not this seed is for a {@link CompatibilitySeed}
+     * @param compatSeed   - Whether or not this seed is for a {@link tehnut.resourceful.crops.api.compat.CompatibilitySeed}
+     * @param compat       - The compatibility settings for specific mods.
      */
-    protected Seed(String name, int tier, int amount, boolean nether, String input, ItemStack output, @Nullable ItemStack secondOutput, @Nullable ItemStack thirdOutput, Color color, SeedReq seedReq, Chance chance, boolean compat) {
+    protected Seed(String name, int tier, int amount, boolean nether, String input, ItemStack output, @Nullable ItemStack secondOutput, @Nullable ItemStack thirdOutput, Color color, SeedReq seedReq, Chance chance, boolean compatSeed, Compat compat) {
         this.name = name;
         this.tier = tier;
         this.amount = amount;
@@ -49,6 +50,7 @@ public class Seed {
         this.color = color;
         this.seedReq = seedReq;
         this.chance = chance;
+        this.compatSeed = compatSeed;
         this.compat = compat;
     }
 
@@ -96,7 +98,11 @@ public class Seed {
         return chance;
     }
 
-    public boolean getCompat() {
+    public boolean getCompatSeed() {
+        return compatSeed;
+    }
+
+    public Compat getCompat() {
         return compat;
     }
 
@@ -106,12 +112,16 @@ public class Seed {
                 "name='" + name + '\'' +
                 ", tier=" + tier +
                 ", amount=" + amount +
+                ", nether=" + nether +
                 ", input='" + input + '\'' +
                 ", output=" + output +
+                ", secondOutput=" + secondOutput +
+                ", thirdOutput=" + thirdOutput +
                 ", color=" + color +
                 ", seedReq=" + seedReq +
                 ", chance=" + chance +
-                ", compat=" + compat+
+                ", compatSeed=" + compatSeed +
+                ", compat=" + compat +
                 '}';
     }
 }

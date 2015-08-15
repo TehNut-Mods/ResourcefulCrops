@@ -1,5 +1,6 @@
 package tehnut.resourceful.crops.api.util;
 
+import cpw.mods.fml.common.registry.GameData;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 
@@ -45,7 +46,7 @@ public class BlockStack {
     @Override
     public String toString() {
         return "BlockStack{" +
-                "block=" + block +
+                "block=" + GameData.getBlockRegistry().getNameForObject(block) +
                 ", meta=" + meta +
                 '}';
     }

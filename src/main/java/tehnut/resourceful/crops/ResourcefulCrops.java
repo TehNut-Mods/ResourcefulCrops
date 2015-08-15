@@ -17,6 +17,7 @@ import tehnut.resourceful.crops.api.ResourcefulAPI;
 import tehnut.resourceful.crops.api.base.Seed;
 import tehnut.resourceful.crops.compat.bloodmagic.CompatBloodMagic;
 import tehnut.resourceful.crops.compat.enderio.CompatEnderIO;
+import tehnut.resourceful.crops.compat.exnihilio.CompatExNihilio;
 import tehnut.resourceful.crops.compat.mfr.CompatMFR;
 import tehnut.resourceful.crops.compat.torcherino.CompatTorcherino;
 import tehnut.resourceful.crops.compat.waila.CompatWaila;
@@ -115,6 +116,7 @@ public class ResourcefulCrops {
         Utils.registerCompat(CompatEnderIO.class, "EnderIO");
         Utils.registerCompat(CompatMFR.class, "MineFactoryReloaded");
         Utils.registerCompat(CompatTorcherino.class, "Torcherino");
+        Utils.registerCompat(CompatExNihilio.class, "exnihilo");
     }
 
     @Mod.EventHandler

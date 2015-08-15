@@ -29,10 +29,13 @@ public class CustomSeedJson implements JsonDeserializer<Seed>, JsonSerializer<Se
         String color = helper.getString("color");
         SeedReq seedReq = new SeedReqBuilder().build();
         Chance chance = new ChanceBuilder().build();
+        Compat compat = new CompatBuilder().build();
         if (json.getAsJsonObject().get("seedReq") != null)
             seedReq = context.deserialize(json.getAsJsonObject().get("seedReq"), new TypeToken<SeedReq>() { }.getType());
         if (json.getAsJsonObject().get("chance") != null)
             chance = context.deserialize(json.getAsJsonObject().get("chance"), new TypeToken<Chance>() { }.getType());
+        if (json.getAsJsonObject().get("compat") != null)
+            compat = context.deserialize(json.getAsJsonObject().get("compat"), new TypeToken<Compat>() { }.getType());
 
         SeedBuilder builder = new SeedBuilder();
         builder.setName(name);
@@ -46,6 +49,7 @@ public class CustomSeedJson implements JsonDeserializer<Seed>, JsonSerializer<Se
         builder.setColor(Color.decode(color));
         builder.setSeedReq(seedReq);
         builder.setChance(chance);
+        builder.setCompat(compat);
 
         return builder.build();
     }
@@ -69,6 +73,8 @@ public class CustomSeedJson implements JsonDeserializer<Seed>, JsonSerializer<Se
             jsonObject.add("seedReq", context.serialize(src.getSeedReq()));
         if (!isChanceDefault(src.getChance()))
             jsonObject.add("chance", context.serialize(src.getChance()));
+        if (src.getCompat() != null)
+            jsonObject.add("compat", context.serialize(src.getCompat()));
 
         return jsonObject;
     }

@@ -7,10 +7,13 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
+import tehnut.resourceful.crops.api.base.Compat;
+import tehnut.resourceful.crops.api.base.CompatBuilder;
 import tehnut.resourceful.crops.api.base.Seed;
 import tehnut.resourceful.crops.api.base.SeedBuilder;
 import tehnut.resourceful.crops.api.compat.CompatibilitySeed;
 import tehnut.resourceful.crops.api.registry.SeedRegistry;
+import tehnut.resourceful.crops.api.util.BlockStack;
 import tehnut.resourceful.crops.util.helper.LogHelper;
 import tehnut.resourceful.crops.util.serialization.SeedCreator;
 
@@ -28,9 +31,9 @@ public class StartupUtils {
     public static void initDefaults() {
         
         // Tier 1
-        addDefaultSeedOre(makeSeed("Inky", 1, 4, "dyeBlack", new ItemStack(getOreStack("dyeBlack").getItem(), 8, getOreStack("dyeBlack").getItemDamage()), new Color(22, 22, 22)), "dyeBlack");
-        addDefaultSeed(makeSeed("Fleshy", 1, 4, getItemString(Items.rotten_flesh), new ItemStack(Items.rotten_flesh, 8), new Color(255, 160, 136)));
-        addDefaultSeed(makeSeed("Feathery", 1, 4, getItemString(Items.feather), new ItemStack(Items.feather, 8), new Color(208, 203, 199)));
+        addDefaultSeedOre(makeSeed("Inky", 1, 4, "dyeBlack", new ItemStack(getOreStack("dyeBlack").getItem(), 8, getOreStack("dyeBlack").getItemDamage()), new Color(22, 22, 22), getCompat(30)), "dyeBlack");
+        addDefaultSeed(makeSeed("Fleshy", 1, 4, getItemString(Items.rotten_flesh), new ItemStack(Items.rotten_flesh, 8), new Color(255, 160, 136), getCompat(30)));
+        addDefaultSeed(makeSeed("Feathery", 1, 4, getItemString(Items.feather), new ItemStack(Items.feather, 8), new Color(208, 203, 199), getCompat(30)));
         // Tier 2
         addDefaultSeedOre(makeSeed("Tin", 2, 4, "ingotTin", new ItemStack(getOreStack("ingotTin").getItem(), 4, getOreStack("ingotTin").getItemDamage()), new Color(135, 154, 168)), "ingotTin");
         addDefaultSeedOre(makeSeed("Copper", 2, 4, "ingotCopper", new ItemStack(getOreStack("ingotCopper").getItem(), 4, getOreStack("ingotCopper").getItemDamage()), new Color(204, 102, 51)), "ingotCopper");
@@ -95,7 +98,7 @@ public class StartupUtils {
     /**
      * Builds a seed based on the given parameters
      */
-    private static Seed makeSeed(String name, int tier, int amount, String input, ItemStack output, Color color) {
+    private static Seed makeSeed(String name, int tier, int amount, String input, ItemStack output, Color color, Compat compat) {
         SeedBuilder builder = new SeedBuilder();
 
         builder.setName(name);
@@ -104,8 +107,13 @@ public class StartupUtils {
         builder.setInput(input);
         builder.setOutput(output);
         builder.setColor(color);
+        builder.setCompat(compat);
 
         return builder.build();
+    }
+
+    private static Seed makeSeed(String name, int tier, int amount, String input, ItemStack output, Color color) {
+        return makeSeed(name, tier, amount, input, output, color, null);
     }
 
     /**
@@ -182,5 +190,9 @@ public class StartupUtils {
                 return new ItemStack(Blocks.fire);
         } else
             return new ItemStack(Blocks.fire);
+    }
+
+    private static Compat getCompat(int sieveChance) {
+        return new CompatBuilder().setCompatExNihilio(new CompatBuilder.CompatExNihilioBuilder().setSourceBlock(new BlockStack(Blocks.dirt)).setSieveChance(sieveChance).build()).build();
     }
 }

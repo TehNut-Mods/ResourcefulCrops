@@ -61,5 +61,7 @@ public class SeedCreator {
         gsonBuilder.registerTypeAdapter(BlockStack.class, new CustomBlockStackJson());
         gsonBuilder.registerTypeAdapter(SeedReq.class, new CustomSeedReqJson());
         gsonBuilder.registerTypeAdapter(Chance.class, new CustomChanceJson());
+        gsonBuilder.registerTypeAdapter(Compat.class, new CustomCompatJson());
+        gsonBuilder.registerTypeAdapter(Compat.CompatExNihilio.class, new CustomCompatJson.CustomCompatExNihilioJson());
     }
 }

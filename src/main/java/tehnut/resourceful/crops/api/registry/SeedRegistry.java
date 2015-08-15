@@ -4,6 +4,7 @@ import com.google.gson.GsonBuilder;
 import net.minecraft.item.ItemStack;
 import tehnut.resourceful.crops.api.ResourcefulAPI;
 import tehnut.resourceful.crops.api.base.Seed;
+import tehnut.resourceful.crops.util.helper.LogHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +17,8 @@ public class SeedRegistry {
 
     public static void registerSeed(Seed seed) {
         try {
-            ResourcefulAPI.seedCache.addObject(seed, !seed.getCompat() ? seed.getName() : seed.getName() + "-Compat");
+            ResourcefulAPI.seedCache.addObject(seed, !seed.getCompatSeed() ? seed.getName() : seed.getName() + "-Compat");
+            LogHelper.info(seed.toString());
         } catch (IllegalArgumentException e) {
             if (ResourcefulAPI.forceAddDuplicates) {
                 ResourcefulAPI.logger.error("Seed { " + seed.getName() + " } has been registered twice. Force adding the copy.");

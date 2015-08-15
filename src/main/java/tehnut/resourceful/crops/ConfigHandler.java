@@ -28,7 +28,9 @@ public class ConfigHandler {
     public static boolean enableMFRAutomation;
     public static boolean enableEnderIOAutomation;
     public static boolean enableBloodMagicAutomation;
-    
+    public static int gaianiteSieveChance;
+    public static String gaianiteSieveBlock;
+
     public static boolean enableFakePlayerMining;
 
     public static void init(File file) {
@@ -66,6 +68,9 @@ public class ConfigHandler {
         config.addCustomCategoryComment(category, "Compatibility settings");
         category = "Compat.Torcherino";
         enableTorcherinoAccelerator = config.getBoolean("enableTorcherinoAccelerator", category, false, "Allows the Torcherino from Torcherino to accelerate crop growth.");
+        category = "Compat.ExNihilio";
+        gaianiteSieveChance = config.getInt("gaianiteSieveChance", category, 40, 0, 100, "Chance for a sieve to drop a standard Gaianite Essence. Set to 0 to disable.");
+        gaianiteSieveBlock = config.getString("gaianiteSieveBlock", category, "minecraft:dirt:0", "Block to sieve for Gaianite Essence.\nSyntax is: modid:regname:meta");
         category = "Compat.MinefactoryReloaded";
         enableMFRAutomation = config.getBoolean("enableMFRAutomation", category, true, "Allows the MFR Planter/Harvester to work with Seeds/Crops.");
         category = "Compat.EnderIO";

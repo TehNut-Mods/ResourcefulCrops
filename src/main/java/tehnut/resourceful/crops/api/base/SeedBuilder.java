@@ -21,7 +21,8 @@ public class SeedBuilder {
     private Color color;
     private SeedReq seedReq = new SeedReqBuilder().build();
     private Chance chance = new ChanceBuilder().build();
-    private boolean compat = false;
+    private boolean compatSeed = false;
+    private Compat compat = new CompatBuilder().build();
 
     public SeedBuilder() {
 
@@ -90,12 +91,17 @@ public class SeedBuilder {
         return this;
     }
 
-    public SeedBuilder setCompat(boolean compat) {
+    public SeedBuilder setCompatSeed(boolean compatSeed) {
+        this.compatSeed = compatSeed;
+        return this;
+    }
+
+    public SeedBuilder setCompat(Compat compat) {
         this.compat = compat;
         return this;
     }
 
     public Seed build() {
-        return new Seed(name, tier, amount, nether, input, output, secondOutput, thirdOutput, color, seedReq, chance, compat);
+        return new Seed(name, tier, amount, nether, input, output, secondOutput, thirdOutput, color, seedReq, chance, compatSeed, compat);
     }
 }
