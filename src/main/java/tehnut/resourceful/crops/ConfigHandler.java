@@ -14,6 +14,7 @@ public class ConfigHandler {
     public static boolean enablePouchCrafting;
 
     public static boolean enableSeedPouches;
+    public static boolean enableFakePlayerMining;
 
     public static boolean enableWorldGeneration;
 
@@ -39,6 +40,7 @@ public class ConfigHandler {
         category = "Balance";
         config.addCustomCategoryComment(category, "Balance settings");
         enableSeedPouches = config.getBoolean("enableSeedPouches", category, true, "Allows registering of seed pouches. These plant a 3x3 (9 total) seeds around a central block.");
+        enableFakePlayerMining = config.getBoolean("enableFakePlayerMining", category, true, "Allows ore to be mined by Quarries and Miners");
 
         category = "World";
         config.addCustomCategoryComment(category, "World settings");
