@@ -26,6 +26,7 @@ public class ConfigHandler {
 
     public static boolean enableTorcherinoAccelerator;
     public static boolean enableMFRAutomation;
+    public static boolean enableMFRLaserDrill;
     public static boolean enableEnderIOAutomation;
     public static boolean enableBloodMagicAutomation;
     public static int gaianiteSieveChance;
@@ -73,6 +74,7 @@ public class ConfigHandler {
         gaianiteSieveBlock = config.getString("gaianiteSieveBlock", category, "minecraft:dirt:0", "Block to sieve for Gaianite Essence.\nSyntax is: modid:regname:meta");
         category = "Compat.MinefactoryReloaded";
         enableMFRAutomation = config.getBoolean("enableMFRAutomation", category, true, "Allows the MFR Planter/Harvester to work with Seeds/Crops.");
+        enableMFRLaserDrill = config.getBoolean("enableMFRLaserDrill", category, true, "Allows the MFR Laser Drill to collect Gaianite Ore with a Purple Lens.");
         category = "Compat.EnderIO";
         enableEnderIOAutomation = config.getBoolean("enableEnderIOAutomation", category, true, "Allows the EnderIO Farming Station to work with Seeds/Crops.");
         category = "Compat.BloodMagic";
