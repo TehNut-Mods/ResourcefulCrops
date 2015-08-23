@@ -66,40 +66,36 @@ public class WorldCache<I> {
 
     @SneakyThrows
     protected void loadData(File file) {
-        try {
-            if (!file.createNewFile()) {
-                NBTTagCompound tag = null;
-                try {
-                    tag = CompressedStreamTools.read(file);
-                } catch (Exception e) {
-                    generateIDs();
-                    return;
-                }
-                if (tag.hasKey("ItemData")) {
-                    // name <-> id mappings
-                    NBTTagList list = tag.getTagList("ItemData", Constants.NBT.TAG_COMPOUND);
-                    for (int i = 0; i < list.tagCount(); i++) {
-                        NBTTagCompound dataTag = list.getCompoundTagAt(i);
-                        int id = dataTag.getInteger("V");
-                        String name = dataTag.getString("K");
-                        nameToID.put(name, id);
-                        if (objToName.values().contains(name)) {
-                            usedIDs.set(id, true);
-                        }
-                    }
-
-                    // blocked ids
-                    for (int id : tag.getIntArray("BlockedItemIds")) {
-                        blockedIDs.add(id);
-                    }
-
-                    blockOldIDs();
-                    mergeNewIDs();
-                    return;
-                }
+        if (!file.createNewFile()) {
+            NBTTagCompound tag = null;
+            try {
+                tag = CompressedStreamTools.read(file);
+            } catch (Exception e) {
+                generateIDs();
+                return;
             }
-        } catch (IOException e) {
+            if (tag.hasKey("ItemData")) {
+                // name <-> id mappings
+                NBTTagList list = tag.getTagList("ItemData", Constants.NBT.TAG_COMPOUND);
+                for (int i = 0; i < list.tagCount(); i++) {
+                    NBTTagCompound dataTag = list.getCompoundTagAt(i);
+                    int id = dataTag.getInteger("V");
+                    String name = dataTag.getString("K");
+                    nameToID.put(name, id);
+                    if (objToName.values().contains(name)) {
+                        usedIDs.set(id, true);
+                    }
+                }
 
+                // blocked ids
+                for (int id : tag.getIntArray("BlockedItemIds")) {
+                    blockedIDs.add(id);
+                }
+
+                blockOldIDs();
+                mergeNewIDs();
+                return;
+            }
         }
         generateIDs();
     }
@@ -120,11 +116,7 @@ public class WorldCache<I> {
         // blocked ids
         data.setIntArray("BlockedItemIds", ArrayUtils.toPrimitive(blockedIDs.toArray(new Integer[0])));
 
-        try {
-            CompressedStreamTools.write(data, file);
-        } catch (IOException e) {
-
-        }
+        CompressedStreamTools.write(data, file);
     }
 
     protected void blockOldIDs() {
