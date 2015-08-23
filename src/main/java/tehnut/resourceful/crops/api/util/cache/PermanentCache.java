@@ -2,6 +2,7 @@ package tehnut.resourceful.crops.api.util.cache;
 
 import com.google.common.collect.Lists;
 import lombok.SneakyThrows;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 
 import java.io.File;
 import java.util.List;
@@ -13,7 +14,6 @@ public class PermanentCache<I> extends WorldCache<I> {
 
     private static final List<PermanentCache<?>> allCaches = Lists.newArrayList();
 
-    @SneakyThrows
     public PermanentCache(String ident) {
         super(ident);
         loadData(getSaveFile());
@@ -22,7 +22,7 @@ public class PermanentCache<I> extends WorldCache<I> {
     @Override
     @SneakyThrows
     protected File getSaveFile() {
-        return new File("saves", ident + ".dat");
+        return FMLCommonHandler.instance().getSide().isServer() ? new File(ident + ".dat") : new File("saves", ident + ".dat");
     }
 
     @Override
