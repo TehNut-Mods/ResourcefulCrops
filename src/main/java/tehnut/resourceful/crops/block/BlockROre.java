@@ -55,7 +55,7 @@ public class BlockROre extends Block {
     }
 
     @Override
-    public ItemStack getPickBlock(MovingObjectPosition target, World world, BlockPos pos, EntityPlayer player) {
+    public ItemStack getPickBlock(MovingObjectPosition target, World world, BlockPos pos) {
         return new ItemStack(this, 1, this.getMetaFromState(world.getBlockState(pos)));
     }
 
