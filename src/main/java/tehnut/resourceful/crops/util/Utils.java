@@ -29,22 +29,26 @@ public class Utils {
         if (stackString == null)
             return null;
 
-        if (stackString.contains(":")) {
-            String[] nameInfo = stackString.split(":");
-            String name = nameInfo[0] + ":" + nameInfo[1];
-            String[] stackInfo = nameInfo[2].split("#");
-            int meta = Integer.parseInt(stackInfo[0]);
-            int amount = Integer.parseInt(stackInfo[1]);
+        try {
+            if (stackString.contains(":")) {
+                String[] nameInfo = stackString.split(":");
+                String name = nameInfo[0] + ":" + nameInfo[1];
+                String[] stackInfo = nameInfo[2].split("#");
+                int meta = Integer.parseInt(stackInfo[0]);
+                int amount = Integer.parseInt(stackInfo[1]);
 
-            return new ItemStack(GameData.getItemRegistry().getObject(name), amount, meta);
-        } else if(stackString.equals("null")) {
-            return null;
-        } else if (!input) {
-            String[] stackInfo = stackString.split("#");
-            ItemStack oreStack = OreDictionary.getOres(stackInfo[0]).get(0);
-            int amount = Integer.parseInt(stackInfo[1]);
+                return new ItemStack(GameData.getItemRegistry().getObject(name), amount, meta);
+            } else if (stackString.equals("null")) {
+                return null;
+            } else if (!input) {
+                String[] stackInfo = stackString.split("#");
+                ItemStack oreStack = OreDictionary.getOres(stackInfo[0]).get(0);
+                int amount = Integer.parseInt(stackInfo[1]);
 
-            return new ItemStack(oreStack.getItem(), amount, oreStack.getItemDamage());
+                return new ItemStack(oreStack.getItem(), amount, oreStack.getItemDamage());
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            LogHelper.error("Error adding " + (input ? "inputStack" : "outputStack") + ": " + stackString + ". Is it formatted correctly?");
         }
 
         return null;
