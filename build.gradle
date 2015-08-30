@@ -39,7 +39,7 @@ task tagRelease {
         System.setProperty("org.ajoberstar.grgit.auth.username", "${git_user_nut}")
         System.setProperty("org.ajoberstar.grgit.auth.password", "${git_pass_nut}")
         repo.tag.add {
-            name = "${mod_name} - ${version}"
+            name = "${mod_name}-${version}"
             message = "Release of ${version}\n" + project.hasProperty('changelog') ? project.changelog : ''
             force = true
             pointsTo = gitHash
