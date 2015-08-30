@@ -14,6 +14,7 @@ public class ConfigHandler {
     public static boolean enablePouchCrafting;
 
     public static boolean enableSeedPouches;
+    public static boolean enableFakePlayerMining;
 
     public static boolean enableWorldGeneration;
 
@@ -23,6 +24,7 @@ public class ConfigHandler {
     public static boolean enableRightClickHarvest;
     public static boolean forceAddDuplicates;
     public static boolean generateDefaults;
+    public static boolean registerClientCommands;
 
     public static boolean enableTorcherinoAccelerator;
     public static boolean enableMFRAutomation;
@@ -31,8 +33,6 @@ public class ConfigHandler {
     public static boolean enableBloodMagicAutomation;
     public static int gaianiteSieveChance;
     public static String gaianiteSieveBlock;
-
-    public static boolean enableFakePlayerMining;
 
     public static void init(File file) {
         config = new Configuration(file);
@@ -64,6 +64,7 @@ public class ConfigHandler {
         forceAddDuplicates = config.getBoolean("forceAddDuplicates", category, false, "Forces duplicate seeds to be registered");
         generateDefaults = config.getBoolean("generateDefaults", category, true, "Generates a list of default seeds.");
         forceFancyRender = config.getBoolean("forceFancyRender", category, false, "Forces the fancy render for crops if you have fast graphics enabled.");
+        registerClientCommands = config.getBoolean("registerClientCommands", category, false, "Registers some client commands that can make adding Seeds a bit easier.\nCommands are \"/createSeed\" and \"printSeeds\".");
 
         category = "Compat";
         config.addCustomCategoryComment(category, "Compatibility settings");

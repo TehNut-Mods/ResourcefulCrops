@@ -24,8 +24,10 @@ public class ClientProxy extends CommonProxy {
 
     @Override
     public void loadCommands() {
-        ClientCommandHandler.instance.registerCommand(new CommandCreateSeed());
-        ClientCommandHandler.instance.registerCommand(new CommandPrintSeed());
+        if (ConfigHandler.registerClientCommands) {
+            ClientCommandHandler.instance.registerCommand(new CommandCreateSeed());
+            ClientCommandHandler.instance.registerCommand(new CommandPrintSeed());
+        }
     }
 
     @Override
