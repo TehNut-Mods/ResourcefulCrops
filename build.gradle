@@ -34,10 +34,19 @@ def gitHash = 'unknown'
 if (new File(projectDir, '.git').exists())
     gitHash = repo.log().find().abbreviatedId
 
-task tagRelease << {
-    repo.tag.add {
-        name = "${archivesBaseName}-${version}"
-        message = "Release of ${version}\n" + project.hasProperty('changelog') ? project.changelog : ''
+task tagRelease {
+    doLast {
+        System.setProperty("org.ajoberstar.grgit.auth.username", "${git_user_nut}")
+        System.setProperty("org.ajoberstar.grgit.auth.password", "${git_pass_nut}")
+        repo.tag.add {
+            name = "${mod_name} - ${version}"
+            message = "Release of ${version}\n" + project.hasProperty('changelog') ? project.changelog : ''
+            force = true
+            pointsTo = gitHash
+        }
+        repo.push{
+            tags = true
+        }
     }
 }
 
