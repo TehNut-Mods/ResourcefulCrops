@@ -9,6 +9,7 @@ import tehnut.resourceful.crops.ConfigHandler;
 import tehnut.resourceful.crops.api.base.Seed;
 import tehnut.resourceful.crops.api.registry.SeedRegistry;
 import tehnut.resourceful.crops.util.Utils;
+import tehnut.resourceful.crops.util.helper.ItemHelper;
 
 public class RecipeRegistry {
 
@@ -20,7 +21,7 @@ public class RecipeRegistry {
                 GameRegistry.addRecipe(new ShapedOreRecipe(
                         new ItemStack(ItemRegistry.seed, seed.getAmount(), SeedRegistry.getIndexOf(seed)),
                         "IEI", "ESE", "IEI",
-                        'I', Utils.parseItemStack(seed.getInput(), true) == null ? seed.getInput() : Utils.parseItemStack(seed.getInput(), true),
+                        'I', ItemHelper.parseItemStack(seed.getInput(), true) == null ? seed.getInput() : ItemHelper.parseItemStack(seed.getInput(), true),
                         'E', new ItemStack(ItemRegistry.material, 1, seed.getTier()),
                         'S', Items.wheat_seeds
                 ));
@@ -29,7 +30,7 @@ public class RecipeRegistry {
             if (ConfigHandler.enableShardCrafting) {
                 if (seed.getOutput() != null) {
                     GameRegistry.addRecipe(new ShapedOreRecipe(
-                                    seed.getOutput(),
+                                    seed.getOutputStack(),
                                     "SSS", "S S", "SSS",
                                     'S', new ItemStack(ItemRegistry.shard, 1, SeedRegistry.getIndexOf(seed)))
                     );
@@ -38,7 +39,7 @@ public class RecipeRegistry {
 
                 if (seed.getSecondOutput() != null) {
                     GameRegistry.addRecipe(new ShapedOreRecipe(
-                                    seed.getSecondOutput(),
+                                    seed.getSecondOutputStack(),
                                     " S ", "SSS", " S ",
                                     'S', new ItemStack(ItemRegistry.shard, 1, SeedRegistry.getIndexOf(seed)))
                     );
@@ -46,7 +47,7 @@ public class RecipeRegistry {
 
                 if (seed.getThirdOutput() != null) {
                     GameRegistry.addRecipe(new ShapedOreRecipe(
-                                    seed.getThirdOutput(),
+                                    seed.getThirdOutputStack(),
                                     "SS", "SS",
                                     'S', new ItemStack(ItemRegistry.shard, 1, SeedRegistry.getIndexOf(seed)))
                     );

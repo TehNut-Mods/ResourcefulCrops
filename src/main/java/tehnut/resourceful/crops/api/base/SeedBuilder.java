@@ -1,7 +1,5 @@
 package tehnut.resourceful.crops.api.base;
 
-import net.minecraft.item.ItemStack;
-
 import java.awt.*;
 
 /**
@@ -15,9 +13,9 @@ public class SeedBuilder {
     private int amount;
     private boolean nether = false;
     private String input;
-    private ItemStack output;
-    private ItemStack secondOutput = null;
-    private ItemStack thirdOutput = null;
+    private String output;
+    private String secondOutput = null;
+    private String thirdOutput = null;
     private Color color;
     private SeedReq seedReq = new SeedReqBuilder().build();
     private Chance chance = new ChanceBuilder().build();
@@ -61,17 +59,17 @@ public class SeedBuilder {
         return this;
     }
 
-    public SeedBuilder setOutput(ItemStack output) {
+    public SeedBuilder setOutput(String output) {
         this.output = output;
         return this;
     }
 
-    public SeedBuilder setSecondOutput(ItemStack secondOutput) {
+    public SeedBuilder setSecondOutput(String secondOutput) {
         this.secondOutput = secondOutput;
         return this;
     }
 
-    public SeedBuilder setThirdOutput(ItemStack thirdOutput) {
+    public SeedBuilder setThirdOutput(String thirdOutput) {
         this.thirdOutput = thirdOutput;
         return this;
     }

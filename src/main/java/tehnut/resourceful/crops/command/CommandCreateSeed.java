@@ -10,6 +10,7 @@ import net.minecraft.world.World;
 import tehnut.resourceful.crops.api.base.Seed;
 import tehnut.resourceful.crops.api.base.SeedBuilder;
 import tehnut.resourceful.crops.util.Utils;
+import tehnut.resourceful.crops.util.helper.ItemHelper;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -73,8 +74,8 @@ public class CommandCreateSeed extends CommandBase {
             builder.setName(name);
             builder.setTier(tier);
             builder.setAmount(amount);
-            builder.setInput(Utils.itemStackToString(new ItemStack(stack.getItem(), 1, stack.getItemDamage())));
-            builder.setOutput(stack);
+            builder.setInput(ItemHelper.getItemString(new ItemStack(stack.getItem(), 1, stack.getItemDamage())));
+            builder.setOutput(ItemHelper.getItemString(stack));
             builder.setColor(color);
 
             commandList.add(builder.build());

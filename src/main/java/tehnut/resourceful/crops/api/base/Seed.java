@@ -1,6 +1,7 @@
 package tehnut.resourceful.crops.api.base;
 
 import net.minecraft.item.ItemStack;
+import tehnut.resourceful.crops.util.helper.ItemHelper;
 
 import javax.annotation.Nullable;
 import java.awt.*;
@@ -12,9 +13,9 @@ public class Seed {
     private int amount;
     private boolean nether;
     private String input;
-    private ItemStack output;
-    private ItemStack secondOutput;
-    private ItemStack thirdOutput;
+    private String output;
+    private String secondOutput;
+    private String thirdOutput;
     private Color color;
     private SeedReq seedReq;
     private Chance chance;
@@ -38,7 +39,7 @@ public class Seed {
      * @param compatSeed   - Whether or not this seed is for a {@link tehnut.resourceful.crops.api.compat.CompatibilitySeed}
      * @param compat       - The compatibility settings for specific mods.
      */
-    protected Seed(String name, int tier, int amount, boolean nether, String input, ItemStack output, @Nullable ItemStack secondOutput, @Nullable ItemStack thirdOutput, Color color, SeedReq seedReq, Chance chance, boolean compatSeed, Compat compat) {
+    protected Seed(String name, int tier, int amount, boolean nether, String input, String output, @Nullable String secondOutput, @Nullable String thirdOutput, Color color, SeedReq seedReq, Chance chance, boolean compatSeed, Compat compat) {
         this.name = name;
         this.tier = tier;
         this.amount = amount;
@@ -74,16 +75,28 @@ public class Seed {
         return input;
     }
 
-    public ItemStack getOutput() {
+    public String getOutput() {
         return output;
     }
 
-    public ItemStack getSecondOutput() {
+    public ItemStack getOutputStack() {
+        return ItemHelper.parseItemStack(getOutput(), false);
+    }
+
+    public String getSecondOutput() {
         return secondOutput;
     }
 
-    public ItemStack getThirdOutput() {
+    public ItemStack getSecondOutputStack() {
+        return ItemHelper.parseItemStack(getSecondOutput(), false);
+    }
+
+    public String getThirdOutput() {
         return thirdOutput;
+    }
+
+    public ItemStack getThirdOutputStack() {
+        return ItemHelper.parseItemStack(thirdOutput, false);
     }
 
     public Color getColor() {
