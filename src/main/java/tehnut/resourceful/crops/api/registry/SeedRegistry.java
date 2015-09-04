@@ -2,9 +2,10 @@ package tehnut.resourceful.crops.api.registry;
 
 import com.google.gson.GsonBuilder;
 import net.minecraft.item.ItemStack;
+import tehnut.resourceful.crops.api.ModInformation;
 import tehnut.resourceful.crops.api.ResourcefulAPI;
 import tehnut.resourceful.crops.api.base.Seed;
-import tehnut.resourceful.crops.util.helper.LogHelper;
+import tehnut.resourceful.crops.api.util.cache.PermanentCache;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,14 +17,18 @@ public class SeedRegistry {
     public static int badSeeds = 0;
 
     public static void registerSeed(Seed seed) {
+        registerSeed(seed, seed.getName());
+    }
+
+    public static void registerSeed(Seed seed, String name) {
         try {
-            ResourcefulAPI.seedCache.addObject(seed, !seed.getCompatSeed() ? seed.getName() : seed.getName() + "-Compat");
+            ResourcefulAPI.seedCache.addObject(seed, name);
         } catch (IllegalArgumentException e) {
             if (ResourcefulAPI.forceAddDuplicates) {
-                ResourcefulAPI.logger.error("Seed { " + seed.getName() + " } has been registered twice. Force adding the copy.");
-                ResourcefulAPI.seedCache.addObject(seed, seed.getName() + badSeeds);
+                ResourcefulAPI.logger.error("Seed { " + name + " } has been registered twice. Force adding the copy.");
+                ResourcefulAPI.seedCache.addObject(seed, name + badSeeds);
             } else {
-                ResourcefulAPI.logger.error("Seed { " + seed.getName() + " } has been registered twice. Skipping the copy and continuing.");
+                ResourcefulAPI.logger.error("Seed { " + name + " } has been registered twice. Skipping the copy and continuing.");
             }
             badSeeds++;
         }
@@ -67,5 +72,9 @@ public class SeedRegistry {
 
     public static ItemStack getItemStackForSeed(Seed seed) {
         return new ItemStack(ResourcefulAPI.seed, 1, getIndexOf(seed));
+    }
+
+    public static void dump() {
+        ResourcefulAPI.seedCache = new PermanentCache<Seed>(ModInformation.ID + "Cache");
     }
 }

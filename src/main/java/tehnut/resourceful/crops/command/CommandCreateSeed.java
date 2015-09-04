@@ -9,8 +9,7 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import tehnut.resourceful.crops.api.base.Seed;
 import tehnut.resourceful.crops.api.base.SeedBuilder;
-import tehnut.resourceful.crops.util.Utils;
-import tehnut.resourceful.crops.util.helper.ItemHelper;
+import tehnut.resourceful.crops.api.util.helper.ItemHelper;
 
 import java.awt.*;
 import java.util.ArrayList;

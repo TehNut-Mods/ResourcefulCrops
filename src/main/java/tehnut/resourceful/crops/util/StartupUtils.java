@@ -4,7 +4,6 @@ import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.registry.GameData;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 import tehnut.resourceful.crops.api.base.Compat;
@@ -14,7 +13,7 @@ import tehnut.resourceful.crops.api.base.SeedBuilder;
 import tehnut.resourceful.crops.api.compat.CompatibilitySeed;
 import tehnut.resourceful.crops.api.registry.SeedRegistry;
 import tehnut.resourceful.crops.api.util.BlockStack;
-import tehnut.resourceful.crops.util.helper.ItemHelper;
+import tehnut.resourceful.crops.api.util.helper.ItemHelper;
 import tehnut.resourceful.crops.util.helper.LogHelper;
 import tehnut.resourceful.crops.util.serialization.SeedCreator;
 

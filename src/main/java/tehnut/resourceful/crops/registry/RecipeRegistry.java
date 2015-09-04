@@ -8,8 +8,7 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
 import tehnut.resourceful.crops.ConfigHandler;
 import tehnut.resourceful.crops.api.base.Seed;
 import tehnut.resourceful.crops.api.registry.SeedRegistry;
-import tehnut.resourceful.crops.util.Utils;
-import tehnut.resourceful.crops.util.helper.ItemHelper;
+import tehnut.resourceful.crops.api.util.helper.ItemHelper;
 
 public class RecipeRegistry {
 

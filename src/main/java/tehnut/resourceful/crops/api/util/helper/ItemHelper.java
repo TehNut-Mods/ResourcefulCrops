@@ -1,10 +1,11 @@
-package tehnut.resourceful.crops.util.helper;
+package tehnut.resourceful.crops.api.util.helper;
 
 import cpw.mods.fml.common.registry.GameData;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
+import tehnut.resourceful.crops.util.helper.LogHelper;
 
 public class ItemHelper {
 

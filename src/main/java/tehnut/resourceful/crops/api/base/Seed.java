@@ -1,7 +1,7 @@
 package tehnut.resourceful.crops.api.base;
 
 import net.minecraft.item.ItemStack;
-import tehnut.resourceful.crops.util.helper.ItemHelper;
+import tehnut.resourceful.crops.api.util.helper.ItemHelper;
 
 import javax.annotation.Nullable;
 import java.awt.*;
