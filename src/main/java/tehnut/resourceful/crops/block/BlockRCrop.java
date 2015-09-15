@@ -221,7 +221,7 @@ public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
 
         TileEntity cropTile = blockAccess.getTileEntity(x, y, z);
 
-        if (cropTile instanceof TileRCrop && !ConfigHandler.enableFancyRender)
+        if (cropTile != null && cropTile instanceof TileRCrop && Utils.isValidSeed(((TileRCrop) cropTile).getSeedName()) && !ConfigHandler.enableFancyRender)
             return SeedRegistry.getSeed(((TileRCrop) cropTile).getSeedName()).getColor().getRGB();
 
         return 16777215;

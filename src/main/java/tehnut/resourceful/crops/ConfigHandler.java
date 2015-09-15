@@ -63,7 +63,7 @@ public class ConfigHandler {
         enableRightClickHarvest = config.getBoolean("enableRightClickHarvest", category, true, "Allows crops to be right clicked to automatically harvest and replant if the crop is mature.");
         forceAddDuplicates = config.getBoolean("forceAddDuplicates", category, false, "Forces duplicate seeds to be registered");
         generateDefaults = config.getBoolean("generateDefaults", category, true, "Generates a list of default seeds.");
-        forceFancyRender = config.getBoolean("forceFancyRender", category, false, "Forces the fancy render for crops if you have fast graphics enabled.");
+        forceFancyRender = config.getBoolean("forceFancyRender", category, true, "Forces the fancy render for crops if you have fast graphics enabled.");
         registerClientCommands = config.getBoolean("registerClientCommands", category, false, "Registers some client commands that can make adding Seeds a bit easier.\nCommands are \"/createSeed\" and \"printSeeds\".");
 
         category = "Compat";
