@@ -11,6 +11,7 @@ import net.minecraft.world.World;
 public class TileRCrop extends TileEntity {
 
     private String seedName = "Dead";
+    private boolean shouldDrop = true;
 
     public String getSeedName() {
         return seedName;
@@ -18,6 +19,14 @@ public class TileRCrop extends TileEntity {
 
     public void setSeedName(String seedName) {
         this.seedName = seedName;
+    }
+
+    public boolean getShouldDrop() {
+        return shouldDrop;
+    }
+
+    public void setShouldDrop(boolean shouldDrop) {
+        this.shouldDrop = shouldDrop;
     }
 
     @Override

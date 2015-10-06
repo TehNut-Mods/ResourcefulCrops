@@ -71,10 +71,11 @@ public class HarvestableHandler implements IFactoryHarvestable {
     @Override
     public void preHarvest(World world, int x, int y, int z) {
         Utils.playBlockBreakAnim(world, x, y, z, new BlockStack(getPlant(), world.getBlockMetadata(x, y, z)));
+        TileEntity cropTile = world.getTileEntity(x, y, z);
         world.setBlockMetadataWithNotify(x, y, z, 0, 3);
-        BlockRCrop.setShouldDrop(false);
+        ((TileRCrop)cropTile).setShouldDrop(false);
         world.setBlockToAir(x, y, z);
-        BlockRCrop.setShouldDrop(true);
+        ((TileRCrop)cropTile).setShouldDrop(true);
     }
 
     @Override

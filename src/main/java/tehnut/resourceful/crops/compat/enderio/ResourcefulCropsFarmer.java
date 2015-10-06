@@ -10,12 +10,14 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import tehnut.resourceful.crops.ConfigHandler;
 import tehnut.resourceful.crops.block.BlockRCrop;
 import tehnut.resourceful.crops.item.ItemSeed;
 import tehnut.resourceful.crops.registry.ItemRegistry;
+import tehnut.resourceful.crops.tile.TileRCrop;
 import tehnut.resourceful.crops.util.Utils;
 
 import java.util.ArrayList;
@@ -69,11 +71,17 @@ public class ResourcefulCropsFarmer extends PlantableFarmer {
         if (!canHarvest(farmStation, coord, block, meta) || !farmStation.hasHoe() || !(block instanceof BlockRCrop))
             return null;
 
-        List<ItemStack> dropped = ((BlockRCrop)block).getDrops(farmStation.getWorldObj(), coord.x, coord.y, coord.z, meta);
-        BlockRCrop.setShouldDrop(false);
-        farmStation.getWorldObj().setBlockToAir(coord.x, coord.y, coord.z);
-        BlockRCrop.setShouldDrop(true);
-        return new HarvestResult(getEntities(farmStation.getWorldObj(), coord, dropped), coord);
+        TileEntity cropTile = farmStation.getWorldObj().getTileEntity(coord.x, coord.y, coord.z);
+
+        if (cropTile instanceof TileRCrop) {
+            List<ItemStack> dropped = ((BlockRCrop) block).getDrops(farmStation.getWorldObj(), coord.x, coord.y, coord.z, meta);
+            ((TileRCrop)cropTile).setShouldDrop(false);
+            farmStation.getWorldObj().setBlockToAir(coord.x, coord.y, coord.z);
+            ((TileRCrop)cropTile).setShouldDrop(true);
+            return new HarvestResult(getEntities(farmStation.getWorldObj(), coord, dropped), coord);
+        }
+
+        return null;
     }
 
     private List<EntityItem> getEntities(World world, BlockCoord bc,  List<ItemStack> dropped) {

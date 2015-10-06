@@ -41,7 +41,6 @@ public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
     public IIcon[] cropIcons = new IIcon[8];
     public IIcon[] fastIcons = new IIcon[8];
     public IIcon[] cropOverlay = new IIcon[8];
-    private static boolean shouldDrop = true;
 
     public BlockRCrop() {
         super();
@@ -228,7 +227,9 @@ public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
     }
 
     public void dropItems(World world, int x, int y, int z, int meta) {
-        if (shouldDrop)
+        TileEntity cropTile = world.getTileEntity(x, y, z);
+
+        if (cropTile instanceof TileRCrop && ((TileRCrop)cropTile).getShouldDrop())
             for (ItemStack stack : getDrops(world, x, y, z, meta))
                 dropBlockAsItem(world, x, y, z, stack);
     }
@@ -303,10 +304,6 @@ public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
 
         if (randomDouble <= essenceDropChance)
             dropBlockAsItem(world, x, y, z, new ItemStack(ItemRegistry.material));
-    }
-
-    public static void setShouldDrop(boolean drop) {
-        shouldDrop = drop;
     }
 
     // IGrowable
