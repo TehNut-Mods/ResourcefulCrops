@@ -1,0 +1,6 @@
+{
+    "parent": "resourcefulcrops:block/crossfast",
+    "textures": {
+        "cross": "resourcefulcrops:blocks/crop_base_7_fast"
+    }
+}

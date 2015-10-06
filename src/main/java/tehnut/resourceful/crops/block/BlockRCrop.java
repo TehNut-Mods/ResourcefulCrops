@@ -201,6 +201,18 @@ public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
             world.spawnEntityInWorld(new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ItemRegistry.material)));
     }
 
+    @Override
+    @SideOnly(Side.CLIENT)
+    public int colorMultiplier(IBlockAccess blockAccess, BlockPos pos, int pass) {
+
+        TileEntity cropTile = blockAccess.getTileEntity(pos);
+
+        if (cropTile != null && cropTile instanceof TileRCrop && Utils.isValidSeed(((TileRCrop) cropTile).getSeedName()))
+            return SeedRegistry.getSeed(((TileRCrop) cropTile).getSeedName()).getColor().getRGB();
+
+        return 16777215;
+    }
+
     // IGrowable
 
     @Override
