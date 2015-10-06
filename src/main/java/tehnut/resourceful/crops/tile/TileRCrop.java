@@ -8,11 +8,11 @@ import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
-import tehnut.resourceful.crops.util.helper.LogHelper;
 
 public class TileRCrop extends TileEntity {
 
     private String seedName = "Dead";
+    private boolean shouldDrop = true;
 
     public String getSeedName() {
         return seedName;
@@ -20,6 +20,14 @@ public class TileRCrop extends TileEntity {
 
     public void setSeedName(String seedName) {
         this.seedName = seedName;
+    }
+
+    public boolean getShouldDrop() {
+        return shouldDrop;
+    }
+
+    public void setShouldDrop(boolean shouldDrop) {
+        this.shouldDrop = shouldDrop;
     }
 
     @Override

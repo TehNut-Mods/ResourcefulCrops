@@ -14,6 +14,8 @@ import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.EnumPlantType;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import tehnut.resourceful.crops.ConfigHandler;
 import tehnut.resourceful.crops.api.ModInformation;
 import tehnut.resourceful.crops.ResourcefulCrops;
@@ -32,8 +34,6 @@ import java.util.List;
 import java.util.Random;
 
 public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
-
-    private static boolean shouldDrop = true;
 
     public BlockRCrop() {
         super();
@@ -128,7 +128,10 @@ public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
     }
 
     public void dropItems(World world, BlockPos pos, IBlockState state) {
-        if (shouldDrop)
+
+        TileEntity cropTile = world.getTileEntity(pos);
+
+        if (cropTile instanceof TileRCrop && ((TileRCrop)cropTile).getShouldDrop())
             for (ItemStack stack : getDrops(world, pos, state))
                 world.spawnEntityInWorld(new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), stack));
     }
@@ -196,10 +199,6 @@ public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
 
         if (randomDouble <= essenceDropChance)
             world.spawnEntityInWorld(new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ItemRegistry.material)));
-    }
-
-    public static void setShouldDrop(boolean drop) {
-        shouldDrop = drop;
     }
 
     // IGrowable
