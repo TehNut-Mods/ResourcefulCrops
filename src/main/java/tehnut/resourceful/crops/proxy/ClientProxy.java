@@ -29,17 +29,4 @@ public class ClientProxy extends CommonProxy {
             ClientCommandHandler.instance.registerCommand(new CommandPrintSeed());
         }
     }
-
-    @Override
-    public void addChatMessage(String string) {
-        addChatMessage(string, 1);
-    }
-
-    @Override
-    public void addChatMessage(String string, int id) {
-        Minecraft minecraft = Minecraft.getMinecraft();
-        GuiNewChat chat = minecraft.ingameGUI.getChatGUI();
-
-        chat.printChatMessageWithOptionalDeletion(new ChatComponentText(string), id);
-    }
 }
