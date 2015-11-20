@@ -60,6 +60,8 @@ dependencies {
     compile "org.projectlombok:lombok:1.16.4"
     compile "mcp.mobius.waila:Waila:${waila_version}_${mc_version}:dev"
     compile "com.enderio.core:EnderCore:${mc_version}-${endercore_version}:dev"
+	compile "com.enderio:EnderIO:${mc_version}-${enderio_version}:dev"
+    compile "exnihilo:Ex-Nihilo:${exnihilo_version}:deobf"
 }
 
 minecraft {
