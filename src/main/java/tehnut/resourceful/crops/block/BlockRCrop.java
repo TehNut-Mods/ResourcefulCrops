@@ -70,18 +70,9 @@ public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
             return;
 
         BlockStack blockReq = new BlockStack(world.getBlock(x, y - 2, z), world.getBlockMetadata(x, y - 2, z));
-        if (!seed.getNether())
-            checkAndDropBlock(world, x, y, z);
+        checkAndDropBlock(world, x, y, z);
 
         doGrowth(world, x, y, z, seed, blockReq, random);
-    }
-
-    @Override
-    public void onNeighborBlockChange(World world, int x, int y, int z, Block block) {
-        Seed seed = SeedRegistry.getSeed(getTileSeedIndex(world, x, y, z));
-
-        if (!seed.getNether())
-            super.onNeighborBlockChange(world, x, y, z, block);
     }
 
     public void doGrowth(World world, int x, int y, int z, Seed seed, BlockStack blockReq, Random random) {

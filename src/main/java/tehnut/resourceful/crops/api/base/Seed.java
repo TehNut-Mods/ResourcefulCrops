@@ -11,7 +11,6 @@ public class Seed {
     private String name;
     private int tier;
     private int amount;
-    private boolean nether;
     private String input;
     private String output;
     private String secondOutput;
@@ -28,7 +27,6 @@ public class Seed {
      * @param name         - Name of the seed (Localized or Unlocalized).
      * @param tier         - The tier of the seed. <ul><li>1 - Mundane</li><li>2 - Magical</li><li>3 - Infused</li><li>4 - Arcane</li></ul>
      * @param amount       - Amount of seeds to produce per craft.
-     * @param nether       - If true, the crop can only be planted on Soul Sand.
      * @param input        - Input ItemStack or OreDict entry for creating the seeds.
      * @param output       - Output ItemStack or OreDict entry from crafting the shards.
      * @param secondOutput - Secondary output ItemStack or OreDict entry from crafting shards
@@ -39,11 +37,10 @@ public class Seed {
      * @param compatSeed   - Whether or not this seed is for a {@link tehnut.resourceful.crops.api.compat.CompatibilitySeed}
      * @param compat       - The compatibility settings for specific mods.
      */
-    protected Seed(String name, int tier, int amount, boolean nether, String input, String output, @Nullable String secondOutput, @Nullable String thirdOutput, Color color, SeedReq seedReq, Chance chance, boolean compatSeed, Compat compat) {
+    protected Seed(String name, int tier, int amount, String input, String output, @Nullable String secondOutput, @Nullable String thirdOutput, Color color, SeedReq seedReq, Chance chance, boolean compatSeed, Compat compat) {
         this.name = name;
         this.tier = tier;
         this.amount = amount;
-        this.nether = nether;
         this.input = input;
         this.output = output;
         this.secondOutput = secondOutput;
@@ -65,10 +62,6 @@ public class Seed {
 
     public int getAmount() {
         return amount;
-    }
-
-    public boolean getNether() {
-        return nether;
     }
 
     public String getInput() {
@@ -125,7 +118,6 @@ public class Seed {
                 "name='" + name + '\'' +
                 ", tier=" + tier +
                 ", amount=" + amount +
-                ", nether=" + nether +
                 ", input='" + input + '\'' +
                 ", output=" + output +
                 ", secondOutput=" + secondOutput +

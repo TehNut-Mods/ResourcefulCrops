@@ -64,7 +64,7 @@ public class ItemSeed extends Item implements IPlantable {
     }
 
     public boolean isSoil(World world, int x, int y, int z, Block block, Seed seed) {
-        return (!seed.getNether() && block.canSustainPlant(world, x, y, z, ForgeDirection.UP, this)) || (seed.getNether() && world.getBlock(x, y, z) == Blocks.soul_sand);
+        return block.canSustainPlant(world, x, y, z, ForgeDirection.UP, this);
     }
 
     @SideOnly(Side.CLIENT)

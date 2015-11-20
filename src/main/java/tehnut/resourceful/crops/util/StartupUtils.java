@@ -107,7 +107,8 @@ public class StartupUtils {
         builder.setInput(input);
         builder.setOutput(output);
         builder.setColor(color);
-        builder.setCompat(compat);
+        if (compat != null)
+            builder.setCompat(compat);
 
         return builder.build();
     }
