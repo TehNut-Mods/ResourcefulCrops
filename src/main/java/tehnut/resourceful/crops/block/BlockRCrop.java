@@ -65,11 +65,11 @@ public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
         BlockPos reqPos = new BlockPos(pos.getX(), pos.getY() - 2, pos.getZ());
         BlockStack blockReq = new BlockStack(world.getBlockState(reqPos));
 
-        func_176475_e(world, pos, state);
+        checkAndDropBlock(world, pos, state);
 
         if (seed.getSeedReq().getGrowthReq() == null || seed.getSeedReq().getGrowthReq().equals(blockReq)) {
 
-            int lightLevel = world.getLight(pos.offsetUp());
+            int lightLevel = world.getLight(pos.up());
 
             if (lightLevel >= seed.getSeedReq().getLightLevelMin() && lightLevel <= seed.getSeedReq().getLightLevelMax()) {
                 int meta = this.getMetaFromState(world.getBlockState(pos));

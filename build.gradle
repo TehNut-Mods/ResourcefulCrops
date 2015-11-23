@@ -1,20 +1,20 @@
 buildscript {
     repositories {
         mavenCentral()
-        maven { url = "http://files.minecraftforge.net/maven" }
-        maven { url = "https://oss.sonatype.org/content/repositories/snapshots/" }
+        maven { url "http://files.minecraftforge.net/maven" }
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.1-SNAPSHOT'
         classpath 'org.ajoberstar:gradle-git:0.10.1'
     }
 }
 
 plugins {
-  id 'com.matthewprenger.cursegradle' version '1.0.1'
+    id 'com.matthewprenger.cursegradle' version '1.0.4'
+    id "net.minecraftforge.gradle.forge" version "2.0.2"
 }
 
-apply plugin: 'forge'
 apply plugin: 'maven-publish'
 
 def build_number = 'CUSTOM'
@@ -26,13 +26,14 @@ group = package_group
 archivesBaseName = mod_name
 version = "${mc_version}-${mod_version}-${build_number}"
 
-import org.ajoberstar.grgit.Grgit
+// Ignore this error. It'll work just fine when building.
+import org.ajoberstar.grgit.*
 
+ext.repo = Grgit.open(project.file('.'))
 def gitHash = 'unknown'
-if (new File(projectDir, '.git').exists()) {
-    def repo = Grgit.open(project.file('.'))
-    //gitHash = repo.log().find().abbreviatedId
-}
+
+if (new File(projectDir, '.git').exists())
+    gitHash = repo.log().find().abbreviatedId
 
 repositories {
     maven {	url "http://mobiusstrip.eu/maven" }
@@ -40,7 +41,6 @@ repositories {
 
 dependencies {
     compile "org.projectlombok:lombok:1.16.4"
-    compile "mcp.mobius.waila:Waila:${waila_version}_${mc_version}.1:dev"
 }
 
 minecraft {
@@ -64,6 +64,7 @@ processResources {
 
         expand 'version': project.version, 'mcversion': project.minecraft.version
     }
+
     from(sourceSets.main.resources.srcDirs) {
         exclude '**/*.info'
         exclude '**/*.properties'
@@ -73,18 +74,12 @@ processResources {
 jar {
     classifier = ''
     manifest.mainAttributes(
-            "Built-By": System.getProperty('user.name'),
-            "Created-By": "${System.getProperty('java.vm.version')} + (${System.getProperty('java.vm.vendor')})",
-            "Implementation-Title": project.name,
-            "Implementation-Version": project.version,
-            "Git-Hash": gitHash
+        "Built-By": System.getProperty('user.name'),
+        "Created-By": "${System.getProperty('java.vm.version')} + (${System.getProperty('java.vm.vendor')})",
+        "Implementation-Title": project.name,
+        "Implementation-Version": project.version,
+        "Git-Hash": gitHash
     )
-}
-
-// Source jar
-task sourceJar(type: Jar) {
-    from sourceSets.main.allSource
-    classifier = 'sources'
 }
 
 // Javadoc jar
@@ -123,16 +118,16 @@ publishing {
         }
     }
 }
- 
+
 curseforge {
     if (project.hasProperty('curse_key'))
         apiKey = project.curse_key
- 
+
     project {
         id = "${curse_id}"
-        changelog = project.hasProperty('changelog') ? project.changelog : ''
+		changelog = project.hasProperty('changelog') ? project.changelog : ''
         releaseType = 'alpha'
- 
+
         addArtifact deobfJar
         addArtifact sourceJar
         addArtifact javadocJar
