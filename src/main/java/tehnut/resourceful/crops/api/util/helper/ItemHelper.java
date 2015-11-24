@@ -5,7 +5,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
-import tehnut.resourceful.crops.util.helper.LogHelper;
+import tehnut.resourceful.crops.api.ResourcefulAPI;
 
 public class ItemHelper {
 
@@ -110,7 +110,7 @@ public class ItemHelper {
                 return new ItemStack(oreStack.getItem(), amount, oreStack.getItemDamage());
             }
         } catch (ArrayIndexOutOfBoundsException e) {
-            LogHelper.error("Error adding " + (input ? "inputStack" : "outputStack") + ": " + stackString + ". Is it formatted correctly?");
+            ResourcefulAPI.logger.info("Error adding " + (input ? "inputStack" : "outputStack") + ": " + stackString + ". Is it formatted correctly?");
         }
 
         return null;
