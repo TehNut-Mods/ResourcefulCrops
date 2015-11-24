@@ -2,6 +2,7 @@ package tehnut.resourceful.crops.api;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraft.util.IIcon;
 import org.apache.logging.log4j.Logger;
 import tehnut.resourceful.crops.api.base.Seed;
 import tehnut.resourceful.crops.api.util.cache.PermanentCache;
@@ -16,6 +17,8 @@ public class ResourcefulAPI {
 
     public static Block crop;
     public static Block ore;
+
+    public static IIcon[] blockOverlay;
 
     public static boolean forceAddDuplicates;
 
