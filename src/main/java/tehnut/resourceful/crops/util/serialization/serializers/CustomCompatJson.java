@@ -30,7 +30,7 @@ public class CustomCompatJson implements JsonDeserializer<Compat>, JsonSerialize
     @Override
     public JsonElement serialize(Compat src, Type typeOfSrc, JsonSerializationContext context) {
         JsonObject jsonObject = new JsonObject();
-        if (src.getCompatExNihilio() != null)
+        if (src.getCompatExNihilio().getSourceBlock() != null)
             jsonObject.add("exnihilio", context.serialize(src.getCompatExNihilio()));
 
         return jsonObject;
@@ -47,7 +47,6 @@ public class CustomCompatJson implements JsonDeserializer<Compat>, JsonSerialize
             int sieveChance = helper.getNullableInteger("sieveChance", 0);
 
             CompatBuilder.CompatExNihilioBuilder builder = new CompatBuilder.CompatExNihilioBuilder();
-            ResourcefulAPI.logger.info(blockStack.toString());
             builder.setSourceBlock(blockStack);
             builder.setSieveChance(sieveChance);
 
@@ -61,11 +60,6 @@ public class CustomCompatJson implements JsonDeserializer<Compat>, JsonSerialize
             jsonObject.add("sieveChance", context.serialize(src.getSieveChance()));
 
             return jsonObject;
-        }
-
-        // Hacky way to get around an issue I'm having, but it works.
-        private static String cleanString(String input) {
-            return input.replace("{", "").replace("}", "").replace("\"name\":\"", "").replace("\",\"meta\"", "");
         }
     }
 }
