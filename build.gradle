@@ -162,6 +162,7 @@ publishing {
             artifact sourceJar
             artifact javadocJar
             artifact deobfJar
+            artifact apiJar
         }
     }
     repositories {
@@ -185,5 +186,6 @@ curseforge {
         addArtifact deobfJar
         addArtifact sourceJar
         addArtifact javadocJar
+        addArtifact apiJar
     }
 }
