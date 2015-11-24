@@ -12,6 +12,7 @@ buildscript {
 
 plugins {
     id 'com.matthewprenger.cursegradle' version '1.0.1'
+	id 'net.franz-becker.gradle-lombok' version '1.5'
 }
 
 apply plugin: 'forge'
@@ -54,10 +55,10 @@ repositories {
     maven { url "http://mobiusstrip.eu/maven" }
     maven { url "http://maven.tterrag.com/" }
     maven { url "http://chickenbones.net/maven/" }
+    maven { url = "http://maven.ic2.player.to" }
 }
 
 dependencies {
-    compile "org.projectlombok:lombok:1.16.4"
     compile "mcp.mobius.waila:Waila:${waila_version}_${mc_version}:dev"
     compile "com.enderio.core:EnderCore:${mc_version}-${endercore_version}:dev"
 	compile "com.enderio:EnderIO:${mc_version}-${enderio_version}:dev"
@@ -92,6 +93,19 @@ processResources {
     }
 }
 
+lombok {
+    version = "1.16.6"
+    sha256 = "e0a471be03e1e6b02bf019480cec7a3ac9801702bf7bf62f15d077ad4df8dd5d"
+}
+
+import net.franz_becker.gradle.lombok.task.DelombokTask
+
+task delombok(type: DelombokTask) {
+    args("src/main/java", "-d", "build/sources/delomboked/java")
+}
+
+tasks.eclipse.dependsOn installLombok
+
 jar {
     classifier = ''
     manifest.mainAttributes(
@@ -109,6 +123,14 @@ task sourceJar(type: Jar) {
     classifier = 'sources'
 }
 
+// API jar
+task apiJar(type: Jar) {
+    from sourceSets.main.allSource
+    from sourceSets.main.output
+	include 'tehnut/resourceful/crops/api/**/*'
+    classifier = 'api'
+}
+
 // Javadoc jar
 task javadocJar(type: Jar, dependsOn: javadoc) {
     from javadoc.destinationDir
@@ -121,7 +143,12 @@ task deobfJar(type: Jar) {
     classifier = 'deobf'
 }
 
-tasks.build.dependsOn sourceJar, javadocJar, deobfJar
+javadoc {
+    source = projectDir.path + "/build/sources/delomboked/java"
+}
+
+tasks.javadoc.dependsOn delombok
+tasks.build.dependsOn sourceJar, javadocJar, deobfJar, apiJar, javadoc
 
 tasks.withType(JavaCompile) { task ->
     task.options.encoding = 'UTF-8'
