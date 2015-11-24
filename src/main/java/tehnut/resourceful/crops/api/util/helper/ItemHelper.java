@@ -104,7 +104,7 @@ public class ItemHelper {
                 return null;
             } else if (!input) {
                 String[] stackInfo = stackString.split("#");
-                ItemStack oreStack = OreDictionary.getOres(stackInfo[0]).get(0);
+                ItemStack oreStack = getOreStack(stackInfo[0]);
                 int amount = Integer.parseInt(stackInfo[1]);
 
                 return new ItemStack(oreStack.getItem(), amount, oreStack.getItemDamage());
