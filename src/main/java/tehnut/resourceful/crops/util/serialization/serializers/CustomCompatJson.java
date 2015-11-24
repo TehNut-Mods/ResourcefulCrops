@@ -3,9 +3,11 @@ package tehnut.resourceful.crops.util.serialization.serializers;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import net.minecraft.block.Block;
+import tehnut.resourceful.crops.api.ResourcefulAPI;
 import tehnut.resourceful.crops.api.base.Compat;
 import tehnut.resourceful.crops.api.base.CompatBuilder;
 import tehnut.resourceful.crops.api.util.BlockStack;
+import tehnut.resourceful.crops.api.util.helper.ItemHelper;
 import tehnut.resourceful.crops.util.helper.JsonHelper;
 
 import java.lang.reflect.Type;
@@ -40,13 +42,13 @@ public class CustomCompatJson implements JsonDeserializer<Compat>, JsonSerialize
         public Compat.CompatExNihilio deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
             JsonHelper helper = new JsonHelper(json);
 
-            String sourceBlock = cleanString(json.getAsJsonObject().get("sourceBlock").toString());
+            BlockStack blockStack = context.deserialize(json.getAsJsonObject().get("sourceBlock"), new TypeToken<BlockStack>() {
+            }.getType());
             int sieveChance = helper.getNullableInteger("sieveChance", 0);
 
-            String[] blockInfo = sourceBlock.split(":");
-
             CompatBuilder.CompatExNihilioBuilder builder = new CompatBuilder.CompatExNihilioBuilder();
-            builder.setSourceBlock(new BlockStack(Block.getBlockFromName(blockInfo[0] + ":" + blockInfo[1]), Integer.parseInt(blockInfo[2])));
+            ResourcefulAPI.logger.info(blockStack.toString());
+            builder.setSourceBlock(blockStack);
             builder.setSieveChance(sieveChance);
 
             return builder.build();
