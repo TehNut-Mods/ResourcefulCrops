@@ -9,6 +9,7 @@ import tehnut.resourceful.crops.ConfigHandler;
 import tehnut.resourceful.crops.api.base.Seed;
 import tehnut.resourceful.crops.api.registry.SeedRegistry;
 import tehnut.resourceful.crops.api.util.helper.ItemHelper;
+import tehnut.resourceful.crops.util.helper.LogHelper;
 
 public class RecipeRegistry {
 
@@ -27,29 +28,40 @@ public class RecipeRegistry {
             }
 
             if (ConfigHandler.enableShardCrafting) {
-                if (seed.getOutput() != null) {
-                    GameRegistry.addRecipe(new ShapedOreRecipe(
-                                    seed.getOutputStack(),
-                                    "SSS", "S S", "SSS",
-                                    'S', new ItemStack(ItemRegistry.shard, 1, SeedRegistry.getIndexOf(seed)))
-                    );
+                try {
+                    if (seed.getOutput() != null) {
+                        GameRegistry.addRecipe(new ShapedOreRecipe(
+                                seed.getOutputStack(),
+                                "SSS", "S S", "SSS",
+                                'S', new ItemStack(ItemRegistry.shard, 1, SeedRegistry.getIndexOf(seed)))
+                        );
+                    }
+                } catch (NullPointerException e) {
+                    LogHelper.error("Error adding standard recipe for {" + seed.getInput() + "}");
                 }
 
-
                 if (seed.getSecondOutput() != null) {
-                    GameRegistry.addRecipe(new ShapedOreRecipe(
-                                    seed.getSecondOutputStack(),
-                                    " S ", "SSS", " S ",
-                                    'S', new ItemStack(ItemRegistry.shard, 1, SeedRegistry.getIndexOf(seed)))
-                    );
+                    try {
+                        GameRegistry.addRecipe(new ShapedOreRecipe(
+                                seed.getSecondOutputStack(),
+                                " S ", "SSS", " S ",
+                                'S', new ItemStack(ItemRegistry.shard, 1, SeedRegistry.getIndexOf(seed)))
+                        );
+                    } catch (NullPointerException e) {
+                        LogHelper.error("Error adding second recipe for {" + seed.getInput() + "}");
+                    }
                 }
 
                 if (seed.getThirdOutput() != null) {
-                    GameRegistry.addRecipe(new ShapedOreRecipe(
-                                    seed.getThirdOutputStack(),
-                                    "SS", "SS",
-                                    'S', new ItemStack(ItemRegistry.shard, 1, SeedRegistry.getIndexOf(seed)))
-                    );
+                    try {
+                        GameRegistry.addRecipe(new ShapedOreRecipe(
+                                seed.getThirdOutputStack(),
+                                "SS", "SS",
+                                'S', new ItemStack(ItemRegistry.shard, 1, SeedRegistry.getIndexOf(seed)))
+                        );
+                    } catch (NullPointerException e) {
+                        LogHelper.error("Error adding third recipe for {" + seed.getInput() + "}");
+                    }
                 }
             }
 
