@@ -39,6 +39,14 @@ public class WorldCache<I> {
 
     public WorldCache(String ident) {
         this(ident, true);
+
+        try {
+            DimensionManager.getCurrentSaveRootDirectory().createNewFile();
+        } catch (NullPointerException e) {
+            // Pokeball!
+        } catch (IOException e) {
+            // Aww! It appeared to be caught!
+        }
     }
 
     protected WorldCache(String ident, boolean registerToEventBus) {
