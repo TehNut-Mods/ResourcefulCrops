@@ -46,7 +46,7 @@ chat.ResourcefulCrops.req.light.between=Only grows between light levels %d and %
 chat.ResourcefulCrops.req.difficulty=Requires the game to be on at least %s difficulty.
 
 # Waila
-waila.config.render.fancy=Fancy Render
+option.outputStack=Output Stack
 
 # Config
 config.ResourcefulCrops.title=ResourcefulCrops Configuration

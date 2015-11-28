@@ -27,8 +27,12 @@ public class ResourcefulCropsDataProvider implements IWailaDataProvider {
 
             if (cropTile != null && cropTile instanceof TileRCrop) {
                 Seed seed = SeedRegistry.getSeed(((TileRCrop) cropTile).getSeedName());
-                if (Utils.isValidSeed(seed))
-                    return new ItemStack(ItemRegistry.seed, 1, SeedRegistry.getIndexOf(seed));
+                if (Utils.isValidSeed(seed)) {
+                    if (config.getConfig("outputStack"))
+                        return seed.getOutputStack();
+                    else
+                        return SeedRegistry.getItemStackForSeed(seed);
+                }
             }
         }
 

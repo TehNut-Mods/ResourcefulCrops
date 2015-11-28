@@ -2,6 +2,7 @@ package tehnut.resourceful.crops.compat.waila;
 
 import cpw.mods.fml.common.event.FMLInterModComms;
 import mcp.mobius.waila.api.IWailaRegistrar;
+import tehnut.resourceful.crops.api.ModInformation;
 import tehnut.resourceful.crops.block.BlockRCrop;
 
 public class CompatWaila {
@@ -12,5 +13,6 @@ public class CompatWaila {
 
     public static void callbackRegister(IWailaRegistrar registrar) {
         registrar.registerStackProvider(new ResourcefulCropsDataProvider(), BlockRCrop.class);
+        registrar.addConfig(ModInformation.NAME, "outputStack", true);
     }
 }
