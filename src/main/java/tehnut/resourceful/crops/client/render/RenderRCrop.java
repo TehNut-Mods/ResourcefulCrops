@@ -36,6 +36,7 @@ public class RenderRCrop implements ISimpleBlockRenderingHandler {
 
         renderer.setOverrideBlockTexture(blockIcon);
         tessellator.setColorRGBA(cleared.getRed(), cleared.getGreen(), cleared.getBlue(), cleared.getAlpha());
+        tessellator.setBrightness(block.getMixedBrightnessForBlock(world, x, y, z));
         renderer.drawCrossedSquares(blockIcon, x, renderY, z, 1.0F);
         renderer.clearOverrideBlockTexture();
         if (cropTile instanceof TileRCrop) {
