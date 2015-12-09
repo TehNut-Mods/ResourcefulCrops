@@ -2,6 +2,7 @@ package tehnut.resourceful.crops.util;
 
 import net.minecraft.block.Block;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.registry.GameData;
@@ -38,7 +39,7 @@ public class Utils {
                 int meta = Integer.parseInt(stackInfo[0]);
                 int amount = Integer.parseInt(stackInfo[1]);
 
-                return new ItemStack(GameData.getItemRegistry().getObject(name), amount, meta);
+                return new ItemStack(GameData.getItemRegistry().getObject(new ResourceLocation(name)), amount, meta);
             } else if (stackString.equals("null")) {
                 return null;
             } else if (!input) {

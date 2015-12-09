@@ -32,7 +32,7 @@ public class CommandCreateSeed extends CommandBase {
     @Override
     public void processCommand(ICommandSender sender, String[] args) {
         World world = sender.getEntityWorld();
-        EntityPlayer player = world.getPlayerEntityByName(sender.getCommandSenderName());
+        EntityPlayer player = world.getPlayerEntityByName(sender.getName());
 
         if (args.length > 0 && args[0].equals("help")) {
             for (int i = 0; i < 4; i++)

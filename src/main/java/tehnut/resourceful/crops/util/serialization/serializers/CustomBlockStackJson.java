@@ -1,6 +1,7 @@
 package tehnut.resourceful.crops.util.serialization.serializers;
 
 import com.google.gson.*;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.GameData;
 import tehnut.resourceful.crops.api.util.BlockStack;
 import tehnut.resourceful.crops.util.helper.JsonHelper;
@@ -16,7 +17,7 @@ public class CustomBlockStackJson implements JsonDeserializer<BlockStack>, JsonS
         String name = helper.getString("name");
         int meta = helper.getNullableInteger("meta", 0);
 
-        return new BlockStack(GameData.getBlockRegistry().containsKey(name) ? GameData.getBlockRegistry().getObject(name).getStateFromMeta(meta) : null);
+        return new BlockStack(GameData.getBlockRegistry().containsKey(new ResourceLocation(name)) ? GameData.getBlockRegistry().getObject(new ResourceLocation(name)).getStateFromMeta(meta) : null);
     }
 
     @Override

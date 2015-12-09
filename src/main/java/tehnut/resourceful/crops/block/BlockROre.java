@@ -97,7 +97,7 @@ public class BlockROre extends Block {
 
         EntityItem entityItem = new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), stack.copy());
         entityItem.setPickupDelay(10);
-        if (!world.isRemote && world.getGameRules().getGameRuleBooleanValue("doTileDrops") && !world.restoringBlockSnapshots)
+        if (!world.isRemote && world.getGameRules().getBoolean("doTileDrops") && !world.restoringBlockSnapshots)
             world.spawnEntityInWorld(entityItem);
 
         return entityItem;

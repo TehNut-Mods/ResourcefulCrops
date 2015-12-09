@@ -1,5 +1,6 @@
 package tehnut.resourceful.crops.util;
 
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.registry.GameData;
 import net.minecraft.init.Blocks;
@@ -135,7 +136,7 @@ public class StartupUtils {
      */
     private static void addDefaultSeed(Seed seed) {
         String[] split = seed.getInput().split(":");
-        if (GameData.getItemRegistry().containsKey(split[0] + ":" + split[1]))
+        if (GameData.getItemRegistry().containsKey(new ResourceLocation(split[0] + ":" + split[1])))
             defaultSeeds.add(seed);
     }
 
