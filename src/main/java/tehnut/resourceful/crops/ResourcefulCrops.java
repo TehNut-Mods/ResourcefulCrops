@@ -8,15 +8,19 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
+import net.minecraftforge.fml.common.discovery.ASMDataTable;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import tehnut.resourceful.crops.annot.ModBlock;
+import tehnut.resourceful.crops.annot.ModItem;
 import tehnut.resourceful.crops.api.ModInformation;
 import tehnut.resourceful.crops.api.ResourcefulAPI;
 import tehnut.resourceful.crops.api.base.Seed;
 import tehnut.resourceful.crops.api.registry.SeedRegistry;
 import tehnut.resourceful.crops.compat.waila.CompatWaila;
+import tehnut.resourceful.crops.item.ItemStone;
 import tehnut.resourceful.crops.proxy.CommonProxy;
 import tehnut.resourceful.crops.registry.*;
 import tehnut.resourceful.crops.util.*;
@@ -29,6 +33,7 @@ import tehnut.resourceful.crops.util.serialization.SeedCreator;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Set;
 
 @Mod(modid = ModInformation.ID, name = ModInformation.NAME, version = ModInformation.VERSION, dependencies = ModInformation.REQUIRED, guiFactory = ModInformation.GUIFACTORY)
 public class ResourcefulCrops {
@@ -39,12 +44,12 @@ public class ResourcefulCrops {
     public static CreativeTabs tabResourcefulCrops = new CreativeTabs(ModInformation.ID + ".creativeTab") {
         @Override
         public ItemStack getIconItemStack() {
-            return new ItemStack(ItemRegistry.stone, 1, 0);
+            return new ItemStack(ItemRegistry.getItem(ItemStone.class), 1, 0);
         }
 
         @Override
         public Item getTabIconItem() {
-            return ItemRegistry.stone;
+            return ItemRegistry.getItem(ItemStone.class);
         }
     };
 
@@ -52,6 +57,8 @@ public class ResourcefulCrops {
     public static ResourcefulCrops instance;
     private static File configDir;
     private static PermanentCache<Seed> seedCache;
+    public Set<ASMDataTable.ASMData> modItems;
+    public Set<ASMDataTable.ASMData> modBlocks;
 
     public static File getConfigDir() {
         return configDir;
@@ -73,8 +80,12 @@ public class ResourcefulCrops {
         ResourcefulAPI.logger = LogHelper.getLogger();
         ResourcefulAPI.forceAddDuplicates = ConfigHandler.forceAddDuplicates;
 
-        BlockRegistry.registerBlocks();
-        ItemRegistry.registerItems();
+        modItems = event.getAsmData().getAll(ModItem.class.getCanonicalName());
+        modBlocks = event.getAsmData().getAll(ModBlock.class.getCanonicalName());
+
+        BlockRegistry.init();
+        ItemRegistry.init();
+
         AchievementRegistry.registerAchievements();
         GameRegistry.registerWorldGenerator(new GenerationHandler(), 2);
     }

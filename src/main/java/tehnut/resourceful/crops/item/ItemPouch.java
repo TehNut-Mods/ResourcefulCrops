@@ -16,9 +16,11 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.EnumPlantType;
 import net.minecraftforge.common.IPlantable;
+import tehnut.resourceful.crops.annot.ModItem;
 import tehnut.resourceful.crops.api.ModInformation;
 import tehnut.resourceful.crops.ResourcefulCrops;
 import tehnut.resourceful.crops.api.base.Seed;
+import tehnut.resourceful.crops.block.BlockRCrop;
 import tehnut.resourceful.crops.registry.BlockRegistry;
 import tehnut.resourceful.crops.api.registry.SeedRegistry;
 import tehnut.resourceful.crops.tile.TileRCrop;
@@ -26,6 +28,7 @@ import tehnut.resourceful.crops.util.Utils;
 
 import java.util.List;
 
+@ModItem
 public class ItemPouch extends Item implements IPlantable {
 
     public ItemPouch() {
@@ -47,7 +50,7 @@ public class ItemPouch extends Item implements IPlantable {
                 Block placed = world.getBlockState(new BlockPos(posX, pos.getY(), posZ)).getBlock();
 
                 if (placed.canSustainPlant(world, new BlockPos(posX, pos.getY(), posZ), EnumFacing.UP, this) && side == EnumFacing.UP && Utils.isValidSeed(Utils.getItemDamage(stack)) && world.isAirBlock(new BlockPos(posX, pos.getY() + 1, posZ))) {
-                    world.setBlockState(new BlockPos(posX, pos.getY() + 1, posZ), BlockRegistry.crop.getDefaultState());
+                    world.setBlockState(new BlockPos(posX, pos.getY() + 1, posZ), BlockRegistry.getBlock(BlockRCrop.class).getDefaultState());
                     ((TileRCrop) world.getTileEntity(new BlockPos(posX, pos.getY() + 1, posZ))).setSeedName(SeedRegistry.getSeed(Utils.getItemDamage(stack)).getName());
                     if (!player.capabilities.isCreativeMode)
                         player.inventory.decrStackSize(player.inventory.currentItem, 1);
@@ -105,6 +108,6 @@ public class ItemPouch extends Item implements IPlantable {
 
     @Override
     public IBlockState getPlant(IBlockAccess world, BlockPos pos) {
-        return BlockRegistry.crop.getDefaultState();
+        return BlockRegistry.getBlock(BlockRCrop.class).getDefaultState();
     }
 }

@@ -17,10 +17,14 @@ import net.minecraftforge.common.EnumPlantType;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import tehnut.resourceful.crops.ConfigHandler;
+import tehnut.resourceful.crops.annot.ModBlock;
 import tehnut.resourceful.crops.api.ModInformation;
 import tehnut.resourceful.crops.ResourcefulCrops;
 import tehnut.resourceful.crops.achievement.AchievementTrigger;
 import tehnut.resourceful.crops.api.base.Seed;
+import tehnut.resourceful.crops.item.ItemMaterial;
+import tehnut.resourceful.crops.item.ItemSeed;
+import tehnut.resourceful.crops.item.ItemShard;
 import tehnut.resourceful.crops.registry.AchievementRegistry;
 import tehnut.resourceful.crops.registry.BlockRegistry;
 import tehnut.resourceful.crops.registry.ItemRegistry;
@@ -33,6 +37,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+@ModBlock(tileEntity = TileRCrop.class)
 public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
 
     public BlockRCrop() {
@@ -43,7 +48,7 @@ public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
 
     public static int getTileSeedIndex(World world, BlockPos pos) {
         TileEntity crop = world.getTileEntity(pos);
-        int seedIndex = Utils.getInvalidSeed(ItemRegistry.seed).getItemDamage();
+        int seedIndex = Utils.getInvalidSeed(ItemRegistry.getItem(ItemSeed.class)).getItemDamage();
 
         if (crop != null && crop instanceof TileRCrop) {
             String seedName = ((TileRCrop) crop).getSeedName();
@@ -124,7 +129,7 @@ public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
 
     @Override
     public ItemStack getPickBlock(MovingObjectPosition target, World world, BlockPos pos, EntityPlayer player) {
-        return new ItemStack(ItemRegistry.seed, 1, getTileSeedIndex(world, pos));
+        return new ItemStack(ItemRegistry.getItem(ItemSeed.class), 1, getTileSeedIndex(world, pos));
     }
 
     public void dropItems(World world, BlockPos pos, IBlockState state) {
@@ -141,17 +146,16 @@ public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
         int seedIndex = getTileSeedIndex(world, pos);
 
         if (this.getMetaFromState(state) <= 6) {
-            drops.add(new ItemStack(ItemRegistry.seed, 1, seedIndex));
+            drops.add(new ItemStack(ItemRegistry.getItem(ItemSeed.class), 1, seedIndex));
         } else {
-            drops.add(new ItemStack(ItemRegistry.seed, 1, seedIndex));
-            drops.add(new ItemStack(ItemRegistry.shard, 1, seedIndex));
+            drops.add(new ItemStack(ItemRegistry.getItem(ItemSeed.class), 1, seedIndex));
+            drops.add(new ItemStack(ItemRegistry.getItem(ItemShard.class), 1, seedIndex));
         }
-
         return drops;
     }
 
     public boolean doHarvest(World world, BlockPos pos, EntityPlayer player) {
-        if (world.getBlockState(pos).getBlock() == BlockRegistry.crop && getMetaFromState(world.getBlockState(pos)) >= 7) {
+        if (world.getBlockState(pos).getBlock() == BlockRegistry.getBlock(BlockRCrop.class) && getMetaFromState(world.getBlockState(pos)) >= 7) {
             if (!world.isRemote) {
                 world.setBlockState(pos, getDefaultState(), 3);
                 doRightClickDrops(world, pos);
@@ -188,17 +192,17 @@ public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
         int seedIndex = getTileSeedIndex(world, pos);
         Seed seed = SeedRegistry.getSeed(seedIndex);
 
-        world.spawnEntityInWorld(new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ItemRegistry.shard, 1, seedIndex)));
+        world.spawnEntityInWorld(new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ItemRegistry.getItem(ItemShard.class), 1, seedIndex)));
 
         double extraSeedChance = seed.getChance().getExtraSeed();
         double essenceDropChance = seed.getChance().getEssenceDrop();
         double randomDouble = random.nextDouble();
 
         if (randomDouble <= extraSeedChance)
-            world.spawnEntityInWorld(new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ItemRegistry.seed, 1, seedIndex)));
+            world.spawnEntityInWorld(new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ItemRegistry.getItem(ItemSeed.class), 1, seedIndex)));
 
         if (randomDouble <= essenceDropChance)
-            world.spawnEntityInWorld(new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ItemRegistry.material)));
+            world.spawnEntityInWorld(new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ItemRegistry.getItem(ItemMaterial.class))));
     }
 
     @Override

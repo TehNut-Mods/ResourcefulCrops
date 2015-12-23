@@ -65,6 +65,6 @@ public class SeedRegistry {
     }
 
     public static ItemStack getItemStackForSeed(Seed seed) {
-        return new ItemStack(ResourcefulAPI.seed, 1, getIndexOf(seed));
+        return new ItemStack(ResourcefulAPI.getItem(ResourcefulAPI.SEED), 1, getIndexOf(seed));
     }
 }

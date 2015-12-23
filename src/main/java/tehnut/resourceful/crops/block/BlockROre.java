@@ -21,8 +21,11 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.IBlockAccess;
 import tehnut.resourceful.crops.ConfigHandler;
+import tehnut.resourceful.crops.annot.ModBlock;
 import tehnut.resourceful.crops.api.ModInformation;
 import tehnut.resourceful.crops.ResourcefulCrops;
+import tehnut.resourceful.crops.item.ItemMaterial;
+import tehnut.resourceful.crops.item.block.ItemBlockROre;
 import tehnut.resourceful.crops.registry.BlockRegistry;
 import tehnut.resourceful.crops.registry.ItemRegistry;
 
@@ -30,6 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+@ModBlock(itemBlock = ItemBlockROre.class)
 public class BlockROre extends Block {
 
     Random random = new Random();
@@ -66,7 +70,7 @@ public class BlockROre extends Block {
         } else {
             boolean silk = EnchantmentHelper.getSilkTouchModifier(player);
             if (silk) {
-                Block ore = BlockRegistry.ore;
+                Block ore = BlockRegistry.getBlock(BlockROre.class);
                 dropItem(world, pos, new ItemStack(ore, 1, getMetaFromState(state)));
             } else {
                 int fortune = EnchantmentHelper.getFortuneModifier(player);
@@ -83,7 +87,7 @@ public class BlockROre extends Block {
                     dropAmount = 1;
                 }
 
-                Item droppedItem = ItemRegistry.material;
+                Item droppedItem = ItemRegistry.getItem(ItemMaterial.class);
                 dropItem(world, pos, new ItemStack(droppedItem, dropAmount, 0));
             }
         }
@@ -120,7 +124,7 @@ public class BlockROre extends Block {
 
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-        return ItemRegistry.material;
+        return ItemRegistry.getItem(ItemMaterial.class);
     }
 
     @Override

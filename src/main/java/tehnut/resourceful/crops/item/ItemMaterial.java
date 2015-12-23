@@ -6,11 +6,13 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import tehnut.resourceful.crops.annot.ModItem;
 import tehnut.resourceful.crops.api.ModInformation;
 import tehnut.resourceful.crops.ResourcefulCrops;
 
 import java.util.List;
 
+@ModItem
 public class ItemMaterial extends Item {
 
     String[] materials = { "", ".mundane", ".magical", ".infused", ".arcane" };

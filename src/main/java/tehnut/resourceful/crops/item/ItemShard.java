@@ -8,6 +8,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
+import tehnut.resourceful.crops.annot.ModItem;
 import tehnut.resourceful.crops.api.ModInformation;
 import tehnut.resourceful.crops.ResourcefulCrops;
 import tehnut.resourceful.crops.api.base.Seed;
@@ -16,6 +17,7 @@ import tehnut.resourceful.crops.util.Utils;
 
 import java.util.List;
 
+@ModItem
 public class ItemShard extends Item {
 
     public ItemShard() {

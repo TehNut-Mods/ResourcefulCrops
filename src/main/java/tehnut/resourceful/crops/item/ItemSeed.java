@@ -16,9 +16,11 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.EnumPlantType;
 import net.minecraftforge.common.IPlantable;
+import tehnut.resourceful.crops.annot.ModItem;
 import tehnut.resourceful.crops.api.ModInformation;
 import tehnut.resourceful.crops.ResourcefulCrops;
 import tehnut.resourceful.crops.api.base.Seed;
+import tehnut.resourceful.crops.block.BlockRCrop;
 import tehnut.resourceful.crops.registry.BlockRegistry;
 import tehnut.resourceful.crops.api.registry.SeedRegistry;
 import tehnut.resourceful.crops.tile.TileRCrop;
@@ -26,6 +28,7 @@ import tehnut.resourceful.crops.util.Utils;
 
 import java.util.List;
 
+@ModItem
 public class ItemSeed extends Item implements IPlantable {
 
     public ItemSeed() {
@@ -51,7 +54,7 @@ public class ItemSeed extends Item implements IPlantable {
         Block placed = world.getBlockState(pos).getBlock();
 
         if (placed.canSustainPlant(world, pos,  EnumFacing.UP, this) && side == EnumFacing.UP && Utils.isValidSeed(Utils.getItemDamage(stack)) && world.isAirBlock(pos.offset(EnumFacing.UP))) {
-            world.setBlockState(pos.offset(EnumFacing.UP), BlockRegistry.crop.getDefaultState());
+            world.setBlockState(pos.offset(EnumFacing.UP), BlockRegistry.getBlock(BlockRCrop.class).getDefaultState());
             ((TileRCrop) world.getTileEntity(pos.offset(EnumFacing.UP))).setSeedName(SeedRegistry.getSeed(Utils.getItemDamage(stack)).getName());
             if (!player.capabilities.isCreativeMode)
                 player.inventory.decrStackSize(player.inventory.currentItem, 1);
@@ -99,6 +102,6 @@ public class ItemSeed extends Item implements IPlantable {
 
     @Override
     public IBlockState getPlant(IBlockAccess world, BlockPos pos) {
-        return BlockRegistry.crop.getDefaultState();
+        return BlockRegistry.getBlock(BlockRCrop.class).getDefaultState();
     }
 }
