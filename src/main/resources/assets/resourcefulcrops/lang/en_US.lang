@@ -46,7 +46,7 @@ chat.ResourcefulCrops.req.light.between=Only grows between light levels %d and %
 chat.ResourcefulCrops.crop.name=%s Seeds grow here.
 
 # Waila
-waila.config.render.fancy=Fancy Render
+option.outputStack=Output Stack
 
 # Config
 config.ResourcefulCrops.title=ResourcefulCrops Configuration
