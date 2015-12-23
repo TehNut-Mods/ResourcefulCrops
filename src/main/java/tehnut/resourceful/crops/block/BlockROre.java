@@ -1,6 +1,5 @@
 package tehnut.resourceful.crops.block;
 
-import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
@@ -46,10 +45,9 @@ public class BlockROre extends Block {
         setHarvestLevel("pickaxe", 3);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubBlocks(Item id, CreativeTabs tab, List list) {
+    public void getSubBlocks(Item id, CreativeTabs tab, List<ItemStack> list) {
         for (int i = 0; i < 2; i++)
             list.add(new ItemStack(id, 1, i));
     }
@@ -127,22 +125,21 @@ public class BlockROre extends Block {
 
     @Override
     public int quantityDropped(Random random) {
-
         int drop = random.nextInt(4);
 
         return drop != 0 ? drop : 1;
     }
 
     public IBlockState getStateFromMeta(int meta) {
-        return this.getDefaultState().withProperty(META, Integer.valueOf(meta));
+        return this.getDefaultState().withProperty(META, meta);
     }
 
     public int getMetaFromState(IBlockState state) {
-        return ((Integer)state.getValue(META)).intValue();
+        return state.getValue(META);
     }
 
     protected BlockState createBlockState() {
-        return new BlockState(this, new IProperty[] {META});
+        return new BlockState(this, META);
     }
 
     @Override

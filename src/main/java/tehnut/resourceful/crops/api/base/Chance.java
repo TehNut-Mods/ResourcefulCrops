@@ -44,8 +44,6 @@ public class Chance {
 
         Chance chance = (Chance) o;
 
-        if (Double.compare(chance.extraSeed, extraSeed) != 0) return false;
-        return Double.compare(chance.essenceDrop, essenceDrop) == 0;
-
+        return Double.compare(chance.extraSeed, extraSeed) == 0 && Double.compare(chance.essenceDrop, essenceDrop) == 0;
     }
 }

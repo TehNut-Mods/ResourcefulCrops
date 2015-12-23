@@ -102,7 +102,7 @@ public class Utils {
         try {
             ret = stack.getItemDamage();
         } catch (NullPointerException e) {
-
+            // Pokemon!
         }
 
         return ret;

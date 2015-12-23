@@ -81,7 +81,6 @@ public class ResourcefulCrops {
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
-        FMLCommonHandler.instance().bus().register(new EventHandler());
         MinecraftForge.EVENT_BUS.register(new EventHandler());
 
         SeedRegistry.seedBuilder = new GsonBuilder();
