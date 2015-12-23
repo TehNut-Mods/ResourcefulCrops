@@ -9,6 +9,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import tehnut.resourceful.crops.api.base.Seed;
 import tehnut.resourceful.crops.block.BlockRCrop;
+import tehnut.resourceful.crops.item.ItemSeed;
 import tehnut.resourceful.crops.registry.ItemRegistry;
 import tehnut.resourceful.crops.api.registry.SeedRegistry;
 import tehnut.resourceful.crops.tile.TileRCrop;
@@ -28,14 +29,14 @@ public class ResourcefulCropsDataProvider implements IWailaDataProvider {
                 Seed seed = SeedRegistry.getSeed(((TileRCrop) cropTile).getSeedName());
                 if (Utils.isValidSeed(seed)) {
                     if (config.getConfig("outputStack"))
-                        return seed.getOutput();
+                        return new ItemStack(seed.getOutput().getItem(), 1, seed.getOutput().getItemDamage());
                     else
                         return SeedRegistry.getItemStackForSeed(seed);
                 }
             }
         }
 
-        return Utils.getInvalidSeed(ItemRegistry.seed);
+        return Utils.getInvalidSeed(ItemRegistry.getItem(ItemSeed.class));
     }
 
     @Override
