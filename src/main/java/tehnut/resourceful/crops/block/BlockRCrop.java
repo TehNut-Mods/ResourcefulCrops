@@ -123,7 +123,7 @@ public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
     }
 
     @Override
-    public ItemStack getPickBlock(MovingObjectPosition target, World world, BlockPos pos) {
+    public ItemStack getPickBlock(MovingObjectPosition target, World world, BlockPos pos, EntityPlayer player) {
         return new ItemStack(ItemRegistry.seed, 1, getTileSeedIndex(world, pos));
     }
 
