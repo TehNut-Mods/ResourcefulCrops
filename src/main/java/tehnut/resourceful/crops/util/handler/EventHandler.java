@@ -13,7 +13,7 @@ public class EventHandler {
 
     @SubscribeEvent
     public void onBonemeal(BonemealEvent event) {
-        if (event.block instanceof BlockRCrop)
+        if (event.block.getBlock() instanceof BlockRCrop)
             event.setCanceled(true);
     }
 
