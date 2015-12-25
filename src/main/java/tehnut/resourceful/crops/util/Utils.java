@@ -85,20 +85,4 @@ public class Utils {
     public static void playBlockBreakAnim(World world, int x, int y, int z, BlockStack blockStack) {
         world.playAuxSFX(2001, x, y, z, Block.getIdFromBlock(blockStack.getBlock()) + (blockStack.getMeta() << 12));
     }
-
-    /**
-     * Loads a class if the given modid is found
-     *
-     * @param clazz - Compatibility class
-     * @param modid - Required modid
-     */
-    public static void registerCompat(Class clazz, String modid) {
-        if (Loader.isModLoaded(modid)) {
-            try {
-                Class.forName(clazz.getCanonicalName());
-            } catch (ClassNotFoundException e) {
-                LogHelper.error("Could not find compatibility class for mod { " + modid + " }. Please report this.");
-            }
-        }
-    }
 }

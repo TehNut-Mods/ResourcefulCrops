@@ -22,10 +22,7 @@ import tehnut.resourceful.crops.compat.mfr.CompatMFR;
 import tehnut.resourceful.crops.compat.torcherino.CompatTorcherino;
 import tehnut.resourceful.crops.compat.waila.CompatWaila;
 import tehnut.resourceful.crops.proxy.CommonProxy;
-import tehnut.resourceful.crops.registry.AchievementRegistry;
-import tehnut.resourceful.crops.registry.BlockRegistry;
-import tehnut.resourceful.crops.registry.ItemRegistry;
-import tehnut.resourceful.crops.registry.RecipeRegistry;
+import tehnut.resourceful.crops.registry.*;
 import tehnut.resourceful.crops.api.registry.SeedRegistry;
 import tehnut.resourceful.crops.util.*;
 import tehnut.resourceful.crops.api.util.cache.PermanentCache;
@@ -111,12 +108,7 @@ public class ResourcefulCrops {
 
         OreDictHandler.load();
 
-        Utils.registerCompat(CompatWaila.class, "Waila");
-        Utils.registerCompat(CompatBloodMagic.class, "AWWayofTime");
-        Utils.registerCompat(CompatEnderIO.class, "EnderIO");
-        Utils.registerCompat(CompatMFR.class, "MineFactoryReloaded");
-        Utils.registerCompat(CompatTorcherino.class, "Torcherino");
-        Utils.registerCompat(CompatExNihilio.class, "exnihilo");
+        CompatibilityRegistry.registerModCompat();
     }
 
     @Mod.EventHandler

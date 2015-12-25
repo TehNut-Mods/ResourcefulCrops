@@ -2,12 +2,24 @@ package tehnut.resourceful.crops.compat.bloodmagic;
 
 import WayofTime.alchemicalWizardry.api.harvest.HarvestRegistry;
 import tehnut.resourceful.crops.ConfigHandler;
+import tehnut.resourceful.crops.compat.ICompatibility;
 
-public class CompatBloodMagic {
+public class CompatBloodMagic implements ICompatibility {
 
-    static {
+    @Override
+    public void loadCompatibility() {
         if (ConfigHandler.enableBloodMagicAutomation)
             HarvestRegistry.registerHarvestHandler(new ResourcefulCropsHarvestHandler());
+    }
+
+    @Override
+    public String getModId() {
+        return "AWWayofTime";
+    }
+
+    @Override
+    public boolean enableCompat() {
+        return true;
     }
 
     public enum OrbType {
