@@ -1,18 +1,20 @@
 package tehnut.resourceful.crops.util;
 
-import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.registry.GameData;
 import net.minecraft.block.Block;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftforge.common.util.FakePlayer;
 import tehnut.resourceful.crops.api.base.Seed;
 import tehnut.resourceful.crops.api.registry.SeedRegistry;
 import tehnut.resourceful.crops.api.util.BlockStack;
-import tehnut.resourceful.crops.util.helper.LogHelper;
+
+import java.util.regex.Pattern;
 
 public class Utils {
+
+    private static final Pattern FAKE_PLAYER_PATTERN = Pattern.compile("^(?:\\[.*\\])|(?:ComputerCraft)$");
 
     /**
      * Provides an invalid version of the given item. Intended to be
@@ -70,6 +72,17 @@ public class Utils {
      */
     public static boolean isValidSeed(Seed seed) {
         return SeedRegistry.getSeedList().contains(seed);
+    }
+
+    /**
+     * Checks if the provided EntityPlayer is instanceof FakePlayer or if the name matches
+     * known non-standard FakePlayer names.
+     *
+     * @param player - Player to check
+     * @return - Whether the provided EntityPlayer is a FakePlayer.
+     */
+    public static boolean isFakePlayer(EntityPlayer player) {
+        return player instanceof FakePlayer || FAKE_PLAYER_PATTERN.matcher(player.getGameProfile().getName()).matches();
     }
 
     /**

@@ -22,6 +22,7 @@ import tehnut.resourceful.crops.ConfigHandler;
 import tehnut.resourceful.crops.ResourcefulCrops;
 import tehnut.resourceful.crops.registry.BlockRegistry;
 import tehnut.resourceful.crops.registry.ItemRegistry;
+import tehnut.resourceful.crops.util.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,14 +59,13 @@ public class BlockROre extends Block {
     @Override
     public void harvestBlock(World world, EntityPlayer player, int x, int y, int z, int meta) {
 
-        if (player instanceof FakePlayer && !ConfigHandler.enableFakePlayerMining) {
+        if (Utils.isFakePlayer(player) && !ConfigHandler.enableFakePlayerMining) {
             Block blockItem = Blocks.cobblestone;
-            BlockROre.dropItem(world, x, y, z, new ItemStack(blockItem, 1, 0));
+            dropItem(world, x, y, z, new ItemStack(blockItem, 1, 0));
         } else {
             boolean silk = EnchantmentHelper.getSilkTouchModifier(player);
             if (silk) {
-                Block ore = BlockRegistry.ore;
-                BlockROre.dropItem(world, x, y, z, new ItemStack(ore, 1, meta));
+                dropItem(world, x, y, z, new ItemStack(this, 1, meta));
             } else {
                 int fortune = EnchantmentHelper.getFortuneModifier(player);
                 int dropAmount;
@@ -81,8 +81,7 @@ public class BlockROre extends Block {
                     dropAmount = 1;
                 }
 
-                Item droppedItem = ItemRegistry.material;
-                BlockROre.dropItem(world, x, y, z, new ItemStack(droppedItem, dropAmount, 0));
+                dropItem(world, x, y, z, new ItemStack(ItemRegistry.material, dropAmount));
             }
         }
     }
