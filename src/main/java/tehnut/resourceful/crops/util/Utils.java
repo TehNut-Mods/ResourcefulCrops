@@ -14,6 +14,9 @@ import tehnut.resourceful.crops.api.registry.SeedRegistry;
 import tehnut.resourceful.crops.api.util.BlockStack;
 import tehnut.resourceful.crops.util.helper.LogHelper;
 
+import java.lang.reflect.Field;
+import java.util.Map;
+
 public class Utils {
 
     /**
@@ -160,17 +163,18 @@ public class Utils {
      * @param entry - OreDict entry to check existence of
      * @return      - If the given entry exists.
      */
+    @SuppressWarnings("unchecked")
     public static boolean doesOreNameExist(String entry) {
-        boolean exists = false;
-
-        for (String ore : OreDictionary.getOreNames()) {
-            if (ore.equals(entry)) {
-                exists = true;
-                break;
-            }
+        try {
+            Field nameToId = OreDictionary.class.getDeclaredField("nameToId");
+            nameToId.setAccessible(true);
+            Map<String, Integer> nameToIdMap = (Map<String, Integer>) nameToId.get(null);
+            return nameToIdMap.get(entry) != null;
+        } catch (NoSuchFieldException e) {
+            // Catch 'em all!
+        } catch (IllegalAccessException e) {
+            // Catch 'em all!
         }
-
-        LogHelper.info(entry + " - " + exists);
-        return exists;
+        return false;
     }
 }
