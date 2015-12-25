@@ -179,8 +179,15 @@ public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
     public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z, EntityPlayer player) {
         TileEntity crop = world.getTileEntity(x, y, z);
 
-        if (crop != null && crop instanceof TileRCrop)
-            return new ItemStack(ItemRegistry.seed, 1, getTileSeedIndex(world, x, y, z));
+        if (crop != null && crop instanceof TileRCrop) {
+            if (!player.isSneaking())
+                return new ItemStack(ItemRegistry.seed, 1, getTileSeedIndex(world, x, y, z));
+            else {
+                ItemStack outputStack = SeedRegistry.getSeed(getTileSeedIndex(world, x, y, z)).getOutputStack();
+                outputStack.stackSize = 1;
+                return outputStack;
+            }
+        }
 
         return Utils.getInvalidSeed(ItemRegistry.seed);
     }
