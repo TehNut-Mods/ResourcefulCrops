@@ -153,22 +153,6 @@ public class Utils {
     }
 
     /**
-     * Loads a class if the given modid is found
-     *
-     * @param clazz - Compatibility class
-     * @param modid - Required modid
-     */
-    public static void registerCompat(Class clazz, String modid) {
-        if (Loader.isModLoaded(modid)) {
-            try {
-                Class.forName(clazz.getCanonicalName());
-            } catch (ClassNotFoundException e) {
-                LogHelper.error("Could not find compatibility class for mod { " + modid + " }. Please report this.");
-            }
-        }
-    }
-
-    /**
      * Since {@code OreDictionary.doesOreNameExist(String)} doesn't exist
      * in 1.8, I needed to write my own version. Not as good as the 1.7.10
      * method, but gets the job done.

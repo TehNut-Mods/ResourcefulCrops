@@ -109,7 +109,7 @@ public class ResourcefulCrops {
 
         OreDictHandler.load();
 
-        Utils.registerCompat(CompatWaila.class, "Waila");
+        CompatibilityRegistry.registerModCompat();
     }
 
     @Mod.EventHandler
