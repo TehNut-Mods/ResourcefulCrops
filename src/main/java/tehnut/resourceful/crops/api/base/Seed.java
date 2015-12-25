@@ -73,7 +73,7 @@ public class Seed {
     }
 
     public ItemStack getOutputStack() {
-        return ItemHelper.parseItemStack(getOutput(), false);
+        return ItemHelper.stackCache.get(getOutput()) != null ? ItemHelper.stackCache.get(getOutput()) : ItemHelper.parseItemStack(getOutput(), false);
     }
 
     public String getSecondOutput() {
@@ -81,7 +81,7 @@ public class Seed {
     }
 
     public ItemStack getSecondOutputStack() {
-        return ItemHelper.parseItemStack(getSecondOutput(), false);
+        return ItemHelper.stackCache.get(getSecondOutput()) != null ? ItemHelper.stackCache.get(getSecondOutput()) : ItemHelper.parseItemStack(getSecondOutput(), false);
     }
 
     public String getThirdOutput() {
@@ -89,7 +89,7 @@ public class Seed {
     }
 
     public ItemStack getThirdOutputStack() {
-        return ItemHelper.parseItemStack(thirdOutput, false);
+        return ItemHelper.stackCache.get(getThirdOutput()) != null ? ItemHelper.stackCache.get(getThirdOutput()) : ItemHelper.parseItemStack(getThirdOutput(), false);
     }
 
     public Color getColor() {

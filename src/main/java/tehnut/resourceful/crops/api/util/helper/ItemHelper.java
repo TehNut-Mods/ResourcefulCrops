@@ -1,13 +1,20 @@
 package tehnut.resourceful.crops.api.util.helper;
 
+import com.google.common.base.Strings;
+import com.google.common.collect.HashBiMap;
 import cpw.mods.fml.common.registry.GameData;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 import tehnut.resourceful.crops.api.ResourcefulAPI;
+import tehnut.resourceful.crops.util.helper.LogHelper;
+
+import java.util.Map;
 
 public class ItemHelper {
+
+    public static Map<String, ItemStack> stackCache = HashBiMap.create();
 
     /**
      * Converts an Item into a string with the formatting of:
@@ -18,7 +25,7 @@ public class ItemHelper {
      * @return     - A string with the formatting of an ItemStack
      */
     public static String getItemString(Item item) {
-        return GameData.getItemRegistry().getNameForObject(item) + ":0#0";
+        return GameData.getItemRegistry().getNameForObject(item) + ":0";
     }
 
     /**
@@ -31,7 +38,7 @@ public class ItemHelper {
      * @return     - A string with the formatting of an ItemStack
      */
     public static String getItemString(Item item, int meta) {
-        return GameData.getItemRegistry().getNameForObject(item) + ":" + meta + "#0";
+        return GameData.getItemRegistry().getNameForObject(item) + ":" + meta;
     }
 
     /**
@@ -67,13 +74,11 @@ public class ItemHelper {
      * @return      - An ItemStack retrieved from the entry
      */
     public static ItemStack getOreStack(String entry) {
-        if (OreDictionary.getOreNames().length != 0 && OreDictionary.doesOreNameExist(entry)) {
+        if (OreDictionary.getOreNames().length != 0 && OreDictionary.doesOreNameExist(entry))
             if (OreDictionary.getOres(entry).size() != 0)
                 return OreDictionary.getOres(entry).get(0);
-            else
-                return new ItemStack(Blocks.fire);
-        } else
-            return new ItemStack(Blocks.fire);
+
+        return new ItemStack(Blocks.fire);
     }
 
     /**
@@ -81,14 +86,14 @@ public class ItemHelper {
      * parses it as an ItemStack.
      *
      * Syntax: domain:regname:meta#amount
-     * IE: minecraft:stone:0#8
+     * IE: {@code minecraft:stone:0#8}
      *
      * @param stackString - Formatted string
      * @param input       - Whether the string defines an input or not.
      * @return            - An ItemStack built from the string
      */
     public static ItemStack parseItemStack(String stackString, boolean input) {
-        if (stackString == null)
+        if (Strings.isNullOrEmpty(stackString))
             return null;
 
         try {
@@ -99,15 +104,17 @@ public class ItemHelper {
                 int meta = Integer.parseInt(stackInfo[0]);
                 int amount = Integer.parseInt(stackInfo[1]);
 
-                return new ItemStack(GameData.getItemRegistry().getObject(name), amount, meta);
-            } else if (stackString.equals("null")) {
-                return null;
+                ItemStack ret = new ItemStack(GameData.getItemRegistry().getObject(name), amount, meta);
+                stackCache.put(stackString, ret);
+                return ret;
             } else if (!input) {
                 String[] stackInfo = stackString.split("#");
                 ItemStack oreStack = getOreStack(stackInfo[0]);
                 int amount = Integer.parseInt(stackInfo[1]);
 
-                return new ItemStack(oreStack.getItem(), amount, oreStack.getItemDamage());
+                ItemStack ret = new ItemStack(oreStack.getItem(), amount, oreStack.getItemDamage());
+                stackCache.put(stackString, ret);
+                return ret;
             }
         } catch (ArrayIndexOutOfBoundsException e) {
             ResourcefulAPI.logger.info("Error adding " + (input ? "inputStack" : "outputStack") + ": " + stackString + ". Is it formatted correctly?");
