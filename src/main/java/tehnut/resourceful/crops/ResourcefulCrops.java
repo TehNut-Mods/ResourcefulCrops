@@ -35,7 +35,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Set;
 
-@Mod(modid = ModInformation.ID, name = ModInformation.NAME, version = ModInformation.VERSION, dependencies = ModInformation.REQUIRED, guiFactory = ModInformation.GUIFACTORY)
+@Mod(modid = ModInformation.ID, name = ModInformation.NAME, version = ModInformation.VERSION, acceptedMinecraftVersions = "[1.8.8,1.8.9]", dependencies = ModInformation.REQUIRED, guiFactory = ModInformation.GUIFACTORY)
 public class ResourcefulCrops {
 
     @SidedProxy(clientSide = ModInformation.CLIENTPROXY, serverSide = ModInformation.COMMONPROXY)
