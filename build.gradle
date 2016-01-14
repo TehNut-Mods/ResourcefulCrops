@@ -74,6 +74,14 @@ processResources {
     }
 }
 
+if (JavaVersion.current().isJava8Compatible()) {
+    allprojects {
+        tasks.withType(Javadoc) {
+            options.addStringOption('Xdoclint:none', '-quiet')
+        }
+    }
+}
+
 jar {
     classifier = ''
     manifest.mainAttributes(
