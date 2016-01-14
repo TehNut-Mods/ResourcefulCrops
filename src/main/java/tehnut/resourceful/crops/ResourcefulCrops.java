@@ -4,8 +4,6 @@ import com.google.gson.GsonBuilder;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.discovery.ASMDataTable;
@@ -13,19 +11,18 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import tehnut.resourceful.crops.annot.Handler;
 import tehnut.resourceful.crops.annot.ModBlock;
 import tehnut.resourceful.crops.annot.ModItem;
 import tehnut.resourceful.crops.api.ModInformation;
 import tehnut.resourceful.crops.api.ResourcefulAPI;
 import tehnut.resourceful.crops.api.base.Seed;
 import tehnut.resourceful.crops.api.registry.SeedRegistry;
-import tehnut.resourceful.crops.compat.waila.CompatWaila;
 import tehnut.resourceful.crops.item.ItemStone;
 import tehnut.resourceful.crops.proxy.CommonProxy;
 import tehnut.resourceful.crops.registry.*;
 import tehnut.resourceful.crops.util.*;
 import tehnut.resourceful.crops.api.util.cache.PermanentCache;
-import tehnut.resourceful.crops.util.handler.EventHandler;
 import tehnut.resourceful.crops.util.handler.GenerationHandler;
 import tehnut.resourceful.crops.util.handler.OreDictHandler;
 import tehnut.resourceful.crops.util.helper.LogHelper;
@@ -59,6 +56,7 @@ public class ResourcefulCrops {
     private static PermanentCache<Seed> seedCache;
     public Set<ASMDataTable.ASMData> modItems;
     public Set<ASMDataTable.ASMData> modBlocks;
+    public Set<ASMDataTable.ASMData> eventHandlers;
 
     public static File getConfigDir() {
         return configDir;
@@ -82,18 +80,19 @@ public class ResourcefulCrops {
 
         modItems = event.getAsmData().getAll(ModItem.class.getCanonicalName());
         modBlocks = event.getAsmData().getAll(ModBlock.class.getCanonicalName());
+        eventHandlers = event.getAsmData().getAll(Handler.class.getCanonicalName());
 
         BlockRegistry.init();
         ItemRegistry.init();
 
         AchievementRegistry.registerAchievements();
         GameRegistry.registerWorldGenerator(new GenerationHandler(), 2);
+
+        proxy.preInit();
     }
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
-        MinecraftForge.EVENT_BUS.register(new EventHandler());
-
         SeedRegistry.seedBuilder = new GsonBuilder();
         SeedCreator.registerCustomSerializers(SeedRegistry.seedBuilder);
 

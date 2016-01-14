@@ -1,9 +1,16 @@
 package tehnut.resourceful.crops;
 
+import net.minecraft.util.StatCollector;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.fml.client.event.ConfigChangedEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import tehnut.resourceful.crops.annot.Handler;
+import tehnut.resourceful.crops.api.ModInformation;
+import tehnut.resourceful.crops.util.helper.LogHelper;
 
 import java.io.File;
 
+@Handler
 public class ConfigHandler {
 
     public static Configuration config;
@@ -62,5 +69,13 @@ public class ConfigHandler {
                 "-");
 
         config.save();
+    }
+
+    @SubscribeEvent
+    public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent eventArgs) {
+        if (eventArgs.modID.equals(ModInformation.ID)) {
+            ConfigHandler.syncConfig();
+            LogHelper.info(StatCollector.translateToLocal("config.ResourcefulCrops.console.refresh"));
+        }
     }
 }

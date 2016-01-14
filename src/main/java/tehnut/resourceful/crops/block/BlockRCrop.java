@@ -14,9 +14,12 @@ import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.EnumPlantType;
+import net.minecraftforge.event.entity.player.BonemealEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import tehnut.resourceful.crops.ConfigHandler;
+import tehnut.resourceful.crops.annot.Handler;
 import tehnut.resourceful.crops.annot.ModBlock;
 import tehnut.resourceful.crops.api.ModInformation;
 import tehnut.resourceful.crops.ResourcefulCrops;
@@ -38,6 +41,7 @@ import java.util.List;
 import java.util.Random;
 
 @ModBlock(tileEntity = TileRCrop.class)
+@Handler
 public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
 
     public BlockRCrop() {
@@ -215,6 +219,12 @@ public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
             return SeedRegistry.getSeed(((TileRCrop) cropTile).getSeedName()).getColor().getRGB();
 
         return 16777215;
+    }
+
+    @SubscribeEvent
+    public void onBonemeal(BonemealEvent event) {
+        if (event.block.getBlock() instanceof BlockRCrop)
+            event.setCanceled(true);
     }
 
     // IGrowable
