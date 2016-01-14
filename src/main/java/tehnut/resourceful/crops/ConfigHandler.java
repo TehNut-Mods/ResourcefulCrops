@@ -30,6 +30,14 @@ public class ConfigHandler {
     public static boolean forceAddDuplicates;
     public static boolean generateDefaults;
 
+    @SubscribeEvent
+    public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent eventArgs) {
+        if (eventArgs.modID.equals(ModInformation.ID)) {
+            ConfigHandler.syncConfig();
+            LogHelper.info(StatCollector.translateToLocal("config.ResourcefulCrops.console.refresh"));
+        }
+    }
+
     public static void init(File file) {
         config = new Configuration(file);
         syncConfig();
@@ -69,13 +77,5 @@ public class ConfigHandler {
                 "-");
 
         config.save();
-    }
-
-    @SubscribeEvent
-    public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent eventArgs) {
-        if (eventArgs.modID.equals(ModInformation.ID)) {
-            ConfigHandler.syncConfig();
-            LogHelper.info(StatCollector.translateToLocal("config.ResourcefulCrops.console.refresh"));
-        }
     }
 }

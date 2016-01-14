@@ -6,7 +6,6 @@ import net.minecraft.stats.Achievement;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.common.AchievementPage;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import tehnut.resourceful.crops.ConfigHandler;
 import tehnut.resourceful.crops.achievement.AchievementRCrops;
 import tehnut.resourceful.crops.achievement.AchievementTrigger;

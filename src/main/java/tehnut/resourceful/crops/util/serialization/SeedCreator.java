@@ -1,6 +1,7 @@
 package tehnut.resourceful.crops.util.serialization;
 
-import com.google.gson.*;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.apache.commons.io.filefilter.FileFilterUtils;
 import tehnut.resourceful.crops.ResourcefulCrops;
 import tehnut.resourceful.crops.api.base.Chance;

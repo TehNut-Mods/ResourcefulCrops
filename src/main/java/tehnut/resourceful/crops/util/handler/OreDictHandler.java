@@ -4,13 +4,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 import tehnut.resourceful.crops.ConfigHandler;
 import tehnut.resourceful.crops.api.base.Seed;
+import tehnut.resourceful.crops.api.registry.SeedRegistry;
 import tehnut.resourceful.crops.block.BlockROre;
 import tehnut.resourceful.crops.item.ItemPouch;
 import tehnut.resourceful.crops.item.ItemSeed;
 import tehnut.resourceful.crops.item.ItemShard;
 import tehnut.resourceful.crops.registry.BlockRegistry;
 import tehnut.resourceful.crops.registry.ItemRegistry;
-import tehnut.resourceful.crops.api.registry.SeedRegistry;
 
 public class OreDictHandler {
 

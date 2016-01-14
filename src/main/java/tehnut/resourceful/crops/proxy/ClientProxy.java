@@ -6,7 +6,6 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.discovery.ASMDataTable;
-import tehnut.resourceful.crops.ConfigHandler;
 import tehnut.resourceful.crops.ResourcefulCrops;
 import tehnut.resourceful.crops.annot.Handler;
 import tehnut.resourceful.crops.command.CommandCreateSeed;

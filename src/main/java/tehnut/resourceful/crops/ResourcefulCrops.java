@@ -18,11 +18,11 @@ import tehnut.resourceful.crops.api.ModInformation;
 import tehnut.resourceful.crops.api.ResourcefulAPI;
 import tehnut.resourceful.crops.api.base.Seed;
 import tehnut.resourceful.crops.api.registry.SeedRegistry;
+import tehnut.resourceful.crops.api.util.cache.PermanentCache;
 import tehnut.resourceful.crops.item.ItemStone;
 import tehnut.resourceful.crops.proxy.CommonProxy;
 import tehnut.resourceful.crops.registry.*;
-import tehnut.resourceful.crops.util.*;
-import tehnut.resourceful.crops.api.util.cache.PermanentCache;
+import tehnut.resourceful.crops.util.StartupUtils;
 import tehnut.resourceful.crops.util.handler.GenerationHandler;
 import tehnut.resourceful.crops.util.handler.OreDictHandler;
 import tehnut.resourceful.crops.util.helper.LogHelper;
@@ -57,14 +57,6 @@ public class ResourcefulCrops {
     public Set<ASMDataTable.ASMData> modItems;
     public Set<ASMDataTable.ASMData> modBlocks;
     public Set<ASMDataTable.ASMData> eventHandlers;
-
-    public static File getConfigDir() {
-        return configDir;
-    }
-
-    public static PermanentCache<Seed> getSeedCache() {
-        return seedCache;
-    }
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
@@ -118,5 +110,13 @@ public class ResourcefulCrops {
 
         proxy.loadCommands();
         proxy.loadRenders();
+    }
+
+    public static File getConfigDir() {
+        return configDir;
+    }
+
+    public static PermanentCache<Seed> getSeedCache() {
+        return seedCache;
     }
 }

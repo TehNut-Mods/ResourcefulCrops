@@ -16,7 +16,8 @@ public class CustomSeedReqJson implements JsonDeserializer<SeedReq>, JsonSeriali
     public SeedReq deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         JsonHelper helper = new JsonHelper(json);
 
-        BlockStack blockStack = context.deserialize(json.getAsJsonObject().get("blockStack"), new TypeToken<BlockStack>() { }.getType());
+        BlockStack blockStack = context.deserialize(json.getAsJsonObject().get("blockStack"), new TypeToken<BlockStack>() {
+        }.getType());
         String difficulty = helper.getNullableString("difficulty", "PEACEFUL");
         int lightLevelMin = helper.getNullableInteger("lightLevelMin", 9);
         int lightLevelMax = helper.getNullableInteger("lightLevelMax", Integer.MAX_VALUE);

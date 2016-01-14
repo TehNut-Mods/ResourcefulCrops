@@ -1,15 +1,18 @@
 package tehnut.resourceful.crops.block;
 
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.util.*;
 import net.minecraft.block.BlockCrops;
 import net.minecraft.block.ITileEntityProvider;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemHoe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -19,21 +22,21 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import tehnut.resourceful.crops.ConfigHandler;
+import tehnut.resourceful.crops.ResourcefulCrops;
+import tehnut.resourceful.crops.achievement.AchievementTrigger;
 import tehnut.resourceful.crops.annot.Handler;
 import tehnut.resourceful.crops.annot.ModBlock;
 import tehnut.resourceful.crops.api.ModInformation;
-import tehnut.resourceful.crops.ResourcefulCrops;
-import tehnut.resourceful.crops.achievement.AchievementTrigger;
 import tehnut.resourceful.crops.api.base.Seed;
+import tehnut.resourceful.crops.api.registry.SeedRegistry;
+import tehnut.resourceful.crops.api.util.BlockStack;
 import tehnut.resourceful.crops.item.ItemMaterial;
 import tehnut.resourceful.crops.item.ItemSeed;
 import tehnut.resourceful.crops.item.ItemShard;
 import tehnut.resourceful.crops.registry.AchievementRegistry;
 import tehnut.resourceful.crops.registry.BlockRegistry;
 import tehnut.resourceful.crops.registry.ItemRegistry;
-import tehnut.resourceful.crops.api.registry.SeedRegistry;
 import tehnut.resourceful.crops.tile.TileRCrop;
-import tehnut.resourceful.crops.api.util.BlockStack;
 import tehnut.resourceful.crops.util.Utils;
 
 import java.util.ArrayList;
@@ -48,18 +51,6 @@ public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
         super();
 
         setUnlocalizedName(ModInformation.ID + ".crop");
-    }
-
-    public static int getTileSeedIndex(World world, BlockPos pos) {
-        TileEntity crop = world.getTileEntity(pos);
-        int seedIndex = Utils.getInvalidSeed(ItemRegistry.getItem(ItemSeed.class)).getItemDamage();
-
-        if (crop != null && crop instanceof TileRCrop) {
-            String seedName = ((TileRCrop) crop).getSeedName();
-            seedIndex = SeedRegistry.getIndexOf(seedName);
-        }
-
-        return seedIndex;
     }
 
     @Override
@@ -86,7 +77,7 @@ public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
                 if (meta < 7) {
                     float growthChance = getGrowthChance(this, world, pos);
 
-                    if (random.nextInt((int)(25.0F / growthChance) + 1) == 0) {
+                    if (random.nextInt((int) (25.0F / growthChance) + 1) == 0) {
                         ++meta;
                         world.setBlockState(pos, this.getStateFromMeta(meta), 2);
                     }
@@ -99,7 +90,7 @@ public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ) {
         TileEntity cropTile = world.getTileEntity(pos);
 
-        if (Utils.isValidSeed(((TileRCrop)cropTile).getSeedName())) {
+        if (Utils.isValidSeed(((TileRCrop) cropTile).getSeedName())) {
             if (player.getHeldItem() != null && player.getHeldItem().getItem() instanceof ItemHoe) {
                 AchievementTrigger.triggerAchievement(player, AchievementRegistry.getInfo);
                 return doReqInfo(((TileRCrop) cropTile).getSeedName());
@@ -140,7 +131,7 @@ public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
 
         TileEntity cropTile = world.getTileEntity(pos);
 
-        if (cropTile instanceof TileRCrop && ((TileRCrop)cropTile).getShouldDrop())
+        if (cropTile instanceof TileRCrop && ((TileRCrop) cropTile).getShouldDrop())
             for (ItemStack stack : getDrops(world, pos, state))
                 world.spawnEntityInWorld(new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), stack));
     }
@@ -227,17 +218,29 @@ public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
             event.setCanceled(true);
     }
 
-    // IGrowable
-
     @Override
     public EnumPlantType getPlantType(IBlockAccess world, BlockPos pos) {
         return EnumPlantType.Crop;
     }
 
-    // ITileEntityProvider
+    // IGrowable
 
     @Override
     public TileEntity createNewTileEntity(World world, int meta) {
         return new TileRCrop();
+    }
+
+    // ITileEntityProvider
+
+    public static int getTileSeedIndex(World world, BlockPos pos) {
+        TileEntity crop = world.getTileEntity(pos);
+        int seedIndex = Utils.getInvalidSeed(ItemRegistry.getItem(ItemSeed.class)).getItemDamage();
+
+        if (crop != null && crop instanceof TileRCrop) {
+            String seedName = ((TileRCrop) crop).getSeedName();
+            seedIndex = SeedRegistry.getIndexOf(seedName);
+        }
+
+        return seedIndex;
     }
 }

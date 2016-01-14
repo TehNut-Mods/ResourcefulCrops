@@ -1,29 +1,29 @@
 package tehnut.resourceful.crops.block;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.world.IBlockAccess;
 import tehnut.resourceful.crops.ConfigHandler;
+import tehnut.resourceful.crops.ResourcefulCrops;
 import tehnut.resourceful.crops.annot.ModBlock;
 import tehnut.resourceful.crops.api.ModInformation;
-import tehnut.resourceful.crops.ResourcefulCrops;
 import tehnut.resourceful.crops.item.ItemMaterial;
 import tehnut.resourceful.crops.item.block.ItemBlockROre;
 import tehnut.resourceful.crops.registry.BlockRegistry;
@@ -36,8 +36,8 @@ import java.util.Random;
 @ModBlock(itemBlock = ItemBlockROre.class)
 public class BlockROre extends Block {
 
-    Random random = new Random();
     public static final PropertyInteger META = PropertyInteger.create("meta", 0, 1);
+    Random random = new Random();
 
     public BlockROre() {
         super(Material.rock);
@@ -93,18 +93,6 @@ public class BlockROre extends Block {
         }
     }
 
-    public static EntityItem dropItem(World world, BlockPos pos, ItemStack stack) {
-        if (stack == null)
-            return null;
-
-        EntityItem entityItem = new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), stack.copy());
-        entityItem.setPickupDelay(10);
-        if (!world.isRemote && world.getGameRules().getBoolean("doTileDrops") && !world.restoringBlockSnapshots)
-            world.spawnEntityInWorld(entityItem);
-
-        return entityItem;
-    }
-
     @Override
     public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
         ArrayList<ItemStack> ret = new ArrayList<ItemStack>();
@@ -149,5 +137,17 @@ public class BlockROre extends Block {
     @Override
     public int getExpDrop(IBlockAccess world, BlockPos pos, int fortune) {
         return random.nextInt(4);
+    }
+
+    public static EntityItem dropItem(World world, BlockPos pos, ItemStack stack) {
+        if (stack == null)
+            return null;
+
+        EntityItem entityItem = new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), stack.copy());
+        entityItem.setPickupDelay(10);
+        if (!world.isRemote && world.getGameRules().getBoolean("doTileDrops") && !world.restoringBlockSnapshots)
+            world.spawnEntityInWorld(entityItem);
+
+        return entityItem;
     }
 }

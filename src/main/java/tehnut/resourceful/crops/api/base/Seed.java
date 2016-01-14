@@ -109,7 +109,7 @@ public class Seed {
                 ", color=" + color +
                 ", seedReq=" + seedReq +
                 ", chance=" + chance +
-                ", compat=" + compat+
+                ", compat=" + compat +
                 '}';
     }
 }

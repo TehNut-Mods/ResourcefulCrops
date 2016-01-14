@@ -1,21 +1,21 @@
 package tehnut.resourceful.crops.item;
 
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import tehnut.resourceful.crops.ResourcefulCrops;
 import tehnut.resourceful.crops.annot.ModItem;
 import tehnut.resourceful.crops.api.ModInformation;
-import tehnut.resourceful.crops.ResourcefulCrops;
 
 import java.util.List;
 
 @ModItem
 public class ItemMaterial extends Item {
 
-    String[] materials = { "", ".mundane", ".magical", ".infused", ".arcane" };
+    String[] materials = {"", ".mundane", ".magical", ".infused", ".arcane"};
 
     public ItemMaterial() {
         super();

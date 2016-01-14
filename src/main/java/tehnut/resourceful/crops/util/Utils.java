@@ -1,13 +1,12 @@
 package tehnut.resourceful.crops.util;
 
 import net.minecraft.block.Block;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.registry.GameData;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 import tehnut.resourceful.crops.api.base.Seed;
 import tehnut.resourceful.crops.api.registry.SeedRegistry;
@@ -22,13 +21,13 @@ public class Utils {
     /**
      * Takes a string input with a specific formatting and
      * parses it as an ItemStack.
-     *
+     * <p/>
      * Syntax: domain:regname:meta#amount
      * IE: minecraft:stone:0#8
      *
      * @param stackString - Formatted string
      * @param input       - Whether the string defines an input or not.
-     * @return            - An ItemStack built from the string
+     * @return - An ItemStack built from the string
      */
     public static ItemStack parseItemStack(String stackString, boolean input) {
         if (stackString == null)
@@ -61,13 +60,13 @@ public class Utils {
 
     /**
      * Converts an ItemStack into a string with the formatting of:
-     *
+     * <p/>
      * domain:regname:meta#amount
-     *
+     * <p/>
      * Basically the inverse of {@code parseItemStack(String, boolean)}
      *
      * @param stack - ItemStack to create a string of
-     * @return      - A string with the formatting of an ItemStack
+     * @return - A string with the formatting of an ItemStack
      */
     public static String itemStackToString(ItemStack stack) {
         if (stack != null)
@@ -81,8 +80,8 @@ public class Utils {
      * used as a fallback for if the entry is invalid and returning
      * null would break things.
      *
-     * @param item  - Item to give an invalid version of
-     * @return      - Invalid version of the given item
+     * @param item - Item to give an invalid version of
+     * @return - Invalid version of the given item
      */
     public static ItemStack getInvalidSeed(Item item) {
         return new ItemStack(item, 1, Short.MAX_VALUE);
@@ -96,7 +95,7 @@ public class Utils {
      * {@code stack.getItemDamage()}
      *
      * @param stack - ItemStack to get the metadata of.
-     * @return      - Metadata of the given ItemStack
+     * @return - Metadata of the given ItemStack
      */
     public static int getItemDamage(ItemStack stack) {
 
@@ -116,7 +115,7 @@ public class Utils {
      * the index of it.
      *
      * @param seedIndex - Index of the seed to check.
-     * @return          - Whether or not the seed is valid.
+     * @return - Whether or not the seed is valid.
      */
     public static boolean isValidSeed(int seedIndex) {
         return SeedRegistry.getSeed(seedIndex) != null;
@@ -127,7 +126,7 @@ public class Utils {
      * the registered name of it.
      *
      * @param seedName - Name of the seed to check.
-     * @return         - Whether or not the seed is valid.
+     * @return - Whether or not the seed is valid.
      */
     public static boolean isValidSeed(String seedName) {
         return SeedRegistry.getSeed(seedName) != null;
@@ -137,7 +136,7 @@ public class Utils {
      * Determines if the given seed is valid or not.
      *
      * @param seed - Seed to check.
-     * @return     - Whether or not the seed is valid.
+     * @return - Whether or not the seed is valid.
      */
     public static boolean isValidSeed(Seed seed) {
         return SeedRegistry.getSeedList().contains(seed);
@@ -161,7 +160,7 @@ public class Utils {
      * method, but gets the job done.
      *
      * @param entry - OreDict entry to check existence of
-     * @return      - If the given entry exists.
+     * @return - If the given entry exists.
      */
     @SuppressWarnings("unchecked")
     public static boolean doesOreNameExist(String entry) {

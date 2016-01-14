@@ -1,10 +1,10 @@
 package tehnut.resourceful.crops.client.gui;
 
-import net.minecraftforge.fml.client.config.GuiConfig;
-import net.minecraftforge.fml.client.config.IConfigElement;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.common.config.ConfigElement;
+import net.minecraftforge.fml.client.config.GuiConfig;
+import net.minecraftforge.fml.client.config.IConfigElement;
 import tehnut.resourceful.crops.ConfigHandler;
 import tehnut.resourceful.crops.api.ModInformation;
 

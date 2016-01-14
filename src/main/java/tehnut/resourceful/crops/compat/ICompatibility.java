@@ -17,7 +17,7 @@ public interface ICompatibility {
 
     /**
      * Whether or not compatibility should be loaded even if the mod were to be found.
-     *
+     * <p/>
      * Generally a determined by a config option.
      */
     boolean enableCompat();

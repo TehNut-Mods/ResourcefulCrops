@@ -1,12 +1,12 @@
 package tehnut.resourceful.crops.util;
 
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.Loader;
-import net.minecraftforge.fml.common.registry.GameData;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.registry.GameData;
 import net.minecraftforge.oredict.OreDictionary;
 import tehnut.resourceful.crops.api.base.Seed;
 import tehnut.resourceful.crops.api.base.SeedBuilder;
@@ -142,11 +142,11 @@ public class StartupUtils {
 
     /**
      * Converts an Item into a string with the formatting of:
-     *
+     * <p/>
      * domain:regname:meta#amount
      *
      * @param item - Item to create a string of
-     * @return     - A string with the formatting of an ItemStack
+     * @return - A string with the formatting of an ItemStack
      */
     private static String getItemString(Item item) {
         return GameData.getItemRegistry().getNameForObject(item) + ":0#0";
@@ -154,12 +154,12 @@ public class StartupUtils {
 
     /**
      * Converts an Item into a string with the formatting of:
-     *
+     * <p/>
      * domain:regname:meta#amount
      *
      * @param item - Item to create a string of
      * @param meta - The damage value of the item
-     * @return     - A string with the formatting of an ItemStack
+     * @return - A string with the formatting of an ItemStack
      */
     private static String getItemString(Item item, int meta) {
         return GameData.getItemRegistry().getNameForObject(item) + ":" + meta + "#0";
@@ -169,7 +169,7 @@ public class StartupUtils {
      * Provides an ItemStack obtained from a given OreDict entry
      *
      * @param entry - OreDict entry to get the ItemStack of
-     * @return      - An ItemStack retrieved from the entry
+     * @return - An ItemStack retrieved from the entry
      */
     private static ItemStack getOreStack(String entry) {
         if (OreDictionary.getOreNames().length != 0 && Utils.doesOreNameExist(entry)) {

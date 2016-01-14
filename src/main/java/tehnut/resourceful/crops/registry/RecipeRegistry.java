@@ -1,8 +1,8 @@
 package tehnut.resourceful.crops.registry;
 
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 import tehnut.resourceful.crops.ConfigHandler;
@@ -30,26 +30,26 @@ public class RecipeRegistry {
             if (ConfigHandler.enableShardCrafting) {
                 if (seed.getOutput() != null) {
                     GameRegistry.addRecipe(new ShapedOreRecipe(
-                                    seed.getOutput(),
-                                    "SSS", "S S", "SSS",
-                                    'S', new ItemStack(ItemRegistry.getItem(ItemShard.class), 1, SeedRegistry.getIndexOf(seed)))
+                            seed.getOutput(),
+                            "SSS", "S S", "SSS",
+                            'S', new ItemStack(ItemRegistry.getItem(ItemShard.class), 1, SeedRegistry.getIndexOf(seed)))
                     );
                 }
 
 
                 if (seed.getSecondOutput() != null) {
                     GameRegistry.addRecipe(new ShapedOreRecipe(
-                                    seed.getSecondOutput(),
-                                    " S ", "SSS", " S ",
-                                    'S', new ItemStack(ItemRegistry.getItem(ItemShard.class), 1, SeedRegistry.getIndexOf(seed)))
+                            seed.getSecondOutput(),
+                            " S ", "SSS", " S ",
+                            'S', new ItemStack(ItemRegistry.getItem(ItemShard.class), 1, SeedRegistry.getIndexOf(seed)))
                     );
                 }
 
                 if (seed.getThirdOutput() != null) {
                     GameRegistry.addRecipe(new ShapedOreRecipe(
-                                    seed.getThirdOutput(),
-                                    "SS", "SS",
-                                    'S', new ItemStack(ItemRegistry.getItem(ItemShard.class), 1, SeedRegistry.getIndexOf(seed)))
+                            seed.getThirdOutput(),
+                            "SS", "SS",
+                            'S', new ItemStack(ItemRegistry.getItem(ItemShard.class), 1, SeedRegistry.getIndexOf(seed)))
                     );
                 }
             }

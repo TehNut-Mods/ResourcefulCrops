@@ -1,10 +1,9 @@
 package tehnut.resourceful.crops.registry;
 
+import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.discovery.ASMDataTable;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraft.item.Item;
 import tehnut.resourceful.crops.ResourcefulCrops;
-import tehnut.resourceful.crops.api.ModInformation;
 import tehnut.resourceful.crops.api.ResourcefulAPI;
 import tehnut.resourceful.crops.item.*;
 import tehnut.resourceful.crops.util.helper.LogHelper;

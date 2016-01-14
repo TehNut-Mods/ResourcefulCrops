@@ -19,6 +19,9 @@ public class ResourcefulAPI {
 
     public static final String CROP = "BlockRCrop";
     public static final String ORE = "BlockROre";
+    public static boolean forceAddDuplicates;
+    public static PermanentCache<Seed> seedCache;
+    public static Logger logger;
 
     /**
      * An abstracted way to get an {@link Item} from ResourcefulCrops. Use the final constant
@@ -43,10 +46,4 @@ public class ResourcefulAPI {
     public static Block getBlock(String name) {
         return GameRegistry.findBlock(ModInformation.ID, name);
     }
-
-    public static boolean forceAddDuplicates;
-
-    public static PermanentCache<Seed> seedCache;
-
-    public static Logger logger;
 }
