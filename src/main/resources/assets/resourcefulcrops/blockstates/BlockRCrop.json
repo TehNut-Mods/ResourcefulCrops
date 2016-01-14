@@ -1,12 +1,12 @@
 {
   "variants": {
-    "age=0": { "model": "resourcefulcrops:crop_stage0_fast" },
-    "age=1": { "model": "resourcefulcrops:crop_stage1_fast" },
-    "age=2": { "model": "resourcefulcrops:crop_stage2_fast" },
-    "age=3": { "model": "resourcefulcrops:crop_stage3_fast" },
-    "age=4": { "model": "resourcefulcrops:crop_stage4_fast" },
-    "age=5": { "model": "resourcefulcrops:crop_stage5_fast" },
-    "age=6": { "model": "resourcefulcrops:crop_stage6_fast" },
-    "age=7": { "model": "resourcefulcrops:crop_stage7_fast" }
+    "age=0": { "model": "resourcefulcrops:crop_stage0" },
+    "age=1": { "model": "resourcefulcrops:crop_stage1" },
+    "age=2": { "model": "resourcefulcrops:crop_stage2" },
+    "age=3": { "model": "resourcefulcrops:crop_stage3" },
+    "age=4": { "model": "resourcefulcrops:crop_stage4" },
+    "age=5": { "model": "resourcefulcrops:crop_stage5" },
+    "age=6": { "model": "resourcefulcrops:crop_stage6" },
+    "age=7": { "model": "resourcefulcrops:crop_stage7" }
   }
 }
