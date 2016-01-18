@@ -38,12 +38,14 @@ if (new File(projectDir, '.git').exists())
 repositories {
     maven {	url "http://mobiusstrip.eu/maven" }
     maven { url "http://dvs1.progwml6.com/files/maven" }
+    maven { url "http://tehnut.info/maven" }
 }
 
 dependencies {
     compile "org.projectlombok:lombok:1.16.4"
     deobfCompile "mezz.jei:jei_${mc_version}:${jei_version}"
     deobfCompile "mcp.mobius.waila:Waila:${waila_version}_1.8.8"
+    deobfCompile "com.wayoftime.bloodmagic:BloodMagic:${mc_version}-${bloodmagic_version}"
 }
 
 minecraft {

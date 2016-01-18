@@ -30,6 +30,8 @@ public class ConfigHandler {
     public static boolean forceAddDuplicates;
     public static boolean generateDefaults;
 
+    public static boolean enableBloodMagicAutomation;
+
     @SubscribeEvent
     public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent eventArgs) {
         if (eventArgs.modID.equals(ModInformation.ID)) {
@@ -75,6 +77,8 @@ public class ConfigHandler {
                 "This is based on the seed name. If you want to use the name for something else, you must disable it in the config here.\n" +
                 "Reserved names include:\n" +
                 "-");
+        category = "Compat.BloodMagic";
+        enableBloodMagicAutomation = config.getBoolean("enableBloodMagicAutomation", category, true, "Allows the Reap of the Harvest Moon to harvest crops.");
 
         config.save();
     }

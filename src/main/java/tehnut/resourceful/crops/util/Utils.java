@@ -143,18 +143,6 @@ public class Utils {
     }
 
     /**
-     * Causes a break animation at the given coordinates.
-     * No reason to use this except for possible future proofing.
-     *
-     * @param world      - The world object
-     * @param pos        - Position in the world to play the animation at
-     * @param blockStack - {@link BlockStack} to get the particle texture from
-     */
-    public static void playBlockBreakAnim(World world, BlockPos pos, BlockStack blockStack) {
-        world.playAuxSFX(2001, pos, Block.getIdFromBlock(blockStack.getBlock()) + (blockStack.getMeta() << 12));
-    }
-
-    /**
      * Since {@code OreDictionary.doesOreNameExist(String)} doesn't exist
      * in 1.8, I needed to write my own version. Not as good as the 1.7.10
      * method, but gets the job done.
