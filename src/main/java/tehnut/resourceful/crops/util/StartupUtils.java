@@ -5,14 +5,11 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.registry.GameData;
 import net.minecraftforge.oredict.OreDictionary;
 import tehnut.resourceful.crops.api.base.Seed;
 import tehnut.resourceful.crops.api.base.SeedBuilder;
-import tehnut.resourceful.crops.api.compat.CompatibilitySeed;
 import tehnut.resourceful.crops.api.registry.SeedRegistry;
-import tehnut.resourceful.crops.util.helper.LogHelper;
 import tehnut.resourceful.crops.util.serialization.SeedCreator;
 
 import java.awt.*;
@@ -103,19 +100,6 @@ public class StartupUtils {
         builder.setColor(color);
 
         return builder.build();
-    }
-
-    /**
-     * Adds a default seed for a given mod
-     *
-     * @param compatibilitySeed - {@link CompatibilitySeed} to check and register
-     */
-    private static void addDefaultSeedMod(CompatibilitySeed compatibilitySeed) {
-
-        LogHelper.info("Adding compatibility Seed for { " + compatibilitySeed.getModid() + " }");
-
-        if (Loader.isModLoaded(compatibilitySeed.getModid()) && compatibilitySeed.getConfig())
-            defaultSeeds.add(compatibilitySeed.getCompatSeed());
     }
 
     /**
