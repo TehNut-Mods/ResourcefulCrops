@@ -28,6 +28,7 @@ public class ResourcefulCropsHarvestHandler implements IHarvestHandler {
                 world.playAuxSFX(2001, blockPos, Block.getIdFromBlock(blockStack.getBlock()) + (blockStack.getMeta() << 12));
                 ItemStack drop = new ItemStack(ItemRegistry.getItem(ItemShard.class), 1, SeedRegistry.getIndexOf(tileCrop.getSeedName()));
                 dropItem(world, blockPos, drop);
+                return true;
             }
         }
 
