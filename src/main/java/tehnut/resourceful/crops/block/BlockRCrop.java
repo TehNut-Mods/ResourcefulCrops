@@ -63,7 +63,7 @@ public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
             return;
 
         BlockPos reqPos = new BlockPos(pos.getX(), pos.getY() - 2, pos.getZ());
-        BlockStack blockReq = new BlockStack(world.getBlockState(reqPos));
+        BlockStack blockReq = BlockStack.getStackFromPos(world, reqPos);
 
         checkAndDropBlock(world, pos, state);
 

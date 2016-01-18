@@ -17,7 +17,7 @@ public class CustomBlockStackJson implements JsonDeserializer<BlockStack>, JsonS
         String name = helper.getString("name");
         int meta = helper.getNullableInteger("meta", 0);
 
-        return new BlockStack(GameData.getBlockRegistry().containsKey(new ResourceLocation(name)) ? GameData.getBlockRegistry().getObject(new ResourceLocation(name)).getStateFromMeta(meta) : null);
+        return new BlockStack(GameData.getBlockRegistry().containsKey(new ResourceLocation(name)) ? GameData.getBlockRegistry().getObject(new ResourceLocation(name)) : null, meta);
     }
 
     @Override
