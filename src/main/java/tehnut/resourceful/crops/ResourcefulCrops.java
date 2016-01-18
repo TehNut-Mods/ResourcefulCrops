@@ -41,7 +41,7 @@ public class ResourcefulCrops {
     public static CreativeTabs tabResourcefulCrops = new CreativeTabs(ModInformation.ID + ".creativeTab") {
         @Override
         public ItemStack getIconItemStack() {
-            return new ItemStack(ItemRegistry.getItem(ItemStone.class), 1, 0);
+            return new ItemStack(ItemRegistry.getItem(ItemStone.class), 1, 4);
         }
 
         @Override
@@ -50,8 +50,9 @@ public class ResourcefulCrops {
         }
     };
 
-    @Mod.Instance
+    @Mod.Instance(ModInformation.ID)
     public static ResourcefulCrops instance;
+
     private static File configDir;
     private static PermanentCache<Seed> seedCache;
     public Set<ASMDataTable.ASMData> modItems;
