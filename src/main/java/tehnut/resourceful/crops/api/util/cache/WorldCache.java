@@ -65,7 +65,7 @@ public class WorldCache<I> {
 
     @SneakyThrows
     protected void loadData(File file) {
-        if (!file.createNewFile()) {
+        if (!(file.getParentFile().mkdirs() || file.createNewFile())) {
             NBTTagCompound tag = null;
             try {
                 tag = CompressedStreamTools.read(file);
