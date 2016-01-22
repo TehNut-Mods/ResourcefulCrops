@@ -17,7 +17,7 @@ import tehnut.resourceful.crops.util.Utils;
 
 import java.util.List;
 
-@ModItem
+@ModItem(name = "ItemShard")
 public class ItemShard extends Item {
 
     public ItemShard() {

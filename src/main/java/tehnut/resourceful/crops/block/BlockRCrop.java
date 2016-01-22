@@ -43,7 +43,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-@ModBlock(tileEntity = TileRCrop.class)
+@ModBlock(name = "BlockRCrop", tileEntity = TileRCrop.class)
 @Handler
 public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
 

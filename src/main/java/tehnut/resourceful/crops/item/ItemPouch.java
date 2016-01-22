@@ -28,7 +28,7 @@ import tehnut.resourceful.crops.util.Utils;
 
 import java.util.List;
 
-@ModItem
+@ModItem(name = "ItemPouch")
 public class ItemPouch extends Item implements IPlantable {
 
     public ItemPouch() {

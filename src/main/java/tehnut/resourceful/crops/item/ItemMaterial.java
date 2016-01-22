@@ -12,7 +12,7 @@ import tehnut.resourceful.crops.api.ModInformation;
 
 import java.util.List;
 
-@ModItem
+@ModItem(name = "ItemMaterial")
 public class ItemMaterial extends Item {
 
     String[] materials = {"", ".mundane", ".magical", ".infused", ".arcane"};

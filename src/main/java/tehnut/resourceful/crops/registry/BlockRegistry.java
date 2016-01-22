@@ -23,12 +23,13 @@ public class BlockRegistry {
                 Class<?> asmClass = Class.forName(data.getClassName());
 
                 Class<? extends Block> modBlockClass = asmClass.asSubclass(Block.class);
+                String name = modBlockClass.getAnnotation(ModBlock.class).name();
                 Class<? extends TileEntity> tileClass = modBlockClass.getAnnotation(ModBlock.class).tileEntity();
                 Class<? extends ItemBlock> itemBlockClass = modBlockClass.getAnnotation(ModBlock.class).itemBlock();
 
                 Block modBlock = modBlockClass.newInstance();
 
-                registerBlock(modBlock, itemBlockClass);
+                registerBlock(modBlock, itemBlockClass, name);
                 registerTile(tileClass);
 
             } catch (Exception e) {
@@ -37,8 +38,8 @@ public class BlockRegistry {
         }
     }
 
-    private static void registerBlock(Block block, Class<? extends ItemBlock> itemBlock) {
-        GameRegistry.registerBlock(block, itemBlock, block.getClass().getSimpleName());
+    private static void registerBlock(Block block, Class<? extends ItemBlock> itemBlock, String name) {
+        GameRegistry.registerBlock(block, itemBlock, name);
     }
 
     private static void registerTile(Class<? extends TileEntity> tile) {

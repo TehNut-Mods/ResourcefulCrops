@@ -33,7 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-@ModBlock(itemBlock = ItemBlockROre.class)
+@ModBlock(name = "BlockROre", itemBlock = ItemBlockROre.class)
 public class BlockROre extends Block {
 
     public static final PropertyInteger META = PropertyInteger.create("meta", 0, 1);

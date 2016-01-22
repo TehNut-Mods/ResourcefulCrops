@@ -24,7 +24,7 @@ import java.lang.annotation.RetentionPolicy;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ModBlock {
 
-    String name() default "";
+    String name();
 
     Class<? extends TileEntity> tileEntity() default TileEntity.class;
 

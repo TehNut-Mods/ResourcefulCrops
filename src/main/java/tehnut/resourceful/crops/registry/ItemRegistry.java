@@ -4,6 +4,7 @@ import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.discovery.ASMDataTable;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import tehnut.resourceful.crops.ResourcefulCrops;
+import tehnut.resourceful.crops.annot.ModItem;
 import tehnut.resourceful.crops.api.ResourcefulAPI;
 import tehnut.resourceful.crops.item.*;
 import tehnut.resourceful.crops.util.helper.LogHelper;
@@ -16,16 +17,17 @@ public class ItemRegistry {
             try {
                 Class<?> asmClass = Class.forName(data.getClassName());
                 Class<? extends Item> modItemClass = asmClass.asSubclass(Item.class);
+                String name = modItemClass.getAnnotation(ModItem.class).name();
                 Item modItem = modItemClass.newInstance();
-                registerItem(modItem);
+                registerItem(modItem, name);
             } catch (Exception e) {
                 LogHelper.error(String.format("Unable to register item for class %s", data.getClassName()));
             }
         }
     }
 
-    private static Item registerItem(Item item) {
-        GameRegistry.registerItem(item, item.getClass().getSimpleName());
+    private static Item registerItem(Item item, String name) {
+        GameRegistry.registerItem(item, name);
         return item;
     }
 
