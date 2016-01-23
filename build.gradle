@@ -39,10 +39,16 @@ repositories {
     maven {	url "http://mobiusstrip.eu/maven" }
     maven { url "http://dvs1.progwml6.com/files/maven" }
     maven { url "http://tehnut.info/maven" }
+
+    ivy {
+        name "NeoTech"
+        artifactPattern "http://teambrmodding.com:8080/job/NeoTech/38/artifact/build/libs/[module]-[revision]-dev.[ext]"
+    }
 }
 
 dependencies {
     compile "org.projectlombok:lombok:1.16.4"
+    compile name: 'NeoTech', version: "${mc_version}-${neotech_version}", ext: 'jar'
     deobfCompile "mezz.jei:jei_${mc_version}:${jei_version}"
     deobfCompile "mcp.mobius.waila:Waila:${waila_version}_1.8.8"
     deobfCompile "com.wayoftime.bloodmagic:BloodMagic:${mc_version}-${bloodmagic_version}"

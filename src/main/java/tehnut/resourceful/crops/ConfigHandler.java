@@ -31,6 +31,7 @@ public class ConfigHandler {
     public static boolean generateDefaults;
 
     public static boolean enableBloodMagicAutomation;
+    public static boolean blacklistNeoTechAccelerator;
 
     @SubscribeEvent
     public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent eventArgs) {
@@ -72,8 +73,10 @@ public class ConfigHandler {
 
         category = "Compat";
         config.addCustomCategoryComment(category, "Compatibility settings");
-        category += ".BloodMagic";
+        category = "Compat.BloodMagic";
         enableBloodMagicAutomation = config.getBoolean("enableBloodMagicAutomation", category, true, "Allows the Reap of the Harvest Moon to harvest crops.");
+        category = "Compat.NeoTech";
+        blacklistNeoTechAccelerator = config.getBoolean("blacklistNeoTechAccelerator", category, true, "Blacklists crops from the NeoTech growth accelerator (Miniature Sun)");
 
         config.save();
     }
