@@ -69,10 +69,14 @@ public class Utils {
      * @return - A string with the formatting of an ItemStack
      */
     public static String itemStackToString(ItemStack stack) {
-        if (stack != null)
-            return GameData.getItemRegistry().getNameForObject(stack.getItem()) + ":" + stack.getItemDamage() + "#" + stack.stackSize;
-        else
-            return "null";
+        try {
+            if (stack != null)
+                return GameData.getItemRegistry().getNameForObject(stack.getItem()) + ":" + stack.getItemDamage() + "#" + stack.stackSize;
+        } catch (NullPointerException e) {
+            // Pokeball!
+        }
+
+        return "null";
     }
 
     /**
