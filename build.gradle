@@ -43,7 +43,7 @@ repositories {
 
     ivy {
         name "NeoTech"
-        artifactPattern "http://teambrmodding.com:8080/job/NeoTech/38/artifact/build/libs/[module]-[revision]-dev.[ext]"
+        artifactPattern "http://teambrmodding.com:8080/job/NeoTech/40/artifact/build/libs/[module]-[revision]-dev.[ext]"
     }
 }
 
