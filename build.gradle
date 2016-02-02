@@ -42,10 +42,6 @@ repositories {
     maven { url "http://www.teambrmodding.com/maven2/" }
 
     ivy {
-        name "NeoTech"
-        artifactPattern "http://teambrmodding.com:8080/job/NeoTech/133/artifact/build/libs/[module]-[revision]-dev.[ext]"
-    }
-    ivy {
         name "Thaumcraft"
         artifactPattern "https://dl.dropboxusercontent.com/u/47135879/[module]-[revision]-deobf.[ext]"
     }
@@ -57,9 +53,9 @@ repositories {
 
 dependencies {
     compile "org.projectlombok:lombok:1.16.4"
-    compile name: 'NeoTech', version: "${mc_version}-${neotech_version}", ext: 'jar'
     compile name: 'Thaumcraft', 'version': "${mc_version}-${thaumcraft_version}", ext: 'jar'
     compile name: 'Baubles', 'version': "${mc_version}-${baubles_version}", ext: 'jar'
+    deobfCompile "com.dyonovan.neotech:NeoTech:${mc_version}-${neotech_version}"
     deobfCompile "com.teambr.bookshelf:Bookshelf:${mc_version}-${bookshelf_version}"
     deobfCompile "mezz.jei:jei_${mc_version}:${jei_version}"
     deobfCompile "mcp.mobius.waila:Waila:${waila_version}_1.8.8"
