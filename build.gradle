@@ -40,6 +40,7 @@ repositories {
     maven { url "http://dvs1.progwml6.com/files/maven" }
     maven { url "http://tehnut.info/maven" }
     maven { url "http://www.teambrmodding.com/maven2/" }
+	maven { url "http://maven.k-4u.nl/" }
 
     ivy {
         name "Thaumcraft"
@@ -55,8 +56,8 @@ dependencies {
     compile "org.projectlombok:lombok:1.16.4"
     compile name: 'Thaumcraft', 'version': "${mc_version}-${thaumcraft_version}", ext: 'jar'
     compile name: 'Baubles', 'version': "${mc_version}-${baubles_version}", ext: 'jar'
-    deobfCompile "com.dyonovan.neotech:NeoTech:${mc_version}-${neotech_version}"
-    deobfCompile "com.teambr.bookshelf:Bookshelf:${mc_version}-${bookshelf_version}"
+    compile "com.dyonovan.neotech:NeoTech:${mc_version}-${neotech_version}:dev"
+    compile "com.teambr.bookshelf:Bookshelf:${mc_version}-${bookshelf_version}:dev"
     deobfCompile "mezz.jei:jei_${mc_version}:${jei_version}"
     deobfCompile "mcp.mobius.waila:Waila:${waila_version}_1.8.8"
     deobfCompile "com.wayoftime.bloodmagic:BloodMagic:${mc_version}-${bloodmagic_version}"
