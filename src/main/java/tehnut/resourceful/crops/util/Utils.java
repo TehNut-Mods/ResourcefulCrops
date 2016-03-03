@@ -1,17 +1,13 @@
 package tehnut.resourceful.crops.util;
 
-import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameData;
 import net.minecraftforge.oredict.OreDictionary;
+import tehnut.resourceful.crops.api.ResourcefulAPI;
 import tehnut.resourceful.crops.api.base.Seed;
 import tehnut.resourceful.crops.api.registry.SeedRegistry;
-import tehnut.resourceful.crops.api.util.BlockStack;
-import tehnut.resourceful.crops.util.helper.LogHelper;
 
 import java.lang.reflect.Field;
 import java.util.Map;
@@ -52,7 +48,7 @@ public class Utils {
                 return new ItemStack(oreStack.getItem(), amount, oreStack.getItemDamage());
             }
         } catch (ArrayIndexOutOfBoundsException e) {
-            LogHelper.error("Error adding " + (input ? "inputStack" : "outputStack") + ": " + stackString + ". Is it formatted correctly?");
+            ResourcefulAPI.logger.error("Error adding " + (input ? "inputStack" : "outputStack") + ": " + stackString + ". Is it formatted correctly?");
         }
 
         return null;

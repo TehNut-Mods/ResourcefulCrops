@@ -22,12 +22,12 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import tehnut.resourceful.crops.ConfigHandler;
 import tehnut.resourceful.crops.ResourcefulCrops;
-import tehnut.resourceful.crops.annot.ModBlock;
 import tehnut.resourceful.crops.api.ModInformation;
 import tehnut.resourceful.crops.item.ItemMaterial;
 import tehnut.resourceful.crops.item.block.ItemBlockROre;
 import tehnut.resourceful.crops.registry.BlockRegistry;
 import tehnut.resourceful.crops.registry.ItemRegistry;
+import tehnut.resourceful.repack.tehnut.lib.annot.ModBlock;
 
 import java.util.ArrayList;
 import java.util.List;

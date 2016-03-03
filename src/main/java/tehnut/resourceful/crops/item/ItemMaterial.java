@@ -7,8 +7,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import tehnut.resourceful.crops.ResourcefulCrops;
-import tehnut.resourceful.crops.annot.ModItem;
 import tehnut.resourceful.crops.api.ModInformation;
+import tehnut.resourceful.repack.tehnut.lib.annot.ModItem;
 
 import java.util.List;
 

@@ -4,11 +4,10 @@ import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.discovery.ASMDataTable;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import tehnut.resourceful.crops.ResourcefulCrops;
-import tehnut.resourceful.crops.annot.ModItem;
 import tehnut.resourceful.crops.api.ResourcefulAPI;
 import tehnut.resourceful.crops.item.*;
-import tehnut.resourceful.crops.util.helper.LogHelper;
 import tehnut.resourceful.crops.util.helper.RenderHelper;
+import tehnut.resourceful.repack.tehnut.lib.annot.ModItem;
 
 public class ItemRegistry {
 
@@ -21,7 +20,7 @@ public class ItemRegistry {
                 Item modItem = modItemClass.newInstance();
                 registerItem(modItem, name);
             } catch (Exception e) {
-                LogHelper.error(String.format("Unable to register item for class %s", data.getClassName()));
+                ResourcefulAPI.logger.error(String.format("Unable to register item for class %s", data.getClassName()));
             }
         }
     }

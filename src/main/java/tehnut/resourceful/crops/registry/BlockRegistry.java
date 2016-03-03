@@ -7,13 +7,12 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fml.common.discovery.ASMDataTable;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import tehnut.resourceful.crops.ResourcefulCrops;
-import tehnut.resourceful.crops.annot.ModBlock;
 import tehnut.resourceful.crops.api.ModInformation;
 import tehnut.resourceful.crops.api.ResourcefulAPI;
 import tehnut.resourceful.crops.block.BlockRCrop;
 import tehnut.resourceful.crops.block.BlockROre;
-import tehnut.resourceful.crops.util.helper.LogHelper;
 import tehnut.resourceful.crops.util.helper.RenderHelper;
+import tehnut.resourceful.repack.tehnut.lib.annot.ModBlock;
 
 public class BlockRegistry {
 
@@ -33,7 +32,7 @@ public class BlockRegistry {
                 registerTile(tileClass);
 
             } catch (Exception e) {
-                LogHelper.error(String.format("Unable to register block for class %s", data.getClassName()));
+                ResourcefulAPI.logger.error(String.format("Unable to register block for class %s", data.getClassName()));
             }
         }
     }

@@ -1,10 +1,12 @@
-package tehnut.resourceful.crops.annot;
+package tehnut.resourceful.repack.tehnut.lib.annot;
 
 import net.minecraft.item.ItemBlock;
 import net.minecraft.tileentity.TileEntity;
 
+import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
  * Used to automatically register Blocks with
@@ -16,14 +18,10 @@ import java.lang.annotation.RetentionPolicy;
  * provided.
  * <p/>
  * Annotate any class that should be registered.
- * <p/>
- * Use {@link tehnut.resourceful.crops.registry.BlockRegistry#getBlock(Class)} or
- * {@link tehnut.resourceful.crops.api.ResourcefulAPI#getBlock(String)} to retrieve
- * a registered Block instance.
  */
 @Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.TYPE)
 public @interface ModBlock {
-
     String name();
 
     Class<? extends TileEntity> tileEntity() default TileEntity.class;

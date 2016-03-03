@@ -11,9 +11,6 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import tehnut.resourceful.crops.annot.Handler;
-import tehnut.resourceful.crops.annot.ModBlock;
-import tehnut.resourceful.crops.annot.ModItem;
 import tehnut.resourceful.crops.api.ModInformation;
 import tehnut.resourceful.crops.api.ResourcefulAPI;
 import tehnut.resourceful.crops.api.base.Seed;
@@ -25,14 +22,17 @@ import tehnut.resourceful.crops.registry.*;
 import tehnut.resourceful.crops.util.StartupUtils;
 import tehnut.resourceful.crops.util.handler.GenerationHandler;
 import tehnut.resourceful.crops.util.handler.OreDictHandler;
-import tehnut.resourceful.crops.util.helper.LogHelper;
 import tehnut.resourceful.crops.util.serialization.SeedCreator;
+import tehnut.resourceful.repack.tehnut.lib.annot.Handler;
+import tehnut.resourceful.repack.tehnut.lib.annot.ModBlock;
+import tehnut.resourceful.repack.tehnut.lib.annot.ModItem;
+import tehnut.resourceful.repack.tehnut.lib.iface.ICompatibility;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Set;
 
-@Mod(modid = ModInformation.ID, name = ModInformation.NAME, version = ModInformation.VERSION, acceptedMinecraftVersions = "[1.8.8,1.8.9]", dependencies = ModInformation.REQUIRED, guiFactory = ModInformation.GUIFACTORY)
+@Mod(modid = ModInformation.ID, name = ModInformation.NAME, version = ModInformation.VERSION, dependencies = ModInformation.REQUIRED, guiFactory = ModInformation.GUIFACTORY)
 public class ResourcefulCrops {
 
     @SidedProxy(clientSide = ModInformation.CLIENTPROXY, serverSide = ModInformation.COMMONPROXY)
@@ -68,7 +68,7 @@ public class ResourcefulCrops {
         seedCache = new PermanentCache<Seed>(ModInformation.ID + "Cache");
 
         ResourcefulAPI.seedCache = seedCache;
-        ResourcefulAPI.logger = LogHelper.getLogger();
+        ResourcefulAPI.logger = event.getModLog();
         ResourcefulAPI.forceAddDuplicates = ConfigHandler.forceAddDuplicates;
 
         modItems = event.getAsmData().getAll(ModItem.class.getCanonicalName());
@@ -81,7 +81,10 @@ public class ResourcefulCrops {
         AchievementRegistry.registerAchievements();
         GameRegistry.registerWorldGenerator(new GenerationHandler(), 2);
 
-        proxy.preInit();
+        CompatibilityRegistry.registerModCompat();
+        CompatibilityRegistry.runCompat(ICompatibility.InitializationPhase.PRE_INIT);
+
+        proxy.preInit(event);
     }
 
     @Mod.EventHandler
@@ -101,16 +104,18 @@ public class ResourcefulCrops {
 
         OreDictHandler.load();
 
-        CompatibilityRegistry.registerModCompat();
+        CompatibilityRegistry.runCompat(ICompatibility.InitializationPhase.INIT);
     }
 
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event) {
         if (SeedRegistry.badSeeds > 0)
-            LogHelper.error(SeedRegistry.badSeeds + " Seeds failed to register.");
+            ResourcefulAPI.logger.error(SeedRegistry.badSeeds + " Seeds failed to register.");
 
         proxy.loadCommands();
         proxy.loadRenders();
+
+        CompatibilityRegistry.runCompat(ICompatibility.InitializationPhase.POST_INIT);
     }
 
     public static File getConfigDir() {

@@ -9,11 +9,11 @@ import net.minecraft.util.StatCollector;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import tehnut.resourceful.crops.ResourcefulCrops;
-import tehnut.resourceful.crops.annot.ModItem;
 import tehnut.resourceful.crops.api.ModInformation;
 import tehnut.resourceful.crops.api.base.Seed;
 import tehnut.resourceful.crops.api.registry.SeedRegistry;
 import tehnut.resourceful.crops.util.Utils;
+import tehnut.resourceful.repack.tehnut.lib.annot.ModItem;
 
 import java.util.List;
 
