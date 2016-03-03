@@ -9,8 +9,6 @@ import net.minecraftforge.fml.common.registry.GameData;
 import net.minecraftforge.oredict.OreDictionary;
 import tehnut.resourceful.crops.api.base.Seed;
 import tehnut.resourceful.crops.api.base.SeedBuilder;
-import tehnut.resourceful.crops.api.registry.SeedRegistry;
-import tehnut.resourceful.crops.util.serialization.SeedCreator;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -82,8 +80,6 @@ public class StartupUtils {
         addDefaultSeedOre(makeSeed("Desh", 4, 2, "ingotDesh", new ItemStack(getOreStack("ingotDesh").getItem(), 1, Utils.getItemDamage(getOreStack("ingotDesh"))), new Color(39, 39, 40)), "ingotDesh");
         addDefaultSeedOre(makeSeed("Cobalt", 4, 2, "ingotCobalt", new ItemStack(getOreStack("ingotCobalt").getItem(), 1, Utils.getItemDamage(getOreStack("ingotCobalt"))), new Color(0, 60, 255)), "ingotCobalt");
         addDefaultSeedOre(makeSeed("Ardite", 4, 2, "ingotArdite", new ItemStack(getOreStack("ingotArdite").getItem(), 1, Utils.getItemDamage(getOreStack("ingotArdite"))), new Color(255, 102, 0)), "ingotArdite");
-
-        SeedCreator.createJsonFromSeeds(SeedRegistry.seedBuilder, defaultSeeds, "DefaultSeeds");
     }
 
     /**
@@ -163,5 +159,9 @@ public class StartupUtils {
                 return new ItemStack(Blocks.fire);
         } else
             return new ItemStack(Blocks.fire);
+    }
+
+    public static List<Seed> getDefaultSeeds() {
+        return new ArrayList<Seed>(defaultSeeds);
     }
 }

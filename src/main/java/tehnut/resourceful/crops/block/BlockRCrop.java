@@ -67,11 +67,11 @@ public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
 
         checkAndDropBlock(world, pos, state);
 
-        if (seed.getSeedReq().getGrowthReq() == null || seed.getSeedReq().getGrowthReq().equals(blockReq)) {
+        if (seed.getRequirement().getGrowthReq() == null || seed.getRequirement().getGrowthReq().equals(blockReq)) {
 
             int lightLevel = world.getLight(pos.up());
 
-            if (lightLevel >= seed.getSeedReq().getLightLevelMin() && lightLevel <= seed.getSeedReq().getLightLevelMax()) {
+            if (lightLevel >= seed.getRequirement().getLightLevelMin() && lightLevel <= seed.getRequirement().getLightLevelMax()) {
                 int meta = this.getMetaFromState(world.getBlockState(pos));
 
                 if (meta < 7) {
@@ -166,17 +166,17 @@ public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
         Seed seed = SeedRegistry.getSeed(seedName);
 
         ResourcefulCrops.proxy.addChatMessage(String.format(StatCollector.translateToLocal("chat.ResourcefulCrops.crop.name"), seed.getName()), 1);
-        ResourcefulCrops.proxy.addChatMessage(String.format(StatCollector.translateToLocal("chat.ResourcefulCrops.req.growth"), seed.getSeedReq().getGrowthReq() != null ? seed.getSeedReq().getGrowthReq().getDisplayName() : StatCollector.translateToLocal("info.ResourcefulCrops.anything")), 2);
+        ResourcefulCrops.proxy.addChatMessage(String.format(StatCollector.translateToLocal("chat.ResourcefulCrops.req.growth"), seed.getRequirement().getGrowthReq() != null ? seed.getRequirement().getGrowthReq().getDisplayName() : StatCollector.translateToLocal("info.ResourcefulCrops.anything")), 2);
 
-        if (seed.getSeedReq().getLightLevelMax() == Integer.MAX_VALUE)
-            ResourcefulCrops.proxy.addChatMessage(String.format(StatCollector.translateToLocal("chat.ResourcefulCrops.req.light.above"), seed.getSeedReq().getLightLevelMin()), 3);
-        else if (seed.getSeedReq().getLightLevelMin() == 0)
-            ResourcefulCrops.proxy.addChatMessage(String.format(StatCollector.translateToLocal("chat.ResourcefulCrops.req.light.below"), seed.getSeedReq().getLightLevelMax()), 3);
+        if (seed.getRequirement().getLightLevelMax() == 15)
+            ResourcefulCrops.proxy.addChatMessage(String.format(StatCollector.translateToLocal("chat.ResourcefulCrops.req.light.above"), seed.getRequirement().getLightLevelMin()), 3);
+        else if (seed.getRequirement().getLightLevelMin() == 0)
+            ResourcefulCrops.proxy.addChatMessage(String.format(StatCollector.translateToLocal("chat.ResourcefulCrops.req.light.below"), seed.getRequirement().getLightLevelMax()), 3);
         else
-            ResourcefulCrops.proxy.addChatMessage(String.format(StatCollector.translateToLocal("chat.ResourcefulCrops.req.light.between"), seed.getSeedReq().getLightLevelMin(), seed.getSeedReq().getLightLevelMax()), 3);
+            ResourcefulCrops.proxy.addChatMessage(String.format(StatCollector.translateToLocal("chat.ResourcefulCrops.req.light.between"), seed.getRequirement().getLightLevelMin(), seed.getRequirement().getLightLevelMax()), 3);
 
-        if (seed.getSeedReq().getDifficulty() != EnumDifficulty.PEACEFUL)
-            ResourcefulCrops.proxy.addChatMessage(String.format(StatCollector.translateToLocal("chat.ResourcefulCrops.req.difficulty"), seed.getSeedReq().getDifficulty().toString()), 4);
+        if (seed.getRequirement().getDifficulty() != EnumDifficulty.PEACEFUL)
+            ResourcefulCrops.proxy.addChatMessage(String.format(StatCollector.translateToLocal("chat.ResourcefulCrops.req.difficulty"), seed.getRequirement().getDifficulty().toString()), 4);
 
         return true;
     }

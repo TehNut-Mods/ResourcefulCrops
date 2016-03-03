@@ -1,6 +1,7 @@
 package tehnut.resourceful.crops;
 
 import com.google.gson.GsonBuilder;
+import lombok.Getter;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -19,10 +20,8 @@ import tehnut.resourceful.crops.api.util.cache.PermanentCache;
 import tehnut.resourceful.crops.item.ItemStone;
 import tehnut.resourceful.crops.proxy.CommonProxy;
 import tehnut.resourceful.crops.registry.*;
-import tehnut.resourceful.crops.util.StartupUtils;
 import tehnut.resourceful.crops.util.handler.GenerationHandler;
 import tehnut.resourceful.crops.util.handler.OreDictHandler;
-import tehnut.resourceful.crops.util.serialization.SeedCreator;
 import tehnut.resourceful.repack.tehnut.lib.annot.Handler;
 import tehnut.resourceful.repack.tehnut.lib.annot.ModBlock;
 import tehnut.resourceful.repack.tehnut.lib.annot.ModItem;
@@ -53,7 +52,9 @@ public class ResourcefulCrops {
     @Mod.Instance(ModInformation.ID)
     public static ResourcefulCrops instance;
 
+    @Getter
     private static File configDir;
+    @Getter
     private static PermanentCache<Seed> seedCache;
     public Set<ASMDataTable.ASMData> modItems;
     public Set<ASMDataTable.ASMData> modBlocks;
@@ -90,15 +91,9 @@ public class ResourcefulCrops {
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
         SeedRegistry.seedBuilder = new GsonBuilder();
-        SeedCreator.registerCustomSerializers(SeedRegistry.seedBuilder);
 
-        File seedsFolder = new File(getConfigDir().getPath() + "/seeds");
-        seedsFolder.mkdir();
-        File defaultSeedsFile = new File(seedsFolder, "DefaultSeeds.json");
-        if (!defaultSeedsFile.exists() && ConfigHandler.generateDefaults)
-            StartupUtils.initDefaults();
+        JsonConfigHandler.init(new File(getConfigDir(), "Seeds.json"));
 
-        SeedCreator.registerJsonSeeds(SeedRegistry.seedBuilder, seedsFolder);
         SeedRegistry.setSeedList(new ArrayList<Seed>(getSeedCache().getEnumeratedObjects().valueCollection()));
         RecipeRegistry.registerItemRecipes();
 
@@ -116,13 +111,5 @@ public class ResourcefulCrops {
         proxy.loadRenders();
 
         CompatibilityRegistry.runCompat(ICompatibility.InitializationPhase.POST_INIT);
-    }
-
-    public static File getConfigDir() {
-        return configDir;
-    }
-
-    public static PermanentCache<Seed> getSeedCache() {
-        return seedCache;
     }
 }

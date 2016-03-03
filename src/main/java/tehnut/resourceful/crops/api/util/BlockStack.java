@@ -26,6 +26,11 @@ public class BlockStack {
         this(block, 0);
     }
 
+    public static BlockStack getStackFromPos(World world, BlockPos pos) {
+        IBlockState state = world.getBlockState(pos);
+        return new BlockStack(state.getBlock(), state.getBlock().getMetaFromState(state));
+    }
+
     public Block getBlock() {
         return block;
     }
@@ -62,7 +67,9 @@ public class BlockStack {
 
         BlockStack that = (BlockStack) o;
 
-        return getMeta() == that.getMeta() && (getBlock() != null ? getBlock().equals(that.getBlock()) : that.getBlock() == null);
+        if (getMeta() != that.getMeta()) return false;
+        return getBlock() != null ? getBlock().equals(that.getBlock()) : that.getBlock() == null;
+
     }
 
     @Override
@@ -70,10 +77,5 @@ public class BlockStack {
         int result = getBlock() != null ? getBlock().hashCode() : 0;
         result = 31 * result + getMeta();
         return result;
-    }
-
-    public static BlockStack getStackFromPos(World world, BlockPos pos) {
-        IBlockState state = world.getBlockState(pos);
-        return new BlockStack(state.getBlock(), state.getBlock().getMetaFromState(state));
     }
 }

@@ -3,14 +3,11 @@ package tehnut.resourceful.crops.proxy;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiNewChat;
 import net.minecraft.util.ChatComponentText;
-import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.discovery.ASMDataTable;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import tehnut.resourceful.crops.ResourcefulCrops;
 import tehnut.resourceful.crops.api.ResourcefulAPI;
-import tehnut.resourceful.crops.command.CommandCreateSeed;
-import tehnut.resourceful.crops.command.CommandPrintSeed;
 import tehnut.resourceful.crops.registry.BlockRegistry;
 import tehnut.resourceful.crops.registry.ItemRegistry;
 import tehnut.resourceful.repack.tehnut.lib.annot.Handler;
@@ -36,8 +33,7 @@ public class ClientProxy extends CommonProxy {
 
     @Override
     public void loadCommands() {
-        ClientCommandHandler.instance.registerCommand(new CommandCreateSeed());
-        ClientCommandHandler.instance.registerCommand(new CommandPrintSeed());
+
     }
 
     @Override

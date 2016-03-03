@@ -28,7 +28,6 @@ public class ConfigHandler {
     public static boolean enableConsoleLogging;
     public static boolean enableRightClickHarvest;
     public static boolean forceAddDuplicates;
-    public static boolean generateDefaults;
 
     public static boolean enableBloodMagicAutomation;
     public static boolean blacklistNeoTechAccelerator;
@@ -70,7 +69,6 @@ public class ConfigHandler {
         enableConsoleLogging = config.getBoolean("enableConsoleLogging", category, true, "Enables extra information being printed to the console.");
         enableRightClickHarvest = config.getBoolean("enableRightClickHarvest", category, true, "Allows crops to be right clicked to automatically harvest and replant if the crop is mature.");
         forceAddDuplicates = config.getBoolean("forceAddDuplicates", category, false, "Forces duplicate seeds to be registered");
-        generateDefaults = config.getBoolean("generateDefaults", category, true, "Generates a list of default seeds.");
 
         category = "Compat";
         config.addCustomCategoryComment(category, "Compatibility settings");

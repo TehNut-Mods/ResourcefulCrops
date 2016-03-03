@@ -1,4 +1,4 @@
-package tehnut.resourceful.crops.util.serialization.serializers;
+package tehnut.resourceful.crops.util.json;
 
 import com.google.gson.*;
 import net.minecraft.util.ResourceLocation;

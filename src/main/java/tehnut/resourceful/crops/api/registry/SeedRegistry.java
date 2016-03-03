@@ -16,7 +16,7 @@ public class SeedRegistry {
 
     public static void registerSeed(Seed seed) {
         try {
-            ResourcefulAPI.seedCache.addObject(seed, !seed.getCompat() ? seed.getName() : seed.getName() + "-Compat");
+            ResourcefulAPI.seedCache.addObject(seed, seed.getName());
         } catch (IllegalArgumentException e) {
             if (ResourcefulAPI.forceAddDuplicates) {
                 ResourcefulAPI.logger.error("Seed { " + seed.getName() + " } has been registered twice. Force adding the copy.");

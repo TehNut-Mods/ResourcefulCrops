@@ -1,4 +1,4 @@
-package tehnut.resourceful.crops.util.serialization.serializers;
+package tehnut.resourceful.crops.util.json;
 
 import com.google.gson.*;
 import tehnut.resourceful.crops.api.base.Chance;
@@ -7,14 +7,13 @@ import tehnut.resourceful.crops.util.helper.JsonHelper;
 
 import java.lang.reflect.Type;
 
-public class CustomChanceJson implements JsonDeserializer<Chance>, JsonSerializer<Chance> {
+public class CustomChanceJson implements JsonSerializer<Chance>, JsonDeserializer<Chance> {
 
     @Override
     public Chance deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        JsonHelper helper = new JsonHelper(json);
-
-        double extraSeed = helper.getNullableDouble("extraSeed", 0.0);
-        double essenceDrop = helper.getNullableDouble("essenceDrop", 0.0);
+        JsonHelper jsonHelper = new JsonHelper(json);
+        double extraSeed = jsonHelper.getNullableDouble("extraSeed", 0.0);
+        double essenceDrop = jsonHelper.getNullableDouble("essenceDrop", 0.0);
 
         ChanceBuilder builder = new ChanceBuilder();
         builder.setExtraSeed(extraSeed);
@@ -26,6 +25,7 @@ public class CustomChanceJson implements JsonDeserializer<Chance>, JsonSerialize
     @Override
     public JsonElement serialize(Chance src, Type typeOfSrc, JsonSerializationContext context) {
         JsonObject jsonObject = new JsonObject();
+
         jsonObject.addProperty("extraSeed", src.getExtraSeed());
         jsonObject.addProperty("essenceDrop", src.getEssenceDrop());
 
