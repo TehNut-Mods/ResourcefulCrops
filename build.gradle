@@ -13,6 +13,7 @@ buildscript {
 plugins {
     id 'com.matthewprenger.cursegradle' version '1.0.4'
     id "net.minecraftforge.gradle.forge" version "2.0.2"
+    id 'io.franzbecker.gradle-lombok' version '1.6'
 }
 
 apply plugin: 'maven-publish'
@@ -21,6 +22,11 @@ def build_number = 'CUSTOM'
 
 if (System.getenv('BUILD_NUMBER') != null)
     build_number = System.getenv('BUILD_NUMBER')
+
+def username = 'ResourcefulCrops'
+
+if (project.hasProperty('dev_username'))
+    username = "${dev_username}"
 
 group = package_group
 archivesBaseName = mod_name
@@ -41,26 +47,14 @@ repositories {
     maven { url "http://tehnut.info/maven" }
     maven { url "http://www.teambrmodding.com/maven2/" }
     maven { url "http://maven.amadornes.com/" }
-
-    ivy {
-        name "Thaumcraft"
-        artifactPattern "https://dl.dropboxusercontent.com/u/47135879/[module]-[revision]-deobf.[ext]"
-    }
-    ivy {
-        name "Baubles"
-        artifactPattern "https://dl.dropboxusercontent.com/u/47135879/[module]-[revision]-deobf.[ext]"
-    }
 }
 
 dependencies {
-    compile "org.projectlombok:lombok:1.16.4"
-    compile name: 'Thaumcraft', 'version': "${mc_version}-${thaumcraft_version}", ext: 'jar'
-    compile name: 'Baubles', 'version': "${mc_version}-${baubles_version}", ext: 'jar'
     deobfCompile "MCMultiPart:MCMultiPart:${mcmp_version}:universal"
     deobfCompile "com.dyonovan.neotech:NeoTech:${mc_version}-${neotech_version}"
     deobfCompile "mezz.jei:jei_${mc_version}:${jei_version}"
     deobfCompile "mcp.mobius.waila:Waila:${waila_version}_1.8.8"
-    deobfCompile "com.wayoftime.bloodmagic:BloodMagic:${mc_version}-${bloodmagic_version}"
+    deobfCompile "com.wayoftime.bloodmagic:BloodMagic:${mc_version}-${bloodmagic_version}:api"
 }
 
 minecraft {
@@ -69,6 +63,8 @@ minecraft {
 
     replace "@VERSION@", project.version
     replaceIn "ModInformation.java"
+
+    clientRunArgs += "--username=${username}"
 
     if (project.hasProperty('mappings_version'))
         mappings = project.mappings_version
@@ -99,6 +95,19 @@ if (JavaVersion.current().isJava8Compatible()) {
     }
 }
 
+lombok {
+    version = "1.16.6"
+    sha256 = "e0a471be03e1e6b02bf019480cec7a3ac9801702bf7bf62f15d077ad4df8dd5d"
+}
+
+import io.franzbecker.gradle.lombok.task.DelombokTask
+
+task delombok(type: DelombokTask) {
+    args("src/main/java", "-d", "build/sources/delomboked/java")
+}
+
+tasks.eclipse.dependsOn installLombok
+
 jar {
     classifier = ''
     manifest.mainAttributes(
@@ -110,14 +119,26 @@ jar {
     )
 }
 
+// API jar
+task apiJar(type: Jar) {
+    from sourceSets.main.allSource
+    from sourceSets.main.output
+    include 'tehnut/resourceful/crops/api/**/*'
+    classifier = 'api'
+}
+
 // Javadoc jar
 task javadocJar(type: Jar, dependsOn: javadoc) {
     from javadoc.destinationDir
     classifier = 'javadoc'
 }
 
+javadoc {
+    source = projectDir.path + "/build/sources/delomboked/java"
+}
 
-tasks.build.dependsOn sourceJar, javadocJar
+tasks.javadoc.dependsOn delombok
+tasks.build.dependsOn javadoc, javadocJar, apiJar
 
 tasks.withType(JavaCompile) { task ->
     task.options.encoding = 'UTF-8'
@@ -141,6 +162,13 @@ publishing {
     }
 }
 
+def curseRelations = {
+    optionalLibrary 'waila'
+    optionalLibrary 'neotech'
+    optionalLibrary 'blood-magic'
+    optionalLibrary 'thaumcraft'
+}
+
 curseforge {
     if (project.hasProperty('curse_key'))
         apiKey = project.curse_key
@@ -150,7 +178,10 @@ curseforge {
 		changelog = project.hasProperty('changelog') ? project.changelog : ''
         releaseType = 'alpha'
 
+        relations curseRelations
+
         addArtifact sourceJar
         addArtifact javadocJar
+        addArtifact apiJar
     }
 }
