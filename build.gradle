@@ -45,13 +45,9 @@ repositories {
     maven {	url "http://mobiusstrip.eu/maven" }
     maven { url "http://dvs1.progwml6.com/files/maven" }
     maven { url "http://tehnut.info/maven" }
-    maven { url "http://www.teambrmodding.com/maven2/" }
-    maven { url "http://maven.amadornes.com/" }
 }
 
 dependencies {
-    deobfCompile "MCMultiPart:MCMultiPart:${mcmp_version}:universal"
-    deobfCompile "com.dyonovan.neotech:NeoTech:${mc_version}-${neotech_version}"
     deobfCompile "mezz.jei:jei_${mc_version}:${jei_version}"
     deobfCompile "mcp.mobius.waila:Waila:${waila_version}_1.8.8"
     deobfCompile "com.wayoftime.bloodmagic:BloodMagic:${mc_version}-${bloodmagic_version}:api"
