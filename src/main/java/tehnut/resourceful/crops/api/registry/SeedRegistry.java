@@ -2,11 +2,11 @@ package tehnut.resourceful.crops.api.registry;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
-import com.sun.istack.internal.Nullable;
 import net.minecraft.item.ItemStack;
 import tehnut.resourceful.crops.api.ResourcefulAPI;
 import tehnut.resourceful.crops.api.base.Seed;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
