@@ -1,6 +1,8 @@
 package tehnut.resourceful.crops.api.registry;
 
-import com.google.gson.GsonBuilder;
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
+import com.sun.istack.internal.Nullable;
 import net.minecraft.item.ItemStack;
 import tehnut.resourceful.crops.api.ResourcefulAPI;
 import tehnut.resourceful.crops.api.base.Seed;
@@ -10,42 +12,40 @@ import java.util.List;
 
 public class SeedRegistry {
 
-    public static GsonBuilder seedBuilder;
-    public static ArrayList<Seed> seedList;
+    public static BiMap<Integer, Seed> seedMap = HashBiMap.create();
+    public static BiMap<String, Seed> seedNameMap = HashBiMap.create();
+    public static List<Seed> seedList;
     public static int badSeeds = 0;
 
-    public static void registerSeed(Seed seed) {
+    public static void registerSeed(int id, Seed seed) {
         try {
-            ResourcefulAPI.seedCache.addObject(seed, seed.getName());
+            seedMap.put(id, seed);
+            seedNameMap.put(seed.getName(), seed);
         } catch (IllegalArgumentException e) {
-            if (ResourcefulAPI.forceAddDuplicates) {
-                ResourcefulAPI.logger.error("Seed { " + seed.getName() + " } has been registered twice. Force adding the copy.");
-                ResourcefulAPI.seedCache.addObject(seed, seed.getName() + badSeeds);
-            } else {
-                ResourcefulAPI.logger.error("Seed { " + seed.getName() + " } has been registered twice. Skipping the copy and continuing.");
-            }
-            badSeeds++;
+            ResourcefulAPI.logger.error("Failed to add seed: {} for id {}. It has already been registered.", seed.getName(), id);
         }
     }
 
+    @Nullable
     public static Seed getSeed(int index) {
-        return ResourcefulAPI.seedCache.getObject(index);
+        return seedMap.get(index);
     }
 
+    @Nullable
     public static Seed getSeed(String name) {
-        return ResourcefulAPI.seedCache.getObject(name);
+        return seedNameMap.get(name);
     }
 
     public static int getIndexOf(Seed seed) {
-        return ResourcefulAPI.seedCache.getID(seed);
+        return seedMap.inverse().get(seed);
     }
 
     public static int getIndexOf(String name) {
-        return ResourcefulAPI.seedCache.getID(getSeed(name));
+        return getIndexOf(seedNameMap.get(name));
     }
 
     public static String getNameOf(Seed seed) {
-        return ResourcefulAPI.seedCache.getName(seed);
+        return seedNameMap.inverse().get(seed);
     }
 
     public static int getSize() {
@@ -57,12 +57,20 @@ public class SeedRegistry {
     }
 
     public static List<Seed> getSeedList() {
-        return new ArrayList<Seed>(seedList);
+        if (seedList == null)
+            seedList = new ArrayList<Seed>(seedMap.values());
+
+        return seedList;
     }
 
-    public static void setSeedList(ArrayList<Seed> list) {
-        seedList = list;
+    public static BiMap<Integer, Seed> getSeedMap() {
+        return HashBiMap.create(seedMap);
     }
+
+    public static BiMap<String, Seed> getSeedNameMap() {
+        return HashBiMap.create(seedNameMap);
+    }
+
 
     public static ItemStack getItemStackForSeed(Seed seed) {
         return new ItemStack(ResourcefulAPI.getItem(ResourcefulAPI.SEED), 1, getIndexOf(seed));

@@ -4,8 +4,6 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import org.apache.logging.log4j.Logger;
-import tehnut.resourceful.crops.api.base.Seed;
-import tehnut.resourceful.crops.api.util.cache.PermanentCache;
 
 import javax.annotation.Nullable;
 
@@ -19,8 +17,6 @@ public class ResourcefulAPI {
 
     public static final String CROP = "BlockRCrop";
     public static final String ORE = "BlockROre";
-    public static boolean forceAddDuplicates;
-    public static PermanentCache<Seed> seedCache;
     public static Logger logger;
 
     /**

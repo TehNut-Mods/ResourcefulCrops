@@ -31,8 +31,9 @@ public class ItemShard extends Item {
     @SuppressWarnings("unchecked")
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item item, CreativeTabs tabs, List list) {
-        for (Seed seed : SeedRegistry.getSeedList())
-            list.add(new ItemStack(this, 1, SeedRegistry.getIndexOf(seed)));
+        for (int i = 0; i < SeedRegistry.getSize(); i++)
+            if (Utils.isValidSeed(i))
+                list.add(new ItemStack(this, 1, i));
 
         if (SeedRegistry.isEmpty())
             list.add(Utils.getInvalidSeed(this));

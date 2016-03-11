@@ -11,12 +11,13 @@ import tehnut.resourceful.crops.api.base.Seed;
 import tehnut.resourceful.crops.api.base.SeedBuilder;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class StartupUtils {
 
-    private static List<Seed> defaultSeeds = new ArrayList<Seed>();
+    private static Map<Integer, Seed> defaultSeeds = new HashMap<Integer, Seed>();
+    private static int registered = 0;
 
     /**
      * Creates a list of default seeds to add to the game.
@@ -106,7 +107,7 @@ public class StartupUtils {
      */
     private static void addDefaultSeedOre(Seed seed, String ore) {
         if (Utils.doesOreNameExist(ore))
-            defaultSeeds.add(seed);
+            defaultSeeds.put(registered++, seed);
     }
 
     /**
@@ -117,7 +118,7 @@ public class StartupUtils {
     private static void addDefaultSeed(Seed seed) {
         String[] split = seed.getInput().split(":");
         if (GameData.getItemRegistry().containsKey(new ResourceLocation(split[0] + ":" + split[1])))
-            defaultSeeds.add(seed);
+            defaultSeeds.put(registered++, seed);
     }
 
     /**
@@ -161,7 +162,7 @@ public class StartupUtils {
             return new ItemStack(Blocks.fire);
     }
 
-    public static List<Seed> getDefaultSeeds() {
-        return new ArrayList<Seed>(defaultSeeds);
+    public static Map<Integer, Seed> getDefaultSeeds() {
+        return new HashMap<Integer, Seed>(defaultSeeds);
     }
 }

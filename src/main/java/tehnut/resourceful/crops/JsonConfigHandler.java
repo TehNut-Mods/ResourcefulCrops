@@ -18,6 +18,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 public class JsonConfigHandler {
 
@@ -25,6 +26,7 @@ public class JsonConfigHandler {
             .serializeNulls()
             .setPrettyPrinting()
             .disableHtmlEscaping()
+            .setVersion(0.2)
             .registerTypeAdapter(Seed.class, new CustomSeedJson())
             .registerTypeAdapter(BlockStack.class, new CustomBlockStackJson())
             .registerTypeAdapter(ItemStack.class, new CustomItemStackJson())
@@ -35,23 +37,23 @@ public class JsonConfigHandler {
     public static void init(File jsonConfig) {
         try {
             if (!jsonConfig.exists() && jsonConfig.createNewFile()) {
-                List<Seed> defaultList = handleDefaults();
-                String json = gson.toJson(defaultList, new TypeToken<List<Seed>>(){ }.getType());
+                Map<Integer, Seed> defaultList = handleDefaults();
+                String json = gson.toJson(defaultList, new TypeToken<Map<Integer, Seed>>(){ }.getType());
                 FileWriter writer = new FileWriter(jsonConfig);
                 writer.write(json);
                 writer.close();
             }
 
-            List<Seed> seeds = gson.fromJson(new FileReader(jsonConfig), new TypeToken<List<Seed>>(){ }.getType());
+            Map<Integer, Seed> seeds = gson.fromJson(new FileReader(jsonConfig), new TypeToken<Map<Integer, Seed>>(){ }.getType());
 
-            for (Seed seed : seeds)
-                SeedRegistry.registerSeed(seed);
+            for (Map.Entry<Integer, Seed> entry : seeds.entrySet())
+                SeedRegistry.registerSeed(entry.getKey(), entry.getValue());
         } catch (IOException e) {
             ResourcefulAPI.logger.error("Failed to handle Seed configuration.");
         }
     }
 
-    private static List<Seed> handleDefaults() {
+    private static Map<Integer, Seed> handleDefaults() {
         StartupUtils.initDefaults();
         return StartupUtils.getDefaultSeeds();
     }

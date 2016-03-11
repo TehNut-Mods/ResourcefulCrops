@@ -1,6 +1,5 @@
 package tehnut.resourceful.crops;
 
-import com.google.gson.GsonBuilder;
 import lombok.Getter;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -14,9 +13,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import tehnut.resourceful.crops.api.ModInformation;
 import tehnut.resourceful.crops.api.ResourcefulAPI;
-import tehnut.resourceful.crops.api.base.Seed;
 import tehnut.resourceful.crops.api.registry.SeedRegistry;
-import tehnut.resourceful.crops.api.util.cache.PermanentCache;
 import tehnut.resourceful.crops.item.ItemStone;
 import tehnut.resourceful.crops.proxy.CommonProxy;
 import tehnut.resourceful.crops.registry.*;
@@ -28,7 +25,6 @@ import tehnut.resourceful.repack.tehnut.lib.annot.ModItem;
 import tehnut.resourceful.repack.tehnut.lib.iface.ICompatibility;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Set;
 
 @Mod(modid = ModInformation.ID, name = ModInformation.NAME, version = ModInformation.VERSION, dependencies = ModInformation.REQUIRED, guiFactory = ModInformation.GUIFACTORY)
@@ -55,7 +51,6 @@ public class ResourcefulCrops {
     @Getter
     private static File configDir;
     @Getter
-    private static PermanentCache<Seed> seedCache;
     public Set<ASMDataTable.ASMData> modItems;
     public Set<ASMDataTable.ASMData> modBlocks;
     public Set<ASMDataTable.ASMData> eventHandlers;
@@ -66,11 +61,7 @@ public class ResourcefulCrops {
         configDir.mkdirs();
         ConfigHandler.init(new File(configDir.getPath(), ModInformation.ID + ".cfg"));
 
-        seedCache = new PermanentCache<Seed>(ModInformation.ID + "Cache");
-
-        ResourcefulAPI.seedCache = seedCache;
         ResourcefulAPI.logger = event.getModLog();
-        ResourcefulAPI.forceAddDuplicates = ConfigHandler.forceAddDuplicates;
 
         modItems = event.getAsmData().getAll(ModItem.class.getCanonicalName());
         modBlocks = event.getAsmData().getAll(ModBlock.class.getCanonicalName());
@@ -90,15 +81,9 @@ public class ResourcefulCrops {
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
-        SeedRegistry.seedBuilder = new GsonBuilder();
-
-        JsonConfigHandler.init(new File(getConfigDir(), "Seeds.json"));
-
-        SeedRegistry.setSeedList(new ArrayList<Seed>(getSeedCache().getEnumeratedObjects().valueCollection()));
+        JsonConfigHandler.init(new File(getConfigDir(), "Seeds-v2.json"));
         RecipeRegistry.registerItemRecipes();
-
         OreDictHandler.load();
-
         CompatibilityRegistry.runCompat(ICompatibility.InitializationPhase.INIT);
     }
 
