@@ -141,27 +141,4 @@ public class Utils {
     public static boolean isValidSeed(Seed seed) {
         return SeedRegistry.getSeedList().contains(seed);
     }
-
-    /**
-     * Since {@code OreDictionary.doesOreNameExist(String)} doesn't exist
-     * in 1.8, I needed to write my own version. Not as good as the 1.7.10
-     * method, but gets the job done.
-     *
-     * @param entry - OreDict entry to check existence of
-     * @return - If the given entry exists.
-     */
-    @SuppressWarnings("unchecked")
-    public static boolean doesOreNameExist(String entry) {
-        try {
-            Field nameToId = OreDictionary.class.getDeclaredField("nameToId");
-            nameToId.setAccessible(true);
-            Map<String, Integer> nameToIdMap = (Map<String, Integer>) nameToId.get(null);
-            return nameToIdMap.get(entry) != null;
-        } catch (NoSuchFieldException e) {
-            // Catch 'em all!
-        } catch (IllegalAccessException e) {
-            // Catch 'em all!
-        }
-        return false;
-    }
 }

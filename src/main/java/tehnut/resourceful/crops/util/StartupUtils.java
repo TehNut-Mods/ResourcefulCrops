@@ -106,7 +106,7 @@ public class StartupUtils {
      * @param ore  - OreDict entry required to add
      */
     private static void addDefaultSeedOre(Seed seed, String ore) {
-        if (Utils.doesOreNameExist(ore))
+        if (OreDictionary.doesOreNameExist(ore))
             defaultSeeds.put(registered++, seed);
     }
 
@@ -153,13 +153,7 @@ public class StartupUtils {
      * @return - An ItemStack retrieved from the entry
      */
     private static ItemStack getOreStack(String entry) {
-        if (OreDictionary.getOreNames().length != 0 && Utils.doesOreNameExist(entry)) {
-            if (OreDictionary.getOres(entry).size() != 0)
-                return OreDictionary.getOres(entry).get(0);
-            else
-                return new ItemStack(Blocks.fire);
-        } else
-            return new ItemStack(Blocks.fire);
+        return OreDictionary.doesOreNameExist(entry) ? OreDictionary.getOres(entry).get(0) : new ItemStack(Blocks.fire);
     }
 
     public static Map<Integer, Seed> getDefaultSeeds() {
