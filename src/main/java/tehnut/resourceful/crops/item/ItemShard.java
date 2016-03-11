@@ -28,9 +28,8 @@ public class ItemShard extends Item {
         setHasSubtypes(true);
     }
 
-    @SuppressWarnings("unchecked")
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item item, CreativeTabs tabs, List list) {
+    public void getSubItems(Item item, CreativeTabs tabs, List<ItemStack> list) {
         for (int i = 0; i < SeedRegistry.getSize(); i++)
             if (Utils.isValidSeed(i))
                 list.add(new ItemStack(this, 1, i));
@@ -48,10 +47,9 @@ public class ItemShard extends Item {
             return String.format(StatCollector.translateToLocal(getUnlocalizedName()), StatCollector.translateToLocal("info.ResourcefulCrops.broken"));
     }
 
-    @SuppressWarnings("unchecked")
     @SideOnly(Side.CLIENT)
     @Override
-    public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean advanced) {
+    public void addInformation(ItemStack stack, EntityPlayer player, List<String> list, boolean advanced) {
         if (!Utils.isValidSeed(Utils.getItemDamage(stack)))
             list.add(EnumChatFormatting.RED + StatCollector.translateToLocal("info.ResourcefulCrops.warn"));
     }

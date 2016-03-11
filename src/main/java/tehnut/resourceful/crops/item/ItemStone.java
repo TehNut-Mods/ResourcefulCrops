@@ -31,9 +31,8 @@ public class ItemStone extends Item {
         return getUnlocalizedName() + "." + stones[stack.getItemDamage() % stones.length];
     }
 
-    @SuppressWarnings("unchecked")
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item item, CreativeTabs tabs, List list) {
+    public void getSubItems(Item item, CreativeTabs tabs, List<ItemStack> list) {
         for (int i = 0; i < stones.length; i++)
             list.add(new ItemStack(this, 1, i));
     }

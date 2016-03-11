@@ -30,9 +30,8 @@ public class ItemMaterial extends Item {
         return getUnlocalizedName() + materials[stack.getItemDamage() % materials.length];
     }
 
-    @SuppressWarnings("unchecked")
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item item, CreativeTabs tabs, List list) {
+    public void getSubItems(Item item, CreativeTabs tabs, List<ItemStack> list) {
         for (int i = 0; i < materials.length; i++)
             list.add(new ItemStack(this, 1, i));
     }
