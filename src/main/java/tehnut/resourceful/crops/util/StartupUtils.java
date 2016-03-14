@@ -106,7 +106,7 @@ public class StartupUtils {
      * @param ore  - OreDict entry required to add
      */
     private static void addDefaultSeedOre(Seed seed, String ore) {
-        if (OreDictionary.doesOreNameExist(ore))
+        if (OreDictionary.doesOreNameExist(ore) && !OreDictionary.getOres(ore).isEmpty())
             defaultSeeds.put(registered++, seed);
     }
 

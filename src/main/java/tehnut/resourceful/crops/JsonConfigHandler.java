@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import net.minecraft.item.ItemStack;
+import org.apache.commons.io.FileUtils;
 import tehnut.resourceful.crops.api.ResourcefulAPI;
 import tehnut.resourceful.crops.api.base.Chance;
 import tehnut.resourceful.crops.api.base.Requirement;
@@ -17,7 +18,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 
 public class JsonConfigHandler {
@@ -36,7 +36,7 @@ public class JsonConfigHandler {
 
     public static void init(File jsonConfig) {
         try {
-            if (!jsonConfig.exists() && jsonConfig.createNewFile()) {
+            if ((!jsonConfig.exists() || FileUtils.readFileToString(jsonConfig).trim().isEmpty()) && jsonConfig.createNewFile()) {
                 Map<Integer, Seed> defaultList = handleDefaults();
                 String json = gson.toJson(defaultList, new TypeToken<Map<Integer, Seed>>(){ }.getType());
                 FileWriter writer = new FileWriter(jsonConfig);
