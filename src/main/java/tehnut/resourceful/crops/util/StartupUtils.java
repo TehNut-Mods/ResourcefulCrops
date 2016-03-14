@@ -153,7 +153,7 @@ public class StartupUtils {
      * @return - An ItemStack retrieved from the entry
      */
     private static ItemStack getOreStack(String entry) {
-        return OreDictionary.doesOreNameExist(entry) ? OreDictionary.getOres(entry).get(0) : new ItemStack(Blocks.fire);
+        return OreDictionary.doesOreNameExist(entry) && OreDictionary.getOres(entry).size() > 0 ? OreDictionary.getOres(entry).get(0) : new ItemStack(Blocks.fire);
     }
 
     public static Map<Integer, Seed> getDefaultSeeds() {
