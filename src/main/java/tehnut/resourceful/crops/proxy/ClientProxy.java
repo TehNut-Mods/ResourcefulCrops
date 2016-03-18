@@ -1,17 +1,28 @@
 package tehnut.resourceful.crops.proxy;
 
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiNewChat;
-import net.minecraft.util.ChatComponentText;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.discovery.ASMDataTable;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import org.apache.commons.lang3.tuple.Pair;
 import tehnut.resourceful.crops.ResourcefulCrops;
+import tehnut.resourceful.crops.api.ModInformation;
 import tehnut.resourceful.crops.api.ResourcefulAPI;
 import tehnut.resourceful.crops.registry.BlockRegistry;
 import tehnut.resourceful.crops.registry.ItemRegistry;
 import tehnut.resourceful.repack.tehnut.lib.annot.Handler;
+import tehnut.resourceful.repack.tehnut.lib.annot.Used;
+import tehnut.resourceful.repack.tehnut.lib.iface.IMeshProvider;
+import tehnut.resourceful.repack.tehnut.lib.iface.IVariantProvider;
 
+@Used
 public class ClientProxy extends CommonProxy {
 
     @Override
@@ -32,14 +43,28 @@ public class ClientProxy extends CommonProxy {
     }
 
     @Override
-    public void loadCommands() {
-
+    public void tryHandleBlockModel(Block block, String name) {
+        if (block instanceof IVariantProvider) {
+            IVariantProvider variantProvider = (IVariantProvider) block;
+            if (variantProvider.getVariants() == null)
+                return;
+            for (Pair<Integer, String> variant : variantProvider.getVariants())
+                ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), variant.getLeft(), new ModelResourceLocation(new ResourceLocation(ModInformation.ID, name), variant.getRight()));
+        }
     }
 
     @Override
-    public void loadRenders() {
-        ItemRegistry.registerRenders();
-        BlockRegistry.registerRenders();
+    public void tryHandleItemModel(Item item, String name) {
+        if (item instanceof IMeshProvider) {
+            IMeshProvider meshProvider = (IMeshProvider) item;
+            ModelLoader.setCustomMeshDefinition(item, meshProvider.getMeshDefinition());
+            for (String variant : meshProvider.getVariants())
+                ModelLoader.registerItemVariants(item, new ModelResourceLocation(new ResourceLocation(ModInformation.ID, "item/" + name), variant));
+        } else if (item instanceof IVariantProvider) {
+            IVariantProvider variantProvider = (IVariantProvider) item;
+            for (Pair<Integer, String> variant : variantProvider.getVariants())
+                ModelLoader.setCustomModelResourceLocation(item, variant.getLeft(), new ModelResourceLocation(new ResourceLocation(ModInformation.ID, "item/" + name), variant.getRight()));
+        }
     }
 
     @Override
@@ -52,6 +77,6 @@ public class ClientProxy extends CommonProxy {
         Minecraft minecraft = Minecraft.getMinecraft();
         GuiNewChat chat = minecraft.ingameGUI.getChatGUI();
 
-        chat.printChatMessageWithOptionalDeletion(new ChatComponentText(string), id);
+        chat.printChatMessageWithOptionalDeletion(new TextComponentString(string), id);
     }
 }

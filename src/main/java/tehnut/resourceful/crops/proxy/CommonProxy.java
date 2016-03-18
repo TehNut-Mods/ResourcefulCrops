@@ -1,5 +1,7 @@
 package tehnut.resourceful.crops.proxy;
 
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.discovery.ASMDataTable;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -37,16 +39,16 @@ public class CommonProxy implements IProxy {
 
     }
 
-    public void loadCommands() {
-
+    public void tryHandleBlockModel(Block block, String name) {
+        // NO-OP
     }
 
-    public void loadRenders() {
-
+    public void tryHandleItemModel(Item item, String name) {
+        // NO-OP
     }
 
     public void addChatMessage(String string) {
-
+        // NO-OP
     }
 
     /**

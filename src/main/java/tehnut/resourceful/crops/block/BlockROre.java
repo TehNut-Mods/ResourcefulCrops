@@ -1,25 +1,29 @@
 package tehnut.resourceful.crops.block;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyInteger;
-import net.minecraft.block.state.BlockState;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Enchantments;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 import tehnut.resourceful.crops.ConfigHandler;
 import tehnut.resourceful.crops.ResourcefulCrops;
 import tehnut.resourceful.crops.api.ModInformation;
@@ -28,52 +32,41 @@ import tehnut.resourceful.crops.item.block.ItemBlockROre;
 import tehnut.resourceful.crops.registry.BlockRegistry;
 import tehnut.resourceful.crops.registry.ItemRegistry;
 import tehnut.resourceful.repack.tehnut.lib.annot.ModBlock;
+import tehnut.resourceful.repack.tehnut.lib.block.base.BlockBoolean;
+import tehnut.resourceful.repack.tehnut.lib.iface.IVariantProvider;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 @ModBlock(name = "BlockROre", itemBlock = ItemBlockROre.class)
-public class BlockROre extends Block {
+public class BlockROre extends BlockBoolean implements IVariantProvider {
 
-    public static final PropertyInteger META = PropertyInteger.create("meta", 0, 1);
     Random random = new Random();
 
     public BlockROre() {
-        super(Material.rock);
+        super(Material.rock, "nether");
 
         setUnlocalizedName(ModInformation.ID + ".ore");
-        setStepSound(soundTypeStone);
+        setSoundType(SoundType.STONE);
         setHardness(4.0F);
         setCreativeTab(ResourcefulCrops.tabResourcefulCrops);
         setHarvestLevel("pickaxe", 3);
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void getSubBlocks(Item id, CreativeTabs tab, List<ItemStack> list) {
-        for (int i = 0; i < 2; i++)
-            list.add(new ItemStack(id, 1, i));
-    }
-
-    @Override
-    public ItemStack getPickBlock(MovingObjectPosition target, World world, BlockPos pos, EntityPlayer player) {
-        return new ItemStack(this, 1, this.getMetaFromState(world.getBlockState(pos)));
-    }
-
-    @Override
-    public void harvestBlock(World world, EntityPlayer player, BlockPos pos, IBlockState state, TileEntity tile) {
+    public void harvestBlock(World world, EntityPlayer player, BlockPos pos, IBlockState state, TileEntity tile, ItemStack stack) {
 
         if (player instanceof FakePlayer && !ConfigHandler.enableFakePlayerMining) {
             Block blockItem = Blocks.cobblestone;
             dropItem(world, pos, new ItemStack(blockItem, 1, 0));
         } else {
-            boolean silk = EnchantmentHelper.getSilkTouchModifier(player);
+            boolean silk = EnchantmentHelper.getEnchantmentLevel(Enchantments.silkTouch, player.getHeldItemMainhand()) > 0;
             if (silk) {
                 Block ore = BlockRegistry.getBlock(BlockROre.class);
                 dropItem(world, pos, new ItemStack(ore, 1, getMetaFromState(state)));
             } else {
-                int fortune = EnchantmentHelper.getFortuneModifier(player);
+                int fortune = EnchantmentHelper.getEnchantmentLevel(Enchantments.fortune, player.getHeldItemMainhand());
                 int dropAmount;
 
                 if (fortune > 0) {
@@ -122,20 +115,8 @@ public class BlockROre extends Block {
         return drop != 0 ? drop : 1;
     }
 
-    public IBlockState getStateFromMeta(int meta) {
-        return this.getDefaultState().withProperty(META, meta);
-    }
-
-    public int getMetaFromState(IBlockState state) {
-        return state.getValue(META);
-    }
-
-    protected BlockState createBlockState() {
-        return new BlockState(this, META);
-    }
-
     @Override
-    public int getExpDrop(IBlockAccess world, BlockPos pos, int fortune) {
+    public int getExpDrop(IBlockState state, IBlockAccess world, BlockPos pos, int fortune) {
         return random.nextInt(4);
     }
 
@@ -149,5 +130,13 @@ public class BlockROre extends Block {
             world.spawnEntityInWorld(entityItem);
 
         return entityItem;
+    }
+
+    @Override
+    public List<Pair<Integer, String>> getVariants() {
+        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
+        ret.add(new ImmutablePair<Integer, String>(0, "nether=false"));
+        ret.add(new ImmutablePair<Integer, String>(1, "nether=true"));
+        return ret;
     }
 }

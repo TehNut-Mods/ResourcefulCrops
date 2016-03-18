@@ -1,11 +1,9 @@
 package tehnut.resourceful.crops;
 
-import net.minecraft.util.StatCollector;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import tehnut.resourceful.crops.api.ModInformation;
-import tehnut.resourceful.crops.api.ResourcefulAPI;
 import tehnut.resourceful.repack.tehnut.lib.annot.Handler;
 
 import java.io.File;
@@ -35,10 +33,8 @@ public class ConfigHandler {
 
     @SubscribeEvent
     public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent eventArgs) {
-        if (eventArgs.modID.equals(ModInformation.ID)) {
+        if (eventArgs.modID.equals(ModInformation.ID))
             ConfigHandler.syncConfig();
-            ResourcefulAPI.logger.info(StatCollector.translateToLocal("config.ResourcefulCrops.console.refresh"));
-        }
     }
 
     public static void init(File file) {

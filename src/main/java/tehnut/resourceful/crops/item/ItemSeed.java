@@ -2,14 +2,19 @@ package tehnut.resourceful.crops.item;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.renderer.ItemMeshDefinition;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.EnumPlantType;
@@ -25,11 +30,13 @@ import tehnut.resourceful.crops.registry.BlockRegistry;
 import tehnut.resourceful.crops.tile.TileRCrop;
 import tehnut.resourceful.crops.util.Utils;
 import tehnut.resourceful.repack.tehnut.lib.annot.ModItem;
+import tehnut.resourceful.repack.tehnut.lib.iface.IMeshProvider;
 
+import java.util.Collections;
 import java.util.List;
 
 @ModItem(name = "ItemSeed")
-public class ItemSeed extends Item implements IPlantable {
+public class ItemSeed extends Item implements IPlantable, IMeshProvider {
 
     public ItemSeed() {
         super();
@@ -49,48 +56,53 @@ public class ItemSeed extends Item implements IPlantable {
             list.add(Utils.getInvalidSeed(this));
     }
 
-    public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ) {
+    @Override
+    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
 
         Block placed = world.getBlockState(pos).getBlock();
+        Seed seed = SeedRegistry.getSeed(stack.getItemDamage());
 
-        if (placed.canSustainPlant(world, pos, EnumFacing.UP, this) && side == EnumFacing.UP && Utils.isValidSeed(Utils.getItemDamage(stack)) && world.isAirBlock(pos.offset(EnumFacing.UP))) {
+        if (seed == null)
+            return EnumActionResult.FAIL;
+
+        if (placed.canSustainPlant(world.getBlockState(pos), world, pos, EnumFacing.UP, this) && side == EnumFacing.UP && Utils.isValidSeed(Utils.getItemDamage(stack)) && world.isAirBlock(pos.offset(EnumFacing.UP))) {
             world.setBlockState(pos.offset(EnumFacing.UP), BlockRegistry.getBlock(BlockRCrop.class).getDefaultState());
-            ((TileRCrop) world.getTileEntity(pos.offset(EnumFacing.UP))).setSeedName(SeedRegistry.getSeed(Utils.getItemDamage(stack)).getName());
+            ((TileRCrop) world.getTileEntity(pos.offset(EnumFacing.UP))).setSeedName(seed.getName());
             if (!player.capabilities.isCreativeMode)
                 player.inventory.decrStackSize(player.inventory.currentItem, 1);
 
-            return true;
+            return EnumActionResult.SUCCESS;
         }
 
-        return false;
+        return EnumActionResult.FAIL;
     }
 
     @SideOnly(Side.CLIENT)
     @Override
     public String getItemStackDisplayName(ItemStack stack) {
         if (Utils.isValidSeed(Utils.getItemDamage(stack)))
-            return String.format(StatCollector.translateToLocal(getUnlocalizedName()), StatCollector.translateToLocal(SeedRegistry.getSeed(Utils.getItemDamage(stack)).getName()));
+            return String.format(I18n.translateToLocal(getUnlocalizedName()), I18n.translateToLocal(SeedRegistry.getSeed(Utils.getItemDamage(stack)).getName()));
         else
-            return String.format(StatCollector.translateToLocal(getUnlocalizedName()), StatCollector.translateToLocal("info.ResourcefulCrops.dead"));
+            return String.format(I18n.translateToLocal(getUnlocalizedName()), I18n.translateToLocal("info.ResourcefulCrops.dead"));
     }
 
     @SideOnly(Side.CLIENT)
     @Override
     public void addInformation(ItemStack stack, EntityPlayer player, List<String> list, boolean advanced) {
         if (!Utils.isValidSeed(Utils.getItemDamage(stack)))
-            list.add(EnumChatFormatting.RED + StatCollector.translateToLocal("info.ResourcefulCrops.warn"));
+            list.add(TextFormatting.RED + I18n.translateToLocal("info.ResourcefulCrops.warn"));
         else
-            list.add(String.format(StatCollector.translateToLocal("info.ResourcefulCrops.tier"), SeedRegistry.getSeed(Utils.getItemDamage(stack)).getTier()));
+            list.add(String.format(I18n.translateToLocal("info.ResourcefulCrops.tier"), SeedRegistry.getSeed(Utils.getItemDamage(stack)).getTier()));
     }
 
-    @SideOnly(Side.CLIENT)
-    @Override
-    public int getColorFromItemStack(ItemStack stack, int pass) {
-        if (pass == 0 && Utils.isValidSeed(Utils.getItemDamage(stack)))
-            return SeedRegistry.getSeed(Utils.getItemDamage(stack)).getColor().getRGB();
-        else
-            return super.getColorFromItemStack(stack, pass);
-    }
+//    @SideOnly(Side.CLIENT)
+//    @Override
+//    public int getColorFromItemStack(ItemStack stack, int pass) {
+//        if (pass == 0 && Utils.isValidSeed(Utils.getItemDamage(stack)))
+//            return SeedRegistry.getSeed(Utils.getItemDamage(stack)).getColor().getRGB();
+//        else
+//            return super.getColorFromItemStack(stack, pass);
+//    }
 
     // IPlantable
 
@@ -102,5 +114,20 @@ public class ItemSeed extends Item implements IPlantable {
     @Override
     public IBlockState getPlant(IBlockAccess world, BlockPos pos) {
         return BlockRegistry.getBlock(BlockRCrop.class).getDefaultState();
+    }
+
+    @Override
+    public ItemMeshDefinition getMeshDefinition() {
+        return new ItemMeshDefinition() {
+            @Override
+            public ModelResourceLocation getModelLocation(ItemStack stack) {
+                return new ModelResourceLocation(new ResourceLocation(ModInformation.ID, "item/ItemSeed"), "type=normal");
+            }
+        };
+    }
+
+    @Override
+    public List<String> getVariants() {
+        return Collections.singletonList("type=normal");
     }
 }

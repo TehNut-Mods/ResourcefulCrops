@@ -6,14 +6,18 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 import tehnut.resourceful.crops.ResourcefulCrops;
 import tehnut.resourceful.crops.api.ModInformation;
 import tehnut.resourceful.repack.tehnut.lib.annot.ModItem;
+import tehnut.resourceful.repack.tehnut.lib.iface.IVariantProvider;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @ModItem(name = "ItemMaterial")
-public class ItemMaterial extends Item {
+public class ItemMaterial extends Item implements IVariantProvider {
 
     String[] materials = {"", ".mundane", ".magical", ".infused", ".arcane"};
 
@@ -58,5 +62,16 @@ public class ItemMaterial extends Item {
             default:
                 return EnumRarity.COMMON;
         }
+    }
+
+    @Override
+    public List<Pair<Integer, String>> getVariants() {
+        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
+        ret.add(new ImmutablePair<Integer, String>(0, "type=normal"));
+        ret.add(new ImmutablePair<Integer, String>(1, "type=mundane"));
+        ret.add(new ImmutablePair<Integer, String>(2, "type=magical"));
+        ret.add(new ImmutablePair<Integer, String>(3, "type=infused"));
+        ret.add(new ImmutablePair<Integer, String>(4, "type=arcane"));
+        return ret;
     }
 }

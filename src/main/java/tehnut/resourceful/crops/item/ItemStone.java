@@ -1,19 +1,24 @@
 package tehnut.resourceful.crops.item;
 
+import net.minecraft.client.renderer.ItemMeshDefinition;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import tehnut.resourceful.crops.ResourcefulCrops;
 import tehnut.resourceful.crops.api.ModInformation;
 import tehnut.resourceful.repack.tehnut.lib.annot.ModItem;
+import tehnut.resourceful.repack.tehnut.lib.iface.IMeshProvider;
 
+import java.util.Collections;
 import java.util.List;
 
 @ModItem(name = "ItemStone")
-public class ItemStone extends Item {
+public class ItemStone extends Item implements IMeshProvider {
 
     String[] stones = {"mundane", "magical", "infused", "arcane", "true"};
 
@@ -69,5 +74,20 @@ public class ItemStone extends Item {
     @Override
     public ItemStack getContainerItem(ItemStack stack) {
         return stack;
+    }
+
+    @Override
+    public ItemMeshDefinition getMeshDefinition() {
+        return new ItemMeshDefinition() {
+            @Override
+            public ModelResourceLocation getModelLocation(ItemStack stack) {
+                return new ModelResourceLocation(new ResourceLocation(ModInformation.ID, "item/ItemStone"), "type=normal");
+            }
+        };
+    }
+
+    @Override
+    public List<String> getVariants() {
+        return Collections.singletonList("type=normal");
     }
 }

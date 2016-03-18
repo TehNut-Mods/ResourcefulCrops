@@ -9,10 +9,11 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemHoe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -21,6 +22,8 @@ import net.minecraftforge.event.entity.player.BonemealEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 import tehnut.resourceful.crops.ConfigHandler;
 import tehnut.resourceful.crops.ResourcefulCrops;
 import tehnut.resourceful.crops.achievement.AchievementTrigger;
@@ -38,6 +41,7 @@ import tehnut.resourceful.crops.tile.TileRCrop;
 import tehnut.resourceful.crops.util.Utils;
 import tehnut.resourceful.repack.tehnut.lib.annot.Handler;
 import tehnut.resourceful.repack.tehnut.lib.annot.ModBlock;
+import tehnut.resourceful.repack.tehnut.lib.iface.IVariantProvider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +49,7 @@ import java.util.Random;
 
 @ModBlock(name = "BlockRCrop", tileEntity = TileRCrop.class)
 @Handler
-public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
+public class BlockRCrop extends BlockCrops implements IVariantProvider {
 
     public BlockRCrop() {
         super();
@@ -59,7 +63,7 @@ public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
         int seedIndex = getTileSeedIndex(world, pos);
         Seed seed = SeedRegistry.getSeed(seedIndex);
 
-        if (seedIndex == Short.MAX_VALUE)
+        if (seedIndex == Short.MAX_VALUE || seed == null)
             return;
 
         BlockPos reqPos = new BlockPos(pos.getX(), pos.getY() - 2, pos.getZ());
@@ -87,18 +91,18 @@ public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
         TileEntity cropTile = world.getTileEntity(pos);
 
         if (Utils.isValidSeed(((TileRCrop) cropTile).getSeedName())) {
-            if (player.getHeldItem() != null && player.getHeldItem().getItem() instanceof ItemHoe) {
+            if (player.getHeldItem(hand) != null && player.getHeldItem(hand).getItem() instanceof ItemHoe) {
                 AchievementTrigger.triggerAchievement(player, AchievementRegistry.getInfo);
                 return doReqInfo(((TileRCrop) cropTile).getSeedName());
             }
 
-            if (!player.isSneaking() || player.getHeldItem() == null && ConfigHandler.enableRightClickHarvest) {
+            if (!player.isSneaking() || player.getHeldItem(hand) == null && ConfigHandler.enableRightClickHarvest) {
                 AchievementTrigger.triggerAchievement(player, AchievementRegistry.getHarvest);
-                return doHarvest(world, pos, player);
+                return doHarvest(world, pos, player, hand);
             }
         }
 
@@ -123,7 +127,7 @@ public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
     }
 
     @Override
-    public ItemStack getPickBlock(MovingObjectPosition target, World world, BlockPos pos, EntityPlayer player) {
+    public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
         return new ItemStack(ItemRegistry.getItem(ItemSeed.class), 1, getTileSeedIndex(world, pos));
     }
 
@@ -149,13 +153,13 @@ public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
         return drops;
     }
 
-    public boolean doHarvest(World world, BlockPos pos, EntityPlayer player) {
+    public boolean doHarvest(World world, BlockPos pos, EntityPlayer player, EnumHand hand) {
         if (world.getBlockState(pos).getBlock() == BlockRegistry.getBlock(BlockRCrop.class) && getMetaFromState(world.getBlockState(pos)) >= 7) {
             if (!world.isRemote) {
                 world.setBlockState(pos, getDefaultState(), 3);
                 doRightClickDrops(world, pos);
             }
-            player.swingItem();
+            player.swingArm(hand);
             return true;
         }
 
@@ -165,18 +169,18 @@ public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
     public boolean doReqInfo(String seedName) {
         Seed seed = SeedRegistry.getSeed(seedName);
 
-        ResourcefulCrops.proxy.addChatMessage(String.format(StatCollector.translateToLocal("chat.ResourcefulCrops.crop.name"), seed.getName()), 1);
-        ResourcefulCrops.proxy.addChatMessage(String.format(StatCollector.translateToLocal("chat.ResourcefulCrops.req.growth"), seed.getRequirement().getGrowthReq() != null ? seed.getRequirement().getGrowthReq().getDisplayName() : StatCollector.translateToLocal("info.ResourcefulCrops.anything")), 2);
+        ResourcefulCrops.proxy.addChatMessage(String.format(I18n.translateToLocal("chat.ResourcefulCrops.crop.name"), seed.getName()), 1);
+        ResourcefulCrops.proxy.addChatMessage(String.format(I18n.translateToLocal("chat.ResourcefulCrops.req.growth"), seed.getRequirement().getGrowthReq() != null ? seed.getRequirement().getGrowthReq().getDisplayName() : I18n.translateToLocal("info.ResourcefulCrops.anything")), 2);
 
         if (seed.getRequirement().getLightLevelMax() == 15)
-            ResourcefulCrops.proxy.addChatMessage(String.format(StatCollector.translateToLocal("chat.ResourcefulCrops.req.light.above"), seed.getRequirement().getLightLevelMin()), 3);
+            ResourcefulCrops.proxy.addChatMessage(String.format(I18n.translateToLocal("chat.ResourcefulCrops.req.light.above"), seed.getRequirement().getLightLevelMin()), 3);
         else if (seed.getRequirement().getLightLevelMin() == 0)
-            ResourcefulCrops.proxy.addChatMessage(String.format(StatCollector.translateToLocal("chat.ResourcefulCrops.req.light.below"), seed.getRequirement().getLightLevelMax()), 3);
+            ResourcefulCrops.proxy.addChatMessage(String.format(I18n.translateToLocal("chat.ResourcefulCrops.req.light.below"), seed.getRequirement().getLightLevelMax()), 3);
         else
-            ResourcefulCrops.proxy.addChatMessage(String.format(StatCollector.translateToLocal("chat.ResourcefulCrops.req.light.between"), seed.getRequirement().getLightLevelMin(), seed.getRequirement().getLightLevelMax()), 3);
+            ResourcefulCrops.proxy.addChatMessage(String.format(I18n.translateToLocal("chat.ResourcefulCrops.req.light.between"), seed.getRequirement().getLightLevelMin(), seed.getRequirement().getLightLevelMax()), 3);
 
         if (seed.getRequirement().getDifficulty() != EnumDifficulty.PEACEFUL)
-            ResourcefulCrops.proxy.addChatMessage(String.format(StatCollector.translateToLocal("chat.ResourcefulCrops.req.difficulty"), seed.getRequirement().getDifficulty().toString()), 4);
+            ResourcefulCrops.proxy.addChatMessage(String.format(I18n.translateToLocal("chat.ResourcefulCrops.req.difficulty"), seed.getRequirement().getDifficulty().toString()), 4);
 
         return true;
     }
@@ -186,6 +190,9 @@ public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
         Random random = new Random();
         int seedIndex = getTileSeedIndex(world, pos);
         Seed seed = SeedRegistry.getSeed(seedIndex);
+
+        if (seed == null)
+            return;
 
         world.spawnEntityInWorld(new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ItemRegistry.getItem(ItemShard.class), 1, seedIndex)));
 
@@ -200,17 +207,17 @@ public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
             world.spawnEntityInWorld(new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ItemRegistry.getItem(ItemMaterial.class))));
     }
 
-    @Override
-    @SideOnly(Side.CLIENT)
-    public int colorMultiplier(IBlockAccess blockAccess, BlockPos pos, int pass) {
-
-        TileEntity cropTile = blockAccess.getTileEntity(pos);
-
-        if (cropTile != null && cropTile instanceof TileRCrop && Utils.isValidSeed(((TileRCrop) cropTile).getSeedName()))
-            return SeedRegistry.getSeed(((TileRCrop) cropTile).getSeedName()).getColor().getRGB();
-
-        return 16777215;
-    }
+//    @Override
+//    @SideOnly(Side.CLIENT)
+//    public int colorMultiplier(IBlockAccess blockAccess, BlockPos pos, int pass) {
+//
+//        TileEntity cropTile = blockAccess.getTileEntity(pos);
+//
+//        if (cropTile != null && cropTile instanceof TileRCrop && Utils.isValidSeed(((TileRCrop) cropTile).getSeedName()))
+//            return SeedRegistry.getSeed(((TileRCrop) cropTile).getSeedName()).getColor().getRGB();
+//
+//        return 16777215;
+//    }
 
     @SubscribeEvent
     public void onBonemeal(BonemealEvent event) {
@@ -223,14 +230,22 @@ public class BlockRCrop extends BlockCrops implements ITileEntityProvider {
         return EnumPlantType.Crop;
     }
 
-    // IGrowable
+    @Override
+    public boolean hasTileEntity(IBlockState state) {
+        return true;
+    }
 
     @Override
-    public TileEntity createNewTileEntity(World world, int meta) {
+    public TileEntity createTileEntity(World world, IBlockState state) {
         return new TileRCrop();
     }
 
-    // ITileEntityProvider
+    @Override
+    public List<Pair<Integer, String>> getVariants() {
+        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
+        ret.add(new ImmutablePair<Integer, String>(0, "inventory"));
+        return null;
+    }
 
     public static int getTileSeedIndex(World world, BlockPos pos) {
         TileEntity crop = world.getTileEntity(pos);

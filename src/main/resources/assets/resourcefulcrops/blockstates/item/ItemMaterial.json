@@ -1,0 +1,36 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "builtin/generated",
+    "transform": "forge:default-item"
+  },
+  "variants": {
+    "type": {
+      "normal": {
+        "textures": {
+          "layer0": "resourcefulcrops:items/dust_0"
+        }
+      },
+      "mundane": {
+        "textures": {
+          "layer0": "resourcefulcrops:items/dust_1"
+        }
+      },
+      "magical": {
+        "textures": {
+          "layer0": "resourcefulcrops:items/dust_2"
+        }
+      },
+      "infused": {
+        "textures": {
+          "layer0": "resourcefulcrops:items/dust_3"
+        }
+      },
+      "arcane": {
+        "textures": {
+          "layer0": "resourcefulcrops:items/dust_4"
+        }
+      }
+    }
+  }
+}

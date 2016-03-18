@@ -92,9 +92,6 @@ public class ResourcefulCrops {
         if (SeedRegistry.badSeeds > 0)
             ResourcefulAPI.logger.error(SeedRegistry.badSeeds + " Seeds failed to register.");
 
-        proxy.loadCommands();
-        proxy.loadRenders();
-
         CompatibilityRegistry.runCompat(ICompatibility.InitializationPhase.POST_INIT);
     }
 }

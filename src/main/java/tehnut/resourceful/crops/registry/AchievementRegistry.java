@@ -3,7 +3,7 @@ package tehnut.resourceful.crops.registry;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.Achievement;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.common.AchievementPage;
 import net.minecraftforge.common.MinecraftForge;
 import tehnut.resourceful.crops.ConfigHandler;
@@ -44,7 +44,7 @@ public class AchievementRegistry {
         if (ConfigHandler.enableRightClickHarvest)
             getHarvest = new AchievementRCrops("get.harvest", 0, 4, new ItemStack(BlockRegistry.getBlock(BlockRCrop.class), 6), getSeed).setSpecial();
 
-        rcropsAchievementPage = new AchievementPage(StatCollector.translateToLocal("achievement.ResourcefulCrops.page"), achievements.toArray(new Achievement[achievements.size()]));
+        rcropsAchievementPage = new AchievementPage(I18n.translateToLocal("achievement.ResourcefulCrops.page"), achievements.toArray(new Achievement[achievements.size()]));
         AchievementPage.registerAchievementPage(rcropsAchievementPage);
         MinecraftForge.EVENT_BUS.register(new AchievementTrigger());
     }

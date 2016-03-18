@@ -1,7 +1,7 @@
 package tehnut.resourceful.crops.client.gui;
 
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.common.config.ConfigElement;
 import net.minecraftforge.fml.client.config.GuiConfig;
 import net.minecraftforge.fml.client.config.IConfigElement;
@@ -14,7 +14,7 @@ import java.util.List;
 public class ConfigGui extends GuiConfig {
 
     public ConfigGui(GuiScreen parentScreen) {
-        super(parentScreen, getConfigElements(parentScreen), ModInformation.ID, false, false, StatCollector.translateToLocal("config.ResourcefulCrops.title"));
+        super(parentScreen, getConfigElements(parentScreen), ModInformation.ID, false, false, I18n.translateToLocal("config.ResourcefulCrops.title"));
     }
 
     private static List<IConfigElement> getConfigElements(GuiScreen parent) {
