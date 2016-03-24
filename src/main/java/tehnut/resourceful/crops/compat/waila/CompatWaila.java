@@ -1,7 +1,7 @@
 package tehnut.resourceful.crops.compat.waila;
 
 import net.minecraftforge.fml.common.event.FMLInterModComms;
-import tehnut.resourceful.repack.tehnut.lib.iface.ICompatibility;
+import tehnut.lib.iface.ICompatibility;
 
 public class CompatWaila implements ICompatibility {
 

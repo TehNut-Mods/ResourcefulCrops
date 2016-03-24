@@ -1,12 +1,12 @@
 package tehnut.resourceful.crops.registry;
 
 import net.minecraftforge.fml.common.Loader;
+import tehnut.lib.iface.ICompatibility;
 import tehnut.resourceful.crops.compat.bloodmagic.CompatBloodMagic;
 import tehnut.resourceful.crops.compat.neotech.CompatNeoTech;
 import tehnut.resourceful.crops.compat.thaumcraft.CompatibilityThaumcraft;
 import tehnut.resourceful.crops.compat.torcherino.CompatTorcherino;
 import tehnut.resourceful.crops.compat.waila.CompatWaila;
-import tehnut.resourceful.repack.tehnut.lib.iface.ICompatibility;
 
 import java.util.ArrayList;
 

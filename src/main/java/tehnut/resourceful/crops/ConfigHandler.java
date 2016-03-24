@@ -3,8 +3,8 @@ package tehnut.resourceful.crops;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import tehnut.lib.annot.Handler;
 import tehnut.resourceful.crops.api.ModInformation;
-import tehnut.resourceful.repack.tehnut.lib.annot.Handler;
 
 import java.io.File;
 

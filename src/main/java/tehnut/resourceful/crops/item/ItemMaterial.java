@@ -8,10 +8,10 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
+import tehnut.lib.annot.ModItem;
+import tehnut.lib.iface.IVariantProvider;
 import tehnut.resourceful.crops.ResourcefulCrops;
 import tehnut.resourceful.crops.api.ModInformation;
-import tehnut.resourceful.repack.tehnut.lib.annot.ModItem;
-import tehnut.resourceful.repack.tehnut.lib.iface.IVariantProvider;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -9,11 +9,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import tehnut.lib.annot.ModItem;
+import tehnut.lib.iface.IMeshProvider;
 import tehnut.resourceful.crops.ResourcefulCrops;
 import tehnut.resourceful.crops.api.ModInformation;
-import tehnut.resourceful.repack.tehnut.lib.annot.ModItem;
-import tehnut.resourceful.repack.tehnut.lib.iface.IMeshProvider;
 
+import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.List;
 
@@ -77,6 +78,7 @@ public class ItemStone extends Item implements IMeshProvider {
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public ItemMeshDefinition getMeshDefinition() {
         return new ItemMeshDefinition() {
             @Override
@@ -84,6 +86,12 @@ public class ItemStone extends Item implements IMeshProvider {
                 return new ModelResourceLocation(new ResourceLocation(ModInformation.ID, "item/ItemStone"), "type=normal");
             }
         };
+    }
+
+    @Nullable
+    @Override
+    public ResourceLocation getCustomLocation() {
+        return null;
     }
 
     @Override

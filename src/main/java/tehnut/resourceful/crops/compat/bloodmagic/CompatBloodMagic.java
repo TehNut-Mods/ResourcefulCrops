@@ -1,7 +1,7 @@
 package tehnut.resourceful.crops.compat.bloodmagic;
 
+import tehnut.lib.iface.ICompatibility;
 import tehnut.resourceful.crops.ConfigHandler;
-import tehnut.resourceful.repack.tehnut.lib.iface.ICompatibility;
 
 public class CompatBloodMagic implements ICompatibility {
 

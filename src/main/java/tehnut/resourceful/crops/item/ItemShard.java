@@ -11,13 +11,14 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import tehnut.lib.annot.ModItem;
+import tehnut.lib.iface.IMeshProvider;
 import tehnut.resourceful.crops.ResourcefulCrops;
 import tehnut.resourceful.crops.api.ModInformation;
 import tehnut.resourceful.crops.api.registry.SeedRegistry;
 import tehnut.resourceful.crops.util.Utils;
-import tehnut.resourceful.repack.tehnut.lib.annot.ModItem;
-import tehnut.resourceful.repack.tehnut.lib.iface.IMeshProvider;
 
+import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.List;
 
@@ -59,6 +60,7 @@ public class ItemShard extends Item implements IMeshProvider {
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public ItemMeshDefinition getMeshDefinition() {
         return new ItemMeshDefinition() {
             @Override
@@ -66,6 +68,12 @@ public class ItemShard extends Item implements IMeshProvider {
                 return new ModelResourceLocation(new ResourceLocation(ModInformation.ID, "item/ItemShard"), "type=normal");
             }
         };
+    }
+
+    @Nullable
+    @Override
+    public ResourceLocation getCustomLocation() {
+        return null;
     }
 
     @Override

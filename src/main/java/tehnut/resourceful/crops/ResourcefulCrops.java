@@ -6,11 +6,13 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.discovery.ASMDataTable;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import tehnut.lib.LendingLibrary;
+import tehnut.lib.iface.ICompatibility;
+import tehnut.lib.util.helper.ItemHelper;
 import tehnut.resourceful.crops.api.ModInformation;
 import tehnut.resourceful.crops.api.ResourcefulAPI;
 import tehnut.resourceful.crops.api.registry.SeedRegistry;
@@ -19,15 +21,11 @@ import tehnut.resourceful.crops.proxy.CommonProxy;
 import tehnut.resourceful.crops.registry.*;
 import tehnut.resourceful.crops.util.handler.GenerationHandler;
 import tehnut.resourceful.crops.util.handler.OreDictHandler;
-import tehnut.resourceful.repack.tehnut.lib.annot.Handler;
-import tehnut.resourceful.repack.tehnut.lib.annot.ModBlock;
-import tehnut.resourceful.repack.tehnut.lib.annot.ModItem;
-import tehnut.resourceful.repack.tehnut.lib.iface.ICompatibility;
 
 import java.io.File;
-import java.util.Set;
 
 @Mod(modid = ModInformation.ID, name = ModInformation.NAME, version = ModInformation.VERSION, dependencies = ModInformation.REQUIRED, guiFactory = ModInformation.GUIFACTORY)
+@Getter
 public class ResourcefulCrops {
 
     @SidedProxy(clientSide = ModInformation.CLIENTPROXY, serverSide = ModInformation.COMMONPROXY)
@@ -36,24 +34,20 @@ public class ResourcefulCrops {
     public static CreativeTabs tabResourcefulCrops = new CreativeTabs(ModInformation.ID + ".creativeTab") {
         @Override
         public ItemStack getIconItemStack() {
-            return new ItemStack(ItemRegistry.getItem(ItemStone.class), 1, 4);
+            return new ItemStack(ItemHelper.getItem(ItemStone.class), 1, 4);
         }
 
         @Override
         public Item getTabIconItem() {
-            return ItemRegistry.getItem(ItemStone.class);
+            return ItemHelper.getItem(ItemStone.class);
         }
     };
 
     @Mod.Instance(ModInformation.ID)
     public static ResourcefulCrops instance;
 
-    @Getter
-    private static File configDir;
-    @Getter
-    public Set<ASMDataTable.ASMData> modItems;
-    public Set<ASMDataTable.ASMData> modBlocks;
-    public Set<ASMDataTable.ASMData> eventHandlers;
+    private File configDir;
+    private LendingLibrary library;
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
@@ -63,12 +57,8 @@ public class ResourcefulCrops {
 
         ResourcefulAPI.logger = event.getModLog();
 
-        modItems = event.getAsmData().getAll(ModItem.class.getCanonicalName());
-        modBlocks = event.getAsmData().getAll(ModBlock.class.getCanonicalName());
-        eventHandlers = event.getAsmData().getAll(Handler.class.getCanonicalName());
-
-        BlockRegistry.init();
-        ItemRegistry.init();
+        library = new LendingLibrary(ModInformation.ID);
+        library.registerObjects(event);
 
         JsonConfigHandler.init(new File(getConfigDir(), "Seeds-v2.json"));
 

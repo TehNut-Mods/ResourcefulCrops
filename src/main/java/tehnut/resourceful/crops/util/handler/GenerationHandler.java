@@ -8,9 +8,9 @@ import net.minecraft.world.chunk.IChunkGenerator;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.feature.WorldGenMinable;
 import net.minecraftforge.fml.common.IWorldGenerator;
+import tehnut.lib.util.helper.BlockHelper;
 import tehnut.resourceful.crops.ConfigHandler;
 import tehnut.resourceful.crops.block.BlockROre;
-import tehnut.resourceful.crops.registry.BlockRegistry;
 
 import java.util.Random;
 
@@ -32,7 +32,7 @@ public class GenerationHandler implements IWorldGenerator {
 
             BlockPos pos = new BlockPos(firstBlockXCoord, gaianiteY, firstBlockZCoord);
 
-            new WorldGenMinable(BlockRegistry.getBlock(BlockROre.class).getStateFromMeta(0), 4, BlockMatcher.forBlock(Blocks.stone)).generate(world, random, pos);
+            new WorldGenMinable(BlockHelper.getBlock(BlockROre.class).getStateFromMeta(0), 4, BlockMatcher.forBlock(Blocks.stone)).generate(world, random, pos);
         }
     }
 
@@ -44,7 +44,7 @@ public class GenerationHandler implements IWorldGenerator {
 
             BlockPos pos = new BlockPos(firstBlockXCoord, gaianiteY, firstBlockZCoord);
 
-            new WorldGenMinable(BlockRegistry.getBlock(BlockROre.class).getStateFromMeta(1), 4, BlockMatcher.forBlock(Blocks.netherrack)).generate(world, random, pos);
+            new WorldGenMinable(BlockHelper.getBlock(BlockROre.class).getStateFromMeta(1), 4, BlockMatcher.forBlock(Blocks.netherrack)).generate(world, random, pos);
         }
     }
 }

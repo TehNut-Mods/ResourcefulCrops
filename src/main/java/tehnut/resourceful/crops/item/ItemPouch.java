@@ -21,16 +21,17 @@ import net.minecraftforge.common.EnumPlantType;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import tehnut.lib.annot.ModItem;
+import tehnut.lib.iface.IMeshProvider;
+import tehnut.lib.util.helper.BlockHelper;
 import tehnut.resourceful.crops.ResourcefulCrops;
 import tehnut.resourceful.crops.api.ModInformation;
 import tehnut.resourceful.crops.api.registry.SeedRegistry;
 import tehnut.resourceful.crops.block.BlockRCrop;
-import tehnut.resourceful.crops.registry.BlockRegistry;
 import tehnut.resourceful.crops.tile.TileRCrop;
 import tehnut.resourceful.crops.util.Utils;
-import tehnut.resourceful.repack.tehnut.lib.annot.ModItem;
-import tehnut.resourceful.repack.tehnut.lib.iface.IMeshProvider;
 
+import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.List;
 
@@ -56,7 +57,7 @@ public class ItemPouch extends Item implements IPlantable, IMeshProvider {
                 Block placed = world.getBlockState(new BlockPos(posX, pos.getY(), posZ)).getBlock();
                 BlockPos placeAt = new BlockPos(posX, pos.getY(), posZ);
                 if (placed.canSustainPlant(world.getBlockState(placeAt), world, placeAt, EnumFacing.UP, this) && side == EnumFacing.UP && Utils.isValidSeed(Utils.getItemDamage(stack)) && world.isAirBlock(new BlockPos(posX, pos.getY() + 1, posZ))) {
-                    world.setBlockState(new BlockPos(posX, pos.getY() + 1, posZ), BlockRegistry.getBlock(BlockRCrop.class).getDefaultState());
+                    world.setBlockState(new BlockPos(posX, pos.getY() + 1, posZ), BlockHelper.getBlock(BlockRCrop.class).getDefaultState());
                     ((TileRCrop) world.getTileEntity(new BlockPos(posX, pos.getY() + 1, posZ))).setSeedName(SeedRegistry.getSeed(Utils.getItemDamage(stack)).getName());
                     if (!player.capabilities.isCreativeMode)
                         player.inventory.decrStackSize(player.inventory.currentItem, 1);
@@ -104,10 +105,11 @@ public class ItemPouch extends Item implements IPlantable, IMeshProvider {
 
     @Override
     public IBlockState getPlant(IBlockAccess world, BlockPos pos) {
-        return BlockRegistry.getBlock(BlockRCrop.class).getDefaultState();
+        return BlockHelper.getBlock(BlockRCrop.class).getDefaultState();
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public ItemMeshDefinition getMeshDefinition() {
         return new ItemMeshDefinition() {
             @Override
@@ -115,6 +117,12 @@ public class ItemPouch extends Item implements IPlantable, IMeshProvider {
                 return new ModelResourceLocation(new ResourceLocation(ModInformation.ID, "item/ItemPouch"), "type=normal");
             }
         };
+    }
+
+    @Nullable
+    @Override
+    public ResourceLocation getCustomLocation() {
+        return null;
     }
 
     @Override

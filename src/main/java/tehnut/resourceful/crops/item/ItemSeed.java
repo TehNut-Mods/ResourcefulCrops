@@ -21,17 +21,18 @@ import net.minecraftforge.common.EnumPlantType;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import tehnut.lib.annot.ModItem;
+import tehnut.lib.iface.IMeshProvider;
+import tehnut.lib.util.helper.BlockHelper;
 import tehnut.resourceful.crops.ResourcefulCrops;
 import tehnut.resourceful.crops.api.ModInformation;
 import tehnut.resourceful.crops.api.base.Seed;
 import tehnut.resourceful.crops.api.registry.SeedRegistry;
 import tehnut.resourceful.crops.block.BlockRCrop;
-import tehnut.resourceful.crops.registry.BlockRegistry;
 import tehnut.resourceful.crops.tile.TileRCrop;
 import tehnut.resourceful.crops.util.Utils;
-import tehnut.resourceful.repack.tehnut.lib.annot.ModItem;
-import tehnut.resourceful.repack.tehnut.lib.iface.IMeshProvider;
 
+import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.List;
 
@@ -66,7 +67,7 @@ public class ItemSeed extends Item implements IPlantable, IMeshProvider {
             return EnumActionResult.FAIL;
 
         if (placed.canSustainPlant(world.getBlockState(pos), world, pos, EnumFacing.UP, this) && side == EnumFacing.UP && Utils.isValidSeed(Utils.getItemDamage(stack)) && world.isAirBlock(pos.offset(EnumFacing.UP))) {
-            world.setBlockState(pos.offset(EnumFacing.UP), BlockRegistry.getBlock(BlockRCrop.class).getDefaultState());
+            world.setBlockState(pos.offset(EnumFacing.UP), BlockHelper.getBlock(BlockRCrop.class).getDefaultState());
             ((TileRCrop) world.getTileEntity(pos.offset(EnumFacing.UP))).setSeedName(seed.getName());
             if (!player.capabilities.isCreativeMode)
                 player.inventory.decrStackSize(player.inventory.currentItem, 1);
@@ -104,10 +105,11 @@ public class ItemSeed extends Item implements IPlantable, IMeshProvider {
 
     @Override
     public IBlockState getPlant(IBlockAccess world, BlockPos pos) {
-        return BlockRegistry.getBlock(BlockRCrop.class).getDefaultState();
+        return BlockHelper.getBlock(BlockRCrop.class).getDefaultState();
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public ItemMeshDefinition getMeshDefinition() {
         return new ItemMeshDefinition() {
             @Override
@@ -115,6 +117,12 @@ public class ItemSeed extends Item implements IPlantable, IMeshProvider {
                 return new ModelResourceLocation(new ResourceLocation(ModInformation.ID, "item/ItemSeed"), "type=normal");
             }
         };
+    }
+
+    @Nullable
+    @Override
+    public ResourceLocation getCustomLocation() {
+        return null;
     }
 
     @Override
