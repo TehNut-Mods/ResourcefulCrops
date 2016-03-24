@@ -7,8 +7,8 @@ public class CompatBloodMagic implements ICompatibility {
 
     @Override
     public void loadCompatibility(InitializationPhase phase) {
-//        if (phase == InitializationPhase.INIT && ConfigHandler.enableBloodMagicAutomation)
-//            HandlerBloodMagic.registerHarvestHandlers();
+        if (phase == InitializationPhase.INIT && ConfigHandler.enableBloodMagicAutomation)
+            HandlerBloodMagic.registerHarvestHandlers();
     }
 
     @Override
