@@ -2,6 +2,7 @@
 
 # Folders
 /.gradle/*
+/.idea/*
 /build/*
 /eclipse/*
 /run/*

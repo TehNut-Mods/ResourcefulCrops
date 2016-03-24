@@ -86,6 +86,8 @@ public class ResourcefulCrops {
         RecipeRegistry.registerItemRecipes();
         OreDictHandler.load();
         CompatibilityRegistry.runCompat(ICompatibility.InitializationPhase.INIT);
+
+        proxy.init(event);
     }
 
     @Mod.EventHandler

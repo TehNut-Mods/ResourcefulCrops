@@ -5,7 +5,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiNewChat;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.color.IItemColor;
-import net.minecraft.client.renderer.color.ItemColors;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -19,12 +18,12 @@ import org.apache.commons.lang3.tuple.Pair;
 import tehnut.resourceful.crops.ResourcefulCrops;
 import tehnut.resourceful.crops.api.ModInformation;
 import tehnut.resourceful.crops.api.ResourcefulAPI;
+import tehnut.resourceful.crops.api.base.Seed;
 import tehnut.resourceful.crops.api.registry.SeedRegistry;
 import tehnut.resourceful.crops.item.ItemPouch;
 import tehnut.resourceful.crops.item.ItemSeed;
 import tehnut.resourceful.crops.item.ItemShard;
 import tehnut.resourceful.crops.registry.ItemRegistry;
-import tehnut.resourceful.crops.util.Utils;
 import tehnut.resourceful.repack.tehnut.lib.annot.Handler;
 import tehnut.resourceful.repack.tehnut.lib.annot.Used;
 import tehnut.resourceful.repack.tehnut.lib.iface.IMeshProvider;
@@ -48,11 +47,20 @@ public class ClientProxy extends CommonProxy {
                 ResourcefulAPI.logger.fatal("Failed to register common EventHandlers");
             }
         }
+    }
+
+    @Override
+    public void init(FMLInitializationEvent event) {
+        super.init(event);
 
         IItemColor seedColor = new IItemColor() {
             @Override
             public int getColorFromItemstack(ItemStack stack, int tintIndex) {
-                return SeedRegistry.getSeed(Utils.getItemDamage(stack)).getColor().getRGB();
+                Seed seed = SeedRegistry.getSeed(stack.getItemDamage());
+                if (seed != null)
+                    return seed.getColor().getRGB();
+
+                return -1;
             }
         };
 
@@ -62,11 +70,6 @@ public class ClientProxy extends CommonProxy {
                 ItemRegistry.getItem(ItemSeed.class),
                 ItemRegistry.getItem(ItemShard.class)
         );
-    }
-
-    @Override
-    public void init(FMLInitializationEvent event) {
-        super.init(event);
     }
 
     @Override
