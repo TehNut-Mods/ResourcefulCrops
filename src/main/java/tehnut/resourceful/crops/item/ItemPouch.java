@@ -95,15 +95,6 @@ public class ItemPouch extends Item implements IPlantable, IMeshProvider {
             list.add(TextFormatting.RED + I18n.translateToLocal("info.ResourcefulCrops.warn"));
     }
 
-//    @SideOnly(Side.CLIENT)
-//    @Override
-//    public int getColorFromItemStack(ItemStack stack, int pass) {
-//        if (pass == 1 && Utils.isValidSeed(Utils.getItemDamage(stack)))
-//            return SeedRegistry.getSeed(Utils.getItemDamage(stack)).getColor().getRGB();
-//        else
-//            return super.getColorFromItemStack(stack, pass);
-//    }
-
     // IPlantable
 
     @Override

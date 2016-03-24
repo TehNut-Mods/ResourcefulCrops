@@ -33,6 +33,7 @@ import tehnut.resourceful.crops.registry.BlockRegistry;
 import tehnut.resourceful.crops.registry.ItemRegistry;
 import tehnut.resourceful.repack.tehnut.lib.annot.ModBlock;
 import tehnut.resourceful.repack.tehnut.lib.block.base.BlockBoolean;
+import tehnut.resourceful.repack.tehnut.lib.block.base.BlockString;
 import tehnut.resourceful.repack.tehnut.lib.iface.IVariantProvider;
 
 import java.util.ArrayList;
@@ -40,12 +41,13 @@ import java.util.List;
 import java.util.Random;
 
 @ModBlock(name = "BlockROre", itemBlock = ItemBlockROre.class)
-public class BlockROre extends BlockBoolean implements IVariantProvider {
+public class BlockROre extends BlockString implements IVariantProvider {
 
+    public static final String[] NAMES = {"normal", "nether"};
     Random random = new Random();
 
     public BlockROre() {
-        super(Material.rock, "nether");
+        super(Material.rock, NAMES, "type");
 
         setUnlocalizedName(ModInformation.ID + ".ore");
         setSoundType(SoundType.STONE);
@@ -56,7 +58,6 @@ public class BlockROre extends BlockBoolean implements IVariantProvider {
 
     @Override
     public void harvestBlock(World world, EntityPlayer player, BlockPos pos, IBlockState state, TileEntity tile, ItemStack stack) {
-
         if (player instanceof FakePlayer && !ConfigHandler.enableFakePlayerMining) {
             Block blockItem = Blocks.cobblestone;
             dropItem(world, pos, new ItemStack(blockItem, 1, 0));
@@ -135,8 +136,8 @@ public class BlockROre extends BlockBoolean implements IVariantProvider {
     @Override
     public List<Pair<Integer, String>> getVariants() {
         List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
-        ret.add(new ImmutablePair<Integer, String>(0, "nether=false"));
-        ret.add(new ImmutablePair<Integer, String>(1, "nether=true"));
+        ret.add(new ImmutablePair<Integer, String>(0, "type=normal"));
+        ret.add(new ImmutablePair<Integer, String>(1, "type=nether"));
         return ret;
     }
 }

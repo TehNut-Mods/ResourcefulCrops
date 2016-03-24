@@ -24,14 +24,14 @@ public class PropertyString extends PropertyHelper<String>
         allowedValues = ImmutableSet.copyOf(hashSet);
     }
 
-    public static PropertyString create(String name, String[] values)
-    {
-        return new PropertyString(name, values);
-    }
-
     @SideOnly(Side.CLIENT)
     public Optional<String> parseValue(String value) {
         return allowedValues.contains(value) ? Optional.of(value) : Optional.<String>absent();
+    }
+
+    public static PropertyString create(String name, String[] values)
+    {
+        return new PropertyString(name, values);
     }
 
     @Override

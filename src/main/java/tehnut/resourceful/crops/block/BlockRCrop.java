@@ -49,7 +49,7 @@ import java.util.Random;
 
 @ModBlock(name = "BlockRCrop", tileEntity = TileRCrop.class)
 @Handler
-public class BlockRCrop extends BlockCrops implements IVariantProvider {
+public class BlockRCrop extends BlockCrops {
 
     public BlockRCrop() {
         super();
@@ -238,13 +238,6 @@ public class BlockRCrop extends BlockCrops implements IVariantProvider {
     @Override
     public TileEntity createTileEntity(World world, IBlockState state) {
         return new TileRCrop();
-    }
-
-    @Override
-    public List<Pair<Integer, String>> getVariants() {
-        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
-        ret.add(new ImmutablePair<Integer, String>(0, "inventory"));
-        return null;
     }
 
     public static int getTileSeedIndex(World world, BlockPos pos) {

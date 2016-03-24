@@ -58,15 +58,6 @@ public class ItemShard extends Item implements IMeshProvider {
             list.add(TextFormatting.RED + I18n.translateToLocal("info.ResourcefulCrops.warn"));
     }
 
-//    @SideOnly(Side.CLIENT)
-//    @Override
-//    public int getColorFromItemStack(ItemStack stack, int pass) {
-//        if (pass == 0 && Utils.isValidSeed(stack.getItemDamage()))
-//            return SeedRegistry.getSeed(Utils.getItemDamage(stack)).getColor().getRGB();
-//        else
-//            return super.getColorFromItemStack(stack, pass);
-//    }
-
     @Override
     public ItemMeshDefinition getMeshDefinition() {
         return new ItemMeshDefinition() {

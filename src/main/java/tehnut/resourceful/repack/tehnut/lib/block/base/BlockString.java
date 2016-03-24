@@ -21,7 +21,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import tehnut.resourceful.repack.tehnut.lib.block.property.PropertyString;
 import tehnut.resourceful.repack.tehnut.lib.block.property.UnlistedPropertyString;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -127,7 +126,7 @@ public class BlockString extends Block
     }
 
     public List<String> getValues() {
-        return new ArrayList<String>(values);
+        return values;
     }
 
     public PropertyString getStringProp() {

@@ -70,6 +70,8 @@ public class ResourcefulCrops {
         BlockRegistry.init();
         ItemRegistry.init();
 
+        JsonConfigHandler.init(new File(getConfigDir(), "Seeds-v2.json"));
+
         AchievementRegistry.registerAchievements();
         GameRegistry.registerWorldGenerator(new GenerationHandler(), 2);
 
@@ -81,7 +83,6 @@ public class ResourcefulCrops {
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
-        JsonConfigHandler.init(new File(getConfigDir(), "Seeds-v2.json"));
         RecipeRegistry.registerItemRecipes();
         OreDictHandler.load();
         CompatibilityRegistry.runCompat(ICompatibility.InitializationPhase.INIT);

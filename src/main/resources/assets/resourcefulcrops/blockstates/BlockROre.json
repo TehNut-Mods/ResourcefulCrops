@@ -5,13 +5,13 @@
     "model": "cube_all"
   },
   "variants": {
-    "nether": {
-      "true": {
+    "type": {
+      "nether": {
         "textures": {
           "all": "resourcefulcrops:blocks/oreGaianite_nether"
         }
       },
-      "false": {
+      "normal": {
         "textures": {
           "all": "resourcefulcrops:blocks/oreGaianite"
         }

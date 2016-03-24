@@ -4,19 +4,27 @@ import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiNewChat;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.color.IItemColor;
+import net.minecraft.client.renderer.color.ItemColors;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.discovery.ASMDataTable;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import org.apache.commons.lang3.tuple.Pair;
 import tehnut.resourceful.crops.ResourcefulCrops;
 import tehnut.resourceful.crops.api.ModInformation;
 import tehnut.resourceful.crops.api.ResourcefulAPI;
-import tehnut.resourceful.crops.registry.BlockRegistry;
+import tehnut.resourceful.crops.api.registry.SeedRegistry;
+import tehnut.resourceful.crops.item.ItemPouch;
+import tehnut.resourceful.crops.item.ItemSeed;
+import tehnut.resourceful.crops.item.ItemShard;
 import tehnut.resourceful.crops.registry.ItemRegistry;
+import tehnut.resourceful.crops.util.Utils;
 import tehnut.resourceful.repack.tehnut.lib.annot.Handler;
 import tehnut.resourceful.repack.tehnut.lib.annot.Used;
 import tehnut.resourceful.repack.tehnut.lib.iface.IMeshProvider;
@@ -40,14 +48,31 @@ public class ClientProxy extends CommonProxy {
                 ResourcefulAPI.logger.fatal("Failed to register common EventHandlers");
             }
         }
+
+        IItemColor seedColor = new IItemColor() {
+            @Override
+            public int getColorFromItemstack(ItemStack stack, int tintIndex) {
+                return SeedRegistry.getSeed(Utils.getItemDamage(stack)).getColor().getRGB();
+            }
+        };
+
+        Minecraft.getMinecraft().getItemColors().registerItemColorHandler(
+                seedColor,
+                ItemRegistry.getItem(ItemPouch.class),
+                ItemRegistry.getItem(ItemSeed.class),
+                ItemRegistry.getItem(ItemShard.class)
+        );
+    }
+
+    @Override
+    public void init(FMLInitializationEvent event) {
+        super.init(event);
     }
 
     @Override
     public void tryHandleBlockModel(Block block, String name) {
         if (block instanceof IVariantProvider) {
             IVariantProvider variantProvider = (IVariantProvider) block;
-            if (variantProvider.getVariants() == null)
-                return;
             for (Pair<Integer, String> variant : variantProvider.getVariants())
                 ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), variant.getLeft(), new ModelResourceLocation(new ResourceLocation(ModInformation.ID, name), variant.getRight()));
         }
