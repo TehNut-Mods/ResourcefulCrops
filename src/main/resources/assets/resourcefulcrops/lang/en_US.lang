@@ -17,7 +17,7 @@ item.ResourcefulCrops.stone.arcane.name=Arcane Stone of Creation
 item.ResourcefulCrops.stone.true.name=True Stone of Creation
 
 # Blocks
-tile.ResourcefulCrops.ore.name=Gaianite Ore
+tile.ResourcefulCrops.ore.normal.name=Gaianite Ore
 tile.ResourcefulCrops.ore.nether.name=Nether Gaianite Ore
 
 # Info

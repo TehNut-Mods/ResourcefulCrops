@@ -16,7 +16,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.FakePlayer;
-import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import tehnut.lib.annot.ModBlock;
 import tehnut.lib.block.base.BlockString;
@@ -129,8 +128,8 @@ public class BlockROre extends BlockString implements IVariantProvider {
     @Override
     public List<Pair<Integer, String>> getVariants() {
         List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
-        ret.add(new ImmutablePair<Integer, String>(0, "type=normal"));
-        ret.add(new ImmutablePair<Integer, String>(1, "type=nether"));
+        ret.add(Pair.of(0, "type=normal"));
+        ret.add(Pair.of(1, "type=nether"));
         return ret;
     }
 }
