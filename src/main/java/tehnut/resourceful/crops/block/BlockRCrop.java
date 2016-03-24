@@ -202,18 +202,6 @@ public class BlockRCrop extends BlockCrops {
             world.spawnEntityInWorld(new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ItemHelper.getItem(ItemMaterial.class))));
     }
 
-//    @Override
-//    @SideOnly(Side.CLIENT)
-//    public int colorMultiplier(IBlockAccess blockAccess, BlockPos pos, int pass) {
-//
-//        TileEntity cropTile = blockAccess.getTileEntity(pos);
-//
-//        if (cropTile != null && cropTile instanceof TileRCrop && Utils.isValidSeed(((TileRCrop) cropTile).getSeedName()))
-//            return SeedRegistry.getSeed(((TileRCrop) cropTile).getSeedName()).getColor().getRGB();
-//
-//        return 16777215;
-//    }
-
     @SubscribeEvent
     @Used
     public void onBonemeal(BonemealEvent event) {
