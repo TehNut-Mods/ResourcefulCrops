@@ -13,6 +13,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import tehnut.lib.LendingLibrary;
 import tehnut.lib.iface.ICompatibility;
 import tehnut.lib.util.helper.ItemHelper;
+import tehnut.lib.util.helper.LogHelper;
 import tehnut.resourceful.crops.api.ModInformation;
 import tehnut.resourceful.crops.api.ResourcefulAPI;
 import tehnut.resourceful.crops.api.registry.SeedRegistry;
@@ -48,8 +49,12 @@ public class ResourcefulCrops {
     @Mod.Instance(ModInformation.ID)
     public static ResourcefulCrops instance;
 
+    private final LendingLibrary library;
     private File configDir;
-    private LendingLibrary library;
+
+    public ResourcefulCrops() {
+        library = new LendingLibrary(ModInformation.ID);
+    }
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
@@ -57,10 +62,9 @@ public class ResourcefulCrops {
         configDir.mkdirs();
         ConfigHandler.init(new File(configDir.getPath(), ModInformation.ID + ".cfg"));
 
-        ResourcefulAPI.logger = event.getModLog();
+        ResourcefulAPI.logger = new LogHelper("ResourcefulCrops").getLogger();
 
-        library = new LendingLibrary(ModInformation.ID);
-        library.registerObjects(event);
+        getLibrary().registerObjects(event);
 
         JsonConfigHandler.init(new File(getConfigDir(), "Seeds-v2.json"));
 
