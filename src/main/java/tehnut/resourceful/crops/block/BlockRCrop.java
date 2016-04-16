@@ -8,9 +8,9 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemHoe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.EnumDifficulty;
@@ -205,7 +205,7 @@ public class BlockRCrop extends BlockCrops {
     @SubscribeEvent
     @Used
     public void onBonemeal(BonemealEvent event) {
-        if (event.block.getBlock() instanceof BlockRCrop)
+        if (event.getBlock().getBlock() instanceof BlockRCrop)
             event.setCanceled(true);
     }
 

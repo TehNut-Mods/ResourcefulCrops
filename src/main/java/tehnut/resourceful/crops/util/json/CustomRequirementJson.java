@@ -18,7 +18,8 @@ public class CustomRequirementJson implements JsonSerializer<Requirement>, JsonD
         JsonHelper jsonHelper = new JsonHelper(json);
         BlockStack growthReq = null;
         if (json.getAsJsonObject().get("growthReq") != null)
-            growthReq = context.deserialize(json.getAsJsonObject().get("growthReq"), new TypeToken<BlockStack>() { }.getType());
+            growthReq = context.deserialize(json.getAsJsonObject().get("growthReq"), new TypeToken<BlockStack>() {
+            }.getType());
         String difficulty = jsonHelper.getNullableString("minDifficulty", "PEACEFUL").toUpperCase(Locale.ENGLISH);
         int lightLevelMin = jsonHelper.getNullableInteger("lightLevelMin", 9);
         int lightLevelMax = jsonHelper.getNullableInteger("lightLevelMax", 15);

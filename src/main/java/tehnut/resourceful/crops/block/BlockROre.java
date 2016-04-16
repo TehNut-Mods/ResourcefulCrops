@@ -39,7 +39,7 @@ public class BlockROre extends BlockString implements IVariantProvider {
     Random random = new Random();
 
     public BlockROre() {
-        super(Material.rock, NAMES, "type");
+        super(Material.ROCK, NAMES, "type");
 
         setUnlocalizedName(ModInformation.ID + ".ore");
         setSoundType(SoundType.STONE);
@@ -51,15 +51,15 @@ public class BlockROre extends BlockString implements IVariantProvider {
     @Override
     public void harvestBlock(World world, EntityPlayer player, BlockPos pos, IBlockState state, TileEntity tile, ItemStack stack) {
         if (player instanceof FakePlayer && !ConfigHandler.enableFakePlayerMining) {
-            Block blockItem = Blocks.cobblestone;
+            Block blockItem = Blocks.COBBLESTONE;
             dropItem(world, pos, new ItemStack(blockItem, 1, 0));
         } else {
-            boolean silk = EnchantmentHelper.getEnchantmentLevel(Enchantments.silkTouch, player.getHeldItemMainhand()) > 0;
+            boolean silk = EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, player.getHeldItemMainhand()) > 0;
             if (silk) {
                 Block ore = BlockHelper.getBlock(BlockROre.class);
                 dropItem(world, pos, new ItemStack(ore, 1, getMetaFromState(state)));
             } else {
-                int fortune = EnchantmentHelper.getEnchantmentLevel(Enchantments.fortune, player.getHeldItemMainhand());
+                int fortune = EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, player.getHeldItemMainhand());
                 int dropAmount;
 
                 if (fortune > 0) {
@@ -113,6 +113,14 @@ public class BlockROre extends BlockString implements IVariantProvider {
         return random.nextInt(4);
     }
 
+    @Override
+    public List<Pair<Integer, String>> getVariants() {
+        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
+        ret.add(Pair.of(0, "type=normal"));
+        ret.add(Pair.of(1, "type=nether"));
+        return ret;
+    }
+
     public static EntityItem dropItem(World world, BlockPos pos, ItemStack stack) {
         if (stack == null)
             return null;
@@ -123,13 +131,5 @@ public class BlockROre extends BlockString implements IVariantProvider {
             world.spawnEntityInWorld(entityItem);
 
         return entityItem;
-    }
-
-    @Override
-    public List<Pair<Integer, String>> getVariants() {
-        List<Pair<Integer, String>> ret = new ArrayList<Pair<Integer, String>>();
-        ret.add(Pair.of(0, "type=normal"));
-        ret.add(Pair.of(1, "type=nether"));
-        return ret;
     }
 }

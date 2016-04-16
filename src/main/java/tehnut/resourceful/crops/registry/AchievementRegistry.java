@@ -40,7 +40,7 @@ public class AchievementRegistry {
         getSeed = new AchievementRCrops("get.seed", 2, 2, Utils.getInvalidSeed(ItemHelper.getItem(ItemSeed.class)), getStone[0]);
         getPouch = new AchievementRCrops("get.pouch", 4, 2, Utils.getInvalidSeed(ItemHelper.getItem(ItemPouch.class)), getSeed);
         getShard = new AchievementRCrops("get.shard", 4, 4, Utils.getInvalidSeed(ItemHelper.getItem(ItemShard.class)), getSeed);
-        getInfo = new AchievementRCrops("get.info", 0, 2, new ItemStack(Items.diamond_hoe), getSeed).setSpecial();
+        getInfo = new AchievementRCrops("get.info", 0, 2, new ItemStack(Items.DIAMOND_HOE), getSeed).setSpecial();
         if (ConfigHandler.enableRightClickHarvest)
             getHarvest = new AchievementRCrops("get.harvest", 0, 4, new ItemStack(BlockHelper.getBlock(BlockRCrop.class), 6), getSeed).setSpecial();
 

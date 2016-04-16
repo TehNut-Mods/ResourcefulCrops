@@ -32,7 +32,7 @@ public class GenerationHandler implements IWorldGenerator {
 
             BlockPos pos = new BlockPos(firstBlockXCoord, gaianiteY, firstBlockZCoord);
 
-            new WorldGenMinable(BlockHelper.getBlock(BlockROre.class).getStateFromMeta(0), 4, BlockMatcher.forBlock(Blocks.stone)).generate(world, random, pos);
+            new WorldGenMinable(BlockHelper.getBlock(BlockROre.class).getStateFromMeta(0), 4, BlockMatcher.forBlock(Blocks.STONE)).generate(world, random, pos);
         }
     }
 
@@ -44,7 +44,7 @@ public class GenerationHandler implements IWorldGenerator {
 
             BlockPos pos = new BlockPos(firstBlockXCoord, gaianiteY, firstBlockZCoord);
 
-            new WorldGenMinable(BlockHelper.getBlock(BlockROre.class).getStateFromMeta(1), 4, BlockMatcher.forBlock(Blocks.netherrack)).generate(world, random, pos);
+            new WorldGenMinable(BlockHelper.getBlock(BlockROre.class).getStateFromMeta(1), 4, BlockMatcher.forBlock(Blocks.NETHERRACK)).generate(world, random, pos);
         }
     }
 }

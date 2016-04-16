@@ -38,9 +38,9 @@ public class ResourcefulCropsHarvestHandler implements IHarvestHandler {
     private void dropItem(World world, BlockPos pos, ItemStack stack) {
         if (!world.isRemote && !world.restoringBlockSnapshots) {
             float f = 0.7F;
-            double xOff = (double)(world.rand.nextFloat() * f) + (double)(1.0F - f) * 0.5D;
-            double yOff = (double)(world.rand.nextFloat() * f) + (double)(1.0F - f) * 0.5D;
-            double zOff = (double)(world.rand.nextFloat() * f) + (double)(1.0F - f) * 0.5D;
+            double xOff = (double) (world.rand.nextFloat() * f) + (double) (1.0F - f) * 0.5D;
+            double yOff = (double) (world.rand.nextFloat() * f) + (double) (1.0F - f) * 0.5D;
+            double zOff = (double) (world.rand.nextFloat() * f) + (double) (1.0F - f) * 0.5D;
             EntityItem entityitem = new EntityItem(world, (double) pos.getX() + xOff, (double) pos.getY() + yOff, (double) pos.getZ() + zOff, stack);
             entityitem.setPickupDelay(10);
             world.spawnEntityInWorld(entityitem);

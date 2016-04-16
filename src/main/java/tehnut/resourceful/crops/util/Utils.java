@@ -3,14 +3,11 @@ package tehnut.resourceful.crops.util;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.registry.GameData;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.oredict.OreDictionary;
 import tehnut.resourceful.crops.api.ResourcefulAPI;
 import tehnut.resourceful.crops.api.base.Seed;
 import tehnut.resourceful.crops.api.registry.SeedRegistry;
-
-import java.lang.reflect.Field;
-import java.util.Map;
 
 public class Utils {
 
@@ -37,7 +34,7 @@ public class Utils {
                 int meta = Integer.parseInt(stackInfo[0]);
                 int amount = Integer.parseInt(stackInfo[1]);
 
-                return new ItemStack(GameData.getItemRegistry().getObject(new ResourceLocation(name)), amount, meta);
+                return new ItemStack(ForgeRegistries.ITEMS.getValue(new ResourceLocation(name)), amount, meta);
             } else if (stackString.equals("null")) {
                 return null;
             } else if (!input) {
@@ -67,7 +64,7 @@ public class Utils {
     public static String itemStackToString(ItemStack stack) {
         try {
             if (stack != null)
-                return GameData.getItemRegistry().getNameForObject(stack.getItem()) + ":" + stack.getItemDamage() + "#" + stack.stackSize;
+                return stack.getItem().getRegistryName().toString() + ":" + stack.getItemDamage() + "#" + stack.stackSize;
         } catch (NullPointerException e) {
             // Pokeball!
         }

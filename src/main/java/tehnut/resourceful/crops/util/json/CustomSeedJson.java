@@ -21,20 +21,25 @@ public class CustomSeedJson implements JsonDeserializer<Seed>, JsonSerializer<Se
         int tier = jsonHelper.getNullableInteger("tier", 1);
         int amount = jsonHelper.getNullableInteger("amount", 1);
         String input = jsonHelper.getString("input");
-        ItemStack output = context.deserialize(json.getAsJsonObject().get("output"), new TypeToken<ItemStack>() { }.getType());
+        ItemStack output = context.deserialize(json.getAsJsonObject().get("output"), new TypeToken<ItemStack>() {
+        }.getType());
         ItemStack secondOutput = null;
         ItemStack thirdOutput = null;
         if (json.getAsJsonObject().get("secondOutput") != null)
-            secondOutput = context.deserialize(json.getAsJsonObject().get("secondOutput"), new TypeToken<ItemStack>() { }.getType());
+            secondOutput = context.deserialize(json.getAsJsonObject().get("secondOutput"), new TypeToken<ItemStack>() {
+            }.getType());
         if (json.getAsJsonObject().get("thirdOutput") != null)
-            thirdOutput = context.deserialize(json.getAsJsonObject().get("thirdOutput"), new TypeToken<ItemStack>() { }.getType());
+            thirdOutput = context.deserialize(json.getAsJsonObject().get("thirdOutput"), new TypeToken<ItemStack>() {
+            }.getType());
         String color = jsonHelper.getString("color");
         Chance chance = new ChanceBuilder().build();
         Requirement requirement = new RequirementBuilder().build();
         if (json.getAsJsonObject().get("requirement") != null)
-            requirement = context.deserialize(json.getAsJsonObject().get("requirement"), new TypeToken<Requirement>() { }.getType());
+            requirement = context.deserialize(json.getAsJsonObject().get("requirement"), new TypeToken<Requirement>() {
+            }.getType());
         if (json.getAsJsonObject().get("chance") != null)
-            chance = context.deserialize(json.getAsJsonObject().get("chance"), new TypeToken<Chance>() { }.getType());
+            chance = context.deserialize(json.getAsJsonObject().get("chance"), new TypeToken<Chance>() {
+            }.getType());
 
         SeedBuilder builder = new SeedBuilder();
         builder.setName(name);

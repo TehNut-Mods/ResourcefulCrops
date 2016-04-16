@@ -18,7 +18,9 @@ import tehnut.resourceful.crops.api.ResourcefulAPI;
 import tehnut.resourceful.crops.api.registry.SeedRegistry;
 import tehnut.resourceful.crops.item.ItemStone;
 import tehnut.resourceful.crops.proxy.CommonProxy;
-import tehnut.resourceful.crops.registry.*;
+import tehnut.resourceful.crops.registry.AchievementRegistry;
+import tehnut.resourceful.crops.registry.CompatibilityRegistry;
+import tehnut.resourceful.crops.registry.RecipeRegistry;
 import tehnut.resourceful.crops.util.handler.GenerationHandler;
 import tehnut.resourceful.crops.util.handler.OreDictHandler;
 

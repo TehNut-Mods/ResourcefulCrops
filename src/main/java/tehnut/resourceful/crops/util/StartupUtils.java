@@ -5,7 +5,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.registry.GameData;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.oredict.OreDictionary;
 import tehnut.resourceful.crops.api.base.Seed;
 import tehnut.resourceful.crops.api.base.SeedBuilder;
@@ -26,23 +26,23 @@ public class StartupUtils {
 
         // Tier 1
         addDefaultSeedOre(makeSeed("Inky", 1, 4, "dyeBlack", new ItemStack(getOreStack("dyeBlack").getItem(), 8, getOreStack("dyeBlack").getItemDamage()), new Color(22, 22, 22)), "dyeBlack");
-        addDefaultSeed(makeSeed("Fleshy", 1, 4, getItemString(Items.rotten_flesh), new ItemStack(Items.rotten_flesh, 8), new Color(255, 160, 136)));
-        addDefaultSeed(makeSeed("Feathery", 1, 4, getItemString(Items.feather), new ItemStack(Items.feather, 8), new Color(208, 203, 199)));
+        addDefaultSeed(makeSeed("Fleshy", 1, 4, getItemString(Items.ROTTEN_FLESH), new ItemStack(Items.ROTTEN_FLESH, 8), new Color(255, 160, 136)));
+        addDefaultSeed(makeSeed("Feathery", 1, 4, getItemString(Items.FEATHER), new ItemStack(Items.FEATHER, 8), new Color(208, 203, 199)));
         // Tier 2
         addDefaultSeedOre(makeSeed("Tin", 2, 4, "ingotTin", new ItemStack(getOreStack("ingotTin").getItem(), 4, Utils.getItemDamage(getOreStack("ingotTin"))), new Color(135, 154, 168)), "ingotTin");
         addDefaultSeedOre(makeSeed("Copper", 2, 4, "ingotCopper", new ItemStack(getOreStack("ingotCopper").getItem(), 4, Utils.getItemDamage(getOreStack("ingotCopper"))), new Color(204, 102, 51)), "ingotCopper");
         addDefaultSeedOre(makeSeed("Aluminum", 2, 4, "ingotAluminum", new ItemStack(getOreStack("ingotAluminum").getItem(), 4, Utils.getItemDamage(getOreStack("ingotAluminum"))), new Color(198, 206, 130)), "ingotAluminum");
         addDefaultSeedOre(makeSeed("Zinc", 2, 4, "ingotZinc", new ItemStack(getOreStack("ingotZinc").getItem(), 4, Utils.getItemDamage(getOreStack("ingotZinc"))), new Color(192, 176, 182)), "ingotZinc");
-        addDefaultSeed(makeSeed("Coal", 2, 4, getItemString(Items.coal), new ItemStack(Items.coal, 4), new Color(45, 44, 47)));
-        addDefaultSeed(makeSeed("Charcoal", 2, 4, getItemString(Items.coal, 1), new ItemStack(Items.coal, 4, 1), new Color(45, 44, 47)));
+        addDefaultSeed(makeSeed("Coal", 2, 4, getItemString(Items.COAL), new ItemStack(Items.COAL, 4), new Color(45, 44, 47)));
+        addDefaultSeed(makeSeed("Charcoal", 2, 4, getItemString(Items.COAL, 1), new ItemStack(Items.COAL, 4, 1), new Color(45, 44, 47)));
         addDefaultSeedOre(makeSeed("Saltpeter", 2, 4, "dustSaltpeter", new ItemStack(getOreStack("dustSaltpeter").getItem(), 8, Utils.getItemDamage(getOreStack("dustSaltpeter"))), new Color(182, 197, 212)), "dustSaltpeter");
         addDefaultSeedOre(makeSeed("Salt", 2, 4, "dustSalt", new ItemStack(getOreStack("dustSalt").getItem(), 8, Utils.getItemDamage(getOreStack("dustSalt"))), new Color(182, 197, 212)), "dustSalt");
-        addDefaultSeed(makeSeed("Leathery", 2, 4, getItemString(Items.leather), new ItemStack(Items.leather, 4), new Color(255, 68, 17)));
-        addDefaultSeed(makeSeed("Stringy", 2, 4, getItemString(Items.string), new ItemStack(Items.string, 8), new Color(241, 255, 210)));
-        addDefaultSeed(makeSeed("Boney", 2, 4, getItemString(Items.bone), new ItemStack(Items.bone, 4), new Color(255, 240, 205)));
-        addDefaultSeed(makeSeed("Slimey", 2, 4, getItemString(Items.slime_ball), new ItemStack(Items.slime_ball, 4), new Color(62, 255, 119)));
+        addDefaultSeed(makeSeed("Leathery", 2, 4, getItemString(Items.LEATHER), new ItemStack(Items.LEATHER, 4), new Color(255, 68, 17)));
+        addDefaultSeed(makeSeed("Stringy", 2, 4, getItemString(Items.STRING), new ItemStack(Items.STRING, 8), new Color(241, 255, 210)));
+        addDefaultSeed(makeSeed("Boney", 2, 4, getItemString(Items.BONE), new ItemStack(Items.BONE, 4), new Color(255, 240, 205)));
+        addDefaultSeed(makeSeed("Slimey", 2, 4, getItemString(Items.SLIME_BALL), new ItemStack(Items.SLIME_BALL, 4), new Color(62, 255, 119)));
         //Tier 3
-        addDefaultSeed(makeSeed("Blaze", 3, 4, getItemString(Items.blaze_rod), new ItemStack(Items.blaze_rod, 2), new Color(255, 215, 66)));
+        addDefaultSeed(makeSeed("Blaze", 3, 4, getItemString(Items.BLAZE_ROD), new ItemStack(Items.BLAZE_ROD, 2), new Color(255, 215, 66)));
         addDefaultSeedOre(makeSeed("Iron", 3, 4, "ingotIron", new ItemStack(getOreStack("ingotIron").getItem(), 4, Utils.getItemDamage(getOreStack("ingotIron"))), new Color(159, 156, 160)), "ingotIron");
         addDefaultSeedOre(makeSeed("Gold", 3, 4, "ingotGold", new ItemStack(getOreStack("ingotGold").getItem(), 4, Utils.getItemDamage(getOreStack("ingotGold"))), new Color(255, 255, 0)), "ingotGold");
         addDefaultSeedOre(makeSeed("Lead", 3, 4, "ingotLead", new ItemStack(getOreStack("ingotLead").getItem(), 4, Utils.getItemDamage(getOreStack("ingotLead"))), new Color(102, 102, 153)), "ingotLead");
@@ -50,13 +50,13 @@ public class StartupUtils {
         addDefaultSeedOre(makeSeed("Nickel", 3, 4, "ingotNickel", new ItemStack(getOreStack("ingotNickel").getItem(), 4, Utils.getItemDamage(getOreStack("ingotNickel"))), new Color(204, 204, 204)), "ingotNickel");
         addDefaultSeedOre(makeSeed("Mithril", 3, 4, "ingotMithril", new ItemStack(getOreStack("ingotMithril").getItem(), 4, Utils.getItemDamage(getOreStack("ingotMithril"))), new Color(146, 164, 208)), "ingotMithril");
         addDefaultSeedOre(makeSeed("Osmium", 3, 4, "ingotOsmium", new ItemStack(getOreStack("ingotOsmium").getItem(), 4, Utils.getItemDamage(getOreStack("ingotOsmium"))), new Color(68, 60, 190)), "ingotOsmium");
-        addDefaultSeed(makeSeed("Ender", 3, 4, getItemString(Items.ender_pearl), new ItemStack(Items.ender_pearl, 2), new Color(72, 100, 97)));
-        addDefaultSeed(makeSeed("Teary", 3, 4, getItemString(Items.ghast_tear), new ItemStack(Items.ghast_tear, 4), new Color(212, 255, 241)));
-        addDefaultSeed(makeSeed("Creepy", 3, 4, getItemString(Items.gunpowder), new ItemStack(Items.gunpowder, 8), new Color(0, 255, 33)));
-        addDefaultSeed(makeSeed("Skelesprout", 3, 2, getItemString(Items.skull), new ItemStack(Items.skull, 1), new Color(159, 164, 155)));
-        addDefaultSeed(makeSeed("Brainy", 3, 2, getItemString(Items.skull, 2), new ItemStack(Items.skull, 1, 2), new Color(49, 105, 50)));
-        addDefaultSeed(makeSeed("Mindful", 3, 2, getItemString(Items.skull, 3), new ItemStack(Items.skull, 1, 3), new Color(232, 186, 131)));
-        addDefaultSeed(makeSeed("Creepots", 3, 2, getItemString(Items.skull, 4), new ItemStack(Items.skull, 1, 4), new Color(71, 178, 74)));
+        addDefaultSeed(makeSeed("Ender", 3, 4, getItemString(Items.ENDER_PEARL), new ItemStack(Items.ENDER_PEARL, 2), new Color(72, 100, 97)));
+        addDefaultSeed(makeSeed("Teary", 3, 4, getItemString(Items.GHAST_TEAR), new ItemStack(Items.GHAST_TEAR, 4), new Color(212, 255, 241)));
+        addDefaultSeed(makeSeed("Creepy", 3, 4, getItemString(Items.GUNPOWDER), new ItemStack(Items.GUNPOWDER, 8), new Color(0, 255, 33)));
+        addDefaultSeed(makeSeed("Skelesprout", 3, 2, getItemString(Items.SKULL), new ItemStack(Items.SKULL, 1), new Color(159, 164, 155)));
+        addDefaultSeed(makeSeed("Brainy", 3, 2, getItemString(Items.SKULL, 2), new ItemStack(Items.SKULL, 1, 2), new Color(49, 105, 50)));
+        addDefaultSeed(makeSeed("Mindful", 3, 2, getItemString(Items.SKULL, 3), new ItemStack(Items.SKULL, 1, 3), new Color(232, 186, 131)));
+        addDefaultSeed(makeSeed("Creepots", 3, 2, getItemString(Items.SKULL, 4), new ItemStack(Items.SKULL, 1, 4), new Color(71, 178, 74)));
         addDefaultSeedOre(makeSeed("Glowstone", 3, 4, "dustGlowstone", new ItemStack(getOreStack("dustGlowstone").getItem(), 8, Utils.getItemDamage(getOreStack("dustGlowstone"))), new Color(233, 255, 84)), "dustGlowstone");
         addDefaultSeedOre(makeSeed("Redstone", 3, 4, "dustRedstone", new ItemStack(getOreStack("dustRedstone").getItem(), 8, Utils.getItemDamage(getOreStack("dustRedstone"))), new Color(159, 13, 0)), "dustRedstone");
         addDefaultSeedOre(makeSeed("Sulfur", 3, 4, "dustSulfur", new ItemStack(getOreStack("dustSulfur").getItem(), 8, Utils.getItemDamage(getOreStack("dustSulfur"))), new Color(212, 190, 85)), "dustSulfur");
@@ -72,7 +72,7 @@ public class StartupUtils {
         addDefaultSeedOre(makeSeed("Amber", 3, 4, "gemAmber", new ItemStack(getOreStack("gemAmber").getItem(), 8, Utils.getItemDamage(getOreStack("gemAmber"))), new Color(212, 121, 60)), "gemAmber");
         addDefaultSeedOre(makeSeed("Apatite", 3, 4, "gemApatite", new ItemStack(getOreStack("gemApatite").getItem(), 8, Utils.getItemDamage(getOreStack("gemApatite"))), new Color(121, 188, 212)), "gemApatite");
         // Tier 4
-        addDefaultSeed(makeSeed("Witherwheat", 4, 2, getItemString(Items.skull, 1), new ItemStack(Items.skull, 1, 1), new Color(52, 52, 51)));
+        addDefaultSeed(makeSeed("Witherwheat", 4, 2, getItemString(Items.SKULL, 1), new ItemStack(Items.SKULL, 1, 1), new Color(52, 52, 51)));
         addDefaultSeedOre(makeSeed("Diamond", 4, 2, "gemDiamond", new ItemStack(getOreStack("gemDiamond").getItem(), 1, Utils.getItemDamage(getOreStack("gemDiamond"))), new Color(58, 242, 239)), "gemDiamond");
         addDefaultSeedOre(makeSeed("Emerald", 4, 2, "gemEmerald", new ItemStack(getOreStack("gemEmerald").getItem(), 1, Utils.getItemDamage(getOreStack("gemEmerald"))), new Color(87, 242, 111)), "gemEmerald");
         addDefaultSeedOre(makeSeed("Platinum", 4, 2, "ingotPlatinum", new ItemStack(getOreStack("ingotPlatinum").getItem(), 1, Utils.getItemDamage(getOreStack("ingotPlatinum"))), new Color(30, 208, 243)), "ingotPlatinum");
@@ -117,7 +117,7 @@ public class StartupUtils {
      */
     private static void addDefaultSeed(Seed seed) {
         String[] split = seed.getInput().split(":");
-        if (GameData.getItemRegistry().containsKey(new ResourceLocation(split[0] + ":" + split[1])))
+        if (ForgeRegistries.ITEMS.containsKey(new ResourceLocation(split[0], split[1])))
             defaultSeeds.put(registered++, seed);
     }
 
@@ -130,7 +130,7 @@ public class StartupUtils {
      * @return - A string with the formatting of an ItemStack
      */
     private static String getItemString(Item item) {
-        return GameData.getItemRegistry().getNameForObject(item) + ":0#0";
+        return item.getRegistryName().toString() + ":0#0";
     }
 
     /**
@@ -143,7 +143,7 @@ public class StartupUtils {
      * @return - A string with the formatting of an ItemStack
      */
     private static String getItemString(Item item, int meta) {
-        return GameData.getItemRegistry().getNameForObject(item) + ":" + meta + "#0";
+        return item.getRegistryName().toString() + ":" + meta + "#0";
     }
 
     /**
@@ -153,7 +153,7 @@ public class StartupUtils {
      * @return - An ItemStack retrieved from the entry
      */
     private static ItemStack getOreStack(String entry) {
-        return OreDictionary.doesOreNameExist(entry) && OreDictionary.getOres(entry).size() > 0 ? OreDictionary.getOres(entry).get(0) : new ItemStack(Blocks.fire);
+        return OreDictionary.doesOreNameExist(entry) && OreDictionary.getOres(entry).size() > 0 ? OreDictionary.getOres(entry).get(0) : new ItemStack(Blocks.FIRE);
     }
 
     public static Map<Integer, Seed> getDefaultSeeds() {

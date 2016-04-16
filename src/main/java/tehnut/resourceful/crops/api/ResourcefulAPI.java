@@ -2,7 +2,8 @@ package tehnut.resourceful.crops.api;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
-import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import org.apache.logging.log4j.Logger;
 
 import javax.annotation.Nullable;
@@ -28,7 +29,7 @@ public class ResourcefulAPI {
      */
     @Nullable
     public static Item getItem(String name) {
-        return GameRegistry.findItem(ModInformation.ID, name);
+        return ForgeRegistries.ITEMS.getValue(new ResourceLocation(ModInformation.ID, name));
     }
 
     /**
@@ -40,6 +41,6 @@ public class ResourcefulAPI {
      */
     @Nullable
     public static Block getBlock(String name) {
-        return GameRegistry.findBlock(ModInformation.ID, name);
+        return ForgeRegistries.BLOCKS.getValue(new ResourceLocation(ModInformation.ID, name));
     }
 }

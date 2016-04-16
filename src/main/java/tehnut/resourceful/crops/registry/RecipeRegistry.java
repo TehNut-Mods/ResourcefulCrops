@@ -24,7 +24,7 @@ public class RecipeRegistry {
                         "IEI", "ESE", "IEI",
                         'I', Utils.parseItemStack(seed.getInput(), true) == null ? seed.getInput() : Utils.parseItemStack(seed.getInput(), true),
                         'E', new ItemStack(ItemHelper.getItem(ItemMaterial.class), 1, seed.getTier()),
-                        'S', Items.wheat_seeds
+                        'S', Items.WHEAT_SEEDS
                 ));
             }
 

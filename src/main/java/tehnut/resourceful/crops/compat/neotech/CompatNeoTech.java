@@ -1,6 +1,5 @@
 package tehnut.resourceful.crops.compat.neotech;
 
-import net.minecraft.block.Block;
 import net.minecraftforge.fml.common.event.FMLInterModComms;
 import tehnut.lib.iface.ICompatibility;
 import tehnut.lib.util.helper.BlockHelper;
@@ -12,7 +11,7 @@ public class CompatNeoTech implements ICompatibility {
     @Override
     public void loadCompatibility(InitializationPhase phase) {
         if (phase == InitializationPhase.PRE_INIT && ConfigHandler.blacklistNeoTechAccelerator)
-            FMLInterModComms.sendMessage("neotech", "blacklistFertilizer", Block.blockRegistry.getNameForObject(BlockHelper.getBlock(BlockRCrop.class)).toString());
+            FMLInterModComms.sendMessage("neotech", "blacklistFertilizer", BlockHelper.getBlock(BlockRCrop.class).getRegistryName().toString());
     }
 
     @Override

@@ -33,7 +33,7 @@ public class Seed {
      * @param secondOutput - Secondary output ItemStack or OreDict entry from crafting shards
      * @param thirdOutput  - Third output ItemStack or OreDict entry from crafting shards
      * @param color        - Color of the Seed/Shard/Crop
-     * @param requirement      - Special conditions for Seeds
+     * @param requirement  - Special conditions for Seeds
      * @param chance       - Chances for events to happen
      */
     protected Seed(String name, int tier, int amount, String input, ItemStack output, ItemStack secondOutput, ItemStack thirdOutput, Color color, Requirement requirement, Chance chance) {
