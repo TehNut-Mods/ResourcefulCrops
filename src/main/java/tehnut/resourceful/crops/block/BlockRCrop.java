@@ -28,6 +28,7 @@ import tehnut.resourceful.crops.ConfigHandler;
 import tehnut.resourceful.crops.ResourcefulCrops;
 import tehnut.resourceful.crops.achievement.AchievementTrigger;
 import tehnut.resourceful.crops.api.ModInformation;
+import tehnut.resourceful.crops.api.ResourcefulAPI;
 import tehnut.resourceful.crops.api.base.Seed;
 import tehnut.resourceful.crops.api.registry.SeedRegistry;
 import tehnut.resourceful.crops.api.util.BlockStack;
@@ -42,7 +43,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-@ModBlock(name = "BlockRCrop", tileEntity = TileRCrop.class)
+@ModBlock(name = ResourcefulAPI.CROP, tileEntity = TileRCrop.class)
 @Handler
 public class BlockRCrop extends BlockCrops {
 

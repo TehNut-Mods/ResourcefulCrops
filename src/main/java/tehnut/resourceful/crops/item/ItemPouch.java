@@ -26,6 +26,7 @@ import tehnut.lib.iface.IMeshProvider;
 import tehnut.lib.util.helper.BlockHelper;
 import tehnut.resourceful.crops.ResourcefulCrops;
 import tehnut.resourceful.crops.api.ModInformation;
+import tehnut.resourceful.crops.api.ResourcefulAPI;
 import tehnut.resourceful.crops.api.registry.SeedRegistry;
 import tehnut.resourceful.crops.block.BlockRCrop;
 import tehnut.resourceful.crops.tile.TileRCrop;
@@ -35,7 +36,7 @@ import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.List;
 
-@ModItem(name = "ItemPouch")
+@ModItem(name = ResourcefulAPI.POUCH)
 public class ItemPouch extends Item implements IPlantable, IMeshProvider {
 
     public ItemPouch() {

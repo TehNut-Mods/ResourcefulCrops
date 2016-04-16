@@ -15,6 +15,7 @@ import tehnut.lib.annot.ModItem;
 import tehnut.lib.iface.IMeshProvider;
 import tehnut.resourceful.crops.ResourcefulCrops;
 import tehnut.resourceful.crops.api.ModInformation;
+import tehnut.resourceful.crops.api.ResourcefulAPI;
 import tehnut.resourceful.crops.api.registry.SeedRegistry;
 import tehnut.resourceful.crops.util.Utils;
 
@@ -22,7 +23,7 @@ import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.List;
 
-@ModItem(name = "ItemShard")
+@ModItem(name = ResourcefulAPI.SHARD)
 public class ItemShard extends Item implements IMeshProvider {
 
     public ItemShard() {

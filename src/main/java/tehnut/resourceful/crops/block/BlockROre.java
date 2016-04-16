@@ -26,13 +26,14 @@ import tehnut.lib.util.helper.ItemHelper;
 import tehnut.resourceful.crops.ConfigHandler;
 import tehnut.resourceful.crops.ResourcefulCrops;
 import tehnut.resourceful.crops.api.ModInformation;
+import tehnut.resourceful.crops.api.ResourcefulAPI;
 import tehnut.resourceful.crops.item.ItemMaterial;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-@ModBlock(name = "BlockROre", itemBlock = ItemBlockString.class)
+@ModBlock(name = ResourcefulAPI.ORE, itemBlock = ItemBlockString.class)
 public class BlockROre extends BlockString implements IVariantProvider {
 
     public static final String[] NAMES = {"normal", "nether"};

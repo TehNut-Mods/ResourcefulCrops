@@ -12,11 +12,12 @@ import tehnut.lib.annot.ModItem;
 import tehnut.lib.iface.IVariantProvider;
 import tehnut.resourceful.crops.ResourcefulCrops;
 import tehnut.resourceful.crops.api.ModInformation;
+import tehnut.resourceful.crops.api.ResourcefulAPI;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@ModItem(name = "ItemMaterial")
+@ModItem(name = ResourcefulAPI.MATERIAL)
 public class ItemMaterial extends Item implements IVariantProvider {
 
     String[] materials = {"", ".mundane", ".magical", ".infused", ".arcane"};

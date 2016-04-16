@@ -13,12 +13,13 @@ import tehnut.lib.annot.ModItem;
 import tehnut.lib.iface.IMeshProvider;
 import tehnut.resourceful.crops.ResourcefulCrops;
 import tehnut.resourceful.crops.api.ModInformation;
+import tehnut.resourceful.crops.api.ResourcefulAPI;
 
 import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.List;
 
-@ModItem(name = "ItemStone")
+@ModItem(name = ResourcefulAPI.STONE)
 public class ItemStone extends Item implements IMeshProvider {
 
     String[] stones = {"mundane", "magical", "infused", "arcane", "true"};
