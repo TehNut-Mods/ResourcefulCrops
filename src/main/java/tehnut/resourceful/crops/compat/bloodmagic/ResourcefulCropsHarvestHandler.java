@@ -6,10 +6,12 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import tehnut.lib.util.helper.BlockHelper;
 import tehnut.lib.util.helper.ItemHelper;
+import tehnut.resourceful.crops.api.ResourcefulAPI;
 import tehnut.resourceful.crops.api.registry.SeedRegistry;
 import tehnut.resourceful.crops.block.BlockRCrop;
 import tehnut.resourceful.crops.item.ItemShard;
@@ -26,7 +28,7 @@ public class ResourcefulCropsHarvestHandler implements IHarvestHandler {
                 BlockStack newBlock = new BlockStack(BlockHelper.getBlock(BlockRCrop.class));
                 world.setBlockState(blockPos, newBlock.getState());
                 world.playAuxSFX(2001, blockPos, Block.getIdFromBlock(blockStack.getBlock()) + (blockStack.getMeta() << 12));
-                ItemStack drop = new ItemStack(ItemHelper.getItem(ItemShard.class), 1, SeedRegistry.getIndexOf(tileCrop.getSeedName()));
+                ItemStack drop = new ItemStack(ItemHelper.getItem(ItemShard.class), 1, ResourcefulAPI.SEEDS.getId(tileCrop.getSeedName()));
                 dropItem(world, blockPos, drop);
                 return true;
             }

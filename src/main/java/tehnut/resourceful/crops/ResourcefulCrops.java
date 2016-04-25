@@ -88,9 +88,6 @@ public class ResourcefulCrops {
 
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event) {
-        if (SeedRegistry.badSeeds > 0)
-            ResourcefulAPI.logger.error(SeedRegistry.badSeeds + " Seeds failed to register.");
-
         CompatibilityRegistry.runCompat(ICompatibility.InitializationPhase.POST_INIT);
     }
 }

@@ -36,11 +36,11 @@ public class ItemShard extends Item implements IMeshProvider {
 
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item item, CreativeTabs tabs, List<ItemStack> list) {
-        for (int i = 0; i < SeedRegistry.getSize(); i++)
+        for (int i = 0; i < ResourcefulAPI.SEEDS.getValues().size(); i++)
             if (Utils.isValidSeed(i))
                 list.add(new ItemStack(this, 1, i));
 
-        if (SeedRegistry.isEmpty())
+        if (ResourcefulAPI.SEEDS.getValues().isEmpty())
             list.add(Utils.getInvalidSeed(this));
     }
 
@@ -48,7 +48,7 @@ public class ItemShard extends Item implements IMeshProvider {
     @Override
     public String getItemStackDisplayName(ItemStack stack) {
         if (Utils.isValidSeed(Utils.getItemDamage(stack)))
-            return String.format(I18n.translateToLocal(getUnlocalizedName()), I18n.translateToLocal(SeedRegistry.getSeed(Utils.getItemDamage(stack)).getName()));
+            return String.format(I18n.translateToLocal(getUnlocalizedName()), I18n.translateToLocal(ResourcefulAPI.SEEDS.getRaw(Utils.getItemDamage(stack)).getName()));
         else
             return String.format(I18n.translateToLocal(getUnlocalizedName()), I18n.translateToLocal("info.ResourcefulCrops.broken"));
     }

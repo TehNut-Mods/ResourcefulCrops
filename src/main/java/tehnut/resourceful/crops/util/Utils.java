@@ -115,7 +115,7 @@ public class Utils {
      * @return - Whether or not the seed is valid.
      */
     public static boolean isValidSeed(int seedIndex) {
-        return SeedRegistry.getSeed(seedIndex) != null;
+        return ResourcefulAPI.SEEDS.getRaw(seedIndex) != null;
     }
 
     /**
@@ -126,7 +126,7 @@ public class Utils {
      * @return - Whether or not the seed is valid.
      */
     public static boolean isValidSeed(String seedName) {
-        return SeedRegistry.getSeed(seedName) != null;
+        return ResourcefulAPI.SEEDS.getValue(new ResourceLocation(seedName)) != null;
     }
 
     /**
@@ -136,6 +136,6 @@ public class Utils {
      * @return - Whether or not the seed is valid.
      */
     public static boolean isValidSeed(Seed seed) {
-        return SeedRegistry.getSeedList().contains(seed);
+        return ResourcefulAPI.SEEDS.containsValue(seed);
     }
 }

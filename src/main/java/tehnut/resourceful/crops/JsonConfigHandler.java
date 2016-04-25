@@ -47,7 +47,7 @@ public class JsonConfigHandler {
             Map<Integer, Seed> seeds = gson.fromJson(new FileReader(jsonConfig), new TypeToken<Map<Integer, Seed>>(){ }.getType());
 
             for (Map.Entry<Integer, Seed> entry : seeds.entrySet())
-                SeedRegistry.registerSeed(entry.getKey(), entry.getValue());
+                ResourcefulAPI.SEEDS.register(entry.getValue().setRegistryName(entry.getValue().getName()));
         } catch (IOException e) {
             ResourcefulAPI.logger.error("Failed to handle Seed configuration.");
         }

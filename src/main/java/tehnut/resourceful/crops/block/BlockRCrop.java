@@ -10,6 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.translation.I18n;
@@ -57,7 +58,7 @@ public class BlockRCrop extends BlockCrops {
     public void updateTick(World world, BlockPos pos, IBlockState state, Random random) {
 
         int seedIndex = getTileSeedIndex(world, pos);
-        Seed seed = SeedRegistry.getSeed(seedIndex);
+        Seed seed = ResourcefulAPI.SEEDS.getRaw(seedIndex);
 
         if (seedIndex == Short.MAX_VALUE || seed == null)
             return;
@@ -90,10 +91,10 @@ public class BlockRCrop extends BlockCrops {
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
         TileEntity cropTile = world.getTileEntity(pos);
 
-        if (Utils.isValidSeed(((TileRCrop) cropTile).getSeedName())) {
+        if (Utils.isValidSeed(((TileRCrop) cropTile).getSeedName().toString())) {
             if (player.getHeldItem(hand) != null && player.getHeldItem(hand).getItem() instanceof ItemHoe) {
                 AchievementTrigger.triggerAchievement(player, AchievementRegistry.getInfo);
-                return doReqInfo(((TileRCrop) cropTile).getSeedName());
+                return doReqInfo(((TileRCrop) cropTile).getSeedName().toString());
             }
 
             if (!player.isSneaking() || player.getHeldItem(hand) == null && ConfigHandler.enableRightClickHarvest) {
@@ -163,7 +164,7 @@ public class BlockRCrop extends BlockCrops {
     }
 
     public boolean doReqInfo(String seedName) {
-        Seed seed = SeedRegistry.getSeed(seedName);
+        Seed seed = ResourcefulAPI.SEEDS.getObject(new ResourceLocation(seedName));
 
         ResourcefulCrops.proxy.addChatMessage(String.format(I18n.translateToLocal("chat.ResourcefulCrops.crop.name"), seed.getName()), 1);
         ResourcefulCrops.proxy.addChatMessage(String.format(I18n.translateToLocal("chat.ResourcefulCrops.req.growth"), seed.getRequirement().getGrowthReq() != null ? seed.getRequirement().getGrowthReq().getDisplayName() : I18n.translateToLocal("info.ResourcefulCrops.anything")), 2);
@@ -185,7 +186,7 @@ public class BlockRCrop extends BlockCrops {
 
         Random random = new Random();
         int seedIndex = getTileSeedIndex(world, pos);
-        Seed seed = SeedRegistry.getSeed(seedIndex);
+        Seed seed = ResourcefulAPI.SEEDS.getRaw(seedIndex);
 
         if (seed == null)
             return;
@@ -230,8 +231,8 @@ public class BlockRCrop extends BlockCrops {
         int seedIndex = Utils.getInvalidSeed(ItemHelper.getItem(ItemSeed.class)).getItemDamage();
 
         if (crop != null && crop instanceof TileRCrop) {
-            String seedName = ((TileRCrop) crop).getSeedName();
-            seedIndex = SeedRegistry.getIndexOf(seedName);
+            ResourceLocation seedName = ((TileRCrop) crop).getSeedName();
+            seedIndex = ResourcefulAPI.SEEDS.getId(seedName);
         }
 
         return seedIndex;

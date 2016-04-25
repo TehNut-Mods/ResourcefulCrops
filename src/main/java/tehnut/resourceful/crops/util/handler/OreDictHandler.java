@@ -5,6 +5,7 @@ import net.minecraftforge.oredict.OreDictionary;
 import tehnut.lib.util.helper.BlockHelper;
 import tehnut.lib.util.helper.ItemHelper;
 import tehnut.resourceful.crops.ConfigHandler;
+import tehnut.resourceful.crops.api.ResourcefulAPI;
 import tehnut.resourceful.crops.api.base.Seed;
 import tehnut.resourceful.crops.api.registry.SeedRegistry;
 import tehnut.resourceful.crops.block.BlockROre;
@@ -25,17 +26,17 @@ public class OreDictHandler {
     }
 
     private static void registerSeeds() {
-        for (Seed seed : SeedRegistry.getSeedList())
-            OreDictionary.registerOre("rcropSeed" + seed.getName().replace(" ", ""), new ItemStack(ItemHelper.getItem(ItemSeed.class), 1, SeedRegistry.getIndexOf(seed)));
+        for (Seed seed : ResourcefulAPI.SEEDS.getValues())
+            OreDictionary.registerOre("rcropSeed" + seed.getName().replace(" ", ""), new ItemStack(ItemHelper.getItem(ItemSeed.class), 1, ResourcefulAPI.SEEDS.getId(seed)));
     }
 
     private static void registerShards() {
-        for (Seed seed : SeedRegistry.getSeedList())
-            OreDictionary.registerOre("rcropShard" + seed.getName().replace(" ", ""), new ItemStack(ItemHelper.getItem(ItemShard.class), 1, SeedRegistry.getIndexOf(seed)));
+        for (Seed seed : ResourcefulAPI.SEEDS.getValues())
+            OreDictionary.registerOre("rcropShard" + seed.getName().replace(" ", ""), new ItemStack(ItemHelper.getItem(ItemShard.class), 1, ResourcefulAPI.SEEDS.getId(seed)));
     }
 
     private static void registerPouches() {
-        for (Seed seed : SeedRegistry.getSeedList())
-            OreDictionary.registerOre("rcropPouch" + seed.getName().replace(" ", ""), new ItemStack(ItemHelper.getItem(ItemPouch.class), 1, SeedRegistry.getIndexOf(seed)));
+        for (Seed seed : ResourcefulAPI.SEEDS.getValues())
+            OreDictionary.registerOre("rcropPouch" + seed.getName().replace(" ", ""), new ItemStack(ItemHelper.getItem(ItemPouch.class), 1, ResourcefulAPI.SEEDS.getId(seed)));
     }
 }

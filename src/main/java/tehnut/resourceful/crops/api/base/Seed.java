@@ -2,12 +2,13 @@ package tehnut.resourceful.crops.api.base;
 
 import lombok.Getter;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.common.registry.IForgeRegistryEntry;
 
 import javax.annotation.Nullable;
 import java.awt.*;
 
 @Getter
-public class Seed {
+public class Seed extends IForgeRegistryEntry.Impl<Seed> {
 
     private String name;
     private int tier;

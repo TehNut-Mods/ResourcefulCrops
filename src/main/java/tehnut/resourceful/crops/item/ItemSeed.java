@@ -50,11 +50,11 @@ public class ItemSeed extends Item implements IPlantable, IMeshProvider {
 
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item item, CreativeTabs tabs, List<ItemStack> list) {
-        for (int i = 0; i < SeedRegistry.getSize(); i++)
+        for (int i = 0; i < ResourcefulAPI.SEEDS.getValues().size(); i++)
             if (Utils.isValidSeed(i))
                 list.add(new ItemStack(this, 1, i));
 
-        if (SeedRegistry.isEmpty())
+        if (ResourcefulAPI.SEEDS.getValues().isEmpty())
             list.add(Utils.getInvalidSeed(this));
     }
 
@@ -62,14 +62,14 @@ public class ItemSeed extends Item implements IPlantable, IMeshProvider {
     public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
 
         Block placed = world.getBlockState(pos).getBlock();
-        Seed seed = SeedRegistry.getSeed(stack.getItemDamage());
+        Seed seed = ResourcefulAPI.SEEDS.getRaw(stack.getItemDamage());
 
         if (seed == null)
             return EnumActionResult.FAIL;
 
         if (placed.canSustainPlant(world.getBlockState(pos), world, pos, EnumFacing.UP, this) && side == EnumFacing.UP && Utils.isValidSeed(Utils.getItemDamage(stack)) && world.isAirBlock(pos.offset(EnumFacing.UP))) {
             world.setBlockState(pos.offset(EnumFacing.UP), BlockHelper.getBlock(BlockRCrop.class).getDefaultState());
-            ((TileRCrop) world.getTileEntity(pos.offset(EnumFacing.UP))).setSeedName(seed.getName());
+            ((TileRCrop) world.getTileEntity(pos.offset(EnumFacing.UP))).setSeedName(seed.getRegistryName());
             if (!player.capabilities.isCreativeMode)
                 player.inventory.decrStackSize(player.inventory.currentItem, 1);
 
@@ -83,7 +83,7 @@ public class ItemSeed extends Item implements IPlantable, IMeshProvider {
     @Override
     public String getItemStackDisplayName(ItemStack stack) {
         if (Utils.isValidSeed(Utils.getItemDamage(stack)))
-            return String.format(I18n.translateToLocal(getUnlocalizedName()), I18n.translateToLocal(SeedRegistry.getSeed(Utils.getItemDamage(stack)).getName()));
+            return String.format(I18n.translateToLocal(getUnlocalizedName()), I18n.translateToLocal(ResourcefulAPI.SEEDS.getRaw(Utils.getItemDamage(stack)).getName()));
         else
             return String.format(I18n.translateToLocal(getUnlocalizedName()), I18n.translateToLocal("info.ResourcefulCrops.dead"));
     }
@@ -94,7 +94,7 @@ public class ItemSeed extends Item implements IPlantable, IMeshProvider {
         if (!Utils.isValidSeed(Utils.getItemDamage(stack)))
             list.add(TextFormatting.RED + I18n.translateToLocal("info.ResourcefulCrops.warn"));
         else
-            list.add(String.format(I18n.translateToLocal("info.ResourcefulCrops.tier"), SeedRegistry.getSeed(Utils.getItemDamage(stack)).getTier()));
+            list.add(String.format(I18n.translateToLocal("info.ResourcefulCrops.tier"), ResourcefulAPI.SEEDS.getRaw(Utils.getItemDamage(stack)).getTier()));
     }
 
     // IPlantable

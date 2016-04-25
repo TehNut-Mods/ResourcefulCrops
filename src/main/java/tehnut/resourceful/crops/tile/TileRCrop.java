@@ -6,6 +6,7 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -14,12 +15,12 @@ public class TileRCrop extends TileEntity {
     private String seedName = "Dead";
     private boolean shouldDrop = true;
 
-    public String getSeedName() {
-        return seedName;
+    public ResourceLocation getSeedName() {
+        return new ResourceLocation(seedName);
     }
 
-    public void setSeedName(String seedName) {
-        this.seedName = seedName;
+    public void setSeedName(ResourceLocation seedName) {
+        this.seedName = seedName.toString();
     }
 
     public boolean getShouldDrop() {
@@ -37,14 +38,14 @@ public class TileRCrop extends TileEntity {
 
     @Override
     public void writeToNBT(NBTTagCompound tag) {
-        tag.setString("seedName", getSeedName());
+        tag.setString("seedName", getSeedName().toString());
 
         super.writeToNBT(tag);
     }
 
     @Override
     public void readFromNBT(NBTTagCompound tag) {
-        setSeedName(tag.getString("seedName"));
+        setSeedName(new ResourceLocation(tag.getString("seedName")));
 
         super.readFromNBT(tag);
     }

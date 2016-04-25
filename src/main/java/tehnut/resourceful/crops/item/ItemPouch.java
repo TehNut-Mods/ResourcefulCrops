@@ -59,7 +59,7 @@ public class ItemPouch extends Item implements IPlantable, IMeshProvider {
                 BlockPos placeAt = new BlockPos(posX, pos.getY(), posZ);
                 if (placed.canSustainPlant(world.getBlockState(placeAt), world, placeAt, EnumFacing.UP, this) && side == EnumFacing.UP && Utils.isValidSeed(Utils.getItemDamage(stack)) && world.isAirBlock(new BlockPos(posX, pos.getY() + 1, posZ))) {
                     world.setBlockState(new BlockPos(posX, pos.getY() + 1, posZ), BlockHelper.getBlock(BlockRCrop.class).getDefaultState());
-                    ((TileRCrop) world.getTileEntity(new BlockPos(posX, pos.getY() + 1, posZ))).setSeedName(SeedRegistry.getSeed(Utils.getItemDamage(stack)).getName());
+                    ((TileRCrop) world.getTileEntity(new BlockPos(posX, pos.getY() + 1, posZ))).setSeedName(ResourcefulAPI.SEEDS.getRaw(Utils.getItemDamage(stack)).getRegistryName());
                     if (!player.capabilities.isCreativeMode)
                         player.inventory.decrStackSize(player.inventory.currentItem, 1);
 
@@ -73,11 +73,11 @@ public class ItemPouch extends Item implements IPlantable, IMeshProvider {
 
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item item, CreativeTabs tabs, List<ItemStack> list) {
-        for (int i = 0; i < SeedRegistry.getSize(); i++)
+        for (int i = 0; i < ResourcefulAPI.SEEDS.getValues().size(); i++)
             if (Utils.isValidSeed(i))
                 list.add(new ItemStack(this, 1, i));
 
-        if (SeedRegistry.isEmpty())
+        if (ResourcefulAPI.SEEDS.getValues().isEmpty())
             list.add(Utils.getInvalidSeed(this));
     }
 
@@ -85,7 +85,7 @@ public class ItemPouch extends Item implements IPlantable, IMeshProvider {
     @Override
     public String getItemStackDisplayName(ItemStack stack) {
         if (Utils.isValidSeed(Utils.getItemDamage(stack)))
-            return String.format(I18n.translateToLocal(getUnlocalizedName()), I18n.translateToLocal(SeedRegistry.getSeed(Utils.getItemDamage(stack)).getName()));
+            return String.format(I18n.translateToLocal(getUnlocalizedName()), I18n.translateToLocal(ResourcefulAPI.SEEDS.getRaw(Utils.getItemDamage(stack)).getName()));
         else
             return String.format(I18n.translateToLocal(getUnlocalizedName()), I18n.translateToLocal("info.ResourcefulCrops.torn"));
     }

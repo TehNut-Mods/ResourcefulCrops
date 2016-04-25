@@ -7,6 +7,7 @@ import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 import tehnut.lib.util.helper.ItemHelper;
 import tehnut.resourceful.crops.ConfigHandler;
+import tehnut.resourceful.crops.api.ResourcefulAPI;
 import tehnut.resourceful.crops.api.base.Seed;
 import tehnut.resourceful.crops.api.registry.SeedRegistry;
 import tehnut.resourceful.crops.item.*;
@@ -17,10 +18,10 @@ public class RecipeRegistry {
     public static void registerItemRecipes() {
 
         // Seed/Shard/Pouch Recipes
-        for (Seed seed : SeedRegistry.getSeedList()) {
+        for (Seed seed : ResourcefulAPI.SEEDS.getValues()) {
             if (ConfigHandler.enableSeedCrafting) {
                 GameRegistry.addRecipe(new ShapedOreRecipe(
-                        new ItemStack(ItemHelper.getItem(ItemSeed.class), seed.getAmount(), SeedRegistry.getIndexOf(seed)),
+                        new ItemStack(ItemHelper.getItem(ItemSeed.class), seed.getAmount(), ResourcefulAPI.SEEDS.getId(seed)),
                         "IEI", "ESE", "IEI",
                         'I', Utils.parseItemStack(seed.getInput(), true) == null ? seed.getInput() : Utils.parseItemStack(seed.getInput(), true),
                         'E', new ItemStack(ItemHelper.getItem(ItemMaterial.class), 1, seed.getTier()),
@@ -33,7 +34,7 @@ public class RecipeRegistry {
                     GameRegistry.addRecipe(new ShapedOreRecipe(
                             seed.getOutput(),
                             "SSS", "S S", "SSS",
-                            'S', new ItemStack(ItemHelper.getItem(ItemShard.class), 1, SeedRegistry.getIndexOf(seed)))
+                            'S', new ItemStack(ItemHelper.getItem(ItemShard.class), 1, ResourcefulAPI.SEEDS.getId(seed)))
                     );
                 }
 
@@ -42,7 +43,7 @@ public class RecipeRegistry {
                     GameRegistry.addRecipe(new ShapedOreRecipe(
                             seed.getSecondOutput(),
                             " S ", "SSS", " S ",
-                            'S', new ItemStack(ItemHelper.getItem(ItemShard.class), 1, SeedRegistry.getIndexOf(seed)))
+                            'S', new ItemStack(ItemHelper.getItem(ItemShard.class), 1, ResourcefulAPI.SEEDS.getId(seed)))
                     );
                 }
 
@@ -50,21 +51,21 @@ public class RecipeRegistry {
                     GameRegistry.addRecipe(new ShapedOreRecipe(
                             seed.getThirdOutput(),
                             "SS", "SS",
-                            'S', new ItemStack(ItemHelper.getItem(ItemShard.class), 1, SeedRegistry.getIndexOf(seed)))
+                            'S', new ItemStack(ItemHelper.getItem(ItemShard.class), 1, ResourcefulAPI.SEEDS.getId(seed)))
                     );
                 }
             }
 
             if (ConfigHandler.enableSeedPouches && ConfigHandler.enableSeedCrafting) {
                 GameRegistry.addRecipe(new ShapedOreRecipe(
-                        new ItemStack(ItemHelper.getItem(ItemPouch.class), 1, SeedRegistry.getIndexOf(seed)),
+                        new ItemStack(ItemHelper.getItem(ItemPouch.class), 1, ResourcefulAPI.SEEDS.getId(seed)),
                         "SSS", "SSS", "SSS",
-                        'S', new ItemStack(ItemHelper.getItem(ItemSeed.class), 1, SeedRegistry.getIndexOf(seed))
+                        'S', new ItemStack(ItemHelper.getItem(ItemSeed.class), 1, ResourcefulAPI.SEEDS.getId(seed))
                 ));
 
                 GameRegistry.addRecipe(new ShapelessOreRecipe(
-                        new ItemStack(ItemHelper.getItem(ItemSeed.class), 9, SeedRegistry.getIndexOf(seed)),
-                        new ItemStack(ItemHelper.getItem(ItemPouch.class), 1, SeedRegistry.getIndexOf(seed))
+                        new ItemStack(ItemHelper.getItem(ItemSeed.class), 9, ResourcefulAPI.SEEDS.getId(seed)),
+                        new ItemStack(ItemHelper.getItem(ItemPouch.class), 1, ResourcefulAPI.SEEDS.getId(seed))
                 ));
             }
         }
@@ -84,12 +85,12 @@ public class RecipeRegistry {
                 'G', "gemEmerald"
         ));
 
-        for (Seed seed : SeedRegistry.getSeedList()) {
+        for (Seed seed : ResourcefulAPI.SEEDS.getValues()) {
             if (seed.getTier() == 1) {
                 GameRegistry.addRecipe(new ShapedOreRecipe(
                         new ItemStack(ItemHelper.getItem(ItemStone.class), 1, 1),
                         "MMM", "MSM", "MMM",
-                        'M', new ItemStack(ItemHelper.getItem(ItemShard.class), 1, SeedRegistry.getIndexOf(seed)),
+                        'M', new ItemStack(ItemHelper.getItem(ItemShard.class), 1, ResourcefulAPI.SEEDS.getId(seed)),
                         'S', new ItemStack(ItemHelper.getItem(ItemStone.class), 1, 0)
                 ));
             }
@@ -98,7 +99,7 @@ public class RecipeRegistry {
                 GameRegistry.addRecipe(new ShapedOreRecipe(
                         new ItemStack(ItemHelper.getItem(ItemStone.class), 1, 2),
                         "MMM", "MSM", "MMM",
-                        'M', new ItemStack(ItemHelper.getItem(ItemShard.class), 1, SeedRegistry.getIndexOf(seed)),
+                        'M', new ItemStack(ItemHelper.getItem(ItemShard.class), 1, ResourcefulAPI.SEEDS.getId(seed)),
                         'S', new ItemStack(ItemHelper.getItem(ItemStone.class), 1, 1)
                 ));
             }
@@ -107,7 +108,7 @@ public class RecipeRegistry {
                 GameRegistry.addRecipe(new ShapedOreRecipe(
                         new ItemStack(ItemHelper.getItem(ItemStone.class), 1, 3),
                         "MMM", "MSM", "MMM",
-                        'M', new ItemStack(ItemHelper.getItem(ItemShard.class), 1, SeedRegistry.getIndexOf(seed)),
+                        'M', new ItemStack(ItemHelper.getItem(ItemShard.class), 1, ResourcefulAPI.SEEDS.getId(seed)),
                         'S', new ItemStack(ItemHelper.getItem(ItemStone.class), 1, 2)
                 ));
             }
@@ -116,7 +117,7 @@ public class RecipeRegistry {
                 GameRegistry.addRecipe(new ShapedOreRecipe(
                         new ItemStack(ItemHelper.getItem(ItemStone.class), 1, 4),
                         "MMM", "MSM", "MMM",
-                        'M', new ItemStack(ItemHelper.getItem(ItemShard.class), 1, SeedRegistry.getIndexOf(seed)),
+                        'M', new ItemStack(ItemHelper.getItem(ItemShard.class), 1, ResourcefulAPI.SEEDS.getId(seed)),
                         'S', new ItemStack(ItemHelper.getItem(ItemStone.class), 1, 3)
                 ));
             }

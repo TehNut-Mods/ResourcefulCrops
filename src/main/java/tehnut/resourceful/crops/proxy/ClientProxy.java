@@ -7,6 +7,7 @@ import net.minecraft.client.renderer.color.IBlockColor;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.IBlockAccess;
@@ -15,6 +16,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import tehnut.lib.annot.Used;
 import tehnut.lib.util.helper.BlockHelper;
 import tehnut.lib.util.helper.ItemHelper;
+import tehnut.resourceful.crops.api.ResourcefulAPI;
 import tehnut.resourceful.crops.api.base.Seed;
 import tehnut.resourceful.crops.api.registry.SeedRegistry;
 import tehnut.resourceful.crops.block.BlockRCrop;
@@ -40,7 +42,7 @@ public class ClientProxy extends CommonProxy {
             public int colorMultiplier(IBlockState state, IBlockAccess blockAccess, BlockPos pos, int tintIndex) {
                 TileEntity cropTile = blockAccess.getTileEntity(pos);
                 if (cropTile != null && cropTile instanceof TileRCrop) {
-                    Seed seed = SeedRegistry.getSeed(((TileRCrop) cropTile).getSeedName());
+                    Seed seed = ResourcefulAPI.SEEDS.getObject(((TileRCrop) cropTile).getSeedName());
                     if (seed != null)
                         return seed.getColor().getRGB();
                 }
@@ -57,7 +59,7 @@ public class ClientProxy extends CommonProxy {
         IItemColor seedColor = new IItemColor() {
             @Override
             public int getColorFromItemstack(ItemStack stack, int tintIndex) {
-                Seed seed = SeedRegistry.getSeed(stack.getItemDamage());
+                Seed seed = ResourcefulAPI.SEEDS.getRaw(stack.getItemDamage());
                 if (seed != null)
                     return seed.getColor().getRGB();
 
