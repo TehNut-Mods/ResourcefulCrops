@@ -37,7 +37,7 @@ public class SeedRegistry {
     }
 
     public static int getIndexOf(Seed seed) {
-        return seedMap.inverse().get(seed);
+        return seedMap.inverse().get(seed) == null ? Short.MAX_VALUE : seedMap.inverse().get(seed);
     }
 
     public static int getIndexOf(String name) {
