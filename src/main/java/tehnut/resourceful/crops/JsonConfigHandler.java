@@ -4,12 +4,12 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import org.apache.commons.io.FileUtils;
 import tehnut.resourceful.crops.api.ResourcefulAPI;
 import tehnut.resourceful.crops.api.base.Chance;
 import tehnut.resourceful.crops.api.base.Requirement;
 import tehnut.resourceful.crops.api.base.Seed;
-import tehnut.resourceful.crops.api.registry.SeedRegistry;
 import tehnut.resourceful.crops.api.util.BlockStack;
 import tehnut.resourceful.crops.util.StartupUtils;
 import tehnut.resourceful.crops.util.json.*;
@@ -47,7 +47,7 @@ public class JsonConfigHandler {
             Map<Integer, Seed> seeds = gson.fromJson(new FileReader(jsonConfig), new TypeToken<Map<Integer, Seed>>(){ }.getType());
 
             for (Map.Entry<Integer, Seed> entry : seeds.entrySet())
-                ResourcefulAPI.SEEDS.register(entry.getValue().setRegistryName(entry.getValue().getName()));
+                GameRegistry.register(entry.getValue().setRegistryName(entry.getValue().getName()));
         } catch (IOException e) {
             ResourcefulAPI.logger.error("Failed to handle Seed configuration.");
         }
