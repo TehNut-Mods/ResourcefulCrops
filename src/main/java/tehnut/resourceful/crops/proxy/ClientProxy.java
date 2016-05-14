@@ -40,6 +40,8 @@ public class ClientProxy extends CommonProxy {
         IBlockColor cropColor = new IBlockColor() {
             @Override
             public int colorMultiplier(IBlockState state, IBlockAccess blockAccess, BlockPos pos, int tintIndex) {
+                if (state == null || blockAccess == null || pos == null)
+                    return 16777215;
                 TileEntity cropTile = blockAccess.getTileEntity(pos);
                 if (cropTile != null && cropTile instanceof TileRCrop) {
                     Seed seed = ResourcefulAPI.SEEDS.getObject(((TileRCrop) cropTile).getSeedName());
@@ -47,7 +49,7 @@ public class ClientProxy extends CommonProxy {
                         return seed.getColor().getRGB();
                 }
 
-                return -1;
+                return 16777215;
             }
         };
 
