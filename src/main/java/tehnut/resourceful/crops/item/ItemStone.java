@@ -75,7 +75,7 @@ public class ItemStone extends Item implements IMeshProvider {
 
     @Override
     public ItemStack getContainerItem(ItemStack stack) {
-        return stack;
+        return stack.copy();
     }
 
     @Override
