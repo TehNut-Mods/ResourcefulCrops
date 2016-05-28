@@ -7,7 +7,6 @@ import net.minecraft.client.renderer.color.IBlockColor;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.IBlockAccess;
@@ -18,7 +17,6 @@ import tehnut.lib.util.helper.BlockHelper;
 import tehnut.lib.util.helper.ItemHelper;
 import tehnut.resourceful.crops.api.ResourcefulAPI;
 import tehnut.resourceful.crops.api.base.Seed;
-import tehnut.resourceful.crops.api.registry.SeedRegistry;
 import tehnut.resourceful.crops.block.BlockRCrop;
 import tehnut.resourceful.crops.item.ItemPouch;
 import tehnut.resourceful.crops.item.ItemSeed;
@@ -75,18 +73,5 @@ public class ClientProxy extends CommonProxy {
                 ItemHelper.getItem(ItemSeed.class),
                 ItemHelper.getItem(ItemShard.class)
         );
-    }
-
-    @Override
-    public void addChatMessage(String string) {
-        addChatMessage(string, 1);
-    }
-
-    @Override
-    public void addChatMessage(String string, int id) {
-        Minecraft minecraft = Minecraft.getMinecraft();
-        GuiNewChat chat = minecraft.ingameGUI.getChatGUI();
-
-        chat.printChatMessageWithOptionalDeletion(new TextComponentString(string), id);
     }
 }

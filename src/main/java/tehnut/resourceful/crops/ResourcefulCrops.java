@@ -9,14 +9,15 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import tehnut.lib.LendingLibrary;
 import tehnut.lib.iface.ICompatibility;
+import tehnut.lib.translate.LocalizationHelper;
 import tehnut.lib.util.helper.ItemHelper;
 import tehnut.lib.util.helper.LogHelper;
 import tehnut.resourceful.crops.api.ModInformation;
 import tehnut.resourceful.crops.api.ResourcefulAPI;
-import tehnut.resourceful.crops.api.registry.SeedRegistry;
 import tehnut.resourceful.crops.item.ItemStone;
 import tehnut.resourceful.crops.proxy.CommonProxy;
 import tehnut.resourceful.crops.registry.AchievementRegistry;
@@ -49,11 +50,15 @@ public class ResourcefulCrops {
     @Mod.Instance(ModInformation.ID)
     public static ResourcefulCrops instance;
 
+    public static final SimpleNetworkWrapper NETWORK_WRAPPER = new SimpleNetworkWrapper(ModInformation.ID);
+
     private final LendingLibrary library;
+    private final LocalizationHelper translater;
     private File configDir;
 
     public ResourcefulCrops() {
-        library = new LendingLibrary(ModInformation.ID);
+        this.library = new LendingLibrary(ModInformation.ID);
+        this.translater = new LocalizationHelper(NETWORK_WRAPPER, 0, 80085);
     }
 
     @Mod.EventHandler

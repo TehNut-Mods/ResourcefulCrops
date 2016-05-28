@@ -7,7 +7,6 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.oredict.OreDictionary;
 import tehnut.resourceful.crops.api.ResourcefulAPI;
 import tehnut.resourceful.crops.api.base.Seed;
-import tehnut.resourceful.crops.api.registry.SeedRegistry;
 
 public class Utils {
 

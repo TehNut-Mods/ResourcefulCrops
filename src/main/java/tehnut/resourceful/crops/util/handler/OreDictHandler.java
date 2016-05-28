@@ -7,7 +7,6 @@ import tehnut.lib.util.helper.ItemHelper;
 import tehnut.resourceful.crops.ConfigHandler;
 import tehnut.resourceful.crops.api.ResourcefulAPI;
 import tehnut.resourceful.crops.api.base.Seed;
-import tehnut.resourceful.crops.api.registry.SeedRegistry;
 import tehnut.resourceful.crops.block.BlockROre;
 import tehnut.resourceful.crops.item.ItemPouch;
 import tehnut.resourceful.crops.item.ItemSeed;

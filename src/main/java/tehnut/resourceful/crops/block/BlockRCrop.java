@@ -13,7 +13,6 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -31,7 +30,6 @@ import tehnut.resourceful.crops.achievement.AchievementTrigger;
 import tehnut.resourceful.crops.api.ModInformation;
 import tehnut.resourceful.crops.api.ResourcefulAPI;
 import tehnut.resourceful.crops.api.base.Seed;
-import tehnut.resourceful.crops.api.registry.SeedRegistry;
 import tehnut.resourceful.crops.api.util.BlockStack;
 import tehnut.resourceful.crops.item.ItemMaterial;
 import tehnut.resourceful.crops.item.ItemSeed;
@@ -91,6 +89,9 @@ public class BlockRCrop extends BlockCrops {
     public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
         TileEntity cropTile = world.getTileEntity(pos);
 
+        if (hand != EnumHand.MAIN_HAND)
+            return false;
+
         if (Utils.isValidSeed(((TileRCrop) cropTile).getSeedName().toString())) {
             if (player.getHeldItem(hand) != null && player.getHeldItem(hand).getItem() instanceof ItemHoe) {
                 AchievementTrigger.triggerAchievement(player, AchievementRegistry.getInfo);
@@ -99,7 +100,7 @@ public class BlockRCrop extends BlockCrops {
 
             if (!player.isSneaking() || player.getHeldItem(hand) == null && ConfigHandler.enableRightClickHarvest) {
                 AchievementTrigger.triggerAchievement(player, AchievementRegistry.getHarvest);
-                return doHarvest(world, pos, player, hand);
+                return doHarvest(world, pos, player);
             }
         }
 
@@ -119,7 +120,7 @@ public class BlockRCrop extends BlockCrops {
     }
 
     @Override
-    public ArrayList<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+    public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
         return new ArrayList<ItemStack>();
     }
 
@@ -134,14 +135,14 @@ public class BlockRCrop extends BlockCrops {
 
         if (cropTile instanceof TileRCrop && ((TileRCrop) cropTile).getShouldDrop())
             for (ItemStack stack : getDrops(world, pos, state))
-                world.spawnEntityInWorld(new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), stack));
+                world.spawnEntityInWorld(new EntityItem(world, pos.getX() + 0.5F, pos.getY(), pos.getZ() + 0.5F, stack));
     }
 
     public List<ItemStack> getDrops(World world, BlockPos pos, IBlockState state) {
         List<ItemStack> drops = new ArrayList<ItemStack>();
         int seedIndex = getTileSeedIndex(world, pos);
 
-        if (this.getMetaFromState(state) <= 6) {
+        if (getAge(state) <= 6) {
             drops.add(new ItemStack(ItemHelper.getItem(ItemSeed.class), 1, seedIndex));
         } else {
             drops.add(new ItemStack(ItemHelper.getItem(ItemSeed.class), 1, seedIndex));
@@ -150,13 +151,13 @@ public class BlockRCrop extends BlockCrops {
         return drops;
     }
 
-    public boolean doHarvest(World world, BlockPos pos, EntityPlayer player, EnumHand hand) {
-        if (world.getBlockState(pos).getBlock() == BlockHelper.getBlock(BlockRCrop.class) && getMetaFromState(world.getBlockState(pos)) >= 7) {
+    public boolean doHarvest(World world, BlockPos pos, EntityPlayer player) {
+        if (world.getBlockState(pos).getBlock() == BlockHelper.getBlock(BlockRCrop.class) && getAge(world.getBlockState(pos)) >= 7) {
             if (!world.isRemote) {
                 world.setBlockState(pos, getDefaultState(), 3);
                 doRightClickDrops(world, pos);
             }
-            player.swingArm(hand);
+            player.swingArm(EnumHand.MAIN_HAND);
             return true;
         }
 
@@ -166,18 +167,18 @@ public class BlockRCrop extends BlockCrops {
     public boolean doReqInfo(String seedName) {
         Seed seed = ResourcefulAPI.SEEDS.getObject(new ResourceLocation(seedName));
 
-        ResourcefulCrops.proxy.addChatMessage(String.format(I18n.translateToLocal("chat.ResourcefulCrops.crop.name"), seed.getName()), 1);
-        ResourcefulCrops.proxy.addChatMessage(String.format(I18n.translateToLocal("chat.ResourcefulCrops.req.growth"), seed.getRequirement().getGrowthReq() != null ? seed.getRequirement().getGrowthReq().getDisplayName() : I18n.translateToLocal("info.ResourcefulCrops.anything")), 2);
+        ResourcefulCrops.instance.getTranslater().localize("chat.ResourcefulCrops.crop.name", seed.getName());
+        ResourcefulCrops.instance.getTranslater().localize("chat.ResourcefulCrops.req.growth", seed.getRequirement().getGrowthReq() != null ? seed.getRequirement().getGrowthReq().getDisplayName() : "info.ResourcefulCrops.anything");
 
         if (seed.getRequirement().getLightLevelMax() == 15)
-            ResourcefulCrops.proxy.addChatMessage(String.format(I18n.translateToLocal("chat.ResourcefulCrops.req.light.above"), seed.getRequirement().getLightLevelMin()), 3);
+            ResourcefulCrops.instance.getTranslater().localize("chat.ResourcefulCrops.req.light.above", String.valueOf(seed.getRequirement().getLightLevelMin()));
         else if (seed.getRequirement().getLightLevelMin() == 0)
-            ResourcefulCrops.proxy.addChatMessage(String.format(I18n.translateToLocal("chat.ResourcefulCrops.req.light.below"), seed.getRequirement().getLightLevelMax()), 3);
+            ResourcefulCrops.instance.getTranslater().localize("chat.ResourcefulCrops.req.light.below", String.valueOf(seed.getRequirement().getLightLevelMax()));
         else
-            ResourcefulCrops.proxy.addChatMessage(String.format(I18n.translateToLocal("chat.ResourcefulCrops.req.light.between"), seed.getRequirement().getLightLevelMin(), seed.getRequirement().getLightLevelMax()), 3);
+            ResourcefulCrops.instance.getTranslater().localize("chat.ResourcefulCrops.req.light.between", String.valueOf(seed.getRequirement().getLightLevelMin()), String.valueOf(seed.getRequirement().getLightLevelMax()));
 
         if (seed.getRequirement().getDifficulty() != EnumDifficulty.PEACEFUL)
-            ResourcefulCrops.proxy.addChatMessage(String.format(I18n.translateToLocal("chat.ResourcefulCrops.req.difficulty"), seed.getRequirement().getDifficulty().toString()), 4);
+            ResourcefulCrops.instance.getTranslater().localize("chat.ResourcefulCrops.req.difficulty", seed.getRequirement().getDifficulty().toString());
 
         return true;
     }
@@ -191,24 +192,24 @@ public class BlockRCrop extends BlockCrops {
         if (seed == null)
             return;
 
-        world.spawnEntityInWorld(new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ItemHelper.getItem(ItemShard.class), 1, seedIndex)));
+        world.spawnEntityInWorld(new EntityItem(world, pos.getX() + 0.5F, pos.getY(), pos.getZ() + 0.5F, new ItemStack(ItemHelper.getItem(ItemShard.class), 1, seedIndex)));
 
         double extraSeedChance = seed.getChance().getExtraSeed();
         double essenceDropChance = seed.getChance().getEssenceDrop();
         double randomDouble = random.nextDouble();
 
         if (randomDouble <= extraSeedChance)
-            world.spawnEntityInWorld(new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ItemHelper.getItem(ItemSeed.class), 1, seedIndex)));
+            world.spawnEntityInWorld(new EntityItem(world, pos.getX() + 0.5F, pos.getY(), pos.getZ() + 0.5F, new ItemStack(ItemHelper.getItem(ItemSeed.class), 1, seedIndex)));
 
         if (randomDouble <= essenceDropChance)
-            world.spawnEntityInWorld(new EntityItem(world, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(ItemHelper.getItem(ItemMaterial.class))));
+            world.spawnEntityInWorld(new EntityItem(world, pos.getX() + 0.5F, pos.getY(), pos.getZ() + 0.5F, new ItemStack(ItemHelper.getItem(ItemMaterial.class))));
     }
 
     @SubscribeEvent
     @Used
     public void onBonemeal(BonemealEvent event) {
         if (event.getBlock().getBlock() instanceof BlockRCrop)
-            event.setCanceled(true);
+            event.setCanceled(false);
     }
 
     @Override

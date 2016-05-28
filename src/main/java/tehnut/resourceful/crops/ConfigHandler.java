@@ -4,6 +4,7 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import tehnut.lib.annot.Handler;
+import tehnut.lib.annot.Used;
 import tehnut.resourceful.crops.api.ModInformation;
 
 import java.io.File;
@@ -32,6 +33,7 @@ public class ConfigHandler {
     public static boolean blacklistTorcherinoAccelerator;
 
     @SubscribeEvent
+    @Used
     public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent eventArgs) {
         if (eventArgs.getModID().equals(ModInformation.ID))
             ConfigHandler.syncConfig();

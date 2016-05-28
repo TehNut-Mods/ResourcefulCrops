@@ -37,10 +37,12 @@ public class TileRCrop extends TileEntity {
     }
 
     @Override
-    public void writeToNBT(NBTTagCompound tag) {
+    public NBTTagCompound writeToNBT(NBTTagCompound tag) {
+        super.writeToNBT(tag);
+
         tag.setString("seedName", getSeedName().toString());
 
-        super.writeToNBT(tag);
+        return tag;
     }
 
     @Override
@@ -51,15 +53,20 @@ public class TileRCrop extends TileEntity {
     }
 
     @Override
-    public Packet getDescriptionPacket() {
+    public SPacketUpdateTileEntity getUpdatePacket() {
         NBTTagCompound tagCompound = new NBTTagCompound();
         this.writeToNBT(tagCompound);
-
-        return new SPacketUpdateTileEntity(this.getPos(), 1, tagCompound);
+        return new SPacketUpdateTileEntity(this.getPos(), -999, tagCompound);
     }
 
     @Override
     public void onDataPacket(NetworkManager manager, SPacketUpdateTileEntity packet) {
+        super.onDataPacket(manager, packet);
         this.readFromNBT(packet.getNbtCompound());
+    }
+
+    @Override
+    public NBTTagCompound getUpdateTag() {
+        return writeToNBT(new NBTTagCompound());
     }
 }

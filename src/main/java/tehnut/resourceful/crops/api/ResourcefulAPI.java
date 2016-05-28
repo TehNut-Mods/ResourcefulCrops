@@ -30,26 +30,11 @@ public class ResourcefulAPI {
             Seed.class,
             null,
             0,
-            512,
+            1024,
             false,
-            new IForgeRegistry.AddCallback<Seed>() {
-                @Override
-                public void onAdd(Seed obj, int id, Map<ResourceLocation, ?> slaveset) {
-                    // No-op
-                }
-            },
-            new IForgeRegistry.ClearCallback<Seed>() {
-                @Override
-                public void onClear(Map<ResourceLocation, ?> slaveset) {
-                    // No-op
-                }
-            },
-            new IForgeRegistry.CreateCallback<Seed>() {
-                @Override
-                public void onCreate(Map<ResourceLocation, ?> slaveset) {
-                    // No-op
-                }
-            }
+            null,
+            null,
+            null
     );
 
     /**
