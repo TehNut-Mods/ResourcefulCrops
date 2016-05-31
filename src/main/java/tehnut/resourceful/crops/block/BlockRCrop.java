@@ -209,7 +209,7 @@ public class BlockRCrop extends BlockCrops {
     @Used
     public void onBonemeal(BonemealEvent event) {
         if (event.getBlock().getBlock() instanceof BlockRCrop)
-            event.setCanceled(false);
+            event.setCanceled(true);
     }
 
     @Override
