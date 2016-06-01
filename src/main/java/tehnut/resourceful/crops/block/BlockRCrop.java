@@ -4,6 +4,7 @@ import net.minecraft.block.BlockCrops;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemHoe;
 import net.minecraft.item.ItemStack;
@@ -95,7 +96,7 @@ public class BlockRCrop extends BlockCrops {
         if (Utils.isValidSeed(((TileRCrop) cropTile).getSeedName().toString())) {
             if (player.getHeldItem(hand) != null && player.getHeldItem(hand).getItem() instanceof ItemHoe) {
                 AchievementTrigger.triggerAchievement(player, AchievementRegistry.getInfo);
-                return doReqInfo(((TileRCrop) cropTile).getSeedName().toString());
+                return doReqInfo(player, ((TileRCrop) cropTile).getSeedName().toString());
             }
 
             if (!player.isSneaking() || player.getHeldItem(hand) == null && ConfigHandler.enableRightClickHarvest) {
@@ -164,21 +165,26 @@ public class BlockRCrop extends BlockCrops {
         return false;
     }
 
-    public boolean doReqInfo(String seedName) {
-        Seed seed = ResourcefulAPI.SEEDS.getObject(new ResourceLocation(seedName));
+    public boolean doReqInfo(EntityPlayer player, String seedName) {
+        Seed seed = ResourcefulAPI.SEEDS.getValue(new ResourceLocation(seedName));
 
-        ResourcefulCrops.instance.getTranslater().localize("chat.ResourcefulCrops.crop.name", seed.getName());
-        ResourcefulCrops.instance.getTranslater().localize("chat.ResourcefulCrops.req.growth", seed.getRequirement().getGrowthReq() != null ? seed.getRequirement().getGrowthReq().getDisplayName() : "info.ResourcefulCrops.anything");
+        if (player.getEntityWorld().isRemote)
+            return false;
+
+        EntityPlayerMP playerMP = (EntityPlayerMP) player;
+
+        ResourcefulCrops.instance.getTranslater().sendLocalization(playerMP, "chat.ResourcefulCrops.crop.name", seed.getName());
+        ResourcefulCrops.instance.getTranslater().sendLocalization(playerMP, "chat.ResourcefulCrops.req.growth", seed.getRequirement().getGrowthReq() != null ? seed.getRequirement().getGrowthReq().getDisplayName() : "info.ResourcefulCrops.anything");
 
         if (seed.getRequirement().getLightLevelMax() == 15)
-            ResourcefulCrops.instance.getTranslater().localize("chat.ResourcefulCrops.req.light.above", String.valueOf(seed.getRequirement().getLightLevelMin()));
+            ResourcefulCrops.instance.getTranslater().sendLocalization(playerMP, "chat.ResourcefulCrops.req.light.above", seed.getRequirement().getLightLevelMin());
         else if (seed.getRequirement().getLightLevelMin() == 0)
-            ResourcefulCrops.instance.getTranslater().localize("chat.ResourcefulCrops.req.light.below", String.valueOf(seed.getRequirement().getLightLevelMax()));
+            ResourcefulCrops.instance.getTranslater().sendLocalization(playerMP, "chat.ResourcefulCrops.req.light.below", seed.getRequirement().getLightLevelMax());
         else
-            ResourcefulCrops.instance.getTranslater().localize("chat.ResourcefulCrops.req.light.between", String.valueOf(seed.getRequirement().getLightLevelMin()), String.valueOf(seed.getRequirement().getLightLevelMax()));
+            ResourcefulCrops.instance.getTranslater().sendLocalization(playerMP, "chat.ResourcefulCrops.req.light.between", seed.getRequirement().getLightLevelMin(), seed.getRequirement().getLightLevelMax());
 
         if (seed.getRequirement().getDifficulty() != EnumDifficulty.PEACEFUL)
-            ResourcefulCrops.instance.getTranslater().localize("chat.ResourcefulCrops.req.difficulty", seed.getRequirement().getDifficulty().toString());
+            ResourcefulCrops.instance.getTranslater().sendLocalization(playerMP, "chat.ResourcefulCrops.req.difficulty", seed.getRequirement().getDifficulty().toString());
 
         return true;
     }
