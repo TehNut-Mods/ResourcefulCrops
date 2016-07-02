@@ -3,6 +3,7 @@ package tehnut.resourceful.crops.registry;
 import net.minecraftforge.fml.common.Loader;
 import tehnut.lib.iface.ICompatibility;
 import tehnut.resourceful.crops.compat.bloodmagic.CompatBloodMagic;
+import tehnut.resourceful.crops.compat.harvestcrap.CompatibilityHarvestcrap;
 import tehnut.resourceful.crops.compat.neotech.CompatNeoTech;
 import tehnut.resourceful.crops.compat.thaumcraft.CompatibilityThaumcraft;
 import tehnut.resourceful.crops.compat.torcherino.CompatTorcherino;
@@ -20,6 +21,7 @@ public class CompatibilityRegistry {
         compatibilities.add(new CompatNeoTech());
         compatibilities.add(new CompatTorcherino());
         compatibilities.add(new CompatibilityThaumcraft());
+        compatibilities.add(new CompatibilityHarvestcrap());
     }
 
     public static void runCompat(ICompatibility.InitializationPhase phase) {
