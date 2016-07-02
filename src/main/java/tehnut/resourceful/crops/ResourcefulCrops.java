@@ -7,6 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLModIdMappingEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
@@ -84,7 +85,6 @@ public class ResourcefulCrops {
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
-        RecipeRegistry.registerItemRecipes();
         OreDictHandler.load();
         CompatibilityRegistry.runCompat(ICompatibility.InitializationPhase.INIT);
 
@@ -95,4 +95,9 @@ public class ResourcefulCrops {
     public void postInit(FMLPostInitializationEvent event) {
         CompatibilityRegistry.runCompat(ICompatibility.InitializationPhase.POST_INIT);
     }
+
+	@Mod.EventHandler
+	public void modMapping(FMLModIdMappingEvent event) {
+		RecipeRegistry.registerItemRecipes();
+	}
 }
