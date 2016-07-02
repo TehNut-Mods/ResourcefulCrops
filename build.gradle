@@ -191,6 +191,9 @@ curseforge {
 		changelog = project.hasProperty('changelog') ? project.changelog : ''
         releaseType = 'alpha'
 
+        addGameVersion '1.10'
+        addGameVersion '1.10.2'
+
         relations curseRelations
 
         addArtifact sourceJar

@@ -29,7 +29,7 @@ import tehnut.resourceful.crops.util.handler.OreDictHandler;
 
 import java.io.File;
 
-@Mod(modid = ModInformation.ID, name = ModInformation.NAME, version = ModInformation.VERSION, dependencies = ModInformation.REQUIRED, guiFactory = ModInformation.GUIFACTORY)
+@Mod(modid = ModInformation.ID, name = ModInformation.NAME, version = ModInformation.VERSION, acceptedMinecraftVersions = ModInformation.MC_VER, dependencies = ModInformation.REQUIRED, guiFactory = ModInformation.GUIFACTORY)
 @Getter
 public class ResourcefulCrops {
 
