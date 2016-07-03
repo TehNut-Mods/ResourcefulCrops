@@ -9,7 +9,6 @@
 /out/*
 /asm/*
 /bin/*
-/libs/*
 
 # File Extensions
 *.psd
