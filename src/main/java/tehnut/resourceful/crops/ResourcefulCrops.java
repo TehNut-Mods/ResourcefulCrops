@@ -6,12 +6,11 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLModIdMappingEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.*;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import tehnut.lib.LendingLibrary;
 import tehnut.lib.iface.ICompatibility;
 import tehnut.lib.translate.LocalizationHelper;
@@ -97,7 +96,16 @@ public class ResourcefulCrops {
     }
 
 	@Mod.EventHandler
+	@SideOnly(Side.SERVER)
+	public void serverStarting(FMLServerStartingEvent event) {
+		RecipeRegistry.registerItemRecipes();
+		ResourcefulAPI.logger.info("Recipes!");
+	}
+
+	@Mod.EventHandler
+	@SideOnly(Side.CLIENT)
 	public void modMapping(FMLModIdMappingEvent event) {
 		RecipeRegistry.registerItemRecipes();
+		ResourcefulAPI.logger.info("Recipes!");
 	}
 }
