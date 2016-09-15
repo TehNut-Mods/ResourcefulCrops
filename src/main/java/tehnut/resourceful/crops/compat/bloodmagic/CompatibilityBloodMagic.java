@@ -3,11 +3,11 @@ package tehnut.resourceful.crops.compat.bloodmagic;
 import tehnut.lib.iface.ICompatibility;
 import tehnut.resourceful.crops.ConfigHandler;
 
-public class CompatBloodMagic implements ICompatibility {
+public class CompatibilityBloodMagic implements ICompatibility {
 
     @Override
     public void loadCompatibility(InitializationPhase phase) {
-        if (phase == InitializationPhase.INIT && ConfigHandler.enableBloodMagicAutomation)
+        if (phase == InitializationPhase.INIT)
             HandlerBloodMagic.registerHarvestHandlers();
     }
 
@@ -18,6 +18,6 @@ public class CompatBloodMagic implements ICompatibility {
 
     @Override
     public boolean enableCompat() {
-        return true;
+        return ConfigHandler.enableBloodMagicAutomation;
     }
 }

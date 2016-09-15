@@ -50,12 +50,15 @@ repositories {
     maven {	url "http://mobiusstrip.eu/maven" }
     maven { url "http://dvs1.progwml6.com/files/maven" }
     maven { url "http://tehnut.info/maven" }
+    maven { url "http://maven.tterrag.com" }
 }
 
 dependencies {
     deobfCompile "mezz.jei:jei_${mc_version}:${jei_version}"
     deobfCompile "mcp.mobius.waila:Waila:${waila_version}_${mc_version}"
     deobfCompile "com.wayoftime.bloodmagic:BloodMagic:${mc_version}-${bloodmagic_version}:api"
+    deobfCompile "com.enderio:EnderIO:${mc_version}-${enderio_version}"
+    deobfCompile "com.enderio.core:EnderCore:${mc_version}-${endercore_version}"
     shade "tehnut.lib:LendingLibrary:${mc_version}-${lendinglibrary_version}"
 }
 
