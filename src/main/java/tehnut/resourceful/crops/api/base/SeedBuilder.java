@@ -5,7 +5,8 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 import net.minecraft.item.ItemStack;
 
-import java.awt.*;
+import java.awt.Color;
+import java.util.List;
 
 /**
  * Factory for creating Seeds/Crops/Shards.
@@ -20,9 +21,7 @@ public class SeedBuilder {
     private int tier;
     private int amount;
     private String input;
-    private ItemStack output;
-    private ItemStack secondOutput = null;
-    private ItemStack thirdOutput = null;
+    private List<Output> output;
     private Color color;
     private Requirement requirement = new RequirementBuilder().build();
     private Chance chance = new ChanceBuilder().build();
@@ -43,6 +42,6 @@ public class SeedBuilder {
     }
 
     public Seed build() {
-        return new Seed(name, tier, amount, input, output, secondOutput, thirdOutput, color, requirement, chance);
+        return new Seed(name, tier, amount, input, output, color, requirement, chance);
     }
 }

@@ -7,10 +7,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.oredict.OreDictionary;
+import tehnut.resourceful.crops.api.base.Output;
+import tehnut.resourceful.crops.api.base.OutputBuilder;
 import tehnut.resourceful.crops.api.base.Seed;
 import tehnut.resourceful.crops.api.base.SeedBuilder;
 
 import java.awt.*;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -93,7 +96,7 @@ public class StartupUtils {
         builder.setTier(tier);
         builder.setAmount(amount);
         builder.setInput(input);
-        builder.setOutput(output);
+        builder.setOutput(Arrays.asList(new Output[] {new OutputBuilder().setOutputStack(output).setRecipe("default").build()}));
         builder.setColor(color);
 
         return builder.build();

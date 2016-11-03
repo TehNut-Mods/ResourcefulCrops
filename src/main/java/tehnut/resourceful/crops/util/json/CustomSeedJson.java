@@ -3,11 +3,14 @@ package tehnut.resourceful.crops.util.json;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import net.minecraft.item.ItemStack;
+import tehnut.resourceful.crops.api.ResourcefulAPI;
 import tehnut.resourceful.crops.api.base.*;
 import tehnut.resourceful.crops.util.helper.JsonHelper;
 
-import java.awt.*;
+import java.awt.Color;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CustomSeedJson implements JsonDeserializer<Seed>, JsonSerializer<Seed> {
 
@@ -21,16 +24,50 @@ public class CustomSeedJson implements JsonDeserializer<Seed>, JsonSerializer<Se
         int tier = jsonHelper.getNullableInteger("tier", 1);
         int amount = jsonHelper.getNullableInteger("amount", 1);
         String input = jsonHelper.getString("input");
-        ItemStack output = context.deserialize(json.getAsJsonObject().get("output"), new TypeToken<ItemStack>() {
-        }.getType());
-        ItemStack secondOutput = null;
-        ItemStack thirdOutput = null;
-        if (json.getAsJsonObject().get("secondOutput") != null)
-            secondOutput = context.deserialize(json.getAsJsonObject().get("secondOutput"), new TypeToken<ItemStack>() {
-            }.getType());
-        if (json.getAsJsonObject().get("thirdOutput") != null)
-            thirdOutput = context.deserialize(json.getAsJsonObject().get("thirdOutput"), new TypeToken<ItemStack>() {
-            }.getType());
+        
+        List<Output> outputs = new ArrayList<Output>();
+        
+        //Old style
+        if (json.getAsJsonObject().get("output").isJsonObject()) {
+        	OutputBuilder builder = new OutputBuilder();
+        	builder.setOutputStack((ItemStack) context.deserialize(json.getAsJsonObject().get("output"), new TypeToken<ItemStack>() {
+        	}.getType()));
+        	builder.setRecipe("default");
+			ResourcefulAPI.logger.info("Old style output found: " + json.getAsJsonObject().get("output"));
+        	outputs.add(builder.build());
+        }
+        //New style
+        else if (json.getAsJsonObject().get("output").isJsonArray()) {
+        	for (JsonElement o : json.getAsJsonObject().get("output").getAsJsonArray()) {
+        		if (!o.isJsonObject()) {
+        			ResourcefulAPI.logger.warn("Ignoring broken output: " + o);
+        			continue;
+        		}
+        		Output output = context.deserialize(o.getAsJsonObject(), new TypeToken<Output>() {
+                }.getType());
+            	outputs.add(output);
+        	}
+        }
+        
+        //Compat
+        if (json.getAsJsonObject().get("secondOutput") != null) {
+        	OutputBuilder builder = new OutputBuilder();
+        	builder.setOutputStack((ItemStack) context.deserialize(json.getAsJsonObject().get("secondOutput"), new TypeToken<ItemStack>() {
+        	}.getType()));
+        	builder.setRecipe("cross");
+			ResourcefulAPI.logger.info("Old style second output found: " + json.getAsJsonObject().get("secondOutput"));
+        	outputs.add(builder.build());
+        }
+        if (json.getAsJsonObject().get("thirdOutput") != null) {
+        	OutputBuilder builder = new OutputBuilder();
+        	builder.setOutputStack((ItemStack) context.deserialize(json.getAsJsonObject().get("thirdOutput"), new TypeToken<ItemStack>() {
+        	}.getType()));
+        	builder.setRecipe("2x2");
+			ResourcefulAPI.logger.info("Old style third output found: " + json.getAsJsonObject().get("thirdOutput"));
+        	outputs.add(builder.build());
+        }
+       
+        
         String color = jsonHelper.getString("color");
         Chance chance = new ChanceBuilder().build();
         Requirement requirement = new RequirementBuilder().build();
@@ -46,9 +83,7 @@ public class CustomSeedJson implements JsonDeserializer<Seed>, JsonSerializer<Se
         builder.setTier(tier);
         builder.setAmount(amount);
         builder.setInput(input);
-        builder.setOutput(output);
-        builder.setSecondOutput(secondOutput);
-        builder.setThirdOutput(thirdOutput);
+        builder.setOutput(outputs);
         try {
             builder.setColor(Color.decode(color));
         } catch (NumberFormatException e) {
@@ -70,10 +105,6 @@ public class CustomSeedJson implements JsonDeserializer<Seed>, JsonSerializer<Se
         jsonObject.addProperty("input", src.getInput());
         jsonObject.add("output", context.serialize(src.getOutput()));
         jsonObject.addProperty("color", "#" + Integer.toHexString(src.getColor().getRGB()).substring(2).toUpperCase());
-        if (src.getSecondOutput() != null)
-            jsonObject.add("secondOutput", context.serialize(src.getSecondOutput()));
-        if (src.getThirdOutput() != null)
-            jsonObject.add("thirdOutput", context.serialize(src.getThirdOutput()));
         if (!src.getChance().equals(DEFAULT_CHANCE))
             jsonObject.add("chance", context.serialize(src.getChance()));
         if (!src.getRequirement().equals(DEFAULT_REQUIREMENT))

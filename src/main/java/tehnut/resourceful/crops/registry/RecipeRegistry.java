@@ -8,6 +8,7 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
 import tehnut.lib.util.helper.ItemHelper;
 import tehnut.resourceful.crops.ConfigHandler;
 import tehnut.resourceful.crops.api.ResourcefulAPI;
+import tehnut.resourceful.crops.api.base.Output;
 import tehnut.resourceful.crops.api.base.Seed;
 import tehnut.resourceful.crops.item.*;
 import tehnut.resourceful.crops.util.Utils;
@@ -29,30 +30,20 @@ public class RecipeRegistry {
             }
 
             if (ConfigHandler.enableShardCrafting) {
-                if (seed.getOutput() != null) {
-                    GameRegistry.addRecipe(new ShapedOreRecipe(
-                            seed.getOutput(),
-                            "SSS", "S S", "SSS",
-                            'S', new ItemStack(ItemHelper.getItem(ItemShard.class), 1, ResourcefulAPI.SEEDS.getId(seed)))
-                    );
-                }
-
-
-                if (seed.getSecondOutput() != null) {
-                    GameRegistry.addRecipe(new ShapedOreRecipe(
-                            seed.getSecondOutput(),
-                            " S ", "SSS", " S ",
-                            'S', new ItemStack(ItemHelper.getItem(ItemShard.class), 1, ResourcefulAPI.SEEDS.getId(seed)))
-                    );
-                }
-
-                if (seed.getThirdOutput() != null) {
-                    GameRegistry.addRecipe(new ShapedOreRecipe(
-                            seed.getThirdOutput(),
-                            "SS", "SS",
-                            'S', new ItemStack(ItemHelper.getItem(ItemShard.class), 1, ResourcefulAPI.SEEDS.getId(seed)))
-                    );
-                }
+	                if (seed.getOutput() != null) {
+	                	for (Output output : seed.getOutput()) {
+			            	try {
+	                		GameRegistry.addRecipe(new ShapedOreRecipe(
+	                				output.getOutputStack(),
+	                				output.getRecipe(),
+	                                'S', new ItemStack(ItemHelper.getItem(ItemShard.class), 1, ResourcefulAPI.SEEDS.getId(seed)))
+	                		);
+			            	}
+			            	catch (NullPointerException e) {
+			            		ResourcefulAPI.logger.error("Error registering recipes for output: " + output, e);
+			            	}
+	                	}
+	                }
             }
 
             if (ConfigHandler.enableSeedPouches && ConfigHandler.enableSeedCrafting) {
