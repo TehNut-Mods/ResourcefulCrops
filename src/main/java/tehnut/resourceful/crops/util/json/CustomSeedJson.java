@@ -26,45 +26,45 @@ public class CustomSeedJson implements JsonDeserializer<Seed>, JsonSerializer<Se
         String input = jsonHelper.getString("input");
         
         List<Output> outputs = new ArrayList<Output>();
-        
+
         //Old style
         if (json.getAsJsonObject().get("output").isJsonObject()) {
-        	OutputBuilder builder = new OutputBuilder();
-        	builder.setOutputStack((ItemStack) context.deserialize(json.getAsJsonObject().get("output"), new TypeToken<ItemStack>() {
-        	}.getType()));
-        	builder.setRecipe("default");
-			ResourcefulAPI.logger.info("Old style output found: " + json.getAsJsonObject().get("output"));
-        	outputs.add(builder.build());
+            OutputBuilder builder = new OutputBuilder();
+            builder.setOutputStack((ItemStack) context.deserialize(json.getAsJsonObject().get("output"), new TypeToken<ItemStack>() {
+            }.getType()));
+            builder.setRecipe("default");
+            ResourcefulAPI.logger.info("Old style output found: " + json.getAsJsonObject().get("output"));
+            outputs.add(builder.build());
         }
         //New style
         else if (json.getAsJsonObject().get("output").isJsonArray()) {
-        	for (JsonElement o : json.getAsJsonObject().get("output").getAsJsonArray()) {
-        		if (!o.isJsonObject()) {
-        			ResourcefulAPI.logger.warn("Ignoring broken output: " + o);
-        			continue;
-        		}
-        		Output output = context.deserialize(o.getAsJsonObject(), new TypeToken<Output>() {
+            for (JsonElement o : json.getAsJsonObject().get("output").getAsJsonArray()) {
+                if (!o.isJsonObject()) {
+                    ResourcefulAPI.logger.warn("Ignoring broken output: " + o);
+                    continue;
+                }
+                Output output = context.deserialize(o.getAsJsonObject(), new TypeToken<Output>() {
                 }.getType());
-            	outputs.add(output);
-        	}
+                outputs.add(output);
+            }
         }
-        
+
         //Compat
         if (json.getAsJsonObject().get("secondOutput") != null) {
-        	OutputBuilder builder = new OutputBuilder();
-        	builder.setOutputStack((ItemStack) context.deserialize(json.getAsJsonObject().get("secondOutput"), new TypeToken<ItemStack>() {
-        	}.getType()));
-        	builder.setRecipe("cross");
-			ResourcefulAPI.logger.info("Old style second output found: " + json.getAsJsonObject().get("secondOutput"));
-        	outputs.add(builder.build());
+            OutputBuilder builder = new OutputBuilder();
+            builder.setOutputStack((ItemStack) context.deserialize(json.getAsJsonObject().get("secondOutput"), new TypeToken<ItemStack>() {
+            }.getType()));
+            builder.setRecipe("cross");
+            ResourcefulAPI.logger.info("Old style second output found: " + json.getAsJsonObject().get("secondOutput"));
+            outputs.add(builder.build());
         }
         if (json.getAsJsonObject().get("thirdOutput") != null) {
-        	OutputBuilder builder = new OutputBuilder();
-        	builder.setOutputStack((ItemStack) context.deserialize(json.getAsJsonObject().get("thirdOutput"), new TypeToken<ItemStack>() {
-        	}.getType()));
-        	builder.setRecipe("2x2");
-			ResourcefulAPI.logger.info("Old style third output found: " + json.getAsJsonObject().get("thirdOutput"));
-        	outputs.add(builder.build());
+            OutputBuilder builder = new OutputBuilder();
+            builder.setOutputStack((ItemStack) context.deserialize(json.getAsJsonObject().get("thirdOutput"), new TypeToken<ItemStack>() {
+            }.getType()));
+            builder.setRecipe("2x2");
+            ResourcefulAPI.logger.info("Old style third output found: " + json.getAsJsonObject().get("thirdOutput"));
+            outputs.add(builder.build());
         }
        
         

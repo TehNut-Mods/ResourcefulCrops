@@ -45,7 +45,7 @@ public class Seed extends IForgeRegistryEntry.Impl<Seed> {
         this.chance = chance;
     }
 
-	@Override
+    @Override
     public String toString() {
         return "Seed{" +
                 "name='" + name + '\'' +
