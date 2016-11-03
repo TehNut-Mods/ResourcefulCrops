@@ -12,6 +12,7 @@ import tehnut.resourceful.crops.api.ResourcefulAPI;
 public class Output {
 	private ItemStack outputStack;
 	private String recipe;
+	private static final Pattern recipePattern = Pattern.compile("^[S #]{5,11}$");
 	private static final Pattern linePattern = Pattern.compile("^[S ]{2,3}$");
 
 	/**
@@ -49,7 +50,12 @@ public class Output {
 				if ("cross".equals(recipe[0])) {
 					return translateRecipe(" S #SSS# S ");
 				}
-				return translateRecipe(recipe[0].split("#", 3));
+				if (recipePattern.matcher(recipe[0]).matches()) {
+					return translateRecipe(recipe[0].split("#", 3));
+				}
+				//fallback if default recipe is broken
+				ResourcefulAPI.logger.info("No valid recipe found, using 'chest': " + this.toString());
+				return translateRecipe("chest");
 			case 2:
 				for (String line : recipe) {
 					Matcher m = linePattern.matcher(line);
