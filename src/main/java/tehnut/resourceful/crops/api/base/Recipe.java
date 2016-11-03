@@ -33,8 +33,10 @@ public enum Recipe {
         if ("3x3".equals(recipeString)) {
             return THREEBYTHREE.getAsArray();
         }
-        if (valueOf(recipeString.toUpperCase()) != null) {
-            return valueOf(recipeString.toUpperCase()).getAsArray();
+        for (Recipe r : values()) {
+            if (r.name().equals(recipeString.toUpperCase())) {
+                return r.getAsArray();
+            }
         }
         if (recipePattern.matcher(recipeString).matches()) {
             String[] recipeArray = recipeString.split("#", 3);
@@ -50,6 +52,7 @@ public enum Recipe {
             }
         }
         //Last resort
+        ResourcefulAPI.logger.info("No valid recipe found, using 'chest': " + recipeString);
         return Recipe.CHEST.getAsArray();
     }
 }
