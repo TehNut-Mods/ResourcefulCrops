@@ -30,20 +30,18 @@ public class RecipeRegistry {
             }
 
             if (ConfigHandler.enableShardCrafting) {
-	                if (seed.getOutput() != null) {
-	                	for (Output output : seed.getOutput()) {
-			            	try {
-	                		GameRegistry.addRecipe(new ShapedOreRecipe(
-	                				output.getOutputStack(),
-	                				output.getRecipe(),
-	                                'S', new ItemStack(ItemHelper.getItem(ItemShard.class), 1, ResourcefulAPI.SEEDS.getId(seed)))
-	                		);
-			            	}
-			            	catch (NullPointerException e) {
-			            		ResourcefulAPI.logger.error("Error registering recipes for output: " + output, e);
-			            	}
-	                	}
-	                }
+                if (seed.getOutput() != null) {
+                    for (Output output : seed.getOutput()) {
+                        try {
+                            GameRegistry.addRecipe(new ShapedOreRecipe(
+                                    output.getOutputStack(),
+                                    output.getRecipe(),
+                                    'S', new ItemStack(ItemHelper.getItem(ItemShard.class), 1, ResourcefulAPI.SEEDS.getId(seed))));
+                        } catch (NullPointerException e) {
+                            ResourcefulAPI.logger.error("Error registering recipes for output: " + output, e);
+                        }
+                    }
+                }
             }
 
             if (ConfigHandler.enableSeedPouches && ConfigHandler.enableSeedCrafting) {

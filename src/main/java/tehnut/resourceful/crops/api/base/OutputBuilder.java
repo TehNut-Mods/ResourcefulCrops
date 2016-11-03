@@ -14,7 +14,7 @@ import net.minecraft.item.ItemStack;
 @NoArgsConstructor
 public class OutputBuilder {
     private ItemStack outputStack;
-    private String    recipe = "default";
+    private String recipe = "default";
 
     public Output build() {
         return new Output(outputStack, recipe);
