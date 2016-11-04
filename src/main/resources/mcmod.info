@@ -1,6 +1,6 @@
 [
   {
-    "modid": "ResourcefulCrops",
+    "modid": "resourcefulcrops",
     "name": "ResourcefulCrops",
     "description": "Simply JSON based resource crops.",
     "version": "${version}",

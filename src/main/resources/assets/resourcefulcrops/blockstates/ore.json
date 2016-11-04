@@ -1,0 +1,21 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "textures": { },
+    "model": "cube_all"
+  },
+  "variants": {
+    "nether": {
+      "false": {
+        "textures": {
+          "all": "resourcefulcrops:blocks/oreGaianite"
+        }
+      },
+      "true": {
+        "textures": {
+          "all": "resourcefulcrops:blocks/oreGaianite_nether"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "resourcefulcrops:items/pouch_base_color",
+    "layer1": "resourcefulcrops:items/pouch_overlay"
+  }
+}
