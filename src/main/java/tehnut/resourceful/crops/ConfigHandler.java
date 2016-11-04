@@ -31,6 +31,10 @@ public class ConfigHandler {
     public static boolean enableBloodMagicAutomation;
     public static boolean blacklistNeoTechAccelerator;
     public static boolean blacklistTorcherinoAccelerator;
+    
+    public static String defaultRecipe;
+    public static float defaultExtraSeedChance;
+    public static float defaultEssenceDropChance;
 
     @SubscribeEvent
     @Used
@@ -77,6 +81,11 @@ public class ConfigHandler {
         category = "Compat.Torcherino";
         blacklistTorcherinoAccelerator = config.getBoolean("blacklistTorcherinoAccelerator", category, true, "Blacklists crops from the Torcherino growth accelerator");
 
+        category = "Defaults";
+        config.addCustomCategoryComment(category, "Default settings for all seeds");
+        defaultRecipe = config.getString("defaultRecipe", category, "chest", "Sets the default recipe for the shard crafting, predefined are 'chest', 'cross', '2x2' and '3x3', free recipes are defined like usual, but as a line separator use '#', and as ingredient spot use 'S'");
+        defaultExtraSeedChance = config.getFloat("defaultExtraSeedChance", category, 0.0f, 0.0f, 1.0f, "Sets the default extra seed drop chance.");
+        defaultEssenceDropChance = config.getFloat("defaultEssenceDropChance", category, 0.0f, 0.0f, 1.0f, "Sets the default essence drop chance.");
         config.save();
     }
 }

@@ -1,6 +1,8 @@
 package tehnut.resourceful.crops.util.json;
 
 import com.google.gson.*;
+
+import tehnut.resourceful.crops.ConfigHandler;
 import tehnut.resourceful.crops.api.base.Chance;
 import tehnut.resourceful.crops.api.base.ChanceBuilder;
 import tehnut.resourceful.crops.util.helper.JsonHelper;
@@ -12,8 +14,8 @@ public class CustomChanceJson implements JsonSerializer<Chance>, JsonDeserialize
     @Override
     public Chance deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         JsonHelper jsonHelper = new JsonHelper(json);
-        double extraSeed = jsonHelper.getNullableDouble("extraSeed", 0.0);
-        double essenceDrop = jsonHelper.getNullableDouble("essenceDrop", 0.0);
+        double extraSeed = jsonHelper.getNullableDouble("extraSeed", ConfigHandler.defaultExtraSeedChance);
+        double essenceDrop = jsonHelper.getNullableDouble("essenceDrop", ConfigHandler.defaultEssenceDropChance);
 
         ChanceBuilder builder = new ChanceBuilder();
         builder.setExtraSeed(extraSeed);
