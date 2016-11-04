@@ -239,7 +239,8 @@ public class BlockRCrop extends BlockCrops {
 
         if (crop != null && crop instanceof TileRCrop) {
             ResourceLocation seedName = ((TileRCrop) crop).getSeedName();
-            seedIndex = ResourcefulAPI.SEEDS.getId(seedName);
+			if (ResourcefulAPI.SEEDS.containsKey(seedName))
+            	seedIndex = ResourcefulAPI.SEEDS.getId(seedName);
         }
 
         return seedIndex;

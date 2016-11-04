@@ -1,4 +1,4 @@
-package tehnut.resourceful.crops.compat.torcherino;
+package tehnut.resourceful.crops.compat.neotech;
 
 import net.minecraftforge.fml.common.event.FMLInterModComms;
 import tehnut.lib.iface.ICompatibility;
@@ -6,21 +6,21 @@ import tehnut.lib.util.helper.BlockHelper;
 import tehnut.resourceful.crops.ConfigHandler;
 import tehnut.resourceful.crops.block.BlockRCrop;
 
-public class CompatTorcherino implements ICompatibility {
+public class CompatibilityNeoTech implements ICompatibility {
 
     @Override
     public void loadCompatibility(InitializationPhase phase) {
-        if (phase == InitializationPhase.PRE_INIT && ConfigHandler.blacklistTorcherinoAccelerator)
-            FMLInterModComms.sendMessage("Torcherino", "blacklist-block", BlockHelper.getBlock(BlockRCrop.class).getRegistryName().toString());
+        if (phase == InitializationPhase.PRE_INIT)
+            FMLInterModComms.sendMessage("neotech", "blacklistFertilizer", BlockHelper.getBlock(BlockRCrop.class).getRegistryName().toString());
     }
 
     @Override
     public String getModId() {
-        return "Torcherino";
+        return "neotech";
     }
 
     @Override
     public boolean enableCompat() {
-        return true;
+        return ConfigHandler.blacklistNeoTechAccelerator;
     }
 }

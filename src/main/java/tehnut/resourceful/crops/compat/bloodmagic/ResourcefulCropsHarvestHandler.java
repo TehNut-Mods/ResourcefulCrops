@@ -23,9 +23,8 @@ public class ResourcefulCropsHarvestHandler implements IHarvestHandler {
             TileEntity tile = world.getTileEntity(blockPos);
             if (tile != null && tile instanceof TileRCrop) {
                 TileRCrop tileCrop = (TileRCrop) tile;
-                BlockStack newBlock = new BlockStack(BlockHelper.getBlock(BlockRCrop.class));
                 world.playEvent(2001, blockPos, Block.getStateId(blockStack.getState()));
-                world.setBlockState(blockPos, newBlock.getState());
+                world.setBlockState(blockPos, BlockHelper.getBlock(BlockRCrop.class).getDefaultState());
                 ItemStack drop = new ItemStack(ItemHelper.getItem(ItemShard.class), 1, ResourcefulAPI.SEEDS.getId(tileCrop.getSeedName()));
                 dropItem(world, blockPos, drop);
                 return true;
