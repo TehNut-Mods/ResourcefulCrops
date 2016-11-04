@@ -42,7 +42,7 @@ public class CompatibilityWaila implements ICompatibility {
                         return invalid;
 
                     Seed seed = ModObjects.SEEDS.getValue(seedContainer.getSeedKey());
-                    ItemStack output = seed.getOutputItems()[0];
+                    ItemStack output = seed.getOutputs()[0].getItem();
                     if (output != null)
                         output.stackSize = 1;
                     return output != null ? output : invalid;

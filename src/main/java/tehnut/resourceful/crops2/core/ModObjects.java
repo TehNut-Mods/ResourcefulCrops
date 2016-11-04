@@ -14,6 +14,7 @@ import tehnut.resourceful.crops2.ResourcefulCrops2;
 import tehnut.resourceful.crops2.block.BlockGaianiteOre;
 import tehnut.resourceful.crops2.block.BlockResourcefulCrop;
 import tehnut.resourceful.crops2.block.tile.TileSeedContainer;
+import tehnut.resourceful.crops2.core.data.Output;
 import tehnut.resourceful.crops2.core.data.Seed;
 import tehnut.resourceful.crops2.core.recipe.ShapedListRecipe;
 import tehnut.resourceful.crops2.item.*;
@@ -83,12 +84,13 @@ public class ModObjects {
             GameRegistry.addRecipe(new ShapelessOreRecipe(wrapper.getStack(seed.getRegistryName(), 9), wrapper.getStack(POUCH, seed.getRegistryName(), 1)));
 
             if (ConfigHandler.crafting.enableShardCrafting) {
-                if (seed.getOutputItems()[0] != null)
-                    GameRegistry.addRecipe(new ShapedOreRecipe(seed.getOutputItems()[0], "SSS", "S S", "SSS", 'S', wrapper.getStack(SHARD, seed.getRegistryName(), 1)));
-                if (seed.getOutputItems().length > 1 && seed.getOutputItems()[1] != null)
-                    GameRegistry.addRecipe(new ShapedOreRecipe(seed.getOutputItems()[1], "SS ", "SS ", 'S', wrapper.getStack(SHARD, seed.getRegistryName(), 1)).setMirrored(true));
-                if (seed.getOutputItems().length > 2 && seed.getOutputItems()[2] != null)
-                    GameRegistry.addRecipe(new ShapedOreRecipe(seed.getOutputItems()[2], " S ", "SSS", " S ", 'S', wrapper.getStack(SHARD, seed.getRegistryName(), 1)));
+                for (Output output : seed.getOutputs()) {
+
+                    String[] recipe = output.getShape().getRecipeFormat().split("#", 3);
+                    if (recipe.length == 1 && !recipe[0].contains("S"))
+                        recipe = Output.Shape.parseRecipe(recipe[0], output.getCustomFormat());
+                    GameRegistry.addRecipe(new ShapedOreRecipe(output.getItem(), recipe, 'S', wrapper.getStack(SHARD, seed.getRegistryName(), 1)));
+                }
             }
 
             GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(STONE, 1, seed.getTier() + 1), "MMM", "MSM", "MMM", 'M', wrapper.getStack(SHARD, seed.getRegistryName(), 1), 'S', new ItemStack(STONE, 1, seed.getTier())));

@@ -35,6 +35,8 @@ public class ConfigHandler {
         public boolean enableSeedCrafting = true;
         @Config.Comment({"Allows crafting of shards into materials. Disable if you wish to use custom recipes.", "Default: true"})
         public boolean enableShardCrafting = true;
+        @Config.Comment({"The default recipe format to use for all outputs.", "Valid values: chest, cross, two_by_two, 2x2, three_by_three, 3x3", "You can also provide a custom shape with each line marked with a #. eg: SSS#S S#SSS for a chest shape.", "Default: chest"})
+        public String defaultRecipeShape = "chest";
     }
 
     public static class Miscellaneous {

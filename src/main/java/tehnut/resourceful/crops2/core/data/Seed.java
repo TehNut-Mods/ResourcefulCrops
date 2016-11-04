@@ -17,36 +17,36 @@ public class Seed extends IForgeRegistryEntry.Impl<Seed> {
     private final int craftAmount;
     private final Color color;
     private final List<ItemStack> inputItems;
-    private final ItemStack[] outputItems;
+    private final Output[] outputs;
     private final GrowthRequirement growthRequirement;
 
     @Nullable
     private String oreName;
 
-    public Seed(String name, int tier, int craftAmount, Color color, List<ItemStack> inputItems, ItemStack[] outputItems, @Nullable GrowthRequirement growthRequirement) {
+    public Seed(String name, int tier, int craftAmount, Color color, List<ItemStack> inputItems, Output[] outputs, @Nullable GrowthRequirement growthRequirement) {
         this.name = name;
         this.tier = tier;
         this.craftAmount = craftAmount;
         this.color = color;
         this.inputItems = inputItems;
-        this.outputItems = outputItems;
+        this.outputs = outputs;
         this.growthRequirement = growthRequirement == null ? GrowthRequirement.DEFAULT : growthRequirement;
     }
 
-    public Seed(String name, int tier, int craftAmount, Color color, List<ItemStack> inputItems, ItemStack outputItem, @Nullable GrowthRequirement growthRequirement) {
-        this(name, tier, craftAmount, color, inputItems, new ItemStack[]{outputItem}, growthRequirement);
+    public Seed(String name, int tier, int craftAmount, Color color, List<ItemStack> inputItems, Output output, @Nullable GrowthRequirement growthRequirement) {
+        this(name, tier, craftAmount, color, inputItems, new Output[]{output}, growthRequirement);
     }
 
-    public Seed(String name, int tier, int craftAmount, Color color, ItemStack inputItem, ItemStack outputItem, @Nullable GrowthRequirement growthRequirement) {
-        this(name, tier, craftAmount, color, Lists.newArrayList(inputItem), new ItemStack[]{outputItem}, growthRequirement);
+    public Seed(String name, int tier, int craftAmount, Color color, ItemStack inputItem, Output output, @Nullable GrowthRequirement growthRequirement) {
+        this(name, tier, craftAmount, color, Lists.newArrayList(inputItem), new Output[]{output}, growthRequirement);
     }
 
-    public Seed(String name, int tier, int craftAmount, Color color, String oreName, ItemStack[] outputItems, @Nullable GrowthRequirement growthRequirement) {
-        this(name, tier, craftAmount, color, OreDictionary.getOres(oreName), outputItems, growthRequirement);
+    public Seed(String name, int tier, int craftAmount, Color color, String oreName, Output[] output, @Nullable GrowthRequirement growthRequirement) {
+        this(name, tier, craftAmount, color, OreDictionary.getOres(oreName), output, growthRequirement);
     }
 
-    public Seed(String name, int tier, int craftAmount, Color color, String oreName, ItemStack outputItem, @Nullable GrowthRequirement growthRequirement) {
-        this(name, tier, craftAmount, color, oreName, new ItemStack[]{outputItem}, growthRequirement);
+    public Seed(String name, int tier, int craftAmount, Color color, String oreName, Output output, @Nullable GrowthRequirement growthRequirement) {
+        this(name, tier, craftAmount, color, oreName, new Output[]{output}, growthRequirement);
     }
 
     public String getName() {
@@ -69,8 +69,8 @@ public class Seed extends IForgeRegistryEntry.Impl<Seed> {
         return ImmutableList.copyOf(inputItems);
     }
 
-    public ItemStack[] getOutputItems() {
-        return outputItems;
+    public Output[] getOutputs() {
+        return outputs;
     }
 
     public GrowthRequirement getGrowthRequirement() {

@@ -8,6 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import org.apache.commons.io.filefilter.FileFilterUtils;
+import tehnut.resourceful.crops2.core.data.Output;
 import tehnut.resourceful.crops2.core.data.Seed;
 import tehnut.resourceful.crops2.core.json.Serializers;
 import tehnut.resourceful.crops2.util.Util;
@@ -110,14 +111,14 @@ public class SeedLoader {
     private static void addSeed(Set<Seed> seeds, String name, int tier, int amount, Color color, ItemStack stack, int outputAmount) {
         ItemStack output = stack.copy();
         output.stackSize = outputAmount;
-        seeds.add(new Seed(name, tier, amount, color, stack, output, null));
+        seeds.add(new Seed(name, tier, amount, color, stack, new Output(output, Output.Shape.DEFAULT, null), null));
     }
 
     private static void addSeed(Set<Seed> seeds, String name, int tier, int amount, Color color, String oreDict, int outputAmount) {
         if (OreDictionary.doesOreNameExist(oreDict) && OreDictionary.getOres(oreDict).size() > 0) {
             ItemStack output = OreDictionary.getOres(oreDict).get(0).copy();
             output.stackSize = outputAmount;
-            Seed seed = new Seed(name, tier, amount, color, oreDict, output, null);
+            Seed seed = new Seed(name, tier, amount, color, oreDict, new Output(output, Output.Shape.DEFAULT, null), null);
             seed.setOreName(oreDict);
             seeds.add(seed);
         }

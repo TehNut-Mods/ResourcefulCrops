@@ -11,6 +11,7 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.oredict.OreDictionary;
 import tehnut.resourceful.crops2.ResourcefulCrops2;
 import tehnut.resourceful.crops2.core.data.GrowthRequirement;
+import tehnut.resourceful.crops2.core.data.Output;
 import tehnut.resourceful.crops2.core.data.Seed;
 
 import java.awt.*;
@@ -49,10 +50,10 @@ public class Serializers {
             }
             if (inputItems == null)
                 throw new RuntimeException("Seed with name " + name + " does not have any valid input items.");
-            ItemStack[] outputItems = context.deserialize(json.getAsJsonObject().get("outputItems"), ItemStack[].class);
+            Output[] outputs = context.deserialize(json.getAsJsonObject().get("outputs"), Output[].class);
             GrowthRequirement growthRequirement = context.deserialize(json.getAsJsonObject().get("growthRequirement"), GrowthRequirement.class);
 
-            Seed seed = new Seed(name, tier, craftAmount, color, inputItems, outputItems, growthRequirement);
+            Seed seed = new Seed(name, tier, craftAmount, color, inputItems, outputs, growthRequirement);
             seed.setOreName(oreName);
             return seed;
         }
@@ -70,7 +71,7 @@ public class Serializers {
                 jsonObject.add("inputItem", context.serialize(src.getInputItems().get(0)));
             else if (src.getInputItems().size() > 1)
                 jsonObject.add("inputItems", context.serialize(src.getInputItems()));
-            jsonObject.add("outputItems", context.serialize(src.getOutputItems()));
+            jsonObject.add("outputs", context.serialize(src.getOutputs()));
             jsonObject.add("growthRequirement", context.serialize(src.getGrowthRequirement()));
             return jsonObject;
         }
@@ -156,11 +157,49 @@ public class Serializers {
             return IBlockState.class;
         }
     };
+    public static final SerializerBase<Output> OUTPUT = new SerializerBase<Output>() {
+        @Override
+        public Output deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+            ItemStack outputItem = context.deserialize(json.getAsJsonObject().get("item"), ItemStack.class);
+            Output.Shape shape;
+            String customFormat = null;
+            if (json.getAsJsonObject().has("shape")) {
+                String shapeText = json.getAsJsonObject().get("shape").getAsString();
+                if (shapeText.equalsIgnoreCase("2x2"))
+                    shapeText = Output.Shape.TWO_BY_TWO.name();
+                else if (shapeText.equalsIgnoreCase("3x3"))
+                    shapeText = Output.Shape.THREE_BY_THREE.name();
+                shape = Output.Shape.valueOf(shapeText.toUpperCase(Locale.ENGLISH));
+
+                if (shape == Output.Shape.CUSTOM)
+                    customFormat = json.getAsJsonObject().get("customFormat").getAsString();
+
+            } else shape = Output.Shape.DEFAULT;
+
+            return new Output(outputItem, shape, customFormat);
+        }
+
+        @Override
+        public JsonElement serialize(Output src, Type typeOfSrc, JsonSerializationContext context) {
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.add("item", context.serialize(src.getItem()));
+            jsonObject.addProperty("shape", src.getShape().name());
+            if (src.getShape() == Output.Shape.CUSTOM)
+                jsonObject.addProperty("customFormat", src.getCustomFormat());
+            return jsonObject;
+        }
+
+        @Override
+        public Type getType() {
+            return Output.class;
+        }
+    };
 
     private static final SerializerBase<?>[] ALL_SERIALIZERS = new SerializerBase[] {
             SEED,
             RESOURCE_LOCATION,
             ITEMSTACK,
-            BLOCKSTATE
+            BLOCKSTATE,
+            OUTPUT
     };
 }
