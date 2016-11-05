@@ -1,7 +1,6 @@
 package tehnut.resourceful.crops2.compat.jei;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 import mezz.jei.api.BlankModPlugin;
 import mezz.jei.api.IModRegistry;
 import mezz.jei.api.JEIPlugin;
@@ -14,7 +13,6 @@ import tehnut.resourceful.crops2.core.ModObjects;
 import tehnut.resourceful.crops2.core.data.Seed;
 
 import java.util.List;
-import java.util.Set;
 
 @JEIPlugin
 public class ResourcefulCropsPlugin extends BlankModPlugin {

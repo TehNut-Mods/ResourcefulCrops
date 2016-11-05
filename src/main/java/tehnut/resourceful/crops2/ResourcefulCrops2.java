@@ -6,10 +6,7 @@ import net.minecraft.launchwrapper.Launch;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.discovery.ASMDataTable;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLModIdMappingEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import tehnut.resourceful.crops2.compat.Compatibility;
@@ -22,7 +19,7 @@ import tehnut.resourceful.crops2.util.AnnotationHelper;
 import java.io.File;
 import java.util.Set;
 
-@Mod(modid = ResourcefulCrops2.MODID, name = ResourcefulCrops2.NAME, version = ResourcefulCrops2.VERSION)
+@Mod(modid = ResourcefulCrops2.MODID, name = ResourcefulCrops2.NAME, version = ResourcefulCrops2.VERSION, dependencies = "after:JEI;")
 public class ResourcefulCrops2 {
 
     public static final String MODID = "resourcefulcrops";
@@ -75,7 +72,7 @@ public class ResourcefulCrops2 {
 
     @Mod.EventHandler
     public void modMapping(FMLModIdMappingEvent event) {
-        ModObjects.mapping();
+        PROXY.mapping();
     }
 
     public static void debug(String message, Object... params) {

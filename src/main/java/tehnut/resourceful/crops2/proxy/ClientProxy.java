@@ -16,6 +16,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import tehnut.resourceful.crops2.block.tile.TileSeedContainer;
 import tehnut.resourceful.crops2.core.data.Seed;
 import tehnut.resourceful.crops2.core.ModObjects;
+import tehnut.resourceful.crops2.util.RecipePurge;
 import tehnut.resourceful.crops2.util.Util;
 
 import javax.annotation.Nullable;
@@ -85,5 +86,11 @@ public class ClientProxy extends CommonProxy {
     @Override
     public void postInit() {
         super.postInit();
+    }
+
+    @Override
+    public void mapping() {
+        RecipePurge.purge();
+        ModObjects.mapping();
     }
 }
