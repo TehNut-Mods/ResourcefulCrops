@@ -47,7 +47,6 @@ if (new File(projectDir, '.git').exists())
     gitHash = repo.log().find().abbreviatedId
 
 repositories {
-    maven {	url "http://mobiusstrip.eu/maven" }
     maven { url "http://dvs1.progwml6.com/files/maven" }
     maven { url "http://maven.tterrag.com/" }
     maven { url "http://tehnut.info/maven/" }
@@ -55,7 +54,7 @@ repositories {
 
 dependencies {
     deobfCompile "mezz.jei:jei_${mc_version}:${jei_version}"
-    deobfCompile "mcp.mobius.waila:Waila:${waila_version}_1.9.4"
+    deobfCompile "mcp.mobius.waila:Hwyla:${waila_version}_1.10.2"
     deobfCompile "com.enderio.core:EnderCore:${endercore_version}"
     deobfCompile "com.enderio:EnderIO:${enderio_version}"
     deobfCompile "com.wayoftime.bloodmagic:BloodMagic:${bloodmagic_version}:api"

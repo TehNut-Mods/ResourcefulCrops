@@ -22,10 +22,6 @@ public class ConfigHandler {
         public boolean enableBloodMagicAutomation = true;
         @Config.Comment({"Allows the Farming Station to harvest crops.", "Default: true"})
         public boolean enableEnderIOAutomation = true;
-        @Config.Comment({"Blacklists crops from the NeoTech growth accelerator (Miniature Sun)", "Default: true"})
-        public boolean blacklistNeotechTickAccelerator = true;
-        @Config.Comment({"Blacklists crops from the Torcherino growth accelerator", "Default: true"})
-        public boolean blacklistTorcherinoTickAccelerator = true;
     }
 
     public static class Crafting {

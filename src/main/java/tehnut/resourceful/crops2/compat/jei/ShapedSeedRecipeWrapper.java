@@ -2,23 +2,22 @@ package tehnut.resourceful.crops2.compat.jei;
 
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.BlankRecipeWrapper;
-import mezz.jei.api.recipe.IStackHelper;
 import mezz.jei.api.recipe.wrapper.IShapedCraftingRecipeWrapper;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
-import tehnut.resourceful.crops2.core.recipe.ShapedListRecipe;
+import tehnut.resourceful.crops2.core.recipe.ShapedSeedRecipe;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class ShapedListRecipeWrapper extends BlankRecipeWrapper implements IShapedCraftingRecipeWrapper {
+public class ShapedSeedRecipeWrapper extends BlankRecipeWrapper implements IShapedCraftingRecipeWrapper {
 
-    private final ShapedListRecipe recipe;
+    private final ShapedSeedRecipe recipe;
     private final int width;
     private final int height;
 
-    public ShapedListRecipeWrapper(ShapedListRecipe recipe) {
+    public ShapedSeedRecipeWrapper(ShapedSeedRecipe recipe) {
         this.recipe = recipe;
         for (Object input : this.recipe.getInput()) {
             if (input instanceof ItemStack) {
@@ -27,8 +26,8 @@ public class ShapedListRecipeWrapper extends BlankRecipeWrapper implements IShap
                     itemStack.stackSize = 1;
             }
         }
-        this.width = ObfuscationReflectionHelper.getPrivateValue(ShapedListRecipe.class, this.recipe, "width");
-        this.height = ObfuscationReflectionHelper.getPrivateValue(ShapedListRecipe.class, this.recipe, "height");
+        this.width = ObfuscationReflectionHelper.getPrivateValue(ShapedSeedRecipe.class, this.recipe, "width");
+        this.height = ObfuscationReflectionHelper.getPrivateValue(ShapedSeedRecipe.class, this.recipe, "height");
     }
 
     @Override

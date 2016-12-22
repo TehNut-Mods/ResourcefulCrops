@@ -16,6 +16,7 @@ import tehnut.resourceful.crops2.ResourcefulCrops2;
 import tehnut.resourceful.crops2.block.tile.TileSeedContainer;
 import tehnut.resourceful.crops2.core.ModObjects;
 import tehnut.resourceful.crops2.core.data.Seed;
+import tehnut.resourceful.crops2.item.ItemResourceful;
 import tehnut.resourceful.crops2.util.Util;
 
 import javax.annotation.Nullable;
@@ -114,10 +115,8 @@ public class BlockResourcefulCrop extends BlockCrops {
 
     private ItemStack getFoodStack(Item toDrop, IBlockAccess world, BlockPos pos) {
         TileSeedContainer cropTile = Util.getSeedContainer(world, pos);
-        if (cropTile != null) {
-            ResourceLocation resourceLocation = cropTile.getSeedKey();
-            return ModObjects.SEED_WRAPPER.getStack(toDrop, resourceLocation, 1);
-        }
+        if (cropTile != null)
+            return ItemResourceful.getResourcefulStack(toDrop, cropTile.getSeedKey());
 
         return new ItemStack(toDrop, 1, Short.MAX_VALUE - 1);
     }

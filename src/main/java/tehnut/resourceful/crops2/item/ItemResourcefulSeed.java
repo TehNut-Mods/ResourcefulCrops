@@ -24,7 +24,7 @@ public class ItemResourcefulSeed extends ItemResourceful implements IPlantable {
 
     @Override
     public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        Seed seed = ModObjects.SEED_WRAPPER.getType(stack);
+        Seed seed = getSeed(stack);
         IBlockState worldState = world.getBlockState(pos);
         if (seed != null && facing == EnumFacing.UP && player.canPlayerEdit(pos.offset(facing), facing, stack) && worldState.getBlock().canSustainPlant(worldState, world, pos, EnumFacing.UP, this) && world.isAirBlock(pos.up())) {
             world.setBlockState(pos.up(), ModObjects.CROP.getDefaultState());

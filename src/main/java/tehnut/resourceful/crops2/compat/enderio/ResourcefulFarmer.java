@@ -19,6 +19,7 @@ import net.minecraftforge.event.ForgeEventFactory;
 import tehnut.resourceful.crops2.block.tile.TileSeedContainer;
 import tehnut.resourceful.crops2.core.ModObjects;
 import tehnut.resourceful.crops2.core.data.Seed;
+import tehnut.resourceful.crops2.item.ItemResourceful;
 import tehnut.resourceful.crops2.item.ItemResourcefulSeed;
 
 import java.util.ArrayList;
@@ -39,7 +40,7 @@ public class ResourcefulFarmer extends PlantableFarmer {
     public boolean plant(TileFarmStation farm, World worldObj, BlockCoord bc, ItemStack seedStack, IPlantable plantable) {
         if (seedStack == null || !(seedStack.getItem() instanceof ItemResourcefulSeed))
             return false;
-        Seed seed = ModObjects.SEED_WRAPPER.getType(seedStack);
+        Seed seed = ((ItemResourceful) seedStack.getItem()).getSeed(seedStack);
         if (seed == null)
             return false;
         worldObj.setBlockState(bc.getBlockPos(), Blocks.AIR.getDefaultState(), 1 | 2);

@@ -3,15 +3,15 @@ package tehnut.resourceful.crops2.compat.jei;
 import mezz.jei.api.recipe.IRecipeHandler;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import mezz.jei.api.recipe.VanillaRecipeCategoryUid;
-import tehnut.resourceful.crops2.core.recipe.ShapedListRecipe;
+import tehnut.resourceful.crops2.core.recipe.ShapedSeedRecipe;
 
 import java.util.List;
 
-public class ShapedListRecipeHandler implements IRecipeHandler<ShapedListRecipe> {
+public class ShapedSeedRecipeHandler implements IRecipeHandler<ShapedSeedRecipe> {
 
     @Override
-    public Class<ShapedListRecipe> getRecipeClass() {
-        return ShapedListRecipe.class;
+    public Class<ShapedSeedRecipe> getRecipeClass() {
+        return ShapedSeedRecipe.class;
     }
 
     @Override
@@ -20,17 +20,17 @@ public class ShapedListRecipeHandler implements IRecipeHandler<ShapedListRecipe>
     }
 
     @Override
-    public String getRecipeCategoryUid(ShapedListRecipe recipe) {
+    public String getRecipeCategoryUid(ShapedSeedRecipe recipe) {
         return VanillaRecipeCategoryUid.CRAFTING;
     }
 
     @Override
-    public IRecipeWrapper getRecipeWrapper(ShapedListRecipe recipe) {
-        return new ShapedListRecipeWrapper(recipe);
+    public IRecipeWrapper getRecipeWrapper(ShapedSeedRecipe recipe) {
+        return new ShapedSeedRecipeWrapper(recipe);
     }
 
     @Override
-    public boolean isRecipeValid(ShapedListRecipe recipe) {
+    public boolean isRecipeValid(ShapedSeedRecipe recipe) {
         if (recipe.getRecipeOutput() == null)
             return false;
         int inputCount = 0;

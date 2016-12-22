@@ -70,11 +70,6 @@ public class ResourcefulCrops2 {
         PROXY.postInit();
     }
 
-    @Mod.EventHandler
-    public void modMapping(FMLModIdMappingEvent event) {
-        PROXY.mapping();
-    }
-
     public static void debug(String message, Object... params) {
         if (ConfigHandler.miscellaneous.debugLogging)
             LOGGER.info("[DEBUG] " + message, params);

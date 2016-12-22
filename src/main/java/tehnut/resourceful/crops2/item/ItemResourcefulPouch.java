@@ -24,7 +24,7 @@ public class ItemResourcefulPouch extends ItemResourceful implements IPlantable 
 
     @Override
     public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        Seed seed = ModObjects.SEED_WRAPPER.getType(stack);
+        Seed seed = getSeed(stack);
         if (facing != EnumFacing.UP || seed == null)
             return EnumActionResult.PASS;
 

@@ -1,5 +1,6 @@
 package tehnut.resourceful.crops2.core.recipe;
 
+import com.google.common.collect.Lists;
 import net.minecraft.block.Block;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.Item;
@@ -9,14 +10,16 @@ import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.oredict.OreDictionary;
+import tehnut.resourceful.crops2.core.data.Seed;
+import tehnut.resourceful.crops2.core.data.SeedStack;
+import tehnut.resourceful.crops2.item.ItemResourceful;
 
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-// The same as a ShapedOreRecipe, but with extra handling to allow an input to be a List<ItemStack>.
-public class ShapedListRecipe implements IRecipe {
+public class ShapedSeedRecipe implements IRecipe {
     //Added in for future ease of change, but hard coded for now.
     public static final int MAX_CRAFT_GRID_WIDTH = 3;
     public static final int MAX_CRAFT_GRID_HEIGHT = 3;
@@ -27,16 +30,8 @@ public class ShapedListRecipe implements IRecipe {
     protected int height = 0;
     protected boolean mirrored = true;
 
-    public ShapedListRecipe(Block result, Object... recipe) {
-        this(new ItemStack(result), recipe);
-    }
-
-    public ShapedListRecipe(Item result, Object... recipe) {
-        this(new ItemStack(result), recipe);
-    }
-
-    public ShapedListRecipe(ItemStack result, Object... recipe) {
-        output = result.copy();
+    public ShapedSeedRecipe(ItemStack output, Object... recipe) {
+        this.output = output.copy();
 
         String shape = "";
         int idx = 0;
@@ -92,7 +87,17 @@ public class ShapedListRecipe implements IRecipe {
             } else if (in instanceof String) {
                 itemMap.put(chr, OreDictionary.getOres((String) in));
             } else if (in instanceof List) { // Allow a List<ItemStack> as a valid input object
-                itemMap.put(chr, in);
+                if (((List) in).get(0).getClass() == ItemStack.class)
+                    itemMap.put(chr, in);
+                else if (((List) in).get(0).getClass() == SeedStack.class) {
+                    List<ItemStack> stacks = Lists.newArrayList();
+                    for (SeedStack stack : (List<SeedStack>) in)
+                        stacks.add(ItemResourceful.getResourcefulStack(stack));
+
+                    itemMap.put(chr, stacks);
+                }
+            } else if (in instanceof SeedStack) {
+                itemMap.put(chr, ItemResourceful.getResourcefulStack((SeedStack) in));
             } else {
                 String ret = "Invalid shaped ore recipe: ";
                 for (Object tmp : recipe) {
@@ -110,27 +115,8 @@ public class ShapedListRecipe implements IRecipe {
         }
     }
 
-    ShapedListRecipe(ShapedRecipes recipe, Map<ItemStack, String> replacements) {
-        output = recipe.getRecipeOutput();
-        width = recipe.recipeWidth;
-        height = recipe.recipeHeight;
-
-        input = new Object[recipe.recipeItems.length];
-
-        for (int i = 0; i < input.length; i++) {
-            ItemStack ingredient = recipe.recipeItems[i];
-
-            if (ingredient == null) continue;
-
-            input[i] = recipe.recipeItems[i];
-
-            for (Map.Entry<ItemStack, String> replace : replacements.entrySet()) {
-                if (OreDictionary.itemMatches(replace.getKey(), ingredient, true)) {
-                    input[i] = OreDictionary.getOres(replace.getValue());
-                    break;
-                }
-            }
-        }
+    public ShapedSeedRecipe(SeedStack output, Object... recipe) {
+        this(ItemResourceful.getResourcefulStack(output), recipe);
     }
 
     /**
@@ -193,6 +179,11 @@ public class ShapedListRecipe implements IRecipe {
                 ItemStack slot = inv.getStackInRowAndColumn(x, y);
 
                 if (target instanceof ItemStack) {
+                    if (((ItemStack) target).getItem() instanceof ItemResourceful) {
+                        Seed seed = ((ItemResourceful) ((ItemStack) target).getItem()).getSeed((ItemStack) target);
+                        if (slot == null || !(slot.getItem() instanceof ItemResourceful) || !((ItemResourceful) slot.getItem()).getSeed(slot).getRegistryName().equals(seed.getRegistryName()))
+                            return false;
+                    }
                     if (!OreDictionary.itemMatches((ItemStack) target, slot, false)) {
                         return false;
                     }
@@ -216,7 +207,7 @@ public class ShapedListRecipe implements IRecipe {
         return true;
     }
 
-    public ShapedListRecipe setMirrored(boolean mirror) {
+    public ShapedSeedRecipe setMirrored(boolean mirror) {
         mirrored = mirror;
         return this;
     }
