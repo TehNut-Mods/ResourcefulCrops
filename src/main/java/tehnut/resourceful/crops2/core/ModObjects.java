@@ -12,6 +12,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.common.registry.PersistentRegistryManager;
 import net.minecraftforge.oredict.RecipeSorter;
 import net.minecraftforge.oredict.ShapedOreRecipe;
+import org.apache.commons.lang3.ArrayUtils;
 import tehnut.resourceful.crops2.ResourcefulCrops2;
 import tehnut.resourceful.crops2.block.BlockGaianiteOre;
 import tehnut.resourceful.crops2.block.BlockResourcefulCrop;
@@ -83,10 +84,13 @@ public class ModObjects {
 
             if (ConfigHandler.crafting.enableShardCrafting) {
                 for (Output output : seed.getOutputs()) {
-
-                    String[] recipe = output.getShape().getRecipeFormat().split("#", 3);
-                    if (recipe.length == 1 && !recipe[0].contains("S"))
-                        recipe = Output.Shape.parseRecipe(recipe[0], output.getCustomFormat());
+                    String[] recipe;
+                    if (output.getShape() == Output.Shape.CUSTOM)
+                        recipe = Output.Shape.parseRecipe(output.getShape().name(), output.getCustomFormat());
+                    else if (output.getShape() == Output.Shape.DEFAULT)
+                        recipe = Output.Shape.parseRecipe(output.getShape().getRecipeFormat(), output.getCustomFormat());
+                    else
+                        recipe = output.getShape().getRecipeFormat().split("#", 3);
                     GameRegistry.addRecipe(new ShapedSeedRecipe(output.getItem(), recipe, 'S', new SeedStack(SHARD, seed)));
                 }
             }

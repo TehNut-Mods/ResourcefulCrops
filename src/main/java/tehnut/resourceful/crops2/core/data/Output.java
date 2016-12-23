@@ -5,6 +5,7 @@ import net.minecraft.item.ItemStack;
 import tehnut.resourceful.crops2.core.ConfigHandler;
 
 import javax.annotation.Nullable;
+import java.util.Locale;
 
 public class Output {
 
@@ -53,18 +54,14 @@ public class Output {
         }
 
         public static String[] parseRecipe(String recipe, @Nullable String customFormat) {
-            for (Shape shape : values()) {
-                if (shape.name().equalsIgnoreCase(recipe)) {
-                    if (shape == CUSTOM && !Strings.isNullOrEmpty(customFormat)) {
-                        recipe = customFormat;
-                        break;
-                    } else if (shape == CUSTOM && Strings.isNullOrEmpty(customFormat)) {
-                        recipe = DEFAULT.getRecipeFormat();
-                        break;
-                    }
+            try {
+                Shape shape = Shape.valueOf(recipe.toUpperCase(Locale.ENGLISH));
+                if (shape == Shape.CUSTOM)
+                    recipe = !Strings.isNullOrEmpty(customFormat) ? customFormat : DEFAULT.getRecipeFormat();
+                else
                     recipe = shape.getRecipeFormat();
-                    break;
-                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
 
             return recipe.split("#", 3);

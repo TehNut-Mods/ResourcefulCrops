@@ -171,8 +171,13 @@ public class Serializers {
                     shapeText = Output.Shape.THREE_BY_THREE.name();
                 shape = Output.Shape.valueOf(shapeText.toUpperCase(Locale.ENGLISH));
 
-                if (shape == Output.Shape.CUSTOM)
+                if (shape == Output.Shape.CUSTOM) {
                     customFormat = json.getAsJsonObject().get("customFormat").getAsString();
+                    if (customFormat.startsWith("#"))
+                        customFormat = customFormat.substring(1, customFormat.length());
+                    if (customFormat.endsWith("#"))
+                        customFormat = customFormat.substring(0, customFormat.length() - 1);
+                }
 
             } else shape = Output.Shape.DEFAULT;
 
