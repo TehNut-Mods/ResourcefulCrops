@@ -8,12 +8,12 @@
     "nether": {
       "false": {
         "textures": {
-          "all": "resourcefulcrops:blocks/oreGaianite"
+          "all": "resourcefulcrops:blocks/ore_gaianite"
         }
       },
       "true": {
         "textures": {
-          "all": "resourcefulcrops:blocks/oreGaianite_nether"
+          "all": "resourcefulcrops:blocks/ore_gaianite_nether"
         }
       }
     }

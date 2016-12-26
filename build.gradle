@@ -13,15 +13,9 @@ buildscript {
 plugins {
     id 'com.matthewprenger.cursegradle' version '1.0.4'
     id "net.minecraftforge.gradle.forge" version "2.0.2"
-    id 'io.franzbecker.gradle-lombok' version '1.6'
 }
 
 apply plugin: 'maven-publish'
-
-configurations {
-    shade
-    compile.extendsFrom shade
-}
 
 def build_number = 'CUSTOM'
 
@@ -54,10 +48,10 @@ repositories {
 
 dependencies {
     deobfCompile "mezz.jei:jei_${mc_version}:${jei_version}"
-    deobfCompile "mcp.mobius.waila:Hwyla:${waila_version}_1.10.2"
-    deobfCompile "com.enderio.core:EnderCore:${endercore_version}"
-    deobfCompile "com.enderio:EnderIO:${enderio_version}"
-    deobfCompile "com.wayoftime.bloodmagic:BloodMagic:${bloodmagic_version}:api"
+    deobfCompile "mcp.mobius.waila:Hwyla:${waila_version}_${mc_version}"
+//  deobfCompile "com.enderio.core:EnderCore:${endercore_version}"
+//  deobfCompile "com.enderio:EnderIO:${enderio_version}"
+//  deobfCompile "com.wayoftime.bloodmagic:BloodMagic:${bloodmagic_version}:api"
 }
 
 minecraft {
@@ -65,7 +59,7 @@ minecraft {
     runDir = "run"
 
     replace "@VERSION@", project.version
-    replaceIn "ModInformation.java"
+    replaceIn "ResourcefulCrops.java"
 
     clientRunArgs += "--username=${username}"
 
@@ -98,32 +92,8 @@ if (JavaVersion.current().isJava8Compatible()) {
     }
 }
 
-lombok {
-    version = "1.16.6"
-    sha256 = "e0a471be03e1e6b02bf019480cec7a3ac9801702bf7bf62f15d077ad4df8dd5d"
-}
-
-import io.franzbecker.gradle.lombok.task.DelombokTask
-
-task delombok(type: DelombokTask) {
-    args("src/main/java", "-d", "build/sources/delomboked/java")
-}
-
-tasks.eclipse.dependsOn installLombok
-
-reobf {
-    jar {
-        extraLines "PK: tehnut/lib tehnut/resourceful/shade/lib"
-    }
-}
-
 jar {
     classifier = ''
-    configurations.shade.each { dep ->
-        from(project.zipTree(dep)) {
-            exclude 'META-INF', 'META-INF/**'
-        }
-    }
     manifest.mainAttributes(
         "Built-By": System.getProperty('user.name'),
         "Created-By": "${System.getProperty('java.vm.version')} + (${System.getProperty('java.vm.vendor')})",
@@ -147,11 +117,6 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
     classifier = 'javadoc'
 }
 
-javadoc {
-    source = projectDir.path + "/build/sources/delomboked/java"
-}
-
-tasks.javadoc.dependsOn delombok
 tasks.build.dependsOn javadoc, javadocJar, apiJar
 
 tasks.withType(JavaCompile) { task ->
@@ -190,10 +155,7 @@ curseforge {
     project {
         id = "${curse_id}"
 		changelog = project.hasProperty('changelog') ? project.changelog : ''
-        releaseType = 'alpha'
-
-        addGameVersion '1.10'
-        addGameVersion '1.10.2'
+        releaseType = 'beta'
 
         relations curseRelations
 
