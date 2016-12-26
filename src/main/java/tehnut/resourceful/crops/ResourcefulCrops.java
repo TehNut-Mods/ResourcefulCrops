@@ -19,8 +19,8 @@ import tehnut.resourceful.crops.util.AnnotationHelper;
 import java.io.File;
 import java.util.Set;
 
-@Mod(modid = ResourcefulCrops2.MODID, name = ResourcefulCrops2.NAME, version = ResourcefulCrops2.VERSION)
-public class ResourcefulCrops2 {
+@Mod(modid = ResourcefulCrops.MODID, name = ResourcefulCrops.NAME, version = ResourcefulCrops.VERSION)
+public class ResourcefulCrops {
 
     public static final String MODID = "resourcefulcrops";
     public static final String NAME = "ResourcefulCrops";

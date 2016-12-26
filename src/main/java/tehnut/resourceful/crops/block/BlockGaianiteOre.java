@@ -12,7 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
-import tehnut.resourceful.crops.ResourcefulCrops2;
+import tehnut.resourceful.crops.ResourcefulCrops;
 import tehnut.resourceful.crops.core.ModObjects;
 
 import javax.annotation.Nullable;
@@ -25,8 +25,8 @@ public class BlockGaianiteOre extends Block {
     public BlockGaianiteOre() {
         super(Material.ROCK);
 
-        setUnlocalizedName(ResourcefulCrops2.MODID + ".ore");
-        setCreativeTab(ResourcefulCrops2.TAB_RCROP);
+        setUnlocalizedName(ResourcefulCrops.MODID + ".ore");
+        setCreativeTab(ResourcefulCrops.TAB_RCROP);
         setSoundType(SoundType.STONE);
         setHardness(4.0F);
         setHarvestLevel("pickaxe", 3);

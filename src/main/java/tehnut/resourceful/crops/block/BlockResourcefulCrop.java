@@ -11,7 +11,7 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.EnumPlantType;
-import tehnut.resourceful.crops.ResourcefulCrops2;
+import tehnut.resourceful.crops.ResourcefulCrops;
 import tehnut.resourceful.crops.block.tile.TileSeedContainer;
 import tehnut.resourceful.crops.core.ModObjects;
 import tehnut.resourceful.crops.core.data.Seed;
@@ -78,7 +78,7 @@ public class BlockResourcefulCrop extends BlockCrops {
 
     @Override
     public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, IBlockState state) {
-        return ResourcefulCrops2.DEV_MODE;
+        return ResourcefulCrops.DEV_MODE;
     }
 
     @Override

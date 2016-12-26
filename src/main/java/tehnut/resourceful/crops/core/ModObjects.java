@@ -9,11 +9,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.FMLControlledNamespacedRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.fml.common.registry.PersistentRegistryManager;
 import net.minecraftforge.fml.common.registry.RegistryBuilder;
 import net.minecraftforge.oredict.RecipeSorter;
 import net.minecraftforge.oredict.ShapedOreRecipe;
-import tehnut.resourceful.crops.ResourcefulCrops2;
+import tehnut.resourceful.crops.ResourcefulCrops;
 import tehnut.resourceful.crops.block.BlockGaianiteOre;
 import tehnut.resourceful.crops.block.BlockResourcefulCrop;
 import tehnut.resourceful.crops.block.tile.TileSeedContainer;
@@ -35,7 +34,7 @@ public class ModObjects {
     public static final Block ORE = new BlockGaianiteOre();
 
     public static final FMLControlledNamespacedRegistry<Seed> SEEDS = (FMLControlledNamespacedRegistry<Seed>) new RegistryBuilder<Seed>()
-            .setName(new ResourceLocation(ResourcefulCrops2.MODID, "seeds"))
+            .setName(new ResourceLocation(ResourcefulCrops.MODID, "seeds"))
             .setType(Seed.class)
             .setIDRange(0, Short.MAX_VALUE - 2)
             .create();
@@ -50,12 +49,12 @@ public class ModObjects {
         GameRegistry.register(ORE.setRegistryName("ore"));
         GameRegistry.register(new ItemBlockMulti(ORE, "false", "true").setRegistryName(ORE.getRegistryName()));
 
-        GameRegistry.registerTileEntity(TileSeedContainer.class, ResourcefulCrops2.MODID + ":seed_container");
+        GameRegistry.registerTileEntity(TileSeedContainer.class, ResourcefulCrops.MODID + ":seed_container");
     }
 
     // Register all the standard
     public static void init() {
-        RecipeSorter.register(ResourcefulCrops2.MODID + ":shapedseed", ShapedSeedRecipe.class, RecipeSorter.Category.SHAPED, "");
+        RecipeSorter.register(ResourcefulCrops.MODID + ":shapedseed", ShapedSeedRecipe.class, RecipeSorter.Category.SHAPED, "");
 
         GameRegistry.addSmelting(new ItemStack(ORE), new ItemStack(ESSENCE), 0.5F);
         GameRegistry.addSmelting(new ItemStack(ORE, 1, 1), new ItemStack(ESSENCE), 0.5F);

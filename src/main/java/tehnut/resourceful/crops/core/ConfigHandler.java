@@ -1,9 +1,9 @@
 package tehnut.resourceful.crops.core;
 
 import net.minecraftforge.common.config.Config;
-import tehnut.resourceful.crops.ResourcefulCrops2;
+import tehnut.resourceful.crops.ResourcefulCrops;
 
-@Config(modid = ResourcefulCrops2.MODID, name = ResourcefulCrops2.MODID + "/" + ResourcefulCrops2.MODID)
+@Config(modid = ResourcefulCrops.MODID, name = ResourcefulCrops.MODID + "/" + ResourcefulCrops.MODID)
 public class ConfigHandler {
 
     public static Balance balance = new Balance();

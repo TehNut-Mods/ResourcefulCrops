@@ -11,7 +11,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import tehnut.resourceful.crops.ResourcefulCrops2;
+import tehnut.resourceful.crops.ResourcefulCrops;
 import tehnut.resourceful.crops.core.data.Seed;
 import tehnut.resourceful.crops.core.ModObjects;
 import tehnut.resourceful.crops.core.data.SeedStack;
@@ -24,8 +24,8 @@ public class ItemResourceful extends Item {
     private final String base;
 
     public ItemResourceful(String base) {
-        setUnlocalizedName(ResourcefulCrops2.MODID + "." + base);
-        setCreativeTab(ResourcefulCrops2.TAB_RCROP);
+        setUnlocalizedName(ResourcefulCrops.MODID + "." + base);
+        setCreativeTab(ResourcefulCrops.TAB_RCROP);
         setHasSubtypes(true);
 
         this.base = base;

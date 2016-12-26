@@ -9,7 +9,7 @@ import net.minecraft.nbt.JsonToNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.oredict.OreDictionary;
-import tehnut.resourceful.crops.ResourcefulCrops2;
+import tehnut.resourceful.crops.ResourcefulCrops;
 import tehnut.resourceful.crops.core.data.GrowthRequirement;
 import tehnut.resourceful.crops.core.data.Output;
 import tehnut.resourceful.crops.core.data.Seed;
@@ -117,8 +117,8 @@ public class Serializers {
                 if (json.getAsJsonObject().has("nbt"))
                     stack.setTagCompound(JsonToNBT.getTagFromJson(json.getAsJsonObject().get("nbt").getAsString()));
             } catch (Exception e) {
-                ResourcefulCrops2.LOGGER.error("Error parsing NBT JSON for a stack containing {}", registryName);
-                ResourcefulCrops2.LOGGER.error(e.getLocalizedMessage());
+                ResourcefulCrops.LOGGER.error("Error parsing NBT JSON for a stack containing {}", registryName);
+                ResourcefulCrops.LOGGER.error(e.getLocalizedMessage());
             }
             return stack;
         }

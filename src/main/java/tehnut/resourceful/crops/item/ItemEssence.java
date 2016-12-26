@@ -7,9 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import tehnut.resourceful.crops.ResourcefulCrops2;
-
-import java.util.List;
+import tehnut.resourceful.crops.ResourcefulCrops;
 
 public class ItemEssence extends Item {
 
@@ -18,8 +16,8 @@ public class ItemEssence extends Item {
     public ItemEssence() {
         super();
 
-        setUnlocalizedName(ResourcefulCrops2.MODID + ".essence");
-        setCreativeTab(ResourcefulCrops2.TAB_RCROP);
+        setUnlocalizedName(ResourcefulCrops.MODID + ".essence");
+        setCreativeTab(ResourcefulCrops.TAB_RCROP);
         setHasSubtypes(true);
     }
 

@@ -7,7 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import tehnut.resourceful.crops.ResourcefulCrops2;
+import tehnut.resourceful.crops.ResourcefulCrops;
 
 public class ItemEarthStone extends Item {
 
@@ -16,8 +16,8 @@ public class ItemEarthStone extends Item {
     public ItemEarthStone() {
         super();
 
-        setCreativeTab(ResourcefulCrops2.TAB_RCROP);
-        setUnlocalizedName(ResourcefulCrops2.MODID + ".stone");
+        setCreativeTab(ResourcefulCrops.TAB_RCROP);
+        setUnlocalizedName(ResourcefulCrops.MODID + ".stone");
         setHasSubtypes(true);
         setMaxStackSize(1);
     }
