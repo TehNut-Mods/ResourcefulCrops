@@ -65,7 +65,8 @@ public class BlockGaianiteOre extends Block {
 
     @Override
     public int quantityDroppedWithBonus(int fortune, Random random) {
-        int drop = random.nextInt(2 * ((fortune + 1) / 2));
+        int randBound = 2 * ((fortune + 1) / 2);
+        int drop = random.nextInt(randBound <= 0 ? 1 : randBound);
         return drop == 0 ? 1 : drop;
     }
 }
