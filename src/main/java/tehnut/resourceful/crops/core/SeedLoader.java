@@ -1,5 +1,6 @@
 package tehnut.resourceful.crops.core;
 
+import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import net.minecraft.init.Items;
@@ -7,11 +8,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import org.apache.commons.io.filefilter.FileFilterUtils;
+import tehnut.resourceful.crops.ResourcefulCrops;
 import tehnut.resourceful.crops.core.data.Output;
 import tehnut.resourceful.crops.core.data.Seed;
 import tehnut.resourceful.crops.core.json.Serializers;
 import tehnut.resourceful.crops.util.Util;
 
+import javax.annotation.Nullable;
 import java.awt.*;
 import java.io.File;
 import java.io.FileFilter;
@@ -62,8 +65,15 @@ public class SeedLoader {
             }
         });
 
-        for (Seed seed : seeds)
+        for (Seed seed : seeds) {
+            String sanity = sanityCheck(seed);
+            if (!Strings.isNullOrEmpty(sanity)) {
+                ResourcefulCrops.LOGGER.error(sanity);
+                continue;
+            }
+
             GameRegistry.register(seed);
+        }
     }
 
     private static Set<Seed> getDefaults() {
@@ -143,5 +153,14 @@ public class SeedLoader {
             seed.setOreName(oreDict);
             seeds.add(seed);
         }
+    }
+
+    // Used to add new checks in the future for requirements on seeds. Returns an error message to display
+    @Nullable
+    private static String sanityCheck(Seed seed) {
+        if (seed.getInputItems().isEmpty())
+            return String.format("Seed %s has no valid inputs. Ignoring.", seed.getRegistryName().toString());
+
+        return null;
     }
 }
