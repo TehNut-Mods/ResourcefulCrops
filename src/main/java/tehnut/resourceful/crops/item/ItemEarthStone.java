@@ -29,7 +29,10 @@ public class ItemEarthStone extends Item {
 
     @SideOnly(Side.CLIENT)
     @Override
-    public void getSubItems(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> subItems) {
+    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> subItems) {
+        if (!isInCreativeTab(tab))
+            return;
+
         for (int i = 0; i < STONES.length; i++)
             subItems.add(new ItemStack(this, 1, i));
     }

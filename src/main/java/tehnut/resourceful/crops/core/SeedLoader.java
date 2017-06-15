@@ -2,6 +2,7 @@ package tehnut.resourceful.crops.core;
 
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import com.google.gson.Gson;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -51,19 +52,16 @@ public class SeedLoader {
         List<Seed> seeds = Lists.newArrayList();
         for (File jsonFile : jsonFiles) {
             try {
-                Seed seed = gson.fromJson(new FileReader(jsonFile), Seed.class);
+                FileReader reader = new FileReader(jsonFile);
+                Seed seed = gson.fromJson(reader, Seed.class);
                 seeds.add(seed.setRegistryName(Util.cleanString(seed.getName())));
+                reader.close();
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
 
-        Collections.sort(seeds, new Comparator<Seed>() {
-            @Override
-            public int compare(Seed seed1, Seed seed2) {
-                return ((Integer) seed1.getTier()).compareTo(seed2.getTier());
-            }
-        });
+        seeds.sort((seed1, seed2) -> ((Integer) seed1.getTier()).compareTo(seed2.getTier()));
 
         for (Seed seed : seeds) {
             String sanity = sanityCheck(seed);
@@ -77,7 +75,7 @@ public class SeedLoader {
     }
 
     private static Set<Seed> getDefaults() {
-        Set<Seed> defaultSeeds = new HashSet<Seed>();
+        Set<Seed> defaultSeeds = Sets.newHashSet();
         // Tier 1
         addSeed(defaultSeeds, "inky", 0, 4, new Color(22, 22, 22), "dyeBlack", 8);
         addSeed(defaultSeeds, "rotting", 0, 4, new Color(255, 160, 136), new ItemStack(Items.ROTTEN_FLESH), 8);

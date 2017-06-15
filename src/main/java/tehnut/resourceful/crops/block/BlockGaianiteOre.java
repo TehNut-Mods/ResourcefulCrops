@@ -52,7 +52,6 @@ public class BlockGaianiteOre extends Block {
         return new ItemStack(state.getBlock(), 1, getMetaFromState(state));
     }
 
-    @Nullable
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune) {
         return ModObjects.ESSENCE;

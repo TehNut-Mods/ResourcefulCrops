@@ -6,12 +6,14 @@ import mezz.jei.api.IModRegistry;
 import mezz.jei.api.ISubtypeRegistry;
 import mezz.jei.api.JEIPlugin;
 import mezz.jei.api.recipe.IStackHelper;
+import mezz.jei.api.recipe.VanillaRecipeCategoryUid;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.translation.I18n;
 import tehnut.resourceful.crops.core.ModObjects;
 import tehnut.resourceful.crops.core.data.Seed;
+import tehnut.resourceful.crops.core.recipe.ShapedSeedRecipe;
 import tehnut.resourceful.crops.item.ItemResourceful;
 
 import java.util.List;
@@ -24,7 +26,7 @@ public class ResourcefulCropsPlugin extends BlankModPlugin {
     @Override
     public void register(IModRegistry registry) {
         stackHelper = registry.getJeiHelpers().getStackHelper();
-        registry.addRecipeHandlers(new ShapedSeedRecipeHandler());
+        registry.handleRecipes(ShapedSeedRecipe.class, new ShapedSeedRecipeFactory(), VanillaRecipeCategoryUid.CRAFTING);
 
         for (Seed seed : ModObjects.SEEDS.getValues()) {
             List<String> descriptions = Lists.newArrayList();
@@ -38,7 +40,7 @@ public class ResourcefulCropsPlugin extends BlankModPlugin {
                 descriptions.add(I18n.translateToLocalFormatted("jei.resourcefulcrops.seed.info.requiredstate", stateStack.getDisplayName()));
             }
             if (!descriptions.isEmpty())
-                registry.addDescription(ItemResourceful.getResourcefulStack(ModObjects.SEED, seed.getRegistryName()), descriptions.toArray(new String [descriptions.size()]));
+                registry.addIngredientInfo(ItemResourceful.getResourcefulStack(ModObjects.SEED, seed.getRegistryName()), ItemStack.class, descriptions.toArray(new String [descriptions.size()]));
         }
     }
 

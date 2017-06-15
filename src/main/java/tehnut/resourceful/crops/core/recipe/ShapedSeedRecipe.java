@@ -9,6 +9,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.fml.common.registry.IForgeRegistryEntry;
 import net.minecraftforge.oredict.OreDictionary;
 import tehnut.resourceful.crops.core.data.Seed;
 import tehnut.resourceful.crops.core.data.SeedStack;
@@ -18,7 +19,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-public class ShapedSeedRecipe implements IRecipe {
+public class ShapedSeedRecipe extends IForgeRegistryEntry.Impl<IRecipe> implements IRecipe {
     //Added in for future ease of change, but hard coded for now.
     public static final int MAX_CRAFT_GRID_WIDTH = 3;
     public static final int MAX_CRAFT_GRID_HEIGHT = 3;
@@ -118,20 +119,14 @@ public class ShapedSeedRecipe implements IRecipe {
         this(ItemResourceful.getResourcefulStack(output), recipe);
     }
 
-    /**
-     * Returns an Item that is the result of this recipe
-     */
     @Override
     public ItemStack getCraftingResult(InventoryCrafting var1) {
         return output.copy();
     }
 
-    /**
-     * Returns the size of the recipe area
-     */
     @Override
-    public int getRecipeSize() {
-        return input.length;
+    public boolean canFit(int width, int height) {
+        return width == 3 && height == 3;
     }
 
     @Override
@@ -139,9 +134,6 @@ public class ShapedSeedRecipe implements IRecipe {
         return output;
     }
 
-    /**
-     * Used to check if a recipe matches current crafting inventory
-     */
     @Override
     public boolean matches(InventoryCrafting inv, World world) {
         for (int x = 0; x <= MAX_CRAFT_GRID_WIDTH - width; x++) {
@@ -211,19 +203,17 @@ public class ShapedSeedRecipe implements IRecipe {
         return this;
     }
 
-    /**
-     * Returns the input for this recipe, any mod accessing this value should never
-     * manipulate the values in this array as it will effect the recipe itself.
-     *
-     * @return The recipes input vales.
-     */
     public Object[] getInput() {
         return this.input;
     }
 
     @Override
-    public NonNullList<ItemStack> getRemainingItems(InventoryCrafting inv)
-    {
+    public String getGroup() {
+        return getRecipeOutput().getItem().getRegistryName().toString();
+    }
+
+    @Override
+    public NonNullList<ItemStack> getRemainingItems(InventoryCrafting inv) {
         return ForgeHooks.defaultRecipeGetRemainingItems(inv);
     }
 }

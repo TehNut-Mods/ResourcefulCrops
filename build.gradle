@@ -5,24 +5,23 @@ buildscript {
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
-        classpath 'org.ajoberstar:gradle-git:0.10.1'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
     }
 }
 
 plugins {
-    id 'com.matthewprenger.cursegradle' version '1.0.4'
-    id "net.minecraftforge.gradle.forge" version "2.0.2"
+    id "com.matthewprenger.cursegradle" version "1.0.7"
+    id "maven-publish"
 }
 
-apply plugin: 'maven-publish'
+apply plugin: 'net.minecraftforge.gradle.forge'
 
 def build_number = 'CUSTOM'
 
 if (System.getenv('BUILD_NUMBER') != null)
     build_number = System.getenv('BUILD_NUMBER')
 
-def username = 'ResourcefulCrops'
+def username = "${mod_name}"
 
 if (project.hasProperty('dev_username'))
     username = "${dev_username}"
@@ -31,27 +30,14 @@ group = package_group
 archivesBaseName = mod_name
 version = "${mc_version}-${mod_version}-${build_number}"
 
-// Ignore this error. It'll work just fine when building.
-import org.ajoberstar.grgit.*
-
-ext.repo = Grgit.open(project.file('.'))
-def gitHash = 'unknown'
-
-if (new File(projectDir, '.git').exists())
-    gitHash = repo.log().find().abbreviatedId
-
 repositories {
     maven { url "http://dvs1.progwml6.com/files/maven" }
-    maven { url "http://maven.tterrag.com/" }
     maven { url "http://tehnut.info/maven/" }
 }
 
 dependencies {
-    deobfCompile "mezz.jei:jei_${mc_version}:${jei_version}"
-    deobfCompile "mcp.mobius.waila:Hwyla:${waila_version}_${mc_version}"
-//  deobfCompile "com.enderio.core:EnderCore:${endercore_version}"
-//  deobfCompile "com.enderio:EnderIO:${enderio_version}"
-//  deobfCompile "com.wayoftime.bloodmagic:BloodMagic:${bloodmagic_version}:api"
+    deobfCompile "mezz.jei:jei_1.12:${jei_version}"
+    deobfCompile "mcp.mobius.waila:Hwyla:${waila_version}"
 }
 
 minecraft {
@@ -98,8 +84,7 @@ jar {
         "Built-By": System.getProperty('user.name'),
         "Created-By": "${System.getProperty('java.vm.version')} + (${System.getProperty('java.vm.vendor')})",
         "Implementation-Title": project.name,
-        "Implementation-Version": project.version,
-        "Git-Hash": gitHash
+        "Implementation-Version": project.version
     )
 }
 
@@ -142,10 +127,7 @@ publishing {
 }
 
 def curseRelations = {
-    optionalLibrary 'waila'
-    optionalLibrary 'neotech'
-    optionalLibrary 'blood-magic'
-    optionalLibrary 'thaumcraft'
+    optionalLibrary 'hwyla'
 }
 
 curseforge {

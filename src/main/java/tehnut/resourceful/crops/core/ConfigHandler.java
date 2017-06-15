@@ -13,14 +13,14 @@ public class ConfigHandler {
     public static World world = new World();
 
     public static class Balance {
-        @Config.Comment({"Allows ore to be mined by Quarries and Miners", "Default: true"})
+        @Config.Comment({"CURRENTLY UNIMPLEMENTED", "Allows ore to be mined by Quarries and Miners", "Default: true"})
         public boolean enableFakePlayerMining = true;
     }
 
     public static class Compatibility {
-        @Config.Comment({"Allows the Reap of the Harvest Moon to harvest crops.", "Default: true"})
+        @Config.Comment({"CURRENTLY UNIMPLEMENTED", "Allows the Reap of the Harvest Moon to harvest crops.", "Default: true"})
         public boolean enableBloodMagicAutomation = true;
-        @Config.Comment({"Allows the Farming Station to harvest crops.", "Default: true"})
+        @Config.Comment({"CURRENTLY UNIMPLEMENTED", "Allows the Farming Station to harvest crops.", "Default: true"})
         public boolean enableEnderIOAutomation = true;
     }
 

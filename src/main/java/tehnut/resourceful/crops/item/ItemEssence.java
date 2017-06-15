@@ -23,9 +23,12 @@ public class ItemEssence extends Item {
 
     @SideOnly(Side.CLIENT)
     @Override
-    public void getSubItems(Item item, CreativeTabs tab, NonNullList<ItemStack> subItems) {
+    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> subItems) {
+        if (!isInCreativeTab(tab))
+            return;
+
         for (int i = 0; i < NAMES.length; i++)
-            subItems.add(new ItemStack(item, 1, i));
+            subItems.add(new ItemStack(this, 1, i));
     }
 
     @Override
