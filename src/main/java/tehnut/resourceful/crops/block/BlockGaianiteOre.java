@@ -13,9 +13,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import tehnut.resourceful.crops.ResourcefulCrops;
-import tehnut.resourceful.crops.core.ModObjects;
+import tehnut.resourceful.crops.core.RegistrarResourcefulCrops;
 
-import javax.annotation.Nullable;
 import java.util.Random;
 
 public class BlockGaianiteOre extends Block {
@@ -54,7 +53,7 @@ public class BlockGaianiteOre extends Block {
 
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-        return ModObjects.ESSENCE;
+        return RegistrarResourcefulCrops.ESSENCE;
     }
 
     @Override

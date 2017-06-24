@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.EnumPlantType;
 import tehnut.resourceful.crops.ResourcefulCrops;
 import tehnut.resourceful.crops.block.tile.TileSeedContainer;
-import tehnut.resourceful.crops.core.ModObjects;
+import tehnut.resourceful.crops.core.RegistrarResourcefulCrops;
 import tehnut.resourceful.crops.core.data.Seed;
 import tehnut.resourceful.crops.item.ItemResourceful;
 import tehnut.resourceful.crops.util.Util;
@@ -63,12 +63,12 @@ public class BlockResourcefulCrop extends BlockCrops {
 
     @Override
     protected Item getSeed() {
-        return ModObjects.SEED;
+        return RegistrarResourcefulCrops.SEED;
     }
 
     @Override
     protected Item getCrop() {
-        return ModObjects.SHARD;
+        return RegistrarResourcefulCrops.SHARD;
     }
 
     @Override
@@ -99,7 +99,7 @@ public class BlockResourcefulCrop extends BlockCrops {
         if (seedContainer == null)
             return false;
 
-        Seed seed = ModObjects.SEEDS.getValue(seedContainer.getSeedKey());
+        Seed seed = RegistrarResourcefulCrops.SEEDS.getValue(seedContainer.getSeedKey());
         if (seed == null)
             return false;
 

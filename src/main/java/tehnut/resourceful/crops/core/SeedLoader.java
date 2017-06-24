@@ -6,8 +6,8 @@ import com.google.common.collect.Sets;
 import com.google.gson.Gson;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftforge.registries.IForgeRegistry;
 import org.apache.commons.io.filefilter.FileFilterUtils;
 import tehnut.resourceful.crops.ResourcefulCrops;
 import tehnut.resourceful.crops.core.data.Output;
@@ -26,7 +26,7 @@ import java.util.List;
 
 public class SeedLoader {
 
-    public static void init(File seedDir) {
+    public static void init(File seedDir, IForgeRegistry<Seed> seedRegistry) {
         Gson gson = Serializers.withAll();
         if (!seedDir.exists() && seedDir.mkdirs()) {
             for (Seed seed : getDefaults()) {
@@ -39,7 +39,7 @@ public class SeedLoader {
                     e.printStackTrace();
                 }
 
-                GameRegistry.register(seed.setRegistryName(Util.cleanString(seed.getName())));
+                seedRegistry.register(seed.setRegistryName(Util.cleanString(seed.getName())));
             }
 
             return;
@@ -70,7 +70,7 @@ public class SeedLoader {
                 continue;
             }
 
-            GameRegistry.register(seed);
+            seedRegistry.register(seed);
         }
     }
 

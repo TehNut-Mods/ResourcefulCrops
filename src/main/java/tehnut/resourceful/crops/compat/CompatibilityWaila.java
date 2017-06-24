@@ -9,7 +9,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import tehnut.resourceful.crops.block.tile.TileSeedContainer;
-import tehnut.resourceful.crops.core.ModObjects;
+import tehnut.resourceful.crops.core.RegistrarResourcefulCrops;
 import tehnut.resourceful.crops.core.data.Seed;
 
 import javax.annotation.Nonnull;
@@ -29,7 +29,7 @@ public class CompatibilityWaila implements IWailaPlugin {
         @Nonnull
         @Override
         public ItemStack getWailaStack(IWailaDataAccessor accessor, IWailaConfigHandler config) {
-            Seed seed = ModObjects.SEEDS.getValue(new ResourceLocation(accessor.getNBTData().getString("seed")));
+            Seed seed = RegistrarResourcefulCrops.SEEDS.getValue(new ResourceLocation(accessor.getNBTData().getString("seed")));
             if (seed == null)
                 return accessor.getStack();
 

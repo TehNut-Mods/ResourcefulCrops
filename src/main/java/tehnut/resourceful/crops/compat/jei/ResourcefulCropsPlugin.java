@@ -11,7 +11,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.translation.I18n;
-import tehnut.resourceful.crops.core.ModObjects;
+import tehnut.resourceful.crops.core.RegistrarResourcefulCrops;
 import tehnut.resourceful.crops.core.data.Seed;
 import tehnut.resourceful.crops.core.recipe.ShapedSeedRecipe;
 import tehnut.resourceful.crops.item.ItemResourceful;
@@ -28,7 +28,7 @@ public class ResourcefulCropsPlugin extends BlankModPlugin {
         stackHelper = registry.getJeiHelpers().getStackHelper();
         registry.handleRecipes(ShapedSeedRecipe.class, new ShapedSeedRecipeFactory(), VanillaRecipeCategoryUid.CRAFTING);
 
-        for (Seed seed : ModObjects.SEEDS.getValues()) {
+        for (Seed seed : RegistrarResourcefulCrops.SEEDS.getValues()) {
             List<String> descriptions = Lists.newArrayList();
             if (seed.getGrowthRequirement().getMinLight() != 7)
                 descriptions.add(I18n.translateToLocalFormatted("jei.resourcefulcrops.seed.info.minlight", MathHelper.clamp(seed.getGrowthRequirement().getMinLight(), 0, 15)));
@@ -40,12 +40,12 @@ public class ResourcefulCropsPlugin extends BlankModPlugin {
                 descriptions.add(I18n.translateToLocalFormatted("jei.resourcefulcrops.seed.info.requiredstate", stateStack.getDisplayName()));
             }
             if (!descriptions.isEmpty())
-                registry.addIngredientInfo(ItemResourceful.getResourcefulStack(ModObjects.SEED, seed.getRegistryName()), ItemStack.class, descriptions.toArray(new String [descriptions.size()]));
+                registry.addIngredientInfo(ItemResourceful.getResourcefulStack(RegistrarResourcefulCrops.SEED, seed.getRegistryName()), ItemStack.class, descriptions.toArray(new String [descriptions.size()]));
         }
     }
 
     @Override
     public void registerItemSubtypes(ISubtypeRegistry subtypeRegistry) {
-        subtypeRegistry.useNbtForSubtypes(ModObjects.SEED, ModObjects.SHARD, ModObjects.POUCH);
+        subtypeRegistry.useNbtForSubtypes(RegistrarResourcefulCrops.SEED, RegistrarResourcefulCrops.SHARD, RegistrarResourcefulCrops.POUCH);
     }
 }

@@ -11,9 +11,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import tehnut.resourceful.crops.compat.Compatibility;
 import tehnut.resourceful.crops.core.ConfigHandler;
-import tehnut.resourceful.crops.core.SeedLoader;
+import tehnut.resourceful.crops.core.RegistrarResourcefulCrops;
 import tehnut.resourceful.crops.proxy.CommonProxy;
-import tehnut.resourceful.crops.core.ModObjects;
 import tehnut.resourceful.crops.util.AnnotationHelper;
 
 import java.io.File;
@@ -30,7 +29,7 @@ public class ResourcefulCrops {
     public static final CreativeTabs TAB_RCROP = new CreativeTabs(MODID) {
         @Override
         public ItemStack getTabIconItem() {
-            return new ItemStack(ModObjects.ESSENCE, 1, 4);
+            return new ItemStack(RegistrarResourcefulCrops.ESSENCE, 1, 4);
         }
     };
 
@@ -45,15 +44,12 @@ public class ResourcefulCrops {
 
         modCompatibilities = event.getAsmData().getAll(Compatibility.class.getCanonicalName());
 
-        ModObjects.preInit();
-
         PROXY.preInit();
     }
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
-        SeedLoader.init(new File(configDir, "seeds"));
-        ModObjects.init();
+        RegistrarResourcefulCrops.registerOthers();
 
         AnnotationHelper.loadCompatibilities(modCompatibilities);
 

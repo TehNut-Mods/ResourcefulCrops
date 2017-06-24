@@ -12,8 +12,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.EnumPlantType;
 import net.minecraftforge.common.IPlantable;
 import tehnut.resourceful.crops.block.tile.TileSeedContainer;
+import tehnut.resourceful.crops.core.RegistrarResourcefulCrops;
 import tehnut.resourceful.crops.core.data.Seed;
-import tehnut.resourceful.crops.core.ModObjects;
 import tehnut.resourceful.crops.util.Util;
 
 public class ItemResourcefulPouch extends ItemResourceful implements IPlantable {
@@ -36,7 +36,7 @@ public class ItemResourcefulPouch extends ItemResourceful implements IPlantable 
                 settablePos.setPos(x, pos.getY(), z);
                 IBlockState worldState = world.getBlockState(settablePos);
                 if (player.canPlayerEdit(settablePos.up(), facing, stack) && worldState.getBlock().canSustainPlant(worldState, world, settablePos, EnumFacing.UP, this) && world.isAirBlock(settablePos.up())) {
-                    world.setBlockState(settablePos.up(), ModObjects.CROP.getDefaultState());
+                    world.setBlockState(settablePos.up(), RegistrarResourcefulCrops.CROP.getDefaultState());
                     if (Util.getSeedContainer(world, settablePos.up()) == null)
                         world.setTileEntity(settablePos.up(), new TileSeedContainer(seed.getRegistryName()));
                     else
@@ -64,6 +64,6 @@ public class ItemResourcefulPouch extends ItemResourceful implements IPlantable 
 
     @Override
     public IBlockState getPlant(IBlockAccess world, BlockPos pos) {
-        return ModObjects.CROP.getDefaultState();
+        return RegistrarResourcefulCrops.CROP.getDefaultState();
     }
 }

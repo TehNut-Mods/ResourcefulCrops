@@ -9,7 +9,7 @@ import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraft.world.gen.feature.WorldGenMinable;
 import net.minecraftforge.fml.common.IWorldGenerator;
 import tehnut.resourceful.crops.core.ConfigHandler;
-import tehnut.resourceful.crops.core.ModObjects;
+import tehnut.resourceful.crops.core.RegistrarResourcefulCrops;
 
 import java.util.Random;
 
@@ -31,7 +31,7 @@ public class OreGenerator implements IWorldGenerator {
 
             BlockPos pos = new BlockPos(firstBlockXCoord, gaianiteY, firstBlockZCoord);
 
-            new WorldGenMinable(ModObjects.ORE.getStateFromMeta(0), 4, BlockMatcher.forBlock(Blocks.STONE)).generate(world, random, pos);
+            new WorldGenMinable(RegistrarResourcefulCrops.ORE.getStateFromMeta(0), 4, BlockMatcher.forBlock(Blocks.STONE)).generate(world, random, pos);
         }
     }
 
@@ -43,7 +43,7 @@ public class OreGenerator implements IWorldGenerator {
 
             BlockPos pos = new BlockPos(firstBlockXCoord, gaianiteY, firstBlockZCoord);
 
-            new WorldGenMinable(ModObjects.ORE.getStateFromMeta(1), 4, BlockMatcher.forBlock(Blocks.NETHERRACK)).generate(world, random, pos);
+            new WorldGenMinable(RegistrarResourcefulCrops.ORE.getStateFromMeta(1), 4, BlockMatcher.forBlock(Blocks.NETHERRACK)).generate(world, random, pos);
         }
     }
 }

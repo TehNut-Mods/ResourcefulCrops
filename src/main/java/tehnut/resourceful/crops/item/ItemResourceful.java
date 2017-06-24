@@ -13,8 +13,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import tehnut.resourceful.crops.ResourcefulCrops;
+import tehnut.resourceful.crops.core.RegistrarResourcefulCrops;
 import tehnut.resourceful.crops.core.data.Seed;
-import tehnut.resourceful.crops.core.ModObjects;
 import tehnut.resourceful.crops.core.data.SeedStack;
 import tehnut.resourceful.crops.util.Util;
 
@@ -38,7 +38,7 @@ public class ItemResourceful extends Item {
         if (!isInCreativeTab(tab))
             return;
 
-        for (Seed seed : ModObjects.SEEDS.getValues())
+        for (Seed seed : RegistrarResourcefulCrops.SEEDS.getValues())
             subItems.add(getResourcefulStack(this, seed.getRegistryName()));
     }
 
@@ -77,7 +77,7 @@ public class ItemResourceful extends Item {
         if (!stack.hasTagCompound() || !stack.getTagCompound().hasKey("seed"))
             return null;
 
-        return ModObjects.SEEDS.getValue(new ResourceLocation(stack.getTagCompound().getString("seed")));
+        return RegistrarResourcefulCrops.SEEDS.getValue(new ResourceLocation(stack.getTagCompound().getString("seed")));
     }
 
     public static ItemStack getResourcefulStack(Item item, ResourceLocation key) {
