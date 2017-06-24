@@ -1,6 +1,7 @@
 package tehnut.resourceful.crops.core;
 
 import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -29,6 +30,7 @@ import tehnut.resourceful.crops.item.*;
 import tehnut.resourceful.crops.util.OreGenerator;
 
 import java.io.File;
+import java.util.List;
 
 @SuppressWarnings("ConstantConditions")
 @Mod.EventBusSubscriber
@@ -63,7 +65,7 @@ public class RegistrarResourcefulCrops {
 
     @SubscribeEvent
     public static void registerItems(RegistryEvent.Register<Item> event) {
-        event.getRegistry().register(new ItemBlockMulti(ORE).setRegistryName(ORE.getRegistryName()));
+        event.getRegistry().register(new ItemBlockMulti(ORE, "false", "true").setRegistryName(ORE.getRegistryName()));
 
         event.getRegistry().register(new ItemResourcefulSeed().setRegistryName("seed"));
         event.getRegistry().register(new ItemResourcefulPouch().setRegistryName("pouch"));
@@ -141,7 +143,7 @@ public class RegistrarResourcefulCrops {
     @SubscribeEvent
     public static void createRegistries(RegistryEvent.NewRegistry event) {
         SEEDS = new RegistryBuilder<Seed>()
-                .setName(new ResourceLocation(ResourcefulCrops.MODID, "seeds"))
+                .setName(new ResourceLocation("_" + ResourcefulCrops.MODID, "seeds")) // _ so we fire before minecraft:recipes
                 .setType(Seed.class)
                 .setIDRange(0, Short.MAX_VALUE - 2)
                 .create();

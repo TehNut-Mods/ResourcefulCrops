@@ -86,15 +86,17 @@ public class ShapedSeedRecipe extends IForgeRegistryEntry.Impl<IRecipe> implemen
                 itemMap.put(chr, new ItemStack((Block) in, 1, OreDictionary.WILDCARD_VALUE));
             } else if (in instanceof String) {
                 itemMap.put(chr, OreDictionary.getOres((String) in));
-            } else if (in instanceof List) { // Allow a List<ItemStack> as a valid input object
-                if (((List) in).get(0).getClass() == ItemStack.class)
-                    itemMap.put(chr, in);
-                else if (((List) in).get(0).getClass() == SeedStack.class) {
-                    List<ItemStack> stacks = Lists.newArrayList();
-                    for (SeedStack stack : (List<SeedStack>) in)
-                        stacks.add(ItemResourceful.getResourcefulStack(stack));
+            } else if (in instanceof List) { // Allow a List<ItemStack> or List<SeedStack> as valid input types
+                if (!((List) in).isEmpty()) {
+                    if (((List) in).get(0).getClass() == ItemStack.class)
+                        itemMap.put(chr, in);
+                    else if (((List) in).get(0).getClass() == SeedStack.class) {
+                        List<ItemStack> stacks = Lists.newArrayList();
+                        for (SeedStack stack : (List<SeedStack>) in)
+                            stacks.add(ItemResourceful.getResourcefulStack(stack));
 
-                    itemMap.put(chr, stacks);
+                        itemMap.put(chr, stacks);
+                    }
                 }
             } else if (in instanceof SeedStack) {
                 itemMap.put(chr, ItemResourceful.getResourcefulStack((SeedStack) in));
