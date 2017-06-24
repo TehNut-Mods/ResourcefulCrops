@@ -124,7 +124,8 @@ public class RegistrarResourcefulCrops {
     
     @SubscribeEvent
     public static void registerModels(ModelRegistryEvent event) {
-        ModelLoader.setCustomMeshDefinition(EARTH_STONE, stack -> new ModelResourceLocation(stack.getItem().getRegistryName(), "inventory"));
+        for (int i = 0; i < ItemEarthStone.STONES.length; i++)
+            ModelLoader.setCustomModelResourceLocation(EARTH_STONE, i, new ModelResourceLocation(EARTH_STONE.getRegistryName(), "inventory"));
 
         ModelLoader.setCustomModelResourceLocation(SEED, 0, new ModelResourceLocation(SEED.getRegistryName(), "inventory"));
         ModelLoader.setCustomModelResourceLocation(POUCH, 0, new ModelResourceLocation(POUCH.getRegistryName(), "inventory"));
