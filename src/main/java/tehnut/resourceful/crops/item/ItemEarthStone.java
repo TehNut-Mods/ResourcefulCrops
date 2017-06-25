@@ -27,7 +27,6 @@ public class ItemEarthStone extends Item {
         return getUnlocalizedName() + "." + STONES[stack.getItemDamage() % STONES.length];
     }
 
-    @SideOnly(Side.CLIENT)
     @Override
     public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> subItems) {
         if (!isInCreativeTab(tab))

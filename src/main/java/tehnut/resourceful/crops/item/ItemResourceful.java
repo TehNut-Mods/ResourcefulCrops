@@ -32,7 +32,6 @@ public class ItemResourceful extends Item {
         this.base = base;
     }
 
-    @SideOnly(Side.CLIENT)
     @Override
     public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> subItems) {
         if (!isInCreativeTab(tab))
