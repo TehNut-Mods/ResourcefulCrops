@@ -82,8 +82,8 @@ public class RegistrarResourcefulCrops {
     @SubscribeEvent
     public static void registerRecipes(RegistryEvent.Register<IRecipe> event) {
         for (int i = 1; i <= 4; i++) {
-            event.getRegistry().register(new ShapedSeedRecipe(new ItemStack(ESSENCE, 1, i), " E ", "ESE", " E ", 'E', new ItemStack(ESSENCE, 1, i - 1), 'S', new ItemStack(EARTH_STONE, 1, i - 1)).setRegistryName("essence_tier" + i));
-            event.getRegistry().register(new ShapedSeedRecipe(new ItemStack(ESSENCE, 1, i), " E ", "ESE", " E ", 'E', new ItemStack(ESSENCE, 1, i - 1), 'S', new ItemStack(EARTH_STONE, 1, 4)).setRegistryName("master_essence_tier" + i));
+            event.getRegistry().register(new ShapedSeedRecipe(new ItemStack(ESSENCE, 1, i), "AEA", "ESE", "AEA", 'E', new ItemStack(ESSENCE, 1, i - 1), 'S', new ItemStack(EARTH_STONE, 1, i - 1), 'A', new ItemStack(Items.AIR)).setRegistryName("essence_tier" + i));
+            event.getRegistry().register(new ShapedSeedRecipe(new ItemStack(ESSENCE, 1, i), "AEA", "ESE", "AEA", 'E', new ItemStack(ESSENCE, 1, i - 1), 'S', new ItemStack(EARTH_STONE, 1, 4), 'A', new ItemStack(Items.AIR)).setRegistryName("master_essence_tier" + i));
         }
 
         Multimap<Integer, SeedStack> tiers = ArrayListMultimap.create();
