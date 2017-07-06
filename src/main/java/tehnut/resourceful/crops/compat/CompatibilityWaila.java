@@ -33,6 +33,12 @@ public class CompatibilityWaila implements IWailaPlugin {
             if (seed == null)
                 return accessor.getStack();
 
+            if (seed.getRegistryName().equals(RegistrarResourcefulCrops.SEED_DEFAULT))
+                return accessor.getStack();
+
+            if (seed.getOutputs().length == 0)
+                return accessor.getStack();
+
             ItemStack ret = seed.getOutputs()[0].getItem();
             ret.setCount(1);
 

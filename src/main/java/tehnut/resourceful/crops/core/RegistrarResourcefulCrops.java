@@ -29,7 +29,9 @@ import tehnut.resourceful.crops.core.recipe.ShapedSeedRecipe;
 import tehnut.resourceful.crops.item.*;
 import tehnut.resourceful.crops.util.OreGenerator;
 
+import java.awt.Color;
 import java.io.File;
+import java.util.Collections;
 import java.util.List;
 
 @SuppressWarnings("ConstantConditions")
@@ -53,6 +55,7 @@ public class RegistrarResourcefulCrops {
     @GameRegistry.ObjectHolder("earth_stone")
     public static final ItemEarthStone EARTH_STONE = new ItemEarthStone();
 
+    public static ResourceLocation SEED_DEFAULT = new ResourceLocation(ResourcefulCrops.MODID, "null");
     public static IForgeRegistry<Seed> SEEDS = null;
 
     @SubscribeEvent
@@ -76,6 +79,7 @@ public class RegistrarResourcefulCrops {
     
     @SubscribeEvent
     public static void registerSeeds(RegistryEvent.Register<Seed> event) {
+        event.getRegistry().register(new Seed("null", 0, 0, Color.BLACK, Collections.emptyList(), new Output[] {}, null).setRegistryName(SEED_DEFAULT));
         SeedLoader.init(new File(ResourcefulCrops.configDir, "seeds"), event.getRegistry());
     }
 
@@ -146,6 +150,7 @@ public class RegistrarResourcefulCrops {
         SEEDS = new RegistryBuilder<Seed>()
                 .setName(new ResourceLocation("_" + ResourcefulCrops.MODID, "seeds")) // _ so we fire before minecraft:recipes
                 .setType(Seed.class)
+                .setDefaultKey(SEED_DEFAULT)
                 .setIDRange(0, Short.MAX_VALUE - 2)
                 .create();
     }
