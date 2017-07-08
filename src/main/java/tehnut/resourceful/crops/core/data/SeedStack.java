@@ -8,7 +8,7 @@ import tehnut.resourceful.crops.item.ItemResourceful;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
-public class SeedStack {
+public final class SeedStack {
 
     private final ItemResourceful type;
     private final ResourceLocation seed;
@@ -50,5 +50,25 @@ public class SeedStack {
 
     public int getAmount() {
         return amount;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof SeedStack)) return false;
+
+        SeedStack seedStack = (SeedStack) o;
+
+        if (amount != seedStack.amount) return false;
+        if (type != null ? !type.equals(seedStack.type) : seedStack.type != null) return false;
+        return seed != null ? seed.equals(seedStack.seed) : seedStack.seed == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = type != null ? type.hashCode() : 0;
+        result = 31 * result + (seed != null ? seed.hashCode() : 0);
+        result = 31 * result + amount;
+        return result;
     }
 }

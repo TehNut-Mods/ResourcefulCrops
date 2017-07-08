@@ -1,4 +1,4 @@
-package tehnut.resourceful.crops.compat.jei;
+package tehnut.resourceful.crops.compat;
 
 import com.google.common.collect.Lists;
 import mezz.jei.api.BlankModPlugin;
@@ -6,14 +6,12 @@ import mezz.jei.api.IModRegistry;
 import mezz.jei.api.ISubtypeRegistry;
 import mezz.jei.api.JEIPlugin;
 import mezz.jei.api.recipe.IStackHelper;
-import mezz.jei.api.recipe.VanillaRecipeCategoryUid;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.translation.I18n;
 import tehnut.resourceful.crops.core.RegistrarResourcefulCrops;
 import tehnut.resourceful.crops.core.data.Seed;
-import tehnut.resourceful.crops.core.recipe.ShapedSeedRecipe;
 import tehnut.resourceful.crops.item.ItemResourceful;
 
 import java.util.List;
@@ -26,9 +24,8 @@ public class ResourcefulCropsPlugin extends BlankModPlugin {
     @Override
     public void register(IModRegistry registry) {
         stackHelper = registry.getJeiHelpers().getStackHelper();
-        registry.handleRecipes(ShapedSeedRecipe.class, new ShapedSeedRecipeFactory(), VanillaRecipeCategoryUid.CRAFTING);
 
-        for (Seed seed : RegistrarResourcefulCrops.SEEDS.getValues()) {
+        for (Seed seed : RegistrarResourcefulCrops.SEEDS) {
             List<String> descriptions = Lists.newArrayList();
             if (seed.getGrowthRequirement().getMinLight() != 7)
                 descriptions.add(I18n.translateToLocalFormatted("jei.resourcefulcrops.seed.info.minlight", MathHelper.clamp(seed.getGrowthRequirement().getMinLight(), 0, 15)));

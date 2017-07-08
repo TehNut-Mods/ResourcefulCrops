@@ -37,15 +37,16 @@ public class ItemResourceful extends Item {
         if (!isInCreativeTab(tab))
             return;
 
-        for (Seed seed : RegistrarResourcefulCrops.SEEDS.getValues())
-            subItems.add(getResourcefulStack(this, seed.getRegistryName()));
+        for (Seed seed : RegistrarResourcefulCrops.SEEDS)
+            if (!RegistrarResourcefulCrops.SEED_DEFAULT.equals(seed.getRegistryName()))
+                subItems.add(getResourcefulStack(this, seed.getRegistryName()));
     }
 
     @SideOnly(Side.CLIENT)
     @Override
     public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag advanced) {
         Seed seed = getSeed(stack);
-        if (seed == null) {
+        if (seed == null || RegistrarResourcefulCrops.SEED_DEFAULT.equals(seed.getRegistryName())) {
             tooltip.add(TextFormatting.RED + net.minecraft.client.resources.I18n.format("info.resourcefulcrops.invalid"));
             return;
         }

@@ -1,5 +1,6 @@
 package tehnut.resourceful.crops.core;
 
+import com.google.common.base.Stopwatch;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
@@ -27,14 +28,18 @@ import java.util.List;
 public class SeedLoader {
 
     public static void init(File seedDir, IForgeRegistry<Seed> seedRegistry) {
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        ResourcefulCrops.LOGGER.info("Beginning Seed loading phase");
         Gson gson = Serializers.withAll();
         if (!seedDir.exists() && seedDir.mkdirs()) {
             for (Seed seed : getDefaults()) {
                 String json = gson.toJson(seed);
                 try {
-                    FileWriter fileWriter = new FileWriter(new File(seedDir, Util.cleanString(seed.getName()) + ".json"));
+                    File printFile = new File(seedDir, Util.cleanString(seed.getName()) + ".json");
+                    FileWriter fileWriter = new FileWriter(printFile);
                     fileWriter.write(json);
                     fileWriter.close();
+                    ResourcefulCrops.debug("Printed default file for {} to {}", seed.getRegistryName(), printFile.getAbsolutePath());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -42,6 +47,7 @@ public class SeedLoader {
                 seedRegistry.register(seed.setRegistryName(Util.cleanString(seed.getName())));
             }
 
+            ResourcefulCrops.LOGGER.info("Finished loading {} seeds in {}", seedRegistry.getValues().size(), stopwatch.stop());
             return;
         }
 
@@ -72,6 +78,7 @@ public class SeedLoader {
 
             seedRegistry.register(seed);
         }
+        ResourcefulCrops.LOGGER.info("Finished loading {} seeds in {}", seedRegistry.getValues().size(), stopwatch.stop());
     }
 
     private static Set<Seed> getDefaults() {
