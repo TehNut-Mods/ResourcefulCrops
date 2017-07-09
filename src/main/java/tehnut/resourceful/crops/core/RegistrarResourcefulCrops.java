@@ -39,6 +39,7 @@ import java.util.Collections;
 @GameRegistry.ObjectHolder(ResourcefulCrops.MODID)
 public class RegistrarResourcefulCrops {
 
+    // Each of these have defaults assigned to avoid invalid null inspections. They are replaced when ObjectHolders are filled.
     @GameRegistry.ObjectHolder("crop")
     public static final BlockResourcefulCrop CROP = new BlockResourcefulCrop();
     @GameRegistry.ObjectHolder("ore")

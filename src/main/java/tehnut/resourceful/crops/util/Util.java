@@ -1,8 +1,14 @@
 package tehnut.resourceful.crops.util;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.block.model.IBakedModel;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
+import org.apache.commons.lang3.math.NumberUtils;
+import tehnut.resourceful.crops.ResourcefulCrops;
 import tehnut.resourceful.crops.block.tile.TileSeedContainer;
 
 import javax.annotation.Nullable;
@@ -43,5 +49,35 @@ public class Util {
         }
 
         return stringBuilder.toString();
+    }
+
+    // Thanks Paul
+    public static int getStackColor(ItemStack stack) {
+        IBakedModel model = Minecraft.getMinecraft().getRenderItem().getItemModelWithOverrides(stack, null, null);
+        TextureAtlasSprite sprite = model.getParticleTexture();
+        if (sprite == null) { // Item doesn't have a TAS and is rendered some other way.
+            ResourcefulCrops.debug("[ERROR] Error generating color from stack {} (Null TAS)", stack);
+            return 0xFF000000;
+        }
+        int[] pixels = sprite.getFrameTextureData(0)[0];
+        int r = 0, g = 0, b = 0, count = 0;
+        for (int argb : pixels) {
+            int ca = argb >> 24 & 0xFF;
+            int cr = argb >> 16 & 0xFF;
+            int cg = argb >> 8 & 0xFF;
+            int cb = argb & 0xFF;
+            if (ca > 0x7F && NumberUtils.max(cr, cg, cb) > 0x1F) {
+                r += cr;
+                g += cg;
+                b += cb;
+                count++;
+            }
+        }
+        if (count > 0) {
+            r /= count;
+            g /= count;
+            b /= count;
+        }
+        return 0xFF000000 | r << 16 | g << 8 | b;
     }
 }

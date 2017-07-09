@@ -37,7 +37,9 @@ public class Serializers {
             String name = json.getAsJsonObject().get("name").getAsString();
             int tier = json.getAsJsonObject().get("tier").getAsInt();
             int craftAmount = json.getAsJsonObject().get("craftAmount").getAsInt();
-            Color color = Color.decode(json.getAsJsonObject().get("color").getAsString());
+            Color color = null;
+            if (json.getAsJsonObject().has("color"))
+                color = Color.decode(json.getAsJsonObject().get("color").getAsString());
             List<ItemStack> inputItems = null;
             String oreName = null;
             if (json.getAsJsonObject().has("inputOre")) {
@@ -64,7 +66,8 @@ public class Serializers {
             jsonObject.addProperty("name", src.getName());
             jsonObject.addProperty("tier", src.getTier());
             jsonObject.addProperty("craftAmount", src.getCraftAmount());
-            jsonObject.addProperty("color", "#" + Integer.toHexString(src.getColor().getRGB()).substring(2).toUpperCase(Locale.ENGLISH));
+            if (src.getColor() != null)
+                jsonObject.addProperty("color", "#" + Integer.toHexString(src.getColor().getRGB()).substring(2).toUpperCase(Locale.ENGLISH));
             if (!Strings.isNullOrEmpty(src.getOreName()))
                 jsonObject.addProperty("inputOre", src.getOreName());
             else if (src.getInputItems().size() == 1)
