@@ -11,6 +11,7 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.oredict.OreDictionary;
 import tehnut.resourceful.crops.ResourcefulCrops;
 import tehnut.resourceful.crops.core.data.GrowthRequirement;
+import tehnut.resourceful.crops.core.data.InfoOverride;
 import tehnut.resourceful.crops.core.data.Output;
 import tehnut.resourceful.crops.core.data.Seed;
 
@@ -54,8 +55,9 @@ public class Serializers {
                 throw new RuntimeException("Seed with name " + name + " does not have any valid input items.");
             Output[] outputs = context.deserialize(json.getAsJsonObject().get("outputs"), Output[].class);
             GrowthRequirement growthRequirement = context.deserialize(json.getAsJsonObject().get("growthRequirement"), GrowthRequirement.class);
+            InfoOverride infoOverride = context.deserialize(json.getAsJsonObject().get("overrides"), InfoOverride.class);
 
-            Seed seed = new Seed(name, tier, craftAmount, color, inputItems, outputs, growthRequirement);
+            Seed seed = new Seed(name, tier, craftAmount, color, inputItems, outputs, growthRequirement, infoOverride);
             seed.setOreName(oreName);
             return seed;
         }
@@ -76,6 +78,7 @@ public class Serializers {
                 jsonObject.add("inputItems", context.serialize(src.getInputItems()));
             jsonObject.add("outputs", context.serialize(src.getOutputs()));
             jsonObject.add("growthRequirement", context.serialize(src.getGrowthRequirement()));
+            jsonObject.add("overrides", context.serialize(src.getOverrides()));
             return jsonObject;
         }
 
@@ -202,12 +205,86 @@ public class Serializers {
             return Output.class;
         }
     };
+    public static final SerializerBase<InfoOverride.StateInfo> STATE_INFO = new SerializerBase<InfoOverride.StateInfo>() {
+        @Override
+        public InfoOverride.StateInfo deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+            String path = InfoOverride.StateInfo.DEFAULT.getPath().toString();
+            boolean shouldColor = InfoOverride.StateInfo.DEFAULT.shouldColor();
+
+            if (json.getAsJsonObject().has("path"))
+                path = json.getAsJsonObject().get("path").getAsString();
+            if (json.getAsJsonObject().has("shouldColor"))
+                shouldColor = json.getAsJsonObject().get("shouldColor").getAsBoolean();
+
+            return new InfoOverride.StateInfo(path, shouldColor);
+        }
+
+        @Override
+        public JsonElement serialize(InfoOverride.StateInfo src, Type typeOfSrc, JsonSerializationContext context) {
+            JsonObject jsonObject = new JsonObject();
+            if (src == null)
+                return null;
+
+            if (!src.getPath().equals(InfoOverride.StateInfo.DEFAULT.getPath()))
+                jsonObject.addProperty("path", src.getPath().toString());
+            if (src.shouldColor() != InfoOverride.StateInfo.DEFAULT.shouldColor())
+                jsonObject.addProperty("shouldColor", src.shouldColor());
+
+            return jsonObject;
+        }
+
+        @Override
+        public Type getType() {
+            return InfoOverride.StateInfo.class;
+        }
+    };
+    public static final SerializerBase<InfoOverride.ModelInfo> MODEL_INFO = new SerializerBase<InfoOverride.ModelInfo>() {
+
+        @Override
+        public InfoOverride.ModelInfo deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+            String path = InfoOverride.ModelInfo.DEFAULT.getPath().toString();
+            String variant = InfoOverride.ModelInfo.DEFAULT.getVariant();
+            boolean shouldColor = InfoOverride.ModelInfo.DEFAULT.shouldColor();
+
+            if (json.getAsJsonObject().has("path"))
+                path = json.getAsJsonObject().get("path").getAsString();
+            if (json.getAsJsonObject().has("variant"))
+                variant = json.getAsJsonObject().get("variant").getAsString();
+            if (json.getAsJsonObject().has("shouldColor"))
+                shouldColor = json.getAsJsonObject().get("shouldColor").getAsBoolean();
+
+            return new InfoOverride.ModelInfo(path, variant, shouldColor);
+        }
+
+        @Override
+        public JsonElement serialize(InfoOverride.ModelInfo src, Type typeOfSrc, JsonSerializationContext context) {
+            JsonObject jsonObject = new JsonObject();
+            if (src == null)
+                return null;
+
+            if (!src.getPath().equals(InfoOverride.ModelInfo.DEFAULT.getPath()))
+                jsonObject.addProperty("path", src.getPath().toString());
+            if (!src.getVariant().equals(InfoOverride.ModelInfo.DEFAULT.getVariant()))
+                jsonObject.addProperty("variant", src.getVariant());
+            if (src.shouldColor() != InfoOverride.ModelInfo.DEFAULT.shouldColor())
+                jsonObject.addProperty("shouldColor", src.shouldColor());
+
+            return jsonObject;
+        }
+
+        @Override
+        public Type getType() {
+            return InfoOverride.ModelInfo.class;
+        }
+    };
 
     private static final SerializerBase<?>[] ALL_SERIALIZERS = new SerializerBase[] {
             SEED,
             RESOURCE_LOCATION,
             ITEMSTACK,
             BLOCKSTATE,
-            OUTPUT
+            OUTPUT,
+            STATE_INFO,
+            MODEL_INFO
     };
 }

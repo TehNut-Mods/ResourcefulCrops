@@ -4,7 +4,7 @@ import net.minecraft.block.state.IBlockState;
 
 import javax.annotation.Nullable;
 
-public class GrowthRequirement {
+public final class GrowthRequirement {
 
     public static final GrowthRequirement DEFAULT = new GrowthRequirement(7, 15, null);
 

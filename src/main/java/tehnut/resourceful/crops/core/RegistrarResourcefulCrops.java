@@ -3,7 +3,9 @@ package tehnut.resourceful.crops.core;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -23,16 +25,14 @@ import tehnut.resourceful.crops.ResourcefulCrops;
 import tehnut.resourceful.crops.block.BlockGaianiteOre;
 import tehnut.resourceful.crops.block.BlockResourcefulCrop;
 import tehnut.resourceful.crops.block.tile.TileSeedContainer;
+import tehnut.resourceful.crops.client.ResourcefulMeshDefinition;
+import tehnut.resourceful.crops.core.data.InfoOverride;
 import tehnut.resourceful.crops.core.data.Output;
 import tehnut.resourceful.crops.core.data.Seed;
 import tehnut.resourceful.crops.core.data.SeedStack;
 import tehnut.resourceful.crops.core.recipe.RecipeHelper;
 import tehnut.resourceful.crops.item.*;
 import tehnut.resourceful.crops.util.OreGenerator;
-
-import java.awt.Color;
-import java.io.File;
-import java.util.Collections;
 
 @SuppressWarnings("ConstantConditions")
 @Mod.EventBusSubscriber
@@ -61,7 +61,7 @@ public class RegistrarResourcefulCrops {
 
     @SubscribeEvent
     public static void registerBlocks(RegistryEvent.Register<Block> event) {
-        event.getRegistry().register(new BlockResourcefulCrop().setRegistryName("crop"));
+        event.getRegistry().register(new BlockResourcefulCrop().init().setRegistryName("crop"));
         event.getRegistry().register(new BlockGaianiteOre().setRegistryName("ore"));
 
         GameRegistry.registerTileEntity(TileSeedContainer.class, ResourcefulCrops.MODID + ":seed_container");
@@ -76,12 +76,6 @@ public class RegistrarResourcefulCrops {
         event.getRegistry().register(new ItemResourceful("shard").setRegistryName("shard"));
         event.getRegistry().register(new ItemEssence().setRegistryName("essence"));
         event.getRegistry().register(new ItemEarthStone().setRegistryName("earth_stone"));
-    }
-    
-    @SubscribeEvent
-    public static void registerSeeds(RegistryEvent.Register<Seed> event) {
-        event.getRegistry().register(new Seed("null", 0, 0, Color.BLACK, Collections.emptyList(), new Output[] {}, null).setRegistryName(SEED_DEFAULT));
-        SeedLoader.init(new File(ResourcefulCrops.configDir, "seeds"), event.getRegistry());
     }
 
     @SubscribeEvent
@@ -136,9 +130,37 @@ public class RegistrarResourcefulCrops {
         for (int i = 0; i < ItemEarthStone.STONES.length; i++)
             ModelLoader.setCustomModelResourceLocation(EARTH_STONE, i, new ModelResourceLocation(EARTH_STONE.getRegistryName(), "inventory"));
 
-        ModelLoader.setCustomModelResourceLocation(SEED, 0, new ModelResourceLocation(SEED.getRegistryName(), "inventory"));
-        ModelLoader.setCustomModelResourceLocation(POUCH, 0, new ModelResourceLocation(POUCH.getRegistryName(), "inventory"));
-        ModelLoader.setCustomModelResourceLocation(SHARD, 0, new ModelResourceLocation(SHARD.getRegistryName(), "inventory"));
+        boolean hasSeedModel = false;
+        boolean hasShardModel = false;
+        boolean hasPouchModel = false;
+
+        for (Seed seed : SEEDS) {
+            InfoOverride override = seed.getOverrides();
+            if (override.getModel("seed") != null)
+                hasSeedModel = true;
+            if (override.getModel("shard") != null)
+                hasShardModel = true;
+            if (override.getModel("pouch") != null)
+                hasPouchModel = true;
+
+            if (hasSeedModel && hasShardModel && hasPouchModel)
+                break; // We have at least one of each, no need to keep looping.
+        }
+
+        if (hasSeedModel)
+            ModelLoader.setCustomMeshDefinition(SEED, new ResourcefulMeshDefinition(SEED));
+        else
+            ModelLoader.setCustomModelResourceLocation(SEED, 0, new ModelResourceLocation(SEED.getRegistryName(), "inventory"));
+
+        if (hasShardModel)
+            ModelLoader.setCustomMeshDefinition(SHARD, new ResourcefulMeshDefinition(SHARD));
+        else
+            ModelLoader.setCustomModelResourceLocation(SHARD, 0, new ModelResourceLocation(SHARD.getRegistryName(), "inventory"));
+
+        if (hasPouchModel)
+            ModelLoader.setCustomMeshDefinition(POUCH, new ResourcefulMeshDefinition(POUCH));
+        else
+            ModelLoader.setCustomModelResourceLocation(POUCH, 0, new ModelResourceLocation(POUCH.getRegistryName(), "inventory"));
 
         ModelLoader.setCustomModelResourceLocation(ESSENCE, 0, new ModelResourceLocation(ESSENCE.getRegistryName(), "type=normal"));
         ModelLoader.setCustomModelResourceLocation(ESSENCE, 1, new ModelResourceLocation(ESSENCE.getRegistryName(), "type=mundane"));
@@ -148,6 +170,18 @@ public class RegistrarResourcefulCrops {
 
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(ORE), 0, new ModelResourceLocation(ORE.getRegistryName(), "nether=false"));
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(ORE), 1, new ModelResourceLocation(ORE.getRegistryName(), "nether=true"));
+
+        ModelLoader.setCustomStateMapper(CROP, new StateMapperBase() {
+            @Override
+            protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
+                ResourceLocation regName = new ResourceLocation(state.getValue(BlockResourcefulCrop.SEED_TYPE).replace("_", ":"));
+                Seed seed = SEEDS.getValue(regName);
+                if (seed.getOverrides().getBlockState() != null)
+                    return new ModelResourceLocation(seed.getOverrides().getBlockState().getPath(), "age=" + state.getValue(BlockResourcefulCrop.AGE));
+
+                return new ModelResourceLocation(state.getBlock().getRegistryName(), "age=" + state.getValue(BlockResourcefulCrop.AGE));
+            }
+        });
     }
 
     @SubscribeEvent

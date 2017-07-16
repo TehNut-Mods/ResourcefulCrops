@@ -10,6 +10,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import tehnut.resourceful.crops.ResourcefulCrops;
 import tehnut.resourceful.crops.block.tile.TileSeedContainer;
 import tehnut.resourceful.crops.core.RegistrarResourcefulCrops;
+import tehnut.resourceful.crops.core.data.InfoOverride;
 import tehnut.resourceful.crops.core.data.Seed;
 import tehnut.resourceful.crops.item.ItemResourceful;
 import tehnut.resourceful.crops.util.Util;
@@ -53,6 +54,10 @@ public class ClientProxy extends CommonProxy {
             if (seed == null || (stack.getItem() == RegistrarResourcefulCrops.POUCH && tintIndex != 1))
                 return -1;
 
+            InfoOverride.ModelInfo modelInfo = seed.getOverrides().getModel(((ItemResourceful) stack.getItem()).getBaseName());
+            if (modelInfo != null && !modelInfo.shouldColor())
+                return -1;
+
             return seed.getColor().getRGB();
         }, RegistrarResourcefulCrops.SEED, RegistrarResourcefulCrops.POUCH, RegistrarResourcefulCrops.SHARD);
 
@@ -65,6 +70,9 @@ public class ClientProxy extends CommonProxy {
 
             Seed seed = RegistrarResourcefulCrops.SEEDS.getValue(seedContainer.getSeedKey());
             if (seed == null)
+                return -1;
+
+            if (seed.getOverrides().getBlockState() != null && !seed.getOverrides().getBlockState().shouldColor())
                 return -1;
 
             return seed.getColor().getRGB();

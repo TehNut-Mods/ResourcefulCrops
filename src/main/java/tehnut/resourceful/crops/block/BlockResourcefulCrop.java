@@ -1,6 +1,8 @@
 package tehnut.resourceful.crops.block;
 
 import net.minecraft.block.BlockCrops;
+import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -12,6 +14,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.EnumPlantType;
 import tehnut.resourceful.crops.ResourcefulCrops;
+import tehnut.resourceful.crops.block.prop.PropertySeedType;
 import tehnut.resourceful.crops.block.tile.TileSeedContainer;
 import tehnut.resourceful.crops.core.RegistrarResourcefulCrops;
 import tehnut.resourceful.crops.core.data.Seed;
@@ -19,11 +22,32 @@ import tehnut.resourceful.crops.item.ItemResourceful;
 import tehnut.resourceful.crops.util.Util;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class BlockResourcefulCrop extends BlockCrops {
+
+    public static final IProperty<String> SEED_TYPE = new PropertySeedType();
+
+    private BlockStateContainer stateContainer;
+
+    @Override
+    protected BlockStateContainer createBlockState() {
+        return new BlockStateContainer.Builder(this).add(AGE).build(); // Dummy state to avoid issues when instantiating
+    }
+
+    private BlockStateContainer createRealState() {
+        return new BlockStateContainer.Builder(this).add(SEED_TYPE, AGE).build();
+    }
+
+    @Override
+    public BlockStateContainer getBlockState() {
+        return stateContainer;
+    }
+
+    @Override
+    public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
+        return state.withProperty(SEED_TYPE, Util.getSeedContainer(worldIn, pos).getSeedKey().toString().replace(":", "_"));
+    }
 
     @Override
     public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
@@ -110,6 +134,12 @@ public class BlockResourcefulCrop extends BlockCrops {
             return false;
 
         return true;
+    }
+
+    public BlockResourcefulCrop init() {
+        this.stateContainer = createRealState();
+        this.setDefaultState(stateContainer.getBaseState());
+        return this;
     }
 
     private ItemStack getFoodStack(Item toDrop, IBlockAccess world, BlockPos pos) {

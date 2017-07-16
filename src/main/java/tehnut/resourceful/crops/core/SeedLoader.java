@@ -147,14 +147,14 @@ public class SeedLoader {
     private static void addSeed(Set<Seed> seeds, String name, int tier, int amount, Color color, ItemStack stack, int outputAmount) {
         ItemStack output = stack.copy();
         output.setCount(outputAmount);
-        seeds.add(new Seed(name, tier, amount, color, stack, new Output(output, Output.Shape.DEFAULT, null), null));
+        seeds.add(new Seed(name, tier, amount, color, stack, new Output(output, Output.Shape.DEFAULT, null), null, null));
     }
 
     private static void addSeed(Set<Seed> seeds, String name, int tier, int amount, Color color, String oreDict, int outputAmount) {
         if (OreDictionary.doesOreNameExist(oreDict) && OreDictionary.getOres(oreDict).size() > 0) {
             ItemStack output = OreDictionary.getOres(oreDict).get(0).copy();
             output.setCount(outputAmount);
-            Seed seed = new Seed(name, tier, amount, color, oreDict, new Output(output, Output.Shape.DEFAULT, null), null);
+            Seed seed = new Seed(name, tier, amount, color, oreDict, new Output(output, Output.Shape.DEFAULT, null), null, null);
             seed.setOreName(oreDict);
             seeds.add(seed);
         }

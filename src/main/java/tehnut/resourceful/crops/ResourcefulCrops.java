@@ -12,6 +12,8 @@ import org.apache.logging.log4j.Logger;
 import tehnut.resourceful.crops.compat.Compatibility;
 import tehnut.resourceful.crops.core.ConfigHandler;
 import tehnut.resourceful.crops.core.RegistrarResourcefulCrops;
+import tehnut.resourceful.crops.core.SeedLoader;
+import tehnut.resourceful.crops.core.data.Seed;
 import tehnut.resourceful.crops.proxy.CommonProxy;
 import tehnut.resourceful.crops.util.AnnotationHelper;
 
@@ -43,6 +45,9 @@ public class ResourcefulCrops {
         configDir = new File(event.getModConfigurationDirectory(), MODID);
 
         modCompatibilities = event.getAsmData().getAll(Compatibility.class.getCanonicalName());
+
+        RegistrarResourcefulCrops.SEEDS.register(Seed.DEFAULT.setRegistryName(RegistrarResourcefulCrops.SEED_DEFAULT));
+        SeedLoader.init(new File(ResourcefulCrops.configDir, "seeds"), RegistrarResourcefulCrops.SEEDS);
 
         PROXY.preInit();
     }

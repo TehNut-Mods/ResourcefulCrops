@@ -6,11 +6,15 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.awt.*;
+import java.util.Collections;
 import java.util.List;
 
-public class Seed extends IForgeRegistryEntry.Impl<Seed> {
+public final class Seed extends IForgeRegistryEntry.Impl<Seed> {
+
+    public static final Seed DEFAULT = new Seed("null", 0, 0, Color.BLACK, Collections.emptyList(), new Output[] {}, null, null);
 
     private final String name;
     private final int tier;
@@ -21,11 +25,12 @@ public class Seed extends IForgeRegistryEntry.Impl<Seed> {
     private final List<ItemStack> inputItems;
     private final Output[] outputs;
     private final GrowthRequirement growthRequirement;
+    private final InfoOverride overrides;
 
     @Nullable
     private String oreName;
 
-    public Seed(String name, int tier, int craftAmount, @Nullable Color color, List<ItemStack> inputItems, Output[] outputs, @Nullable GrowthRequirement growthRequirement) {
+    public Seed(String name, int tier, int craftAmount, @Nullable Color color, List<ItemStack> inputItems, Output[] outputs, @Nullable GrowthRequirement growthRequirement, @Nullable InfoOverride overrides) {
         this.name = name;
         this.tier = tier;
         this.craftAmount = craftAmount;
@@ -34,22 +39,23 @@ public class Seed extends IForgeRegistryEntry.Impl<Seed> {
         this.inputItems = inputItems;
         this.outputs = outputs;
         this.growthRequirement = growthRequirement == null ? GrowthRequirement.DEFAULT : growthRequirement;
+        this.overrides = overrides == null ? InfoOverride.DEFAULT : overrides;
     }
 
-    public Seed(String name, int tier, int craftAmount, @Nullable Color color, List<ItemStack> inputItems, Output output, @Nullable GrowthRequirement growthRequirement) {
-        this(name, tier, craftAmount, color, inputItems, new Output[]{output}, growthRequirement);
+    public Seed(String name, int tier, int craftAmount, @Nullable Color color, List<ItemStack> inputItems, Output output, @Nullable GrowthRequirement growthRequirement, @Nullable InfoOverride overrides) {
+        this(name, tier, craftAmount, color, inputItems, new Output[]{output}, growthRequirement, overrides);
     }
 
-    public Seed(String name, int tier, int craftAmount, @Nullable Color color, ItemStack inputItem, Output output, @Nullable GrowthRequirement growthRequirement) {
-        this(name, tier, craftAmount, color, Lists.newArrayList(inputItem), new Output[]{output}, growthRequirement);
+    public Seed(String name, int tier, int craftAmount, @Nullable Color color, ItemStack inputItem, Output output, @Nullable GrowthRequirement growthRequirement, @Nullable InfoOverride overrides) {
+        this(name, tier, craftAmount, color, Lists.newArrayList(inputItem), new Output[]{output}, growthRequirement, overrides);
     }
 
-    public Seed(String name, int tier, int craftAmount, @Nullable Color color, String oreName, Output[] output, @Nullable GrowthRequirement growthRequirement) {
-        this(name, tier, craftAmount, color, OreDictionary.getOres(oreName), output, growthRequirement);
+    public Seed(String name, int tier, int craftAmount, @Nullable Color color, String oreName, Output[] output, @Nullable GrowthRequirement growthRequirement, @Nullable InfoOverride overrides) {
+        this(name, tier, craftAmount, color, OreDictionary.getOres(oreName), output, growthRequirement, overrides);
     }
 
-    public Seed(String name, int tier, int craftAmount, @Nullable Color color, String oreName, Output output, @Nullable GrowthRequirement growthRequirement) {
-        this(name, tier, craftAmount, color, oreName, new Output[]{output}, growthRequirement);
+    public Seed(String name, int tier, int craftAmount, @Nullable Color color, String oreName, Output output, @Nullable GrowthRequirement growthRequirement, @Nullable InfoOverride overrides) {
+        this(name, tier, craftAmount, color, oreName, new Output[]{output}, growthRequirement, overrides);
     }
 
     public String getName() {
@@ -87,6 +93,11 @@ public class Seed extends IForgeRegistryEntry.Impl<Seed> {
 
     public GrowthRequirement getGrowthRequirement() {
         return growthRequirement;
+    }
+
+    @Nonnull
+    public InfoOverride getOverrides() {
+        return overrides;
     }
 
     @Nullable

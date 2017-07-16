@@ -59,6 +59,8 @@ public class ItemResourceful extends Item {
         Seed seed = getSeed(stack);
         if (seed != null) {
             String unlocFormat = "item.resourcefulcrops." + base + ".name";
+            if (seed.getOverrides().getLangKey() != null)
+                unlocFormat = seed.getOverrides().getLangKey();
             String seedUnloc = "seed.resourcefulcrops." + Util.cleanString(seed.getName()) + ".name";
             String seedName = Util.prettifyString(seed.getName());
             if (I18n.canTranslate(seedUnloc))
@@ -78,6 +80,10 @@ public class ItemResourceful extends Item {
             return null;
 
         return RegistrarResourcefulCrops.SEEDS.getValue(new ResourceLocation(stack.getTagCompound().getString("seed")));
+    }
+
+    public String getBaseName() {
+        return base;
     }
 
     public static ItemStack getResourcefulStack(Item item, ResourceLocation key) {
