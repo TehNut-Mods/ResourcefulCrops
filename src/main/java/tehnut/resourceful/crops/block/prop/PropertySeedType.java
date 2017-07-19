@@ -20,7 +20,7 @@ public class PropertySeedType extends PropertyHelper<String> {
     public Collection<String> getAllowedValues() {
         Set<String> allowed = Sets.newHashSet();
         for (Seed seed : RegistrarResourcefulCrops.SEEDS)
-            if (seed.getRegistryName() != null && !RegistrarResourcefulCrops.SEED_DEFAULT.equals(seed.getRegistryName()))
+            if (seed.getRegistryName() != null)
                 allowed.add(seed.getRegistryName().toString().replace(":", "_"));
         
         return allowed;

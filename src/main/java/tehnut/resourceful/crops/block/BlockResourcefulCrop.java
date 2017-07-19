@@ -45,8 +45,9 @@ public class BlockResourcefulCrop extends BlockCrops {
     }
 
     @Override
-    public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
-        return state.withProperty(SEED_TYPE, Util.getSeedContainer(worldIn, pos).getSeedKey().toString().replace(":", "_"));
+    public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos) {
+        Seed seed = RegistrarResourcefulCrops.SEEDS.getValue(Util.getSeedContainer(world, pos).getSeedKey());
+        return state.withProperty(SEED_TYPE, seed.getRegistryName().toString().replace(":", "_"));
     }
 
     @Override
