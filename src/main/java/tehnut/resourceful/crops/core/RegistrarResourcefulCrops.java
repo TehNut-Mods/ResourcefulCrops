@@ -40,20 +40,13 @@ import tehnut.resourceful.crops.util.OreGenerator;
 public class RegistrarResourcefulCrops {
 
     // Each of these have defaults assigned to avoid invalid null inspections. They are replaced when ObjectHolders are filled.
-    @GameRegistry.ObjectHolder("crop")
     public static final BlockResourcefulCrop CROP = new BlockResourcefulCrop();
-    @GameRegistry.ObjectHolder("ore")
     public static final BlockGaianiteOre ORE = new BlockGaianiteOre();
 
-    @GameRegistry.ObjectHolder("seed")
     public static final ItemResourcefulSeed SEED = new ItemResourcefulSeed();
-    @GameRegistry.ObjectHolder("pouch")
     public static final ItemResourcefulPouch POUCH = new ItemResourcefulPouch();
-    @GameRegistry.ObjectHolder("shard")
     public static final ItemResourceful SHARD = new ItemResourceful("");
-    @GameRegistry.ObjectHolder("essence")
     public static final ItemEssence ESSENCE = new ItemEssence();
-    @GameRegistry.ObjectHolder("earth_stone")
     public static final ItemEarthStone EARTH_STONE = new ItemEarthStone();
 
     public static ResourceLocation SEED_DEFAULT = new ResourceLocation(ResourcefulCrops.MODID, "null");
