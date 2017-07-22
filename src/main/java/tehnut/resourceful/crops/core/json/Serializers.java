@@ -38,6 +38,9 @@ public class Serializers {
             String name = json.getAsJsonObject().get("name").getAsString();
             int tier = json.getAsJsonObject().get("tier").getAsInt();
             int craftAmount = json.getAsJsonObject().get("craftAmount").getAsInt();
+            boolean canFertilize = false;
+            if (json.getAsJsonObject().has("canFertilize"))
+                canFertilize = json.getAsJsonObject().get("canFertilize").getAsBoolean();
             Color color = null;
             if (json.getAsJsonObject().has("color"))
                 color = Color.decode(json.getAsJsonObject().get("color").getAsString());
@@ -57,7 +60,7 @@ public class Serializers {
             GrowthRequirement growthRequirement = context.deserialize(json.getAsJsonObject().get("growthRequirement"), GrowthRequirement.class);
             InfoOverride infoOverride = context.deserialize(json.getAsJsonObject().get("overrides"), InfoOverride.class);
 
-            Seed seed = new Seed(name, tier, craftAmount, color, inputItems, outputs, growthRequirement, infoOverride);
+            Seed seed = new Seed(name, tier, craftAmount, canFertilize, color, inputItems, outputs, growthRequirement, infoOverride);
             seed.setOreName(oreName);
             return seed;
         }

@@ -29,10 +29,10 @@ public class ItemResourcefulSeed extends ItemResourceful implements IPlantable {
         IBlockState worldState = world.getBlockState(pos);
         if (seed != null && facing == EnumFacing.UP && player.canPlayerEdit(pos.offset(facing), facing, stack) && worldState.getBlock().canSustainPlant(worldState, world, pos, EnumFacing.UP, this) && world.isAirBlock(pos.up())) {
             world.setBlockState(pos.up(), RegistrarResourcefulCrops.CROP.getDefaultState());
-            if (Util.getSeedContainer(world, pos.up()) == null)
+            if (Util.getTile(TileSeedContainer.class, world, pos.up()) == null)
                 world.setTileEntity(pos.up(), new TileSeedContainer(seed.getRegistryName()));
             else
-                Util.getSeedContainer(world, pos.up()).setSeedKey(seed.getRegistryName());
+                Util.getTile(TileSeedContainer.class, world, pos.up()).setSeedKey(seed.getRegistryName());
             if (!player.capabilities.isCreativeMode)
                 player.inventory.decrStackSize(player.inventory.currentItem, 1);
             return EnumActionResult.SUCCESS;

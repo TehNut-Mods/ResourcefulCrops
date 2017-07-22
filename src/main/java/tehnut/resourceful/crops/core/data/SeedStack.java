@@ -45,7 +45,7 @@ public final class SeedStack {
     }
 
     public Seed getSeed() {
-        return RegistrarResourcefulCrops.SEEDS.containsKey(seed) ? RegistrarResourcefulCrops.SEEDS.getValue(seed) : RegistrarResourcefulCrops.SEEDS.getValue(RegistrarResourcefulCrops.SEED_DEFAULT);
+        return RegistrarResourcefulCrops.SEEDS.getValue(seed);
     }
 
     public int getAmount() {

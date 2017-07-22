@@ -37,10 +37,10 @@ public class ItemResourcefulPouch extends ItemResourceful implements IPlantable 
                 IBlockState worldState = world.getBlockState(settablePos);
                 if (player.canPlayerEdit(settablePos.up(), facing, stack) && worldState.getBlock().canSustainPlant(worldState, world, settablePos, EnumFacing.UP, this) && world.isAirBlock(settablePos.up())) {
                     world.setBlockState(settablePos.up(), RegistrarResourcefulCrops.CROP.getDefaultState());
-                    if (Util.getSeedContainer(world, settablePos.up()) == null)
+                    if (Util.getTile(TileSeedContainer.class, world, settablePos.up()) == null)
                         world.setTileEntity(settablePos.up(), new TileSeedContainer(seed.getRegistryName()));
                     else
-                        Util.getSeedContainer(world, settablePos.up()).setSeedKey(seed.getRegistryName());
+                        Util.getTile(TileSeedContainer.class, world, settablePos.up()).setSeedKey(seed.getRegistryName());
                     flag = true;
                 }
             }

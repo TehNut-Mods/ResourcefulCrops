@@ -81,7 +81,7 @@ public class RegistrarResourcefulCrops {
         Multimap<Integer, SeedStack> tiers = ArrayListMultimap.create();
 
         for (Seed seed : SEEDS) {
-            if (SEED_DEFAULT.equals(seed.getRegistryName()))
+            if (seed.isNull())
                 continue;
 
             if (ConfigHandler.crafting.enableSeedCrafting)

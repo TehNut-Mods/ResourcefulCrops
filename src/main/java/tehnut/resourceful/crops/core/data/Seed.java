@@ -5,6 +5,7 @@ import com.google.common.collect.Lists;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.registries.IForgeRegistryEntry;
+import tehnut.resourceful.crops.core.RegistrarResourcefulCrops;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -14,11 +15,12 @@ import java.util.List;
 
 public final class Seed extends IForgeRegistryEntry.Impl<Seed> {
 
-    public static final Seed DEFAULT = new Seed("null", 0, 0, Color.BLACK, Collections.emptyList(), new Output[] {}, null, null);
+    public static final Seed DEFAULT = new Seed("null", 0, 0, false, Color.BLACK, Collections.emptyList(), new Output[] {}, null, null);
 
     private final String name;
     private final int tier;
     private final int craftAmount;
+    private final boolean canFertilize;
     @Nullable
     private Color color;
     private final transient boolean generateColor;
@@ -30,10 +32,11 @@ public final class Seed extends IForgeRegistryEntry.Impl<Seed> {
     @Nullable
     private String oreName;
 
-    public Seed(String name, int tier, int craftAmount, @Nullable Color color, List<ItemStack> inputItems, Output[] outputs, @Nullable GrowthRequirement growthRequirement, @Nullable InfoOverride overrides) {
+    public Seed(String name, int tier, int craftAmount, boolean canFertilize, @Nullable Color color, List<ItemStack> inputItems, Output[] outputs, @Nullable GrowthRequirement growthRequirement, @Nullable InfoOverride overrides) {
         this.name = name;
         this.tier = tier;
         this.craftAmount = craftAmount;
+        this.canFertilize = canFertilize;
         this.color = color;
         this.generateColor = color == null;
         this.inputItems = inputItems;
@@ -42,20 +45,20 @@ public final class Seed extends IForgeRegistryEntry.Impl<Seed> {
         this.overrides = overrides == null ? InfoOverride.DEFAULT : overrides;
     }
 
-    public Seed(String name, int tier, int craftAmount, @Nullable Color color, List<ItemStack> inputItems, Output output, @Nullable GrowthRequirement growthRequirement, @Nullable InfoOverride overrides) {
-        this(name, tier, craftAmount, color, inputItems, new Output[]{output}, growthRequirement, overrides);
+    public Seed(String name, int tier, int craftAmount, boolean canFertilize, @Nullable Color color, List<ItemStack> inputItems, Output output, @Nullable GrowthRequirement growthRequirement, @Nullable InfoOverride overrides) {
+        this(name, tier, craftAmount, canFertilize, color, inputItems, new Output[]{output}, growthRequirement, overrides);
     }
 
-    public Seed(String name, int tier, int craftAmount, @Nullable Color color, ItemStack inputItem, Output output, @Nullable GrowthRequirement growthRequirement, @Nullable InfoOverride overrides) {
-        this(name, tier, craftAmount, color, Lists.newArrayList(inputItem), new Output[]{output}, growthRequirement, overrides);
+    public Seed(String name, int tier, int craftAmount, boolean canFertilize, @Nullable Color color, ItemStack inputItem, Output output, @Nullable GrowthRequirement growthRequirement, @Nullable InfoOverride overrides) {
+        this(name, tier, craftAmount, canFertilize, color, Lists.newArrayList(inputItem), new Output[]{output}, growthRequirement, overrides);
     }
 
-    public Seed(String name, int tier, int craftAmount, @Nullable Color color, String oreName, Output[] output, @Nullable GrowthRequirement growthRequirement, @Nullable InfoOverride overrides) {
-        this(name, tier, craftAmount, color, OreDictionary.getOres(oreName), output, growthRequirement, overrides);
+    public Seed(String name, int tier, int craftAmount, boolean canFertilize, @Nullable Color color, String oreName, Output[] output, @Nullable GrowthRequirement growthRequirement, @Nullable InfoOverride overrides) {
+        this(name, tier, craftAmount, canFertilize, color, OreDictionary.getOres(oreName), output, growthRequirement, overrides);
     }
 
-    public Seed(String name, int tier, int craftAmount, @Nullable Color color, String oreName, Output output, @Nullable GrowthRequirement growthRequirement, @Nullable InfoOverride overrides) {
-        this(name, tier, craftAmount, color, oreName, new Output[]{output}, growthRequirement, overrides);
+    public Seed(String name, int tier, int craftAmount, boolean canFertilize, @Nullable Color color, String oreName, Output output, @Nullable GrowthRequirement growthRequirement, @Nullable InfoOverride overrides) {
+        this(name, tier, craftAmount, canFertilize, color, oreName, new Output[]{output}, growthRequirement, overrides);
     }
 
     public String getName() {
@@ -68,6 +71,10 @@ public final class Seed extends IForgeRegistryEntry.Impl<Seed> {
 
     public int getCraftAmount() {
         return craftAmount;
+    }
+
+    public boolean canFertilize() {
+        return canFertilize;
     }
 
     @Nullable
@@ -107,5 +114,24 @@ public final class Seed extends IForgeRegistryEntry.Impl<Seed> {
 
     public void setOreName(@Nullable String oreName) {
         this.oreName = oreName;
+    }
+
+    public boolean isNull() {
+        return RegistrarResourcefulCrops.SEED_DEFAULT.equals(getRegistryName());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Seed)) return false;
+
+        Seed seed = (Seed) o;
+
+        return getRegistryName() != null ? getRegistryName().equals(seed.getRegistryName()) : seed.getRegistryName() == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return getRegistryName() != null ? getRegistryName().hashCode() : 0;
     }
 }

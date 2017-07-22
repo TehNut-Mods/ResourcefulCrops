@@ -31,7 +31,7 @@ public class ClientProxy extends CommonProxy {
         Stopwatch stopwatch = Stopwatch.createStarted();
         int count = 0;
         for (Seed seed : RegistrarResourcefulCrops.SEEDS) {
-            if (!RegistrarResourcefulCrops.SEED_DEFAULT.equals(seed.getRegistryName()) && seed.shouldGenerateColor()) {
+            if (!seed.isNull() && seed.shouldGenerateColor()) {
                 ResourcefulCrops.debug("Generating color for seed {}", seed.getRegistryName());
                 ItemStack base = seed.getInputItems().get(0);
                 Color color = new Color(Util.getStackColor(base)).brighter();
@@ -64,7 +64,7 @@ public class ClientProxy extends CommonProxy {
         Minecraft.getMinecraft().getBlockColors().registerBlockColorHandler((state, blockAccess, pos, tintIndex) -> {
             if (blockAccess == null || pos == null)
                 return -1;
-            TileSeedContainer seedContainer = Util.getSeedContainer(blockAccess, pos);
+            TileSeedContainer seedContainer = Util.getTile(TileSeedContainer.class, blockAccess, pos);
             if (seedContainer == null)
                 return -1;
 

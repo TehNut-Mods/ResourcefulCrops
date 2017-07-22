@@ -33,7 +33,7 @@ public class CompatibilityWaila implements IWailaPlugin {
             if (seed == null)
                 return accessor.getStack();
 
-            if (seed.getRegistryName().equals(RegistrarResourcefulCrops.SEED_DEFAULT))
+            if (seed.isNull())
                 return accessor.getStack();
 
             if (seed.getOutputs().length == 0)

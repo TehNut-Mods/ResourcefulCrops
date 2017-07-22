@@ -38,7 +38,7 @@ public class ItemResourceful extends Item {
             return;
 
         for (Seed seed : RegistrarResourcefulCrops.SEEDS)
-            if (!RegistrarResourcefulCrops.SEED_DEFAULT.equals(seed.getRegistryName()))
+            if (!seed.isNull())
                 subItems.add(getResourcefulStack(this, seed.getRegistryName()));
     }
 
@@ -46,7 +46,7 @@ public class ItemResourceful extends Item {
     @Override
     public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag advanced) {
         Seed seed = getSeed(stack);
-        if (seed == null || RegistrarResourcefulCrops.SEED_DEFAULT.equals(seed.getRegistryName())) {
+        if (seed == null || seed.isNull()) {
             tooltip.add(TextFormatting.RED + net.minecraft.client.resources.I18n.format("info.resourcefulcrops.invalid"));
             return;
         }
@@ -73,11 +73,8 @@ public class ItemResourceful extends Item {
     }
 
     public Seed getSeed(ItemStack stack) {
-        if (stack.getItemDamage() == Short.MAX_VALUE - 1)
-            return null;
-
-        if (!stack.hasTagCompound() || !stack.getTagCompound().hasKey("seed"))
-            return null;
+        if (!stack.hasTagCompound())
+            return Seed.DEFAULT;
 
         return RegistrarResourcefulCrops.SEEDS.getValue(new ResourceLocation(stack.getTagCompound().getString("seed")));
     }

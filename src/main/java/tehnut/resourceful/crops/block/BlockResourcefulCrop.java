@@ -46,7 +46,7 @@ public class BlockResourcefulCrop extends BlockCrops {
 
     @Override
     public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos) {
-        Seed seed = RegistrarResourcefulCrops.SEEDS.getValue(Util.getSeedContainer(world, pos).getSeedKey());
+        Seed seed = RegistrarResourcefulCrops.SEEDS.getValue(Util.getTile(TileSeedContainer.class, world, pos).getSeedKey());
         return state.withProperty(SEED_TYPE, seed.getRegistryName().toString().replace(":", "_"));
     }
 
@@ -102,8 +102,14 @@ public class BlockResourcefulCrop extends BlockCrops {
     }
 
     @Override
-    public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, IBlockState state) {
-        return ResourcefulCrops.DEV_MODE;
+    public boolean canUseBonemeal(World world, Random rand, BlockPos pos, IBlockState state) {
+        TileSeedContainer seedContainer = Util.getTile(TileSeedContainer.class, world, pos);
+        if (seedContainer != null) {
+            Seed seed = RegistrarResourcefulCrops.SEEDS.getValue(seedContainer.getSeedKey());
+            if (!seed.isNull())
+                return seed.canFertilize();
+        }
+        return false;
     }
 
     @Override
@@ -120,7 +126,7 @@ public class BlockResourcefulCrop extends BlockCrops {
         if (isMaxAge(state))
             return false;
 
-        TileSeedContainer seedContainer = Util.getSeedContainer(world, pos);
+        TileSeedContainer seedContainer = Util.getTile(TileSeedContainer.class, world, pos);
         if (seedContainer == null)
             return false;
 
@@ -144,7 +150,7 @@ public class BlockResourcefulCrop extends BlockCrops {
     }
 
     private ItemStack getFoodStack(Item toDrop, IBlockAccess world, BlockPos pos) {
-        TileSeedContainer cropTile = Util.getSeedContainer(world, pos);
+        TileSeedContainer cropTile = Util.getTile(TileSeedContainer.class, world, pos);
         if (cropTile != null)
             return ItemResourceful.getResourcefulStack(toDrop, cropTile.getSeedKey());
 

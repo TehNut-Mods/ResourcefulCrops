@@ -9,17 +9,16 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import org.apache.commons.lang3.math.NumberUtils;
 import tehnut.resourceful.crops.ResourcefulCrops;
-import tehnut.resourceful.crops.block.tile.TileSeedContainer;
 
 import javax.annotation.Nullable;
 
 public class Util {
 
     @Nullable
-    public static TileSeedContainer getSeedContainer(IBlockAccess world, BlockPos pos) {
+    public static <T extends TileEntity> T getTile(Class<T> type, IBlockAccess world, BlockPos pos) {
         TileEntity tile = world.getTileEntity(pos);
-        if (tile != null && tile instanceof TileSeedContainer)
-            return (TileSeedContainer) tile;
+        if (tile != null && tile.getClass().isAssignableFrom(type))
+            return (T) tile;
 
         return null;
     }

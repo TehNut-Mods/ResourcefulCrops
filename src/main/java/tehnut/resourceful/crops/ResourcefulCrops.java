@@ -37,17 +37,15 @@ public class ResourcefulCrops {
 
     @SidedProxy(clientSide = "tehnut.resourceful.crops.proxy.ClientProxy", serverSide = "tehnut.resourceful.crops.proxy.CommonProxy")
     public static CommonProxy PROXY;
-    public static File configDir;
+
     public static Set<ASMDataTable.ASMData> modCompatibilities;
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
-        configDir = new File(event.getModConfigurationDirectory(), MODID);
-
         modCompatibilities = event.getAsmData().getAll(Compatibility.class.getCanonicalName());
 
         RegistrarResourcefulCrops.SEEDS.register(Seed.DEFAULT.setRegistryName(RegistrarResourcefulCrops.SEED_DEFAULT));
-        SeedLoader.init(new File(ResourcefulCrops.configDir, "seeds"), RegistrarResourcefulCrops.SEEDS);
+        SeedLoader.init(new File(new File(event.getModConfigurationDirectory(), MODID), "seeds"), RegistrarResourcefulCrops.SEEDS);
 
         PROXY.preInit();
     }
