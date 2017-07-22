@@ -165,21 +165,21 @@ public class Serializers {
             ResourceLocation blockId = context.deserialize(json.getAsJsonObject().get("id"), ResourceLocation.class);
             if (json.getAsJsonObject().has("meta")) {
                 int meta = json.getAsJsonObject().get("meta").getAsInt();
+                ResourcefulCrops.LOGGER.warn("Selecting a state based on metadata is deprecated.");
                 return ForgeRegistries.BLOCKS.getValue(blockId).getStateFromMeta(meta);
             } else {
-                String variant = json.getAsJsonObject().get("variant").getAsString();
                 Block block = ForgeRegistries.BLOCKS.getValue(blockId);
-                if (block == Blocks.AIR)
-                    return Blocks.AIR.getDefaultState();
+                if (block == Blocks.AIR || !json.getAsJsonObject().has("variant"))
+                    return block.getDefaultState();
 
-                BlockStateContainer blockState = block.getBlockState();
-                IBlockState returnState = blockState.getBaseState();
+                String variant = json.getAsJsonObject().get("variant").getAsString();
+                IBlockState returnState = block.getBlockState().getBaseState();
 
                 // Force our values into the state
                 String[] stateValues = variant.split(","); // Splits up each value
                 for (String value : stateValues) {
                     String[] valueSplit = value.split("=");
-                    IProperty property = blockState.getProperty(valueSplit[0]);
+                    IProperty property = block.getBlockState().getProperty(valueSplit[0]);
                     if (property != null)
                         returnState = returnState.withProperty(property, (Comparable) property.parseValue(valueSplit[1]).get());
                 }
