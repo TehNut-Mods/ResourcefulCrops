@@ -3,7 +3,11 @@ package tehnut.resourceful.crops.core.json;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.google.gson.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.JsonToNBT;
 import net.minecraft.util.ResourceLocation;
@@ -14,6 +18,7 @@ import tehnut.resourceful.crops.core.data.GrowthRequirement;
 import tehnut.resourceful.crops.core.data.InfoOverride;
 import tehnut.resourceful.crops.core.data.Output;
 import tehnut.resourceful.crops.core.data.Seed;
+import tehnut.resourceful.crops.util.Util;
 
 import java.awt.*;
 import java.lang.reflect.Type;
@@ -57,8 +62,12 @@ public class Serializers {
             if (inputItems == null)
                 throw new RuntimeException("Seed with name " + name + " does not have any valid input items.");
             Output[] outputs = context.deserialize(json.getAsJsonObject().get("outputs"), Output[].class);
-            GrowthRequirement growthRequirement = context.deserialize(json.getAsJsonObject().get("growthRequirement"), GrowthRequirement.class);
-            InfoOverride infoOverride = context.deserialize(json.getAsJsonObject().get("overrides"), InfoOverride.class);
+            GrowthRequirement growthRequirement = GrowthRequirement.DEFAULT;
+            if (json.getAsJsonObject().has("growthRequirement"))
+                growthRequirement = context.deserialize(json.getAsJsonObject().get("growthRequirement"), GrowthRequirement.class);
+            InfoOverride infoOverride = InfoOverride.DEFAULT;
+            if (json.getAsJsonObject().has("overrides"))
+                infoOverride = context.deserialize(json.getAsJsonObject().get("overrides"), InfoOverride.class);
 
             Seed seed = new Seed(name, tier, craftAmount, canFertilize, color, inputItems, outputs, growthRequirement, infoOverride);
             seed.setOreName(oreName);
@@ -80,8 +89,10 @@ public class Serializers {
             else if (src.getInputItems().size() > 1)
                 jsonObject.add("inputItems", context.serialize(src.getInputItems()));
             jsonObject.add("outputs", context.serialize(src.getOutputs()));
-            jsonObject.add("growthRequirement", context.serialize(src.getGrowthRequirement()));
-            jsonObject.add("overrides", context.serialize(src.getOverrides()));
+            if (!src.getGrowthRequirement().equals(GrowthRequirement.DEFAULT))
+                jsonObject.add("growthRequirement", context.serialize(src.getGrowthRequirement()));
+            if (!src.getOverrides().equals(InfoOverride.DEFAULT))
+                jsonObject.add("overrides", context.serialize(src.getOverrides()));
             return jsonObject;
         }
 
@@ -151,13 +162,37 @@ public class Serializers {
     public static final SerializerBase<IBlockState> BLOCKSTATE = new SerializerBase<IBlockState>() {
         @Override
         public IBlockState deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-            ResourceLocation block = context.deserialize(json.getAsJsonObject().get("id"), ResourceLocation.class);
-            int meta = json.getAsJsonObject().get("meta").getAsInt();
-            return ForgeRegistries.BLOCKS.getValue(block).getStateFromMeta(meta);
+            ResourceLocation blockId = context.deserialize(json.getAsJsonObject().get("id"), ResourceLocation.class);
+            if (json.getAsJsonObject().has("meta")) {
+                int meta = json.getAsJsonObject().get("meta").getAsInt();
+                return ForgeRegistries.BLOCKS.getValue(blockId).getStateFromMeta(meta);
+            } else {
+                String variant = json.getAsJsonObject().get("variant").getAsString();
+                Block block = ForgeRegistries.BLOCKS.getValue(blockId);
+                if (block == Blocks.AIR)
+                    return Blocks.AIR.getDefaultState();
+
+                BlockStateContainer blockState = block.getBlockState();
+                IBlockState returnState = blockState.getBaseState();
+
+                // Force our values into the state
+                String[] stateValues = variant.split(","); // Splits up each value
+                for (String value : stateValues) {
+                    String[] valueSplit = value.split("=");
+                    IProperty property = blockState.getProperty(valueSplit[0]);
+                    if (property != null)
+                        returnState = returnState.withProperty(property, (Comparable) property.parseValue(valueSplit[1]).get());
+                }
+
+                return returnState;
+            }
         }
 
         @Override
         public JsonElement serialize(IBlockState src, Type typeOfSrc, JsonSerializationContext context) {
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("id", src.getBlock().getRegistryName().toString());
+            jsonObject.addProperty("variant", Util.getPropertyString(src.getProperties()));
             return super.serialize(src, typeOfSrc, context);
         }
 

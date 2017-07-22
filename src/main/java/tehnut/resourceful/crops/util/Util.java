@@ -1,5 +1,6 @@
 package tehnut.resourceful.crops.util;
 
+import net.minecraft.block.properties.IProperty;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -10,7 +11,9 @@ import net.minecraft.world.IBlockAccess;
 import org.apache.commons.lang3.math.NumberUtils;
 import tehnut.resourceful.crops.ResourcefulCrops;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Map;
 
 public class Util {
 
@@ -78,5 +81,30 @@ public class Util {
             b /= count;
         }
         return 0xFF000000 | r << 16 | g << 8 | b;
+    }
+
+    @Nonnull
+    public static String getPropertyString(Map<IProperty<?>, Comparable<?>> values) {
+        StringBuilder builder = new StringBuilder();
+
+        for (Map.Entry<IProperty<?>, Comparable<?>> entry : values.entrySet()) {
+            if (builder.length() != 0)
+                builder.append(",");
+
+            IProperty<?> prop = entry.getKey();
+            builder.append(prop.getName());
+            builder.append("=");
+            builder.append(getPropertyName(prop, entry.getValue()));
+        }
+
+        if (builder.length() == 0)
+            builder.append("normal");
+
+        return builder.toString();
+    }
+
+    @Nonnull
+    private static <T extends Comparable<T>> String getPropertyName(IProperty<T> property, Comparable<?> value) {
+        return property.getName((T)value);
     }
 }
