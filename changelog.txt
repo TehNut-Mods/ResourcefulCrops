@@ -1,0 +1,25 @@
+------------------------------------------------------
+Version 2.1.0
+------------------------------------------------------
+
+- RE-LICENSED AS MIT
+- Added the much better changelog system that all my other mods use
+- Fixed all crafting recipes (#48)
+- Simplified fortune logic
+    - It is now a base of 1 drop plus a random amount up to the fortune level.
+- Added the ability to generate colors for seeds based on the first input
+    - Just set your color to null or remove the value altogether
+    - This change has been applied to newly created defaults
+- Added info overrides
+    - This system allows you to now fully customize how your seeds appear to the player
+    - Example: https://streamable.com/9w5gj
+    - You can now override the following things on a per-seed basis:
+        - Language key to use for the items
+            - This is appended by the item type (ie: seed, shard, pouch)
+        - Blockstate file to use for the crop block
+        - Model (and variant) to use for the Seed item
+        - Model (and variant) to use for the Shard item
+        - Model (and variant) to use for the Pouch item
+- Added the ability to define if a seed can be fertilized (bonemeal)
+- Blockstate serializer (used for defining a requirement under the soil) now takes variant strings
+    - This is backwards compatible, but a warning will be logged if meta is used.

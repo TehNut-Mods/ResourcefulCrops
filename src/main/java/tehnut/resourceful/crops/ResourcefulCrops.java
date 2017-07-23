@@ -65,7 +65,7 @@ public class ResourcefulCrops {
     }
 
     public static void debug(String message, Object... params) {
-        if (ConfigHandler.miscellaneous.debugLogging)
+        if (ConfigHandler.miscellaneous.debugLogging || DEV_MODE)
             LOGGER.info("[DEBUG] " + message, params);
     }
 }
