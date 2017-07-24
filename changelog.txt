@@ -23,3 +23,4 @@ Version 2.1.0
 - Added the ability to define if a seed can be fertilized (bonemeal)
 - Blockstate serializer (used for defining a requirement under the soil) now takes variant strings
     - This is backwards compatible, but a warning will be logged if meta is used.
+- Fixed crash when a crop provided a null key
