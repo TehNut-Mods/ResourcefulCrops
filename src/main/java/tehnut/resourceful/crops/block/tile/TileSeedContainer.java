@@ -10,7 +10,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import tehnut.resourceful.crops.core.RegistrarResourcefulCrops;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class TileSeedContainer extends TileEntity {
@@ -72,9 +74,9 @@ public class TileSeedContainer extends TileEntity {
         readFromNBT(tag);
     }
 
-    @Nullable
+    @Nonnull
     public ResourceLocation getSeedKey() {
-        return seedKey;
+        return seedKey == null ? RegistrarResourcefulCrops.SEED_DEFAULT : seedKey;
     }
 
     public void setSeedKey(@Nullable ResourceLocation seedKey) {

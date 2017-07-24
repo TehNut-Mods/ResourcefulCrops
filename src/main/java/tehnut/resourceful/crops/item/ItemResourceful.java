@@ -18,6 +18,7 @@ import tehnut.resourceful.crops.core.data.Seed;
 import tehnut.resourceful.crops.core.data.SeedStack;
 import tehnut.resourceful.crops.util.Util;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 public class ItemResourceful extends Item {
@@ -83,15 +84,15 @@ public class ItemResourceful extends Item {
         return base;
     }
 
-    public static ItemStack getResourcefulStack(Item item, ResourceLocation key) {
+    public static ItemStack getResourcefulStack(@Nonnull Item item, @Nonnull ResourceLocation key) {
         return getResourcefulStack(item, key, 1);
     }
 
-    public static ItemStack getResourcefulStack(Item item, ResourceLocation key, int amount) {
+    public static ItemStack getResourcefulStack(@Nonnull Item item, @Nonnull ResourceLocation key, int amount) {
         return getResourcefulStack(new SeedStack((ItemResourceful) item, key, amount));
     }
 
-    public static ItemStack getResourcefulStack(SeedStack seedStack) {
+    public static ItemStack getResourcefulStack(@Nonnull SeedStack seedStack) {
         ItemStack stack = new ItemStack(seedStack.getType(), seedStack.getAmount(), 0);
         stack.setTagCompound(new NBTTagCompound());
         stack.getTagCompound().setString("seed", seedStack.getSeed().getRegistryName().toString());
