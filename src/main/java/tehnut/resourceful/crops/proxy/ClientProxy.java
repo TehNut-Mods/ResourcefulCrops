@@ -51,7 +51,7 @@ public class ClientProxy extends CommonProxy {
 
         Minecraft.getMinecraft().getItemColors().registerItemColorHandler((stack, tintIndex) -> {
             Seed seed = ((ItemResourceful) stack.getItem()).getSeed(stack);
-            if (seed == null || (stack.getItem() == RegistrarResourcefulCrops.POUCH && tintIndex != 1))
+            if (seed == null || seed.getColor() == null || (stack.getItem() == RegistrarResourcefulCrops.POUCH && tintIndex != 1))
                 return -1;
 
             InfoOverride.ModelInfo modelInfo = seed.getOverrides().getModel(((ItemResourceful) stack.getItem()).getBaseName());
@@ -69,7 +69,7 @@ public class ClientProxy extends CommonProxy {
                 return -1;
 
             Seed seed = RegistrarResourcefulCrops.SEEDS.getValue(seedContainer.getSeedKey());
-            if (seed == null)
+            if (seed == null || seed.getColor() == null)
                 return -1;
 
             if (seed.getOverrides().getBlockState() != null && !seed.getOverrides().getBlockState().shouldColor())
