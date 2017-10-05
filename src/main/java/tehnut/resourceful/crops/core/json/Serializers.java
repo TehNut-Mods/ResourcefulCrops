@@ -47,7 +47,7 @@ public class Serializers {
             if (json.getAsJsonObject().has("canFertilize"))
                 canFertilize = json.getAsJsonObject().get("canFertilize").getAsBoolean();
             Color color = null;
-            if (json.getAsJsonObject().has("color"))
+            if (json.getAsJsonObject().has("color") && !json.getAsJsonObject().get("color").isJsonNull())
                 color = Color.decode(json.getAsJsonObject().get("color").getAsString());
             List<ItemStack> inputItems = null;
             String oreName = null;
