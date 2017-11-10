@@ -166,6 +166,9 @@ curseforge {
 		changelog = getChangelogText()
         releaseType = 'beta'
 
+        addGameVersion "1.12.1"
+        addGameVersion "1.12.2"
+
         relations curseRelations
 
         addArtifact sourceJar

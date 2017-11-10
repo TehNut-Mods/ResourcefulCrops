@@ -1,4 +1,12 @@
 ------------------------------------------------------
+Version 2.1.1
+------------------------------------------------------
+
+- Fixed odd crash when obtaining the seed color
+    - I was never able to reproduce this, but it was reported several times.
+- Allow the `color` field to accept `null`
+
+------------------------------------------------------
 Version 2.1.0
 ------------------------------------------------------
 
