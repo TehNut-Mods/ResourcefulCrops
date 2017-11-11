@@ -1,4 +1,13 @@
 ------------------------------------------------------
+Version 2.1.2
+------------------------------------------------------
+
+- Updated to a new Forge method of obtaining drops
+    - This should fix an issue with Industrial Foregoing's farming system
+    - This issue was caused by a Forge patch that wasn't implemented properly
+    - ¯\_(ツ)_/¯
+
+------------------------------------------------------
 Version 2.1.1
 ------------------------------------------------------
 
