@@ -8,12 +8,12 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.EnumPlantType;
-import tehnut.resourceful.crops.ResourcefulCrops;
 import tehnut.resourceful.crops.block.prop.PropertySeedType;
 import tehnut.resourceful.crops.block.tile.TileSeedContainer;
 import tehnut.resourceful.crops.core.RegistrarResourcefulCrops;
@@ -57,23 +57,21 @@ public class BlockResourcefulCrop extends BlockCrops {
     }
 
     @Override
-    public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
-        List<ItemStack> drops = new ArrayList<ItemStack>();
-            drops.add(getFoodStack(getSeed(), world, pos));
-            if (getAge(state) >= 7)
-                drops.add(getFoodStack(getCrop(), world, pos));
-        return drops;
+    public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+        drops.add(getResourcefulStack(getSeed(), world, pos));
+        if (getAge(state) >= 7)
+            drops.add(getResourcefulStack(getCrop(), world, pos));
     }
 
     @Override
-    public void harvestBlock(World world, EntityPlayer player, BlockPos pos, IBlockState state, @Nullable TileEntity tile, @Nullable ItemStack stack) {
+    public void harvestBlock(World world, EntityPlayer player, BlockPos pos, IBlockState state, @Nullable TileEntity tile, ItemStack stack) {
         super.harvestBlock(world, player, pos, state, tile, stack);
         world.setBlockToAir(pos);
     }
 
     @Override
     public boolean removedByPlayer(IBlockState state, World world, BlockPos pos, EntityPlayer player, boolean willHarvest) {
-        return willHarvest || super.removedByPlayer(state, world, pos, player, willHarvest);
+        return willHarvest || super.removedByPlayer(state, world, pos, player, false);
     }
 
     @Override
@@ -83,7 +81,7 @@ public class BlockResourcefulCrop extends BlockCrops {
 
     @Override
     public ItemStack getItem(World world, BlockPos pos, IBlockState state) {
-        return getFoodStack(getSeed(), world, pos);
+        return getResourcefulStack(getSeed(), world, pos);
     }
 
     @Override
@@ -149,7 +147,7 @@ public class BlockResourcefulCrop extends BlockCrops {
         return this;
     }
 
-    private ItemStack getFoodStack(Item toDrop, IBlockAccess world, BlockPos pos) {
+    private ItemStack getResourcefulStack(Item toDrop, IBlockAccess world, BlockPos pos) {
         TileSeedContainer cropTile = Util.getTile(TileSeedContainer.class, world, pos);
         if (cropTile != null)
             return ItemResourceful.getResourcefulStack(toDrop, cropTile.getSeedKey());

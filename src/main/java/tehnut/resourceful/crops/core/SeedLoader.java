@@ -67,7 +67,7 @@ public class SeedLoader {
             }
         }
 
-        seeds.sort((seed1, seed2) -> ((Integer) seed1.getTier()).compareTo(seed2.getTier()));
+        seeds.sort(Comparator.comparingInt(Seed::getTier));
 
         for (Seed seed : seeds) {
             String sanity = sanityCheck(seed);

@@ -57,8 +57,7 @@ public class IngredientSeed extends Ingredient {
 
         Seed seed = ((ItemResourceful) input.getItem()).getSeed(input);
         SeedStack seedStack = new SeedStack((ItemResourceful) input.getItem(), seed.getRegistryName(), input.getCount());
-        boolean ret = seeds.contains(seedStack);
-        return ret;
+        return seeds.contains(seedStack);
     }
 
     @Override

@@ -8,6 +8,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.items.ItemHandlerHelper;
 import tehnut.resourceful.crops.block.tile.TileSeedContainer;
 import tehnut.resourceful.crops.core.RegistrarResourcefulCrops;
 import tehnut.resourceful.crops.core.data.Seed;
@@ -39,10 +40,7 @@ public class CompatibilityWaila implements IWailaPlugin {
             if (seed.getOutputs().length == 0)
                 return accessor.getStack();
 
-            ItemStack ret = seed.getOutputs()[0].getItem();
-            ret.setCount(1);
-
-            return ret;
+            return ItemHandlerHelper.copyStackWithSize(seed.getOutputs()[0].getItem(), 1);
         }
 
         @Nonnull
